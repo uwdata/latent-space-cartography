@@ -11,9 +11,10 @@ import re
 
 class LogoSpider(scrapy.Spider):
     name = 'spider-i5-europe'
+    rotate_user_agent = True
 
     # let's have a fake start url ...
-    start_urls = ['https://scrapy.org/']
+    start_urls = ['https://www.inc.com/']
 
     def parse(self, response):
         # read our list of companies from a file

@@ -1,0 +1,6330 @@
+{
+    "domain": "3m.com", 
+    "logo": "https://logo.clearbit.com/3m.com", 
+    "name": "3M"
+}
+{
+    "domain": "3i.com", 
+    "logo": "https://logo.clearbit.com/3i.com", 
+    "name": "3i"
+}
+{
+    "domain": "abb.com", 
+    "logo": "https://logo.clearbit.com/abb.com", 
+    "name": "ABB"
+}
+{
+    "domain": "1stopweldingshop.com", 
+    "logo": "https://logo.clearbit.com/1stopweldingshop.com", 
+    "name": "AES"
+}
+{
+    "domain": "agl.com.au", 
+    "logo": "https://logo.clearbit.com/agl.com.au", 
+    "name": "AGL Energy"
+}
+{
+    "domain": "aia-figc.it", 
+    "logo": "https://logo.clearbit.com/aia-figc.it", 
+    "name": "A.I.A."
+}
+{
+    "domain": "alfasystems.com", 
+    "logo": "https://logo.clearbit.com/alfasystems.com", 
+    "name": "Alfa"
+}
+{
+    "domain": "amp.com.au", 
+    "logo": "https://logo.clearbit.com/amp.com.au", 
+    "name": "AMP"
+}
+{
+    "domain": "anz-media.com", 
+    "logo": "https://logo.clearbit.com/anz-media.com", 
+    "name": "ANZ"
+}
+{
+    "domain": "armholdings.net", 
+    "logo": null, 
+    "name": "ARM Holdings"
+}
+{
+    "domain": "portaldasfinancas.gov.pt", 
+    "logo": "https://logo.clearbit.com/portaldasfinancas.gov.pt", 
+    "name": "AT"
+}
+{
+    "domain": "atos.net", 
+    "logo": "https://logo.clearbit.com/atos.net", 
+    "name": "Atos"
+}
+{
+    "domain": "auo.com", 
+    "logo": "https://logo.clearbit.com/auo.com", 
+    "name": "AU Optronics"
+}
+{
+    "domain": "axa.com", 
+    "logo": "https://logo.clearbit.com/axa.com", 
+    "name": "AXA"
+}
+{
+    "domain": "abbvie.com", 
+    "logo": "https://logo.clearbit.com/abbvie.com", 
+    "name": "AbbVie"
+}
+{
+    "domain": "abertis.com", 
+    "logo": "https://logo.clearbit.com/abertis.com", 
+    "name": "Abertis"
+}
+{
+    "domain": "aboitiz.com", 
+    "logo": null, 
+    "name": "Aboitiz Equity Ventures"
+}
+{
+    "domain": "adib.ae", 
+    "logo": "https://logo.clearbit.com/adib.ae", 
+    "name": "Abu Dhabi Islamic Bank"
+}
+{
+    "domain": "accenture.com", 
+    "logo": "https://logo.clearbit.com/accenture.com", 
+    "name": "Accenture"
+}
+{
+    "domain": "acciona.com", 
+    "logo": "https://logo.clearbit.com/acciona.com", 
+    "name": "Acciona"
+}
+{
+    "domain": "samantha-mercier.com", 
+    "logo": "https://logo.clearbit.com/samantha-mercier.com", 
+    "name": "Acc\u2019or"
+}
+{
+    "domain": "actelion.com", 
+    "logo": "https://logo.clearbit.com/actelion.com", 
+    "name": "Actelion"
+}
+{
+    "domain": "activisionblizzard.com", 
+    "logo": "https://logo.clearbit.com/activisionblizzard.com", 
+    "name": "Activision Blizzard"
+}
+{
+    "domain": "adecco.nl", 
+    "logo": "https://logo.clearbit.com/adecco.nl", 
+    "name": "Adecco"
+}
+{
+    "domain": "adidas.com", 
+    "logo": null, 
+    "name": "Adidas"
+}
+{
+    "domain": "adobe.com", 
+    "logo": "https://logo.clearbit.com/adobe.com", 
+    "name": "Adobe Systems"
+}
+{
+    "domain": "advanceautoparts.com", 
+    "logo": "https://logo.clearbit.com/advanceautoparts.com", 
+    "name": "Advance Auto Parts"
+}
+{
+    "domain": "aegon.com", 
+    "logo": "https://logo.clearbit.com/aegon.com", 
+    "name": "Aegon"
+}
+{
+    "domain": "aena.es", 
+    "logo": "https://logo.clearbit.com/aena.es", 
+    "name": "Aena"
+}
+{
+    "domain": "aeon.co", 
+    "logo": "https://logo.clearbit.com/aeon.co", 
+    "name": "Aeon"
+}
+{
+    "domain": "alibaba-caverne.com", 
+    "logo": "https://logo.clearbit.com/alibaba-caverne.com", 
+    "name": "Aeroports de Paris"
+}
+{
+    "domain": "aetna.com", 
+    "logo": "https://logo.clearbit.com/aetna.com", 
+    "name": "Aetna"
+}
+{
+    "domain": "aflac.com", 
+    "logo": "https://logo.clearbit.com/aflac.com", 
+    "name": "Aflac"
+}
+{
+    "domain": "ageassrl.it", 
+    "logo": null, 
+    "name": "Ageas"
+}
+{
+    "domain": "agilent.com", 
+    "logo": "https://logo.clearbit.com/agilent.com", 
+    "name": "Agilent Technologies"
+}
+{
+    "domain": "abchina.com", 
+    "logo": "https://logo.clearbit.com/abchina.com", 
+    "name": "Agricultural Bank of China"
+}
+{
+    "domain": "agrium.jobs", 
+    "logo": null, 
+    "name": "Agrium"
+}
+{
+    "domain": "aircanada.com", 
+    "logo": "https://logo.clearbit.com/aircanada.com", 
+    "name": "Air Canada"
+}
+{
+    "domain": "airfranceklm.com", 
+    "logo": "https://logo.clearbit.com/airfranceklm.com", 
+    "name": "Air France-KLM"
+}
+{
+    "domain": "airliquide.com", 
+    "logo": "https://logo.clearbit.com/airliquide.com", 
+    "name": "Air Liquide"
+}
+{
+    "domain": "airproducts.com", 
+    "logo": "https://logo.clearbit.com/airproducts.com", 
+    "name": "Air Products"
+}
+{
+    "domain": "airgas.com", 
+    "logo": "https://logo.clearbit.com/airgas.com", 
+    "name": "Airgas"
+}
+{
+    "domain": "akamai.com", 
+    "logo": "https://logo.clearbit.com/akamai.com", 
+    "name": "Akamai Technologies"
+}
+{
+    "domain": "akbank.com", 
+    "logo": "https://logo.clearbit.com/akbank.com", 
+    "name": "Akbank"
+}
+{
+    "domain": "akzonobel.com", 
+    "logo": "https://logo.clearbit.com/akzonobel.com", 
+    "name": "AkzoNobel"
+}
+{
+    "domain": "alrajhibank.com.sa", 
+    "logo": "https://logo.clearbit.com/alrajhibank.com.sa", 
+    "name": "Al Rajhi Bank"
+}
+{
+    "domain": "alcoa.com", 
+    "logo": "https://logo.clearbit.com/alcoa.com", 
+    "name": "Alcoa"
+}
+{
+    "domain": "aldar.com", 
+    "logo": "https://logo.clearbit.com/aldar.com", 
+    "name": "Aldar Properties"
+}
+{
+    "domain": "alxn.com", 
+    "logo": "https://logo.clearbit.com/alxn.com", 
+    "name": "Alexion Pharmaceuticals"
+}
+{
+    "domain": "alfalaval.com", 
+    "logo": "https://logo.clearbit.com/alfalaval.com", 
+    "name": "Alfa Laval"
+}
+{
+    "domain": "alibabaexpress.com", 
+    "logo": null, 
+    "name": "Ali Baba"
+}
+{
+    "domain": "alinma.com", 
+    "logo": "https://logo.clearbit.com/alinma.com", 
+    "name": "Alinma Bank"
+}
+{
+    "domain": "ana.co.jp", 
+    "logo": null, 
+    "name": "All Nippon Airways"
+}
+{
+    "domain": "allahabadbank.in", 
+    "logo": "https://logo.clearbit.com/allahabadbank.in", 
+    "name": "Allahabad Bank"
+}
+{
+    "domain": "alleghany.com", 
+    "logo": "https://logo.clearbit.com/alleghany.com", 
+    "name": "Alleghany"
+}
+{
+    "domain": "allergan.jobs", 
+    "logo": null, 
+    "name": "Allergan"
+}
+{
+    "domain": "alliantenergy.com", 
+    "logo": "https://logo.clearbit.com/alliantenergy.com", 
+    "name": "Alliant Energy"
+}
+{
+    "domain": "allianz.de", 
+    "logo": "https://logo.clearbit.com/allianz.de", 
+    "name": "Allianz"
+}
+{
+    "domain": "allstate.com", 
+    "logo": "https://logo.clearbit.com/allstate.com", 
+    "name": "Allstate"
+}
+{
+    "domain": "almarai.com", 
+    "logo": "https://logo.clearbit.com/almarai.com", 
+    "name": "Almarai - \u0627\u0644\u0645\u0631\u0627\u0639\u064a"
+}
+{
+    "domain": "abc.xyz", 
+    "logo": "https://logo.clearbit.com/abc.xyz", 
+    "name": "Alphabet"
+}
+{
+    "domain": "alrosa.aero", 
+    "logo": null, 
+    "name": "ALROSA"
+}
+{
+    "domain": "alstom.com", 
+    "logo": "https://logo.clearbit.com/alstom.com", 
+    "name": "ALSTOM"
+}
+{
+    "domain": "altice.net", 
+    "logo": "https://logo.clearbit.com/altice.net", 
+    "name": "Altice"
+}
+{
+    "domain": "altria.com", 
+    "logo": "https://logo.clearbit.com/altria.com", 
+    "name": "Altria"
+}
+{
+    "domain": "chalco.com.cn", 
+    "logo": null, 
+    "name": "Aluminum Corp Of China"
+}
+{
+    "domain": "ambank.com.my", 
+    "logo": "https://logo.clearbit.com/ambank.com.my", 
+    "name": "AmBank"
+}
+{
+    "domain": "amtrustfinancial.com", 
+    "logo": "https://logo.clearbit.com/amtrustfinancial.com", 
+    "name": "AmTrust Financial Services"
+}
+{
+    "domain": "amazon.com", 
+    "logo": "https://logo.clearbit.com/amazon.com", 
+    "name": "Amazon.com"
+}
+{
+    "domain": "amcor.com", 
+    "logo": "https://logo.clearbit.com/amcor.com", 
+    "name": "Amcor"
+}
+{
+    "domain": "amdocs.com", 
+    "logo": "https://logo.clearbit.com/amdocs.com", 
+    "name": "Amdocs"
+}
+{
+    "domain": "amerco.com", 
+    "logo": null, 
+    "name": "Amerco"
+}
+{
+    "domain": "ameren.com", 
+    "logo": "https://logo.clearbit.com/ameren.com", 
+    "name": "Ameren"
+}
+{
+    "domain": "aa.com", 
+    "logo": "https://logo.clearbit.com/aa.com", 
+    "name": "American Airlines"
+}
+{
+    "domain": "americanelectricinc.net", 
+    "logo": "https://logo.clearbit.com/americanelectricinc.net", 
+    "name": "American Electric"
+}
+{
+    "domain": "american-equity.com", 
+    "logo": "https://logo.clearbit.com/american-equity.com", 
+    "name": "American Equity Investment"
+}
+{
+    "domain": "americanexpress.com", 
+    "logo": "https://logo.clearbit.com/americanexpress.com", 
+    "name": "American Express"
+}
+{
+    "domain": "americanfinancial1.com", 
+    "logo": "https://logo.clearbit.com/americanfinancial1.com", 
+    "name": "American Financial"
+}
+{
+    "domain": "am-nat.net", 
+    "logo": null, 
+    "name": "American International"
+}
+{
+    "domain": "americantower.com", 
+    "logo": "https://logo.clearbit.com/americantower.com", 
+    "name": "American Tower"
+}
+{
+    "domain": "american-waterworks.com", 
+    "logo": "https://logo.clearbit.com/american-waterworks.com", 
+    "name": "American Waterworks"
+}
+{
+    "domain": "ameriprise.com", 
+    "logo": "https://logo.clearbit.com/ameriprise.com", 
+    "name": "Ameriprise Financial"
+}
+{
+    "domain": "amerisourcebergen.com", 
+    "logo": "https://logo.clearbit.com/amerisourcebergen.com", 
+    "name": "AmerisourceBergen"
+}
+{
+    "domain": "ametek.com", 
+    "logo": "https://logo.clearbit.com/ametek.com", 
+    "name": "AMETEK"
+}
+{
+    "domain": "amgen.com", 
+    "logo": "https://logo.clearbit.com/amgen.com", 
+    "name": "Amgen"
+}
+{
+    "domain": "amorepacific.com", 
+    "logo": "https://logo.clearbit.com/amorepacific.com", 
+    "name": "AMOREPACIFIC"
+}
+{
+    "domain": "amphenol.com", 
+    "logo": "https://logo.clearbit.com/amphenol.com", 
+    "name": "Amphenol"
+}
+{
+    "domain": "anadarko.com", 
+    "logo": "https://logo.clearbit.com/anadarko.com", 
+    "name": "Anadarko Petroleum"
+}
+{
+    "domain": "analog.com", 
+    "logo": "https://logo.clearbit.com/analog.com", 
+    "name": "Analog Devices"
+}
+{
+    "domain": "andhrabank.in", 
+    "logo": "https://logo.clearbit.com/andhrabank.in", 
+    "name": "Andhra Bank"
+}
+{
+    "domain": "angloamerican.com", 
+    "logo": "https://logo.clearbit.com/angloamerican.com", 
+    "name": "Anglo American"
+}
+{
+    "domain": "ab-inbev.com", 
+    "logo": "https://logo.clearbit.com/ab-inbev.com", 
+    "name": "Anheuser-Busch InBev"
+}
+{
+    "domain": "annaly.com", 
+    "logo": "https://logo.clearbit.com/annaly.com", 
+    "name": "Annaly Capital Management"
+}
+{
+    "domain": "anteroresources.com", 
+    "logo": "https://logo.clearbit.com/anteroresources.com", 
+    "name": "Antero Resources"
+}
+{
+    "domain": "antheminc.com", 
+    "logo": "https://logo.clearbit.com/antheminc.com", 
+    "name": "Anthem"
+}
+{
+    "domain": "aon.com", 
+    "logo": "https://logo.clearbit.com/aon.com", 
+    "name": "Aon"
+}
+{
+    "domain": "aozorabank.co.jp", 
+    "logo": "https://logo.clearbit.com/aozorabank.co.jp", 
+    "name": "Aozora Bank"
+}
+{
+    "domain": "apache.be", 
+    "logo": "https://logo.clearbit.com/apache.be", 
+    "name": "Apache"
+}
+{
+    "domain": "apple.com", 
+    "logo": "https://logo.clearbit.com/apple.com", 
+    "name": "Apple"
+}
+{
+    "domain": "appliedmaterials.com", 
+    "logo": "https://logo.clearbit.com/appliedmaterials.com", 
+    "name": "Applied Materials"
+}
+{
+    "domain": "arabbank.com", 
+    "logo": "https://logo.clearbit.com/arabbank.com", 
+    "name": "Arab Bank"
+}
+{
+    "domain": "arabbanking.com.jo", 
+    "logo": null, 
+    "name": "Arab Banking"
+}
+{
+    "domain": "anb.com.sa", 
+    "logo": "https://logo.clearbit.com/anb.com.sa", 
+    "name": "Arab National Bank"
+}
+{
+    "domain": "aramark.com", 
+    "logo": "https://logo.clearbit.com/aramark.com", 
+    "name": "Aramark"
+}
+{
+    "domain": "arcacontal.com", 
+    "logo": "https://logo.clearbit.com/arcacontal.com", 
+    "name": "Arca Continental"
+}
+{
+    "domain": "arcelormittal.com", 
+    "logo": "https://logo.clearbit.com/arcelormittal.com", 
+    "name": "ArcelorMittal"
+}
+{
+    "domain": "archcapital.com.au", 
+    "logo": "https://logo.clearbit.com/archcapital.com.au", 
+    "name": "Arch Capital"
+}
+{
+    "domain": "werkenbijadm.nl", 
+    "logo": null, 
+    "name": "Archer Daniels Midland"
+}
+{
+    "domain": "arevablog.com", 
+    "logo": null, 
+    "name": "AREVA"
+}
+{
+    "domain": "arkema.com", 
+    "logo": "https://logo.clearbit.com/arkema.com", 
+    "name": "Arkema"
+}
+{
+    "domain": "arrow.com", 
+    "logo": "https://logo.clearbit.com/arrow.com", 
+    "name": "Arrow Electronics"
+}
+{
+    "domain": "ajginternational.com", 
+    "logo": "https://logo.clearbit.com/ajginternational.com", 
+    "name": "Arthur J. Gallagher"
+}
+{
+    "domain": "ashland.com", 
+    "logo": "https://logo.clearbit.com/ashland.com", 
+    "name": "Ashland"
+}
+{
+    "domain": "assaabloy.com", 
+    "logo": "https://logo.clearbit.com/assaabloy.com", 
+    "name": "ASSA ABLOY"
+}
+{
+    "domain": "assurant.com", 
+    "logo": "https://logo.clearbit.com/assurant.com", 
+    "name": "Assurant"
+}
+{
+    "domain": "assuredguaranty.com", 
+    "logo": "https://logo.clearbit.com/assuredguaranty.com", 
+    "name": "Assured Guaranty"
+}
+{
+    "domain": "astellas.us", 
+    "logo": "https://logo.clearbit.com/astellas.us", 
+    "name": "Astellas Pharma"
+}
+{
+    "domain": "astrazeneca.com", 
+    "logo": "https://logo.clearbit.com/astrazeneca.com", 
+    "name": "AstraZeneca"
+}
+{
+    "domain": "atlantia.ca", 
+    "logo": "https://logo.clearbit.com/atlantia.ca", 
+    "name": "Atlantia"
+}
+{
+    "domain": "atlascopco.com", 
+    "logo": "https://logo.clearbit.com/atlascopco.com", 
+    "name": "Atlas Copco"
+}
+{
+    "domain": "attijariwafa.com", 
+    "logo": null, 
+    "name": "Attijariwafa bank"
+}
+{
+    "domain": "aurubis.ch", 
+    "logo": "https://logo.clearbit.com/aurubis.ch", 
+    "name": "Au Rubis"
+}
+{
+    "domain": "autonation.com", 
+    "logo": "https://logo.clearbit.com/autonation.com", 
+    "name": "AutoNation"
+}
+{
+    "domain": "autozone.com", 
+    "logo": "https://logo.clearbit.com/autozone.com", 
+    "name": "AutoZone"
+}
+{
+    "domain": "autodesk.com", 
+    "logo": "https://logo.clearbit.com/autodesk.com", 
+    "name": "Autodesk"
+}
+{
+    "domain": "autoliv.com", 
+    "logo": "https://logo.clearbit.com/autoliv.com", 
+    "name": "Autoliv"
+}
+{
+    "domain": "avaloncommunities.com", 
+    "logo": "https://logo.clearbit.com/avaloncommunities.com", 
+    "name": "AvalonBay Communities"
+}
+{
+    "domain": "aviva.co.uk", 
+    "logo": "https://logo.clearbit.com/aviva.co.uk", 
+    "name": "Aviva"
+}
+{
+    "domain": "avnet.com", 
+    "logo": "https://logo.clearbit.com/avnet.com", 
+    "name": "Avnet"
+}
+{
+    "domain": "axisbank.com", 
+    "logo": "https://logo.clearbit.com/axisbank.com", 
+    "name": "Axis Bank"
+}
+{
+    "domain": "baesystems.com", 
+    "logo": "https://logo.clearbit.com/baesystems.com", 
+    "name": "BAE Systems"
+}
+{
+    "domain": "baicmotor.com", 
+    "logo": "https://logo.clearbit.com/baicmotor.com", 
+    "name": "BAIC Motor"
+}
+{
+    "domain": "basf.com", 
+    "logo": "https://logo.clearbit.com/basf.com", 
+    "name": "BASF"
+}
+{
+    "domain": "oebb.at", 
+    "logo": "https://logo.clearbit.com/oebb.at", 
+    "name": "\u00d6BB"
+}
+{
+    "domain": "bbmg.com.cn", 
+    "logo": "https://logo.clearbit.com/bbmg.com.cn", 
+    "name": "Bbmg"
+}
+{
+    "domain": "bce.ca", 
+    "logo": "https://logo.clearbit.com/bce.ca", 
+    "name": "BCE"
+}
+{
+    "domain": "bcv.org.ve", 
+    "logo": "https://logo.clearbit.com/bcv.org.ve", 
+    "name": "BCV"
+}
+{
+    "domain": "bcbe.ch", 
+    "logo": "https://logo.clearbit.com/bcbe.ch", 
+    "name": "Bekb / Bcbe"
+}
+{
+    "domain": "bmracing.com", 
+    "logo": "https://logo.clearbit.com/bmracing.com", 
+    "name": "B&M"
+}
+{
+    "domain": "bmcebank.ma", 
+    "logo": "https://logo.clearbit.com/bmcebank.ma", 
+    "name": "BMCE BANK"
+}
+{
+    "domain": "bmw.com", 
+    "logo": "https://logo.clearbit.com/bmw.com", 
+    "name": "BMW"
+}
+{
+    "domain": "group.bnpparibas", 
+    "logo": "https://logo.clearbit.com/group.bnpparibas", 
+    "name": "BNP Paribas"
+}
+{
+    "domain": "bokf.com", 
+    "logo": "https://logo.clearbit.com/bokf.com", 
+    "name": "BOK Financial"
+}
+{
+    "domain": "bp.com", 
+    "logo": "https://logo.clearbit.com/bp.com", 
+    "name": "BP"
+}
+{
+    "domain": "bpi.fr", 
+    "logo": "https://logo.clearbit.com/bpi.fr", 
+    "name": "Bpi"
+}
+{
+    "domain": "brf-global.com", 
+    "logo": "https://logo.clearbit.com/brf-global.com", 
+    "name": "BRF"
+}
+{
+    "domain": "burtonstuart.com", 
+    "logo": null, 
+    "name": "BS Financial"
+}
+{
+    "domain": "bt.com", 
+    "logo": "https://logo.clearbit.com/bt.com", 
+    "name": "BT"
+}
+{
+    "domain": "byd.com", 
+    "logo": "https://logo.clearbit.com/byd.com", 
+    "name": "BYD"
+}
+{
+    "domain": "babcockinternational.com", 
+    "logo": "https://logo.clearbit.com/babcockinternational.com", 
+    "name": "Babcock International"
+}
+{
+    "domain": "baidu.com", 
+    "logo": "https://logo.clearbit.com/baidu.com", 
+    "name": "Baidu"
+}
+{
+    "domain": "bakerhughes.com", 
+    "logo": "https://logo.clearbit.com/bakerhughes.com", 
+    "name": "Baker Hughes"
+}
+{
+    "domain": "ball.com", 
+    "logo": "https://logo.clearbit.com/ball.com", 
+    "name": "Ball"
+}
+{
+    "domain": "gruppocarige.it", 
+    "logo": "https://logo.clearbit.com/gruppocarige.it", 
+    "name": "Banca Carige"
+}
+{
+    "domain": "bancamediolanum.it", 
+    "logo": "https://logo.clearbit.com/bancamediolanum.it", 
+    "name": "Banca Mediolanum"
+}
+{
+    "domain": "popso.it", 
+    "logo": null, 
+    "name": "Banca Popolare di Sondrio"
+}
+{
+    "domain": "bancatransilvania.ro", 
+    "logo": "https://logo.clearbit.com/bancatransilvania.ro", 
+    "name": "Banca Transilvania"
+}
+{
+    "domain": "bancobpi.pt", 
+    "logo": "https://logo.clearbit.com/bancobpi.pt", 
+    "name": "Banco BPI"
+}
+{
+    "domain": "contimarket.com", 
+    "logo": "https://logo.clearbit.com/contimarket.com", 
+    "name": "Banco Continental"
+}
+{
+    "domain": "santander.com", 
+    "logo": "https://logo.clearbit.com/santander.com", 
+    "name": "Banco Santander"
+}
+{
+    "domain": "bancochile.cl", 
+    "logo": "https://logo.clearbit.com/bancochile.cl", 
+    "name": "Banco de Chile"
+}
+{
+    "domain": "grupobancosabadell.com", 
+    "logo": null, 
+    "name": "Banco de Sabadell"
+}
+{
+    "domain": "bb.com.br", 
+    "logo": "https://logo.clearbit.com/bb.com.br", 
+    "name": "Banco do Brasil"
+}
+{
+    "domain": "grupobancolombia.com", 
+    "logo": "https://logo.clearbit.com/grupobancolombia.com", 
+    "name": "Bancolombia"
+}
+{
+    "domain": "bangkokbank.com", 
+    "logo": "https://logo.clearbit.com/bangkokbank.com", 
+    "name": "Bangkok Bank"
+}
+{
+    "domain": "baj.com.sa", 
+    "logo": "https://logo.clearbit.com/baj.com.sa", 
+    "name": "Bank AlJazira"
+}
+{
+    "domain": "bankaudigroup.com", 
+    "logo": "https://logo.clearbit.com/bankaudigroup.com", 
+    "name": "Bank Audi"
+}
+{
+    "domain": "bankhapoalim.co.il", 
+    "logo": "https://logo.clearbit.com/bankhapoalim.co.il", 
+    "name": "Bank Hapoalim"
+}
+{
+    "domain": "leumi.co.il", 
+    "logo": "https://logo.clearbit.com/leumi.co.il", 
+    "name": "Bank Leumi"
+}
+{
+    "domain": "bankmandiri.co.id", 
+    "logo": "https://logo.clearbit.com/bankmandiri.co.id", 
+    "name": "Bank Mandiri"
+}
+{
+    "domain": "bankmuscat.com", 
+    "logo": "https://logo.clearbit.com/bankmuscat.com", 
+    "name": "bank muscat"
+}
+{
+    "domain": "bri.co.id", 
+    "logo": "https://logo.clearbit.com/bri.co.id", 
+    "name": "Bank Rakyat Indonesia"
+}
+{
+    "domain": "bankofamerica.com", 
+    "logo": "https://logo.clearbit.com/bankofamerica.com", 
+    "name": "Bank of America"
+}
+{
+    "domain": "bobibanking.com", 
+    "logo": "https://logo.clearbit.com/bobibanking.com", 
+    "name": "Bank of Baroda"
+}
+{
+    "domain": "bankofbeijing.com.cn", 
+    "logo": "https://logo.clearbit.com/bankofbeijing.com.cn", 
+    "name": "Bank of Beijing"
+}
+{
+    "domain": "boc.cn", 
+    "logo": "https://logo.clearbit.com/boc.cn", 
+    "name": "Bank of China"
+}
+{
+    "domain": "bankofgreece.gr", 
+    "logo": null, 
+    "name": "Bank of Greece"
+}
+{
+    "domain": "bankofindia.com", 
+    "logo": null, 
+    "name": "Bank of India"
+}
+{
+    "domain": "bankofireland.com", 
+    "logo": "https://logo.clearbit.com/bankofireland.com", 
+    "name": "Bank of Ireland"
+}
+{
+    "domain": "kyotobank.co.jp", 
+    "logo": "https://logo.clearbit.com/kyotobank.co.jp", 
+    "name": "Bank of Kyoto"
+}
+{
+    "domain": "boq.com.au", 
+    "logo": "https://logo.clearbit.com/boq.com.au", 
+    "name": "Bank of Queensland"
+}
+{
+    "domain": "bankia.es", 
+    "logo": "https://logo.clearbit.com/bankia.es", 
+    "name": "Bankia"
+}
+{
+    "domain": "bankinter.com", 
+    "logo": "https://logo.clearbit.com/bankinter.com", 
+    "name": "Bankinter"
+}
+{
+    "domain": "fransiplus.com", 
+    "logo": "https://logo.clearbit.com/fransiplus.com", 
+    "name": "Banque Saudi Fransi"
+}
+{
+    "domain": "home.barclays", 
+    "logo": "https://logo.clearbit.com/home.barclays", 
+    "name": "Barclays"
+}
+{
+    "domain": "barrattdevelopments.co.uk", 
+    "logo": "https://logo.clearbit.com/barrattdevelopments.co.uk", 
+    "name": "Barratt Developments"
+}
+{
+    "domain": "barrick.com", 
+    "logo": "https://logo.clearbit.com/barrick.com", 
+    "name": "Barrick Gold"
+}
+{
+    "domain": "bkb.ch", 
+    "logo": "https://logo.clearbit.com/bkb.ch", 
+    "name": "Basler Kantonalbank"
+}
+{
+    "domain": "baxter.com", 
+    "logo": "https://logo.clearbit.com/baxter.com", 
+    "name": "Baxter International"
+}
+{
+    "domain": "bayer.de", 
+    "logo": "https://logo.clearbit.com/bayer.de", 
+    "name": "Bayer"
+}
+{
+    "domain": "bedandbath.gr", 
+    "logo": null, 
+    "name": "Bed&Bath"
+}
+{
+    "domain": "beiersdorf.de", 
+    "logo": null, 
+    "name": "Beiersdorf"
+}
+{
+    "domain": "belga.com", 
+    "logo": null, 
+    "name": "BELGA COM"
+}
+{
+    "domain": "bendigofamilyhistory.org", 
+    "logo": null, 
+    "name": "Bendigo"
+}
+{
+    "domain": "berkshirehathaway.com", 
+    "logo": null, 
+    "name": "Berkshire Hathaway"
+}
+{
+    "domain": "bestbuy.com", 
+    "logo": "https://logo.clearbit.com/bestbuy.com", 
+    "name": "Best Buy"
+}
+{
+    "domain": "bharatpetroleum.in", 
+    "logo": "https://logo.clearbit.com/bharatpetroleum.in", 
+    "name": "Bharat Petroleum"
+}
+{
+    "domain": "bidvest.com", 
+    "logo": "https://logo.clearbit.com/bidvest.com", 
+    "name": "Bidvest"
+}
+{
+    "domain": "biomarin.com", 
+    "logo": "https://logo.clearbit.com/biomarin.com", 
+    "name": "BioMarin Pharmaceutical"
+}
+{
+    "domain": "blackrock.com", 
+    "logo": "https://logo.clearbit.com/blackrock.com", 
+    "name": "BlackRock"
+}
+{
+    "domain": "blombank.com", 
+    "logo": "https://logo.clearbit.com/blombank.com", 
+    "name": "BLOM BANK"
+}
+{
+    "domain": "boeing.com", 
+    "logo": "https://logo.clearbit.com/boeing.com", 
+    "name": "Boeing"
+}
+{
+    "domain": "bombardier.com", 
+    "logo": "https://logo.clearbit.com/bombardier.com", 
+    "name": "Bombardier"
+}
+{
+    "domain": "borgwarner.com", 
+    "logo": "https://logo.clearbit.com/borgwarner.com", 
+    "name": "BorgWarner"
+}
+{
+    "domain": "bostonproperties.com", 
+    "logo": "https://logo.clearbit.com/bostonproperties.com", 
+    "name": "Boston Properties"
+}
+{
+    "domain": "bostonscientific.com", 
+    "logo": "https://logo.clearbit.com/bostonscientific.com", 
+    "name": "Boston Scientific"
+}
+{
+    "domain": "bouygues.com", 
+    "logo": "https://logo.clearbit.com/bouygues.com", 
+    "name": "Bouygues"
+}
+{
+    "domain": "dramers.com.pl", 
+    "logo": null, 
+    "name": "Brait"
+}
+{
+    "domain": "brambles.ie", 
+    "logo": "https://logo.clearbit.com/brambles.ie", 
+    "name": "Brambles"
+}
+{
+    "domain": "braskem.com.br", 
+    "logo": "https://logo.clearbit.com/braskem.com.br", 
+    "name": "Braskem"
+}
+{
+    "domain": "bridgestone.com", 
+    "logo": "https://logo.clearbit.com/bridgestone.com", 
+    "name": "Bridgestone"
+}
+{
+    "domain": "bms.com", 
+    "logo": "https://logo.clearbit.com/bms.com", 
+    "name": "Bristol-Myers Squibb"
+}
+{
+    "domain": "bat.com", 
+    "logo": "https://logo.clearbit.com/bat.com", 
+    "name": "British American Tobacco"
+}
+{
+    "domain": "broadcom.com", 
+    "logo": "https://logo.clearbit.com/broadcom.com", 
+    "name": "Broadcom"
+}
+{
+    "domain": "brookfield.com", 
+    "logo": "https://logo.clearbit.com/brookfield.com", 
+    "name": "Brookfield Asset Management"
+}
+{
+    "domain": "brown-forman.com", 
+    "logo": "https://logo.clearbit.com/brown-forman.com", 
+    "name": "Brown-Forman"
+}
+{
+    "domain": "bunge.com", 
+    "logo": "https://logo.clearbit.com/bunge.com", 
+    "name": "Bunge"
+}
+{
+    "domain": "bunzldistribution.com", 
+    "logo": "https://logo.clearbit.com/bunzldistribution.com", 
+    "name": "Bunzl"
+}
+{
+    "domain": "burberry.com", 
+    "logo": "https://logo.clearbit.com/burberry.com", 
+    "name": "Burberry"
+}
+{
+    "domain": "c-and-a.com", 
+    "logo": "https://logo.clearbit.com/c-and-a.com", 
+    "name": "C&A"
+}
+{
+    "domain": "cbre.us", 
+    "logo": "https://logo.clearbit.com/cbre.us", 
+    "name": "CBRE"
+}
+{
+    "domain": "cbs.com", 
+    "logo": "https://logo.clearbit.com/cbs.com", 
+    "name": "CBS"
+}
+{
+    "domain": "cdw.com", 
+    "logo": "https://logo.clearbit.com/cdw.com", 
+    "name": "CDW"
+}
+{
+    "domain": "cfindustries.com", 
+    "logo": "https://logo.clearbit.com/cfindustries.com", 
+    "name": "CF Industries Holdings"
+}
+{
+    "domain": "cgi.com", 
+    "logo": "https://logo.clearbit.com/cgi.com", 
+    "name": "CGI"
+}
+{
+    "domain": "cic.fr", 
+    "logo": "https://logo.clearbit.com/cic.fr", 
+    "name": "CIC"
+}
+{
+    "domain": "ciandt.com", 
+    "logo": "https://logo.clearbit.com/ciandt.com", 
+    "name": "CI&T"
+}
+{
+    "domain": "cj.co.kr", 
+    "logo": null, 
+    "name": "CJ CheilJedang"
+}
+{
+    "domain": "cmecorp.com", 
+    "logo": "https://logo.clearbit.com/cmecorp.com", 
+    "name": "CME"
+}
+{
+    "domain": "cmsenergy.com", 
+    "logo": "https://logo.clearbit.com/cmsenergy.com", 
+    "name": "CMS Energy"
+}
+{
+    "domain": "cnhindustrial.com", 
+    "logo": "https://logo.clearbit.com/cnhindustrial.com", 
+    "name": "CNH Industrial"
+}
+{
+    "domain": "cnoocltd.com", 
+    "logo": "https://logo.clearbit.com/cnoocltd.com", 
+    "name": "Cnooc"
+}
+{
+    "domain": "cnp.fr", 
+    "logo": "https://logo.clearbit.com/cnp.fr", 
+    "name": "CNP Assurances"
+}
+{
+    "domain": "crbard.com", 
+    "logo": "https://logo.clearbit.com/crbard.com", 
+    "name": "C. R. Bard"
+}
+{
+    "domain": "crhukraine.com", 
+    "logo": "https://logo.clearbit.com/crhukraine.com", 
+    "name": "CRH \u0432 \u0423\u043a\u0440\u0430\u0457\u043d\u0456"
+}
+{
+    "domain": "crrcgc.cc", 
+    "logo": null, 
+    "name": "C R R C"
+}
+{
+    "domain": "hkcsl.com", 
+    "logo": null, 
+    "name": "csl"
+}
+{
+    "domain": "csn.se", 
+    "logo": "https://logo.clearbit.com/csn.se", 
+    "name": "CSN"
+}
+{
+    "domain": "csx.com", 
+    "logo": "https://logo.clearbit.com/csx.com", 
+    "name": "CSX"
+}
+{
+    "domain": "cvshealth.com", 
+    "logo": "https://logo.clearbit.com/cvshealth.com", 
+    "name": "CVS Health"
+}
+{
+    "domain": "caesars.com", 
+    "logo": "https://logo.clearbit.com/caesars.com", 
+    "name": "Caesars Entertainment"
+}
+{
+    "domain": "caixabank.es", 
+    "logo": "https://logo.clearbit.com/caixabank.es", 
+    "name": "CaixaBank"
+}
+{
+    "domain": "calpine.com", 
+    "logo": "https://logo.clearbit.com/calpine.com", 
+    "name": "Calpine"
+}
+{
+    "domain": "caltex.com.au", 
+    "logo": "https://logo.clearbit.com/caltex.com.au", 
+    "name": "Caltex Australia"
+}
+{
+    "domain": "campbellsoupcompany.com", 
+    "logo": "https://logo.clearbit.com/campbellsoupcompany.com", 
+    "name": "Campbell Soup"
+}
+{
+    "domain": "cn.ca", 
+    "logo": "https://logo.clearbit.com/cn.ca", 
+    "name": "Canadian National Railway"
+}
+{
+    "domain": "cnrl.com", 
+    "logo": "https://logo.clearbit.com/cnrl.com", 
+    "name": "Canadian Natural Resources"
+}
+{
+    "domain": "cpr.ca", 
+    "logo": "https://logo.clearbit.com/cpr.ca", 
+    "name": "Canadian Pacific Railway"
+}
+{
+    "domain": "canadiantire.ca", 
+    "logo": "https://logo.clearbit.com/canadiantire.ca", 
+    "name": "Canadian Tire"
+}
+{
+    "domain": "canarabank.com", 
+    "logo": "https://logo.clearbit.com/canarabank.com", 
+    "name": "Canara Bank"
+}
+{
+    "domain": "canon.com.cn", 
+    "logo": null, 
+    "name": "Canon"
+}
+{
+    "domain": "capgemini.com", 
+    "logo": "https://logo.clearbit.com/capgemini.com", 
+    "name": "Capgemini"
+}
+{
+    "domain": "capita.com", 
+    "logo": "https://logo.clearbit.com/capita.com", 
+    "name": "Capita"
+}
+{
+    "domain": "capitaland.com", 
+    "logo": "https://logo.clearbit.com/capitaland.com", 
+    "name": "CapitaLand"
+}
+{
+    "domain": "carmax.com", 
+    "logo": "https://logo.clearbit.com/carmax.com", 
+    "name": "CarMax"
+}
+{
+    "domain": "cardinalhealth.com", 
+    "logo": "https://logo.clearbit.com/cardinalhealth.com", 
+    "name": "Cardinal Health"
+}
+{
+    "domain": "carlsberg.com", 
+    "logo": "https://logo.clearbit.com/carlsberg.com", 
+    "name": "Carlsberg"
+}
+{
+    "domain": "carnivalcorp.com", 
+    "logo": "https://logo.clearbit.com/carnivalcorp.com", 
+    "name": "Carnival"
+}
+{
+    "domain": "carrefour.fr", 
+    "logo": "https://logo.clearbit.com/carrefour.fr", 
+    "name": "Carrefour"
+}
+{
+    "domain": "caterpillar.com", 
+    "logo": "https://logo.clearbit.com/caterpillar.com", 
+    "name": "Caterpillar"
+}
+{
+    "domain": "cathaypacific.com", 
+    "logo": "https://logo.clearbit.com/cathaypacific.com", 
+    "name": "Cathay Pacific Airways"
+}
+{
+    "domain": "assicurazioneonline.palermo.it", 
+    "logo": "https://logo.clearbit.com/assicurazioneonline.palermo.it", 
+    "name": "Cattolica Assicurazioni"
+}
+{
+    "domain": "celanese.com", 
+    "logo": "https://logo.clearbit.com/celanese.com", 
+    "name": "Celanese"
+}
+{
+    "domain": "celgene.com", 
+    "logo": "https://logo.clearbit.com/celgene.com", 
+    "name": "Celgene"
+}
+{
+    "domain": "cemex.com", 
+    "logo": "https://logo.clearbit.com/cemex.com", 
+    "name": "CEMEX"
+}
+{
+    "domain": "cemig.com", 
+    "logo": null, 
+    "name": "CEMIG"
+}
+{
+    "domain": "cenovus.com", 
+    "logo": "https://logo.clearbit.com/cenovus.com", 
+    "name": "Cenovus Energy"
+}
+{
+    "domain": "centene.com", 
+    "logo": "https://logo.clearbit.com/centene.com", 
+    "name": "Centene"
+}
+{
+    "domain": "centerpointenergy.com", 
+    "logo": "https://logo.clearbit.com/centerpointenergy.com", 
+    "name": "CenterPoint Energy"
+}
+{
+    "domain": "centralbankofindia.co.in", 
+    "logo": "https://logo.clearbit.com/centralbankofindia.co.in", 
+    "name": "Central Bank Of India"
+}
+{
+    "domain": "centrica.com", 
+    "logo": "https://logo.clearbit.com/centrica.com", 
+    "name": "Centrica"
+}
+{
+    "domain": "centurylink.com", 
+    "logo": "https://logo.clearbit.com/centurylink.com", 
+    "name": "CenturyLink"
+}
+{
+    "domain": "cerner.com", 
+    "logo": "https://logo.clearbit.com/cerner.com", 
+    "name": "Cerner"
+}
+{
+    "domain": "schwab.com", 
+    "logo": "https://logo.clearbit.com/schwab.com", 
+    "name": "Charles Schwab"
+}
+{
+    "domain": "tomtracker.com", 
+    "logo": null, 
+    "name": "Charter Communications"
+}
+{
+    "domain": "checkpointfrance.fr", 
+    "logo": "https://logo.clearbit.com/checkpointfrance.fr", 
+    "name": "Check Point Software"
+}
+{
+    "domain": "cheniere.com", 
+    "logo": "https://logo.clearbit.com/cheniere.com", 
+    "name": "Cheniere Energy"
+}
+{
+    "domain": "chk.com", 
+    "logo": "https://logo.clearbit.com/chk.com", 
+    "name": "Chesapeake Energy"
+}
+{
+    "domain": "chevron.com", 
+    "logo": "https://logo.clearbit.com/chevron.com", 
+    "name": "Chevron"
+}
+{
+    "domain": "citicbank.com", 
+    "logo": "https://logo.clearbit.com/citicbank.com", 
+    "name": "China CITIC Bank"
+}
+{
+    "domain": "chinacoalenergy.com", 
+    "logo": "https://logo.clearbit.com/chinacoalenergy.com", 
+    "name": "China Coal Energy"
+}
+{
+    "domain": "chinaccs.com.hk", 
+    "logo": null, 
+    "name": "China Communications Services"
+}
+{
+    "domain": "ccb.com", 
+    "logo": "https://logo.clearbit.com/ccb.com", 
+    "name": "China Construction Bank"
+}
+{
+    "domain": "chinaeastern-air.co.jp", 
+    "logo": null, 
+    "name": "China Eastern Airlines"
+}
+{
+    "domain": "cebbank.com", 
+    "logo": "https://logo.clearbit.com/cebbank.com", 
+    "name": "China Everbright Bank"
+}
+{
+    "domain": "cfldcn.com", 
+    "logo": null, 
+    "name": "China Fortune Land Development"
+}
+{
+    "domain": "chamc.com.cn", 
+    "logo": null, 
+    "name": "China Huarong Asset Management"
+}
+{
+    "domain": "chinalife.com.hk", 
+    "logo": null, 
+    "name": "China Life Insurance"
+}
+{
+    "domain": "cmbchina.com", 
+    "logo": "https://logo.clearbit.com/cmbchina.com", 
+    "name": "China Merchants Bank"
+}
+{
+    "domain": "cmbc.com.cn", 
+    "logo": "https://logo.clearbit.com/cmbc.com.cn", 
+    "name": "China Minsheng Banking"
+}
+{
+    "domain": "chinamobileltd.com", 
+    "logo": "https://logo.clearbit.com/chinamobileltd.com", 
+    "name": "China Mobile"
+}
+{
+    "domain": "cpic.com.cn", 
+    "logo": "https://logo.clearbit.com/cpic.com.cn", 
+    "name": "China Pacific Insurance"
+}
+{
+    "domain": "crcc.cn", 
+    "logo": "https://logo.clearbit.com/crcc.cn", 
+    "name": "China Railway Construction"
+}
+{
+    "domain": "csec.com", 
+    "logo": "https://logo.clearbit.com/csec.com", 
+    "name": "China Shenhua Energy"
+}
+{
+    "domain": "csic.com.cn", 
+    "logo": "https://logo.clearbit.com/csic.com.cn", 
+    "name": "China Shipbuilding Industry"
+}
+{
+    "domain": "flychinasouthern.com", 
+    "logo": null, 
+    "name": "China Southern Airlines"
+}
+{
+    "domain": "csc.com.tw", 
+    "logo": "https://logo.clearbit.com/csc.com.tw", 
+    "name": "China Steel"
+}
+{
+    "domain": "cntaiping.com", 
+    "logo": "https://logo.clearbit.com/cntaiping.com", 
+    "name": "China Taiping Insurance"
+}
+{
+    "domain": "chinatelecom.com.cn", 
+    "logo": null, 
+    "name": "chinatelecom"
+}
+{
+    "domain": "chinaunicom.com", 
+    "logo": "https://logo.clearbit.com/chinaunicom.com", 
+    "name": "China Unicom"
+}
+{
+    "domain": "czbank.com", 
+    "logo": "https://logo.clearbit.com/czbank.com", 
+    "name": "China Zheshang Bank"
+}
+{
+    "domain": "chipotle.com", 
+    "logo": "https://logo.clearbit.com/chipotle.com", 
+    "name": "Chipotle Mexican Grill"
+}
+{
+    "domain": "chubb.com", 
+    "logo": "https://logo.clearbit.com/chubb.com", 
+    "name": "Chubb"
+}
+{
+    "domain": "chugin.co.jp", 
+    "logo": "https://logo.clearbit.com/chugin.co.jp", 
+    "name": "Chugoku Bank"
+}
+{
+    "domain": "cht.com.tw", 
+    "logo": "https://logo.clearbit.com/cht.com.tw", 
+    "name": "Chunghwa Telecom"
+}
+{
+    "domain": "church-essen.de", 
+    "logo": null, 
+    "name": "Church"
+}
+{
+    "domain": "cielo.com.br", 
+    "logo": "https://logo.clearbit.com/cielo.com.br", 
+    "name": "Cielo"
+}
+{
+    "domain": "cigna.com", 
+    "logo": "https://logo.clearbit.com/cigna.com", 
+    "name": "Cigna"
+}
+{
+    "domain": "cintas.com", 
+    "logo": "https://logo.clearbit.com/cintas.com", 
+    "name": "Cintas"
+}
+{
+    "domain": "citicpacific.com", 
+    "logo": null, 
+    "name": "CITIC Pacific"
+}
+{
+    "domain": "citigroup.com", 
+    "logo": "https://logo.clearbit.com/citigroup.com", 
+    "name": "Citigroup"
+}
+{
+    "domain": "citizensfinancial.co", 
+    "logo": null, 
+    "name": "Citizens Financial"
+}
+{
+    "domain": "commonwealth-towers.com.sg", 
+    "logo": "https://logo.clearbit.com/commonwealth-towers.com.sg", 
+    "name": "City Developments"
+}
+{
+    "domain": "stopmrsanow.org", 
+    "logo": "https://logo.clearbit.com/stopmrsanow.org", 
+    "name": "Clorox"
+}
+{
+    "domain": "coach.com", 
+    "logo": "https://logo.clearbit.com/coach.com", 
+    "name": "Coach"
+}
+{
+    "domain": "coca-cola.ru", 
+    "logo": "https://logo.clearbit.com/coca-cola.ru", 
+    "name": "Coca-Cola"
+}
+{
+    "domain": "cokesummership.ba", 
+    "logo": "https://logo.clearbit.com/cokesummership.ba", 
+    "name": "Coca-Cola HBC"
+}
+{
+    "domain": "colgatepalmolive.com", 
+    "logo": "https://logo.clearbit.com/colgatepalmolive.com", 
+    "name": "Colgate-Palmolive"
+}
+{
+    "domain": "coloplast.com", 
+    "logo": "https://logo.clearbit.com/coloplast.com", 
+    "name": "Coloplast"
+}
+{
+    "domain": "colruyt.fr", 
+    "logo": null, 
+    "name": "Colruyt"
+}
+{
+    "domain": "xfinity.com", 
+    "logo": "https://logo.clearbit.com/xfinity.com", 
+    "name": "Comcast"
+}
+{
+    "domain": "comerica.com", 
+    "logo": "https://logo.clearbit.com/comerica.com", 
+    "name": "Comerica"
+}
+{
+    "domain": "commerzbank.com", 
+    "logo": "https://logo.clearbit.com/commerzbank.com", 
+    "name": "Commerzbank"
+}
+{
+    "domain": "commonwealth.com.au", 
+    "logo": null, 
+    "name": "Commonwealth Bank"
+}
+{
+    "domain": "chs.net", 
+    "logo": null, 
+    "name": "Community Health Systems"
+}
+{
+    "domain": "compal.com", 
+    "logo": "https://logo.clearbit.com/compal.com", 
+    "name": "Compal Electronics"
+}
+{
+    "domain": "compass.com", 
+    "logo": "https://logo.clearbit.com/compass.com", 
+    "name": "Compass"
+}
+{
+    "domain": "mesafds.com", 
+    "logo": null, 
+    "name": "Conagra Foods"
+}
+{
+    "domain": "conocophillips.com", 
+    "logo": "https://logo.clearbit.com/conocophillips.com", 
+    "name": "ConocoPhillips"
+}
+{
+    "domain": "cbrands.com", 
+    "logo": "https://logo.clearbit.com/cbrands.com", 
+    "name": "Constellation Brands"
+}
+{
+    "domain": "continental-corporation.com", 
+    "logo": "https://logo.clearbit.com/continental-corporation.com", 
+    "name": "Continental"
+}
+{
+    "domain": "conres.com", 
+    "logo": "https://logo.clearbit.com/conres.com", 
+    "name": "Continental Resources"
+}
+{
+    "domain": "corpbank.com", 
+    "logo": "https://logo.clearbit.com/corpbank.com", 
+    "name": "CORPORATION BANK"
+}
+{
+    "domain": "costco.co.uk", 
+    "logo": null, 
+    "name": "Costco Wholesale"
+}
+{
+    "domain": "coty.com", 
+    "logo": "https://logo.clearbit.com/coty.com", 
+    "name": "Coty"
+}
+{
+    "domain": "couche-tard.com", 
+    "logo": "https://logo.clearbit.com/couche-tard.com", 
+    "name": "Couche-Tard"
+}
+{
+    "domain": "credit-suisse.com", 
+    "logo": "https://logo.clearbit.com/credit-suisse.com", 
+    "name": "Credit Suisse"
+}
+{
+    "domain": "creval.it", 
+    "logo": "https://logo.clearbit.com/creval.it", 
+    "name": "Credito Valtellinese"
+}
+{
+    "domain": "crescentpointenergy.com", 
+    "logo": "https://logo.clearbit.com/crescentpointenergy.com", 
+    "name": "Crescent Point Energy"
+}
+{
+    "domain": "crowncork.com", 
+    "logo": "https://logo.clearbit.com/crowncork.com", 
+    "name": "Crown Holdings"
+}
+{
+    "domain": "cummins.com", 
+    "logo": "https://logo.clearbit.com/cummins.com", 
+    "name": "Cummins"
+}
+{
+    "domain": "saiyantv.com", 
+    "logo": "https://logo.clearbit.com/saiyantv.com", 
+    "name": "Dbs"
+}
+{
+    "domain": "dolphinscancerchallenge.com", 
+    "logo": "https://logo.clearbit.com/dolphinscancerchallenge.com", 
+    "name": "DCC"
+}
+{
+    "domain": "dia-installer.de", 
+    "logo": "https://logo.clearbit.com/dia-installer.de", 
+    "name": "Dia"
+}
+{
+    "domain": "dish-satellitetvdeals.com", 
+    "logo": null, 
+    "name": "Dish Network"
+}
+{
+    "domain": "dnb.no", 
+    "logo": "https://logo.clearbit.com/dnb.no", 
+    "name": "DNB"
+}
+{
+    "domain": "dpworld.com", 
+    "logo": "https://logo.clearbit.com/dpworld.com", 
+    "name": "DP World"
+}
+{
+    "domain": "drhorton.com", 
+    "logo": "https://logo.clearbit.com/drhorton.com", 
+    "name": "D.R. Horton"
+}
+{
+    "domain": "dsm.com", 
+    "logo": "https://logo.clearbit.com/dsm.com", 
+    "name": "DSM"
+}
+{
+    "domain": "dsme.co.kr", 
+    "logo": null, 
+    "name": "DSME"
+}
+{
+    "domain": "letstalkscrap.com", 
+    "logo": null, 
+    "name": "DSV"
+}
+{
+    "domain": "dteenergy.com", 
+    "logo": "https://logo.clearbit.com/dteenergy.com", 
+    "name": "DTE Energy"
+}
+{
+    "domain": "davita.com", 
+    "logo": "https://logo.clearbit.com/davita.com", 
+    "name": "DaVita"
+}
+{
+    "domain": "dsi.com", 
+    "logo": null, 
+    "name": "Daiichi Sankyo"
+}
+{
+    "domain": "daikin.com", 
+    "logo": "https://logo.clearbit.com/daikin.com", 
+    "name": "Daikin Industries"
+}
+{
+    "domain": "truckstore.com", 
+    "logo": null, 
+    "name": "Daimler"
+}
+{
+    "domain": "daiwa.global", 
+    "logo": null, 
+    "name": "Daiwa Securities"
+}
+{
+    "domain": "damacproperties.com", 
+    "logo": "https://logo.clearbit.com/damacproperties.com", 
+    "name": "DAMAC Properties"
+}
+{
+    "domain": "danaher.com", 
+    "logo": "https://logo.clearbit.com/danaher.com", 
+    "name": "Danaher"
+}
+{
+    "domain": "dangotecement.com", 
+    "logo": "https://logo.clearbit.com/dangotecement.com", 
+    "name": "Dangote Cement"
+}
+{
+    "domain": "danone.com", 
+    "logo": "https://logo.clearbit.com/danone.com", 
+    "name": "Danone"
+}
+{
+    "domain": "danskebank.dk", 
+    "logo": "https://logo.clearbit.com/danskebank.dk", 
+    "name": "Danske Bank"
+}
+{
+    "domain": "darden.com", 
+    "logo": "https://logo.clearbit.com/darden.com", 
+    "name": "Darden Restaurants"
+}
+{
+    "domain": "dassault-aviation.com", 
+    "logo": "https://logo.clearbit.com/dassault-aviation.com", 
+    "name": "Dassault Aviation"
+}
+{
+    "domain": "delek.co.il", 
+    "logo": null, 
+    "name": "Delek"
+}
+{
+    "domain": "delhaize.be", 
+    "logo": "https://logo.clearbit.com/delhaize.be", 
+    "name": "Delhaize"
+}
+{
+    "domain": "deltaww.com", 
+    "logo": null, 
+    "name": "Delta Electronics"
+}
+{
+    "domain": "deltalloyd.nl", 
+    "logo": "https://logo.clearbit.com/deltalloyd.nl", 
+    "name": "Delta Lloyd"
+}
+{
+    "domain": "denso.com", 
+    "logo": "https://logo.clearbit.com/denso.com", 
+    "name": "DENSO"
+}
+{
+    "domain": "dentsplysirona.com", 
+    "logo": "https://logo.clearbit.com/dentsplysirona.com", 
+    "name": "Dentsply Sirona"
+}
+{
+    "domain": "dentsu.co.jp", 
+    "logo": "https://logo.clearbit.com/dentsu.co.jp", 
+    "name": "Dentsu"
+}
+{
+    "domain": "derwentlondon.com", 
+    "logo": "https://logo.clearbit.com/derwentlondon.com", 
+    "name": "Derwent London"
+}
+{
+    "domain": "db.com", 
+    "logo": "https://logo.clearbit.com/db.com", 
+    "name": "Deutsche Bank"
+}
+{
+    "domain": "pfandbriefbank.com", 
+    "logo": "https://logo.clearbit.com/pfandbriefbank.com", 
+    "name": "Deutsche Pfandbriefbank"
+}
+{
+    "domain": "deutschepost.de", 
+    "logo": "https://logo.clearbit.com/deutschepost.de", 
+    "name": "Deutsche Post"
+}
+{
+    "domain": "telekom.de", 
+    "logo": "https://logo.clearbit.com/telekom.de", 
+    "name": "Deutsche Telekom"
+}
+{
+    "domain": "devonenergy.com", 
+    "logo": "https://logo.clearbit.com/devonenergy.com", 
+    "name": "Devon Energy"
+}
+{
+    "domain": "dexia.com", 
+    "logo": "https://logo.clearbit.com/dexia.com", 
+    "name": "Dexia"
+}
+{
+    "domain": "diageo.com", 
+    "logo": "https://logo.clearbit.com/diageo.com", 
+    "name": "Diageo"
+}
+{
+    "domain": "dickssportinggoods.com", 
+    "logo": "https://logo.clearbit.com/dickssportinggoods.com", 
+    "name": "Dick's Sporting Goods"
+}
+{
+    "domain": "digitalrealty.com", 
+    "logo": "https://logo.clearbit.com/digitalrealty.com", 
+    "name": "Digital Realty Trust"
+}
+{
+    "domain": "directlineinsurance.ca", 
+    "logo": "https://logo.clearbit.com/directlineinsurance.ca", 
+    "name": "DirectLine Insurance"
+}
+{
+    "domain": "30yearsofdiscovery.com", 
+    "logo": null, 
+    "name": "Discovery Communications"
+}
+{
+    "domain": "dohabank.qa", 
+    "logo": "https://logo.clearbit.com/dohabank.qa", 
+    "name": "Doha Bank"
+}
+{
+    "domain": "dollargeneral.com", 
+    "logo": "https://logo.clearbit.com/dollargeneral.com", 
+    "name": "Dollar General"
+}
+{
+    "domain": "dollartree.com", 
+    "logo": "https://logo.clearbit.com/dollartree.com", 
+    "name": "Dollar Tree"
+}
+{
+    "domain": "dfmc.com.cn", 
+    "logo": "https://logo.clearbit.com/dfmc.com.cn", 
+    "name": "Dongfeng Motor"
+}
+{
+    "domain": "dxzq.net", 
+    "logo": null, 
+    "name": "DongXing Securities"
+}
+{
+    "domain": "doosan.com", 
+    "logo": "https://logo.clearbit.com/doosan.com", 
+    "name": "Doosan"
+}
+{
+    "domain": "dovercorporation.com", 
+    "logo": "https://logo.clearbit.com/dovercorporation.com", 
+    "name": "Dover"
+}
+{
+    "domain": "drreddys.com", 
+    "logo": "https://logo.clearbit.com/drreddys.com", 
+    "name": "Dr. Reddy's Laboratories"
+}
+{
+    "domain": "dib.ae", 
+    "logo": "https://logo.clearbit.com/dib.ae", 
+    "name": "Dubai Islamic Bank"
+}
+{
+    "domain": "dufry.com", 
+    "logo": "https://logo.clearbit.com/dufry.com", 
+    "name": "Dufry AG"
+}
+{
+    "domain": "duke-energy.com", 
+    "logo": "https://logo.clearbit.com/duke-energy.com", 
+    "name": "Duke Energy"
+}
+{
+    "domain": "etrade.com", 
+    "logo": "https://logo.clearbit.com/etrade.com", 
+    "name": "E*TRADE Financial"
+}
+{
+    "domain": "adultemart.com", 
+    "logo": null, 
+    "name": "eMart"
+}
+{
+    "domain": "eonenergy.com", 
+    "logo": "https://logo.clearbit.com/eonenergy.com", 
+    "name": "e.on"
+}
+{
+    "domain": "edf.fr", 
+    "logo": "https://logo.clearbit.com/edf.fr", 
+    "name": "EDF"
+}
+{
+    "domain": "emcconnected.com", 
+    "logo": "https://logo.clearbit.com/emcconnected.com", 
+    "name": "EMC"
+}
+{
+    "domain": "eogresources.com", 
+    "logo": "https://logo.clearbit.com/eogresources.com", 
+    "name": "EOG Resources"
+}
+{
+    "domain": "eqt.com", 
+    "logo": "https://logo.clearbit.com/eqt.com", 
+    "name": "EQT"
+}
+{
+    "domain": "exor.com", 
+    "logo": "https://logo.clearbit.com/exor.com", 
+    "name": "Exor"
+}
+{
+    "domain": "eastmoney.com", 
+    "logo": "https://logo.clearbit.com/eastmoney.com", 
+    "name": "East Money Information"
+}
+{
+    "domain": "eastman.com", 
+    "logo": "https://logo.clearbit.com/eastman.com", 
+    "name": "Eastman Chemical"
+}
+{
+    "domain": "easyjet.com", 
+    "logo": "https://logo.clearbit.com/easyjet.com", 
+    "name": "easyJet"
+}
+{
+    "domain": "eaton.com", 
+    "logo": "https://logo.clearbit.com/eaton.com", 
+    "name": "Eaton"
+}
+{
+    "domain": "ecolab.com", 
+    "logo": "https://logo.clearbit.com/ecolab.com", 
+    "name": "Ecolab"
+}
+{
+    "domain": "ecopetrol.com.co", 
+    "logo": "https://logo.clearbit.com/ecopetrol.com.co", 
+    "name": "Ecopetrol"
+}
+{
+    "domain": "edison.com", 
+    "logo": "https://logo.clearbit.com/edison.com", 
+    "name": "Edison International"
+}
+{
+    "domain": "edwards.com", 
+    "logo": "https://logo.clearbit.com/edwards.com", 
+    "name": "Edwards Lifesciences"
+}
+{
+    "domain": "eiffage.com", 
+    "logo": "https://logo.clearbit.com/eiffage.com", 
+    "name": "Eiffage"
+}
+{
+    "domain": "eisai.com", 
+    "logo": "https://logo.clearbit.com/eisai.com", 
+    "name": "Eisai"
+}
+{
+    "domain": "electrolux.ru", 
+    "logo": null, 
+    "name": "Electrolux"
+}
+{
+    "domain": "ea.com", 
+    "logo": "https://logo.clearbit.com/ea.com", 
+    "name": "Electronic Arts"
+}
+{
+    "domain": "emiratesnbd.com", 
+    "logo": "https://logo.clearbit.com/emiratesnbd.com", 
+    "name": "Emirates NBD"
+}
+{
+    "domain": "empireonline.com", 
+    "logo": "https://logo.clearbit.com/empireonline.com", 
+    "name": "Empire"
+}
+{
+    "domain": "enbridge.com", 
+    "logo": "https://logo.clearbit.com/enbridge.com", 
+    "name": "Enbridge"
+}
+{
+    "domain": "endo.pl", 
+    "logo": "https://logo.clearbit.com/endo.pl", 
+    "name": "Endo"
+}
+{
+    "domain": "e-nel.de", 
+    "logo": null, 
+    "name": "e-nel"
+}
+{
+    "domain": "eni.com", 
+    "logo": "https://logo.clearbit.com/eni.com", 
+    "name": "Eni"
+}
+{
+    "domain": "en-ka.eu", 
+    "logo": null, 
+    "name": "En-Ka"
+}
+{
+    "domain": "entergy.com", 
+    "logo": null, 
+    "name": "Entergy"
+}
+{
+    "domain": "equifax.com", 
+    "logo": "https://logo.clearbit.com/equifax.com", 
+    "name": "Equifax"
+}
+{
+    "domain": "equinix.com", 
+    "logo": "https://logo.clearbit.com/equinix.com", 
+    "name": "Equinix"
+}
+{
+    "domain": "equityapartments.com", 
+    "logo": null, 
+    "name": "Equity Residential"
+}
+{
+    "domain": "ericsson.com", 
+    "logo": "https://logo.clearbit.com/ericsson.com", 
+    "name": "Ericsson"
+}
+{
+    "domain": "bank.ua", 
+    "logo": null, 
+    "name": "Erste Bank"
+}
+{
+    "domain": "essexapartmenthomes.com", 
+    "logo": "https://logo.clearbit.com/essexapartmenthomes.com", 
+    "name": "Essex Property Trust"
+}
+{
+    "domain": "esteelauder.ca", 
+    "logo": "https://logo.clearbit.com/esteelauder.ca", 
+    "name": "Est\u00e9e Lauder"
+}
+{
+    "domain": "etisalat.ae", 
+    "logo": null, 
+    "name": "Etisalat"
+}
+{
+    "domain": "eurazeo.com", 
+    "logo": "https://logo.clearbit.com/eurazeo.com", 
+    "name": "Eurazeo"
+}
+{
+    "domain": "pansype.gr", 
+    "logo": "https://logo.clearbit.com/pansype.gr", 
+    "name": "\u03a0\u03b1\u03bd\u03b5\u03bb\u03bb\u03ae\u03bd\u03b9\u03bf\u03c2 \u03a3\u03cd\u03bb\u03bb\u03bf\u03b3\u03bf\u03c2 \u03a0\u03c1\u03bf\u03c3\u03c9\u03c0\u03b9\u03ba\u03bf\u03cd Eurobank-Ergasias"
+}
+{
+    "domain": "ebscn.com", 
+    "logo": "https://logo.clearbit.com/ebscn.com", 
+    "name": "Everbright Securities"
+}
+{
+    "domain": "eversource.com", 
+    "logo": "https://logo.clearbit.com/eversource.com", 
+    "name": "Eversource Energy"
+}
+{
+    "domain": "evonik.com", 
+    "logo": "https://logo.clearbit.com/evonik.com", 
+    "name": "Evonik"
+}
+{
+    "domain": "exeloncorp.com", 
+    "logo": "https://logo.clearbit.com/exeloncorp.com", 
+    "name": "Exelon"
+}
+{
+    "domain": "expedia.com", 
+    "logo": "https://logo.clearbit.com/expedia.com", 
+    "name": "Expedia"
+}
+{
+    "domain": "experian.com", 
+    "logo": "https://logo.clearbit.com/experian.com", 
+    "name": "Experian"
+}
+{
+    "domain": "express-scripts.com", 
+    "logo": null, 
+    "name": "Express Scripts"
+}
+{
+    "domain": "exxonmobil.com", 
+    "logo": "https://logo.clearbit.com/exxonmobil.com", 
+    "name": "ExxonMobil"
+}
+{
+    "domain": "fcc.es", 
+    "logo": "https://logo.clearbit.com/fcc.es", 
+    "name": "FCC"
+}
+{
+    "domain": "fmctechnologies.com", 
+    "logo": "https://logo.clearbit.com/fmctechnologies.com", 
+    "name": "FMC Technologies"
+}
+{
+    "domain": "facebook.com", 
+    "logo": "https://logo.clearbit.com/facebook.com", 
+    "name": "Facebook"
+}
+{
+    "domain": "fairfax.ca", 
+    "logo": "https://logo.clearbit.com/fairfax.ca", 
+    "name": "Fairfax Financial"
+}
+{
+    "domain": "falabella.com", 
+    "logo": "https://logo.clearbit.com/falabella.com", 
+    "name": "Falabella"
+}
+{
+    "domain": "fanniemae.com", 
+    "logo": "https://logo.clearbit.com/fanniemae.com", 
+    "name": "Fannie Mae"
+}
+{
+    "domain": "fanuc.co.jp", 
+    "logo": "https://logo.clearbit.com/fanuc.co.jp", 
+    "name": "FANUC"
+}
+{
+    "domain": "fastretailing.com", 
+    "logo": "https://logo.clearbit.com/fastretailing.com", 
+    "name": "Fast Retailing"
+}
+{
+    "domain": "fastenal.com", 
+    "logo": "https://logo.clearbit.com/fastenal.com", 
+    "name": "Fastenal"
+}
+{
+    "domain": "fedex.com", 
+    "logo": "https://logo.clearbit.com/fedex.com", 
+    "name": "FedEx"
+}
+{
+    "domain": "femsa.com", 
+    "logo": "https://logo.clearbit.com/femsa.com", 
+    "name": "FEMSA"
+}
+{
+    "domain": "ferrovial.com", 
+    "logo": "https://logo.clearbit.com/ferrovial.com", 
+    "name": "Ferrovial"
+}
+{
+    "domain": "fca4dealers.it", 
+    "logo": null, 
+    "name": "Fiat Chrysler Automobiles"
+}
+{
+    "domain": "funo.mx", 
+    "logo": "https://logo.clearbit.com/funo.mx", 
+    "name": "Fibra Uno"
+}
+{
+    "domain": "fnf.com", 
+    "logo": "https://logo.clearbit.com/fnf.com", 
+    "name": "Fidelity National Financial"
+}
+{
+    "domain": "firstdata.com", 
+    "logo": "https://logo.clearbit.com/firstdata.com", 
+    "name": "First Data"
+}
+{
+    "domain": "firstpac.com", 
+    "logo": "https://logo.clearbit.com/firstpac.com", 
+    "name": "First Pacific"
+}
+{
+    "domain": "firstrepublic.com", 
+    "logo": "https://logo.clearbit.com/firstrepublic.com", 
+    "name": "First Republic Bank"
+}
+{
+    "domain": "firstsolar.com", 
+    "logo": "https://logo.clearbit.com/firstsolar.com", 
+    "name": "First Solar"
+}
+{
+    "domain": "firstenergycorp.com", 
+    "logo": "https://logo.clearbit.com/firstenergycorp.com", 
+    "name": "FirstEnergy"
+}
+{
+    "domain": "fiserv.com", 
+    "logo": "https://logo.clearbit.com/fiserv.com", 
+    "name": "Fiserv"
+}
+{
+    "domain": "fleetcor.com", 
+    "logo": "https://logo.clearbit.com/fleetcor.com", 
+    "name": "Fleetcor Technologies"
+}
+{
+    "domain": "fluor.com", 
+    "logo": "https://logo.clearbit.com/fluor.com", 
+    "name": "Fluor"
+}
+{
+    "domain": "foncieredesregions.fr", 
+    "logo": "https://logo.clearbit.com/foncieredesregions.fr", 
+    "name": "Fonci\u00e8re des R\u00e9gions"
+}
+{
+    "domain": "footlocker.com", 
+    "logo": "https://logo.clearbit.com/footlocker.com", 
+    "name": "Footlocker"
+}
+{
+    "domain": "ford.com", 
+    "logo": "https://logo.clearbit.com/ford.com", 
+    "name": "Ford Motor"
+}
+{
+    "domain": "fmgl.com.au", 
+    "logo": "https://logo.clearbit.com/fmgl.com.au", 
+    "name": "Fortescue Metals"
+}
+{
+    "domain": "fortum.com", 
+    "logo": "https://logo.clearbit.com/fortum.com", 
+    "name": "Fortum"
+}
+{
+    "domain": "freddiemac.com", 
+    "logo": "https://logo.clearbit.com/freddiemac.com", 
+    "name": "Freddie Mac"
+}
+{
+    "domain": "freeport.cz", 
+    "logo": "https://logo.clearbit.com/freeport.cz", 
+    "name": "Freeport"
+}
+{
+    "domain": "fresenius.de", 
+    "logo": "https://logo.clearbit.com/fresenius.de", 
+    "name": "Fresenius"
+}
+{
+    "domain": "frontier.com", 
+    "logo": "https://logo.clearbit.com/frontier.com", 
+    "name": "Frontier Communications"
+}
+{
+    "domain": "fujitsu.com", 
+    "logo": "https://logo.clearbit.com/fujitsu.com", 
+    "name": "Fujitsu"
+}
+{
+    "domain": "genderandeducation.com", 
+    "logo": "https://logo.clearbit.com/genderandeducation.com", 
+    "name": "GEA"
+}
+{
+    "domain": "gfsecurities.ca", 
+    "logo": null, 
+    "name": "GF Securities"
+}
+{
+    "domain": "gkn.life", 
+    "logo": "https://logo.clearbit.com/gkn.life", 
+    "name": "GKN"
+}
+{
+    "domain": "gptsoft.com", 
+    "logo": "https://logo.clearbit.com/gptsoft.com", 
+    "name": "GPT"
+}
+{
+    "domain": "gsengineering.com", 
+    "logo": null, 
+    "name": "GS Engineering"
+}
+{
+    "domain": "karmco.com", 
+    "logo": "https://logo.clearbit.com/karmco.com", 
+    "name": "galaxyentertainment"
+}
+{
+    "domain": "galenica.com", 
+    "logo": "https://logo.clearbit.com/galenica.com", 
+    "name": "Galenica"
+}
+{
+    "domain": "gamestop.com", 
+    "logo": "https://logo.clearbit.com/gamestop.com", 
+    "name": "GameStop"
+}
+{
+    "domain": "gap.com", 
+    "logo": "https://logo.clearbit.com/gap.com", 
+    "name": "Gap"
+}
+{
+    "domain": "garantileasing.ro", 
+    "logo": "https://logo.clearbit.com/garantileasing.ro", 
+    "name": "Garanti Bank"
+}
+{
+    "domain": "garmin.com", 
+    "logo": "https://logo.clearbit.com/garmin.com", 
+    "name": "Garmin"
+}
+{
+    "domain": "gasnaturalfenosa.com", 
+    "logo": "https://logo.clearbit.com/gasnaturalfenosa.com", 
+    "name": "Gas Natural Fenosa"
+}
+{
+    "domain": "gazprom.com", 
+    "logo": "https://logo.clearbit.com/gazprom.com", 
+    "name": "Gazprom"
+}
+{
+    "domain": "geberit.com", 
+    "logo": "https://logo.clearbit.com/geberit.com", 
+    "name": "Geberit"
+}
+{
+    "domain": "gecina.fr", 
+    "logo": "https://logo.clearbit.com/gecina.fr", 
+    "name": "Gecina"
+}
+{
+    "domain": "gemdale.com", 
+    "logo": null, 
+    "name": "Gemdale"
+}
+{
+    "domain": "gd.com", 
+    "logo": "https://logo.clearbit.com/gd.com", 
+    "name": "General Dynamics"
+}
+{
+    "domain": "ge.com", 
+    "logo": "https://logo.clearbit.com/ge.com", 
+    "name": "General Electric"
+}
+{
+    "domain": "ggp.jobs", 
+    "logo": null, 
+    "name": "General Growth Properties"
+}
+{
+    "domain": "generalmills.com", 
+    "logo": "https://logo.clearbit.com/generalmills.com", 
+    "name": "General Mills"
+}
+{
+    "domain": "gm.com", 
+    "logo": "https://logo.clearbit.com/gm.com", 
+    "name": "General Motors"
+}
+{
+    "domain": "generali.fr", 
+    "logo": "https://logo.clearbit.com/generali.fr", 
+    "name": "Generali"
+}
+{
+    "domain": "genting.com.my", 
+    "logo": null, 
+    "name": "Genting"
+}
+{
+    "domain": "gentinghk.com", 
+    "logo": null, 
+    "name": "Genting Hong Kong"
+}
+{
+    "domain": "genpt.com", 
+    "logo": null, 
+    "name": "Genuine Parts"
+}
+{
+    "domain": "gilead.com", 
+    "logo": "https://logo.clearbit.com/gilead.com", 
+    "name": "Gilead Sciences"
+}
+{
+    "domain": "givaudan.com", 
+    "logo": "https://logo.clearbit.com/givaudan.com", 
+    "name": "Givaudan"
+}
+{
+    "domain": "ncgskfoundation.org", 
+    "logo": "https://logo.clearbit.com/ncgskfoundation.org", 
+    "name": "Glaxo Smith Kline"
+}
+{
+    "domain": "goldcorp.com", 
+    "logo": "https://logo.clearbit.com/goldcorp.com", 
+    "name": "Goldcorp"
+}
+{
+    "domain": "goldenagri.com", 
+    "logo": null, 
+    "name": "Golden Agri-Resources"
+}
+{
+    "domain": "goldmansachs.com", 
+    "logo": "https://logo.clearbit.com/goldmansachs.com", 
+    "name": "Goldman Sachs"
+}
+{
+    "domain": "goodman.com", 
+    "logo": "https://logo.clearbit.com/goodman.com", 
+    "name": "Goodman"
+}
+{
+    "domain": "goodyear.com", 
+    "logo": "https://logo.clearbit.com/goodyear.com", 
+    "name": "Goodyear"
+}
+{
+    "domain": "gree.com", 
+    "logo": "https://logo.clearbit.com/gree.com", 
+    "name": "Gree Electric Appliances"
+}
+{
+    "domain": "greenlandsc.com", 
+    "logo": null, 
+    "name": "Greenland Holdings"
+}
+{
+    "domain": "grifolsplasma.com", 
+    "logo": null, 
+    "name": "Grifols"
+}
+{
+    "domain": "group1auto.com", 
+    "logo": "https://logo.clearbit.com/group1auto.com", 
+    "name": "Group 1 Automotive"
+}
+{
+    "domain": "grupobimbo.com", 
+    "logo": "https://logo.clearbit.com/grupobimbo.com", 
+    "name": "Grupo Bimbo"
+}
+{
+    "domain": "gcarso.com.mx", 
+    "logo": "https://logo.clearbit.com/gcarso.com.mx", 
+    "name": "Grupo Carso"
+}
+{
+    "domain": "gdi.com.hk", 
+    "logo": "https://logo.clearbit.com/gdi.com.hk", 
+    "name": "Guangdong Investment"
+}
+{
+    "domain": "gudanggaramtbk.com", 
+    "logo": null, 
+    "name": "Gudang Garam"
+}
+{
+    "domain": "guosen.com.cn", 
+    "logo": "https://logo.clearbit.com/guosen.com.cn", 
+    "name": "Guosen Securities"
+}
+{
+    "domain": "gtja.com", 
+    "logo": "https://logo.clearbit.com/gtja.com", 
+    "name": "Guotai Junan Securities"
+}
+{
+    "domain": "hfashionmall.com", 
+    "logo": "https://logo.clearbit.com/hfashionmall.com", 
+    "name": "H\ud328\uc158\ubab0"
+}
+{
+    "domain": "hcltech.com", 
+    "logo": "https://logo.clearbit.com/hcltech.com", 
+    "name": "HCL Technologies"
+}
+{
+    "domain": "hcpi.com", 
+    "logo": "https://logo.clearbit.com/hcpi.com", 
+    "name": "HCP"
+}
+{
+    "domain": "hdfcbank.com", 
+    "logo": "https://logo.clearbit.com/hdfcbank.com", 
+    "name": "HDFC Bank"
+}
+{
+    "domain": "hp.com", 
+    "logo": "https://logo.clearbit.com/hp.com", 
+    "name": "HP"
+}
+{
+    "domain": "hrgworldwide.com", 
+    "logo": "https://logo.clearbit.com/hrgworldwide.com", 
+    "name": "HRG"
+}
+{
+    "domain": "hainanairlines.com", 
+    "logo": null, 
+    "name": "Hainan Airlines"
+}
+{
+    "domain": "htsec.com", 
+    "logo": null, 
+    "name": "Haitong Securities"
+}
+{
+    "domain": "halkbank.com.tr", 
+    "logo": "https://logo.clearbit.com/halkbank.com.tr", 
+    "name": "Halkbank"
+}
+{
+    "domain": "halliburton.com", 
+    "logo": "https://logo.clearbit.com/halliburton.com", 
+    "name": "Halliburton"
+}
+{
+    "domain": "halykbank.kz", 
+    "logo": "https://logo.clearbit.com/halykbank.kz", 
+    "name": "Halyk Bank"
+}
+{
+    "domain": "geraniumgin.com", 
+    "logo": null, 
+    "name": "Hammer & Son"
+}
+{
+    "domain": "hanafinancial.com", 
+    "logo": "https://logo.clearbit.com/hanafinancial.com", 
+    "name": "Hana Financial"
+}
+{
+    "domain": "hanesbrands.com", 
+    "logo": "https://logo.clearbit.com/hanesbrands.com", 
+    "name": "Hanesbrands"
+}
+{
+    "domain": "lynnwoodtires.com", 
+    "logo": null, 
+    "name": "Hankook Tire"
+}
+{
+    "domain": "hankyu-hanshin.co.jp", 
+    "logo": null, 
+    "name": "Hankyu Hanshin Holdings"
+}
+{
+    "domain": "hanoverprofessional.com", 
+    "logo": "https://logo.clearbit.com/hanoverprofessional.com", 
+    "name": "Hanover Insurance"
+}
+{
+    "domain": "harley-davidson.com", 
+    "logo": "https://logo.clearbit.com/harley-davidson.com", 
+    "name": "Harley-Davidson"
+}
+{
+    "domain": "harris.com", 
+    "logo": "https://logo.clearbit.com/harris.com", 
+    "name": "Harris"
+}
+{
+    "domain": "hasbro.com", 
+    "logo": "https://logo.clearbit.com/hasbro.com", 
+    "name": "Hasbro"
+}
+{
+    "domain": "haseko.co.jp", 
+    "logo": "https://logo.clearbit.com/haseko.co.jp", 
+    "name": "HASEKO"
+}
+{
+    "domain": "helvetia.com", 
+    "logo": "https://logo.clearbit.com/helvetia.com", 
+    "name": "Helvetia Holding"
+}
+{
+    "domain": "henkel.com", 
+    "logo": "https://logo.clearbit.com/henkel.com", 
+    "name": "Henkel"
+}
+{
+    "domain": "henryschein.com", 
+    "logo": "https://logo.clearbit.com/henryschein.com", 
+    "name": "Henry Schein"
+}
+{
+    "domain": "hess.com", 
+    "logo": "https://logo.clearbit.com/hess.com", 
+    "name": "Hess"
+}
+{
+    "domain": "hpe.com", 
+    "logo": "https://logo.clearbit.com/hpe.com", 
+    "name": "Hewlett Packard Enterprise"
+}
+{
+    "domain": "geksagon.ru", 
+    "logo": null, 
+    "name": "Hexagon"
+}
+{
+    "domain": "hikvision.com.au", 
+    "logo": "https://logo.clearbit.com/hikvision.com.au", 
+    "name": "Hikvision"
+}
+{
+    "domain": "hindalco.com", 
+    "logo": "https://logo.clearbit.com/hindalco.com", 
+    "name": "Hindalco Industries"
+}
+{
+    "domain": "hpcl-lube.co.in", 
+    "logo": "https://logo.clearbit.com/hpcl-lube.co.in", 
+    "name": "Hindustan Petroleum"
+}
+{
+    "domain": "hitachi.co.jp", 
+    "logo": null, 
+    "name": "\u65e5\u7acb\u88fd\u4f5c\u6240 / Hitachi"
+}
+{
+    "domain": "hokkokubank.co.jp", 
+    "logo": "https://logo.clearbit.com/hokkokubank.co.jp", 
+    "name": "Hokkoku Bank"
+}
+{
+    "domain": "hollyfrontier.com", 
+    "logo": null, 
+    "name": "HollyFrontier"
+}
+{
+    "domain": "honda.fi", 
+    "logo": "https://logo.clearbit.com/honda.fi", 
+    "name": "Honda Motor"
+}
+{
+    "domain": "esitour.com", 
+    "logo": null, 
+    "name": "Honeywell International"
+}
+{
+    "domain": "hormelfoods.com", 
+    "logo": "https://logo.clearbit.com/hormelfoods.com", 
+    "name": "Hormel Foods"
+}
+{
+    "domain": "hoya.co.jp", 
+    "logo": null, 
+    "name": "Hoya"
+}
+{
+    "domain": "hpi.com.cn", 
+    "logo": null, 
+    "name": "Huaneng Power International"
+}
+{
+    "domain": "hxb.com.cn", 
+    "logo": "https://logo.clearbit.com/hxb.com.cn", 
+    "name": "Huaxia Bank"
+}
+{
+    "domain": "thebay.com", 
+    "logo": "https://logo.clearbit.com/thebay.com", 
+    "name": "Hudson's Bay"
+}
+{
+    "domain": "humana.com", 
+    "logo": "https://logo.clearbit.com/humana.com", 
+    "name": "Humana"
+}
+{
+    "domain": "huntington.com", 
+    "logo": "https://logo.clearbit.com/huntington.com", 
+    "name": "Huntington Bancshares"
+}
+{
+    "domain": "huntingtoningalls.com", 
+    "logo": "https://logo.clearbit.com/huntingtoningalls.com", 
+    "name": "Huntington Ingalls Industries"
+}
+{
+    "domain": "huntsman.com", 
+    "logo": "https://logo.clearbit.com/huntsman.com", 
+    "name": "Huntsman"
+}
+{
+    "domain": "huskyenergy.com", 
+    "logo": "https://logo.clearbit.com/huskyenergy.com", 
+    "name": "Husky Energy"
+}
+{
+    "domain": "hyakugo.co.jp", 
+    "logo": "https://logo.clearbit.com/hyakugo.co.jp", 
+    "name": "HYAKUGO bank"
+}
+{
+    "domain": "hydroone.com", 
+    "logo": "https://logo.clearbit.com/hydroone.com", 
+    "name": "Hydro One"
+}
+{
+    "domain": "hyosung.com", 
+    "logo": "https://logo.clearbit.com/hyosung.com", 
+    "name": "Hyosung"
+}
+{
+    "domain": "mobis.co.kr", 
+    "logo": "https://logo.clearbit.com/mobis.co.kr", 
+    "name": "Hyundai MOBIS"
+}
+{
+    "domain": "hyundaimotorgroup.com", 
+    "logo": "https://logo.clearbit.com/hyundaimotorgroup.com", 
+    "name": "Hyundai Motor"
+}
+{
+    "domain": "hyundai-steel.com", 
+    "logo": "https://logo.clearbit.com/hyundai-steel.com", 
+    "name": "Hyundai Steel"
+}
+{
+    "domain": "ibm.com", 
+    "logo": null, 
+    "name": "IBM"
+}
+{
+    "domain": "icagruppen.se", 
+    "logo": "https://logo.clearbit.com/icagruppen.se", 
+    "name": "ICAGruppen"
+}
+{
+    "domain": "icap.me", 
+    "logo": "https://logo.clearbit.com/icap.me", 
+    "name": "iCap"
+}
+{
+    "domain": "icbc.com", 
+    "logo": "https://logo.clearbit.com/icbc.com", 
+    "name": "ICBC"
+}
+{
+    "domain": "icicibank.com", 
+    "logo": "https://logo.clearbit.com/icicibank.com", 
+    "name": "ICICI Bank"
+}
+{
+    "domain": "idbi.com", 
+    "logo": "https://logo.clearbit.com/idbi.com", 
+    "name": "IDBI Bank"
+}
+{
+    "domain": "ihi.org", 
+    "logo": "https://logo.clearbit.com/ihi.org", 
+    "name": "IHI"
+}
+{
+    "domain": "imprimerie-europeenne.com", 
+    "logo": "https://logo.clearbit.com/imprimerie-europeenne.com", 
+    "name": "ING"
+}
+{
+    "domain": "intlfcstone.com", 
+    "logo": "https://logo.clearbit.com/intlfcstone.com", 
+    "name": "INTL FCStone"
+}
+{
+    "domain": "issworld.com", 
+    "logo": "https://logo.clearbit.com/issworld.com", 
+    "name": "ISS"
+}
+{
+    "domain": "intracen.org", 
+    "logo": "https://logo.clearbit.com/intracen.org", 
+    "name": "ITC"
+}
+{
+    "domain": "itv.com", 
+    "logo": "https://logo.clearbit.com/itv.com", 
+    "name": "ITV"
+}
+{
+    "domain": "iberdrola.com", 
+    "logo": "https://logo.clearbit.com/iberdrola.com", 
+    "name": "Iberdrola"
+}
+{
+    "domain": "ideacellular.com", 
+    "logo": "https://logo.clearbit.com/ideacellular.com", 
+    "name": "Idea Cellular"
+}
+{
+    "domain": "iliad.fr", 
+    "logo": "https://logo.clearbit.com/iliad.fr", 
+    "name": "Iliad"
+}
+{
+    "domain": "illumina.com", 
+    "logo": "https://logo.clearbit.com/illumina.com", 
+    "name": "Illumina"
+}
+{
+    "domain": "imperial-tobacco.ru", 
+    "logo": "https://logo.clearbit.com/imperial-tobacco.ru", 
+    "name": "Imperial Tobacco"
+}
+{
+    "domain": "incyte.com", 
+    "logo": "https://logo.clearbit.com/incyte.com", 
+    "name": "Incyte"
+}
+{
+    "domain": "indianbank.in", 
+    "logo": "https://logo.clearbit.com/indianbank.in", 
+    "name": "Indian Bank"
+}
+{
+    "domain": "ioml.mu", 
+    "logo": "https://logo.clearbit.com/ioml.mu", 
+    "name": "IndianOil"
+}
+{
+    "domain": "iob.in", 
+    "logo": "https://logo.clearbit.com/iob.in", 
+    "name": "Indian Overseas Bank"
+}
+{
+    "domain": "inditex.com", 
+    "logo": "https://logo.clearbit.com/inditex.com", 
+    "name": "Inditex"
+}
+{
+    "domain": "indusind.com", 
+    "logo": "https://logo.clearbit.com/indusind.com", 
+    "name": "IndusInd Bank"
+}
+{
+    "domain": "industrial-bank.com", 
+    "logo": "https://logo.clearbit.com/industrial-bank.com", 
+    "name": "Industrial Bank"
+}
+{
+    "domain": "infosys.com", 
+    "logo": "https://logo.clearbit.com/infosys.com", 
+    "name": "Infosys"
+}
+{
+    "domain": "ingersollrand.com", 
+    "logo": "https://logo.clearbit.com/ingersollrand.com", 
+    "name": "Ingersoll Rand"
+}
+{
+    "domain": "ingrammicro.com", 
+    "logo": "https://logo.clearbit.com/ingrammicro.com", 
+    "name": "Ingram Micro"
+}
+{
+    "domain": "ingredion.com", 
+    "logo": "https://logo.clearbit.com/ingredion.com", 
+    "name": "Ingredion"
+}
+{
+    "domain": "innolux.com", 
+    "logo": "https://logo.clearbit.com/innolux.com", 
+    "name": "Innolux"
+}
+{
+    "domain": "inpex.co.jp", 
+    "logo": "https://logo.clearbit.com/inpex.co.jp", 
+    "name": "INPEX"
+}
+{
+    "domain": "intel.com", 
+    "logo": "https://logo.clearbit.com/intel.com", 
+    "name": "Intel"
+}
+{
+    "domain": "interrao.ru", 
+    "logo": "https://logo.clearbit.com/interrao.ru", 
+    "name": "Inter RAO"
+}
+{
+    "domain": "interactivebrokers.com", 
+    "logo": "https://logo.clearbit.com/interactivebrokers.com", 
+    "name": "Interactive Brokers"
+}
+{
+    "domain": "theice.com", 
+    "logo": "https://logo.clearbit.com/theice.com", 
+    "name": "Intercontinental Exchange"
+}
+{
+    "domain": "internationalpaper.com", 
+    "logo": "https://logo.clearbit.com/internationalpaper.com", 
+    "name": "International Paper"
+}
+{
+    "domain": "intesasanpaolo.com", 
+    "logo": "https://logo.clearbit.com/intesasanpaolo.com", 
+    "name": "Intesa Sanpaolo"
+}
+{
+    "domain": "intugroup.co.uk", 
+    "logo": "https://logo.clearbit.com/intugroup.co.uk", 
+    "name": "Intu Properties"
+}
+{
+    "domain": "intuit.com", 
+    "logo": "https://logo.clearbit.com/intuit.com", 
+    "name": "Intuit"
+}
+{
+    "domain": "intuitivesurgical.com", 
+    "logo": "https://logo.clearbit.com/intuitivesurgical.com", 
+    "name": "Intuitive Surgical"
+}
+{
+    "domain": "inventec.com", 
+    "logo": "https://logo.clearbit.com/inventec.com", 
+    "name": "Inventec"
+}
+{
+    "domain": "invesco.com", 
+    "logo": "https://logo.clearbit.com/invesco.com", 
+    "name": "Invesco"
+}
+{
+    "domain": "investec.com", 
+    "logo": "https://logo.clearbit.com/investec.com", 
+    "name": "Investec"
+}
+{
+    "domain": "investorab.com", 
+    "logo": "https://logo.clearbit.com/investorab.com", 
+    "name": "Investor AB"
+}
+{
+    "domain": "isbankgmbh.de", 
+    "logo": null, 
+    "name": "ISBANK"
+}
+{
+    "domain": "discountbank.co.il", 
+    "logo": "https://logo.clearbit.com/discountbank.co.il", 
+    "name": "Israel Discount Bank"
+}
+{
+    "domain": "isuzu.co.jp", 
+    "logo": null, 
+    "name": "Isuzu Motors"
+}
+{
+    "domain": "itasa.eng.br", 
+    "logo": null, 
+    "name": "Itasa"
+}
+{
+    "domain": "kyoto-itochu.jp", 
+    "logo": null, 
+    "name": "Itochu"
+}
+{
+    "domain": "ivanhoemines.com", 
+    "logo": "https://logo.clearbit.com/ivanhoemines.com", 
+    "name": "Ivanhoe Mines"
+}
+{
+    "domain": "jbfinancialllc.com", 
+    "logo": "https://logo.clearbit.com/jbfinancialllc.com", 
+    "name": "JB Financial"
+}
+{
+    "domain": "littlewargame.com", 
+    "logo": "https://logo.clearbit.com/littlewargame.com", 
+    "name": "jbs"
+}
+{
+    "domain": "jcpenney.com", 
+    "logo": "https://logo.clearbit.com/jcpenney.com", 
+    "name": "JCPenney"
+}
+{
+    "domain": "jd.com", 
+    "logo": "https://logo.clearbit.com/jd.com", 
+    "name": "JD.com"
+}
+{
+    "domain": "jfe-holdings.co.jp", 
+    "logo": "https://logo.clearbit.com/jfe-holdings.co.jp", 
+    "name": "JFE Holdings"
+}
+{
+    "domain": "jgsummit.com.ph", 
+    "logo": "https://logo.clearbit.com/jgsummit.com.ph", 
+    "name": "JG Summit Holdings"
+}
+{
+    "domain": "jtekt.co.jp", 
+    "logo": "https://logo.clearbit.com/jtekt.co.jp", 
+    "name": "JTEKT"
+}
+{
+    "domain": "jaccs.nl", 
+    "logo": "https://logo.clearbit.com/jaccs.nl", 
+    "name": "JACCS"
+}
+{
+    "domain": "jacobs-engineering.com", 
+    "logo": "https://logo.clearbit.com/jacobs-engineering.com", 
+    "name": "Jacobs Engineering"
+}
+{
+    "domain": "jal.co.jp", 
+    "logo": "https://logo.clearbit.com/jal.co.jp", 
+    "name": "JAPAN AIRLINES"
+}
+{
+    "domain": "jazzpharma.com", 
+    "logo": "https://logo.clearbit.com/jazzpharma.com", 
+    "name": "Jazz Pharmaceuticals"
+}
+{
+    "domain": "jxcc.com", 
+    "logo": "https://logo.clearbit.com/jxcc.com", 
+    "name": "Jiangxi Copper"
+}
+{
+    "domain": "deere.com", 
+    "logo": "https://logo.clearbit.com/deere.com", 
+    "name": "John Deere"
+}
+{
+    "domain": "johnson.cl", 
+    "logo": "https://logo.clearbit.com/johnson.cl", 
+    "name": "Johnson"
+}
+{
+    "domain": "johnsoncontrols.com", 
+    "logo": "https://logo.clearbit.com/johnsoncontrols.com", 
+    "name": "Johnson Controls"
+}
+{
+    "domain": "matthey.com", 
+    "logo": "https://logo.clearbit.com/matthey.com", 
+    "name": "Johnson Matthey"
+}
+{
+    "domain": "baer.is", 
+    "logo": "https://logo.clearbit.com/baer.is", 
+    "name": "Julius Baer"
+}
+{
+    "domain": "juniper.net", 
+    "logo": "https://logo.clearbit.com/juniper.net", 
+    "name": "Juniper Networks"
+}
+{
+    "domain": "jyskebank.dk", 
+    "logo": "https://logo.clearbit.com/jyskebank.dk", 
+    "name": "Jyske Bank"
+}
+{
+    "domain": "kues.de", 
+    "logo": "https://logo.clearbit.com/kues.de", 
+    "name": "K\u00dcS"
+}
+{
+    "domain": "kbfg.com", 
+    "logo": null, 
+    "name": "KB Financial"
+}
+{
+    "domain": "ikbc.co.kr", 
+    "logo": "https://logo.clearbit.com/ikbc.co.kr", 
+    "name": "KBC\uad11\uc8fc\ubc29\uc1a1"
+}
+{
+    "domain": "kddi.com", 
+    "logo": "https://logo.clearbit.com/kddi.com", 
+    "name": "KDDI"
+}
+{
+    "domain": "kia.com", 
+    "logo": "https://logo.clearbit.com/kia.com", 
+    "name": "Kia Motors"
+}
+{
+    "domain": "kla-tencor.com", 
+    "logo": "https://logo.clearbit.com/kla-tencor.com", 
+    "name": "KLA-Tencor"
+}
+{
+    "domain": "kpn.com", 
+    "logo": "https://logo.clearbit.com/kpn.com", 
+    "name": "KPN"
+}
+{
+    "domain": "kt.com", 
+    "logo": "https://logo.clearbit.com/kt.com", 
+    "name": "KT"
+}
+{
+    "domain": "kajima.com", 
+    "logo": null, 
+    "name": "Kajima"
+}
+{
+    "domain": "kcsouthern.com", 
+    "logo": null, 
+    "name": "Kansas City Southern"
+}
+{
+    "domain": "kelloggs.com", 
+    "logo": "https://logo.clearbit.com/kelloggs.com", 
+    "name": "Kellogg"
+}
+{
+    "domain": "kering.com", 
+    "logo": "https://logo.clearbit.com/kering.com", 
+    "name": "Kering"
+}
+{
+    "domain": "kerry.com", 
+    "logo": null, 
+    "name": "Kerry"
+}
+{
+    "domain": "keyence.com", 
+    "logo": "https://logo.clearbit.com/keyence.com", 
+    "name": "Keyence"
+}
+{
+    "domain": "kimberly-clark.com", 
+    "logo": "https://logo.clearbit.com/kimberly-clark.com", 
+    "name": "Kimberly-Clark"
+}
+{
+    "domain": "kimcorealty.com", 
+    "logo": "https://logo.clearbit.com/kimcorealty.com", 
+    "name": "Kimco Realty"
+}
+{
+    "domain": "kindermorgan.com", 
+    "logo": "https://logo.clearbit.com/kindermorgan.com", 
+    "name": "Kinder Morgan"
+}
+{
+    "domain": "kingdom.com.sa", 
+    "logo": "https://logo.clearbit.com/kingdom.com.sa", 
+    "name": "Kingdom Holding"
+}
+{
+    "domain": "unitedbreweries.com", 
+    "logo": "https://logo.clearbit.com/unitedbreweries.com", 
+    "name": "Kingfisher"
+}
+{
+    "domain": "kirinholdings.co.jp", 
+    "logo": "https://logo.clearbit.com/kirinholdings.co.jp", 
+    "name": "Kirin Holdings"
+}
+{
+    "domain": "kohls.com", 
+    "logo": "https://logo.clearbit.com/kohls.com", 
+    "name": "Kohl's"
+}
+{
+    "domain": "komatsu-ural.ru", 
+    "logo": "https://logo.clearbit.com/komatsu-ural.ru", 
+    "name": "\u0422\u0435\u0445\u043d\u0438\u043a\u0430 Komatsu"
+}
+{
+    "domain": "kone.com", 
+    "logo": "https://logo.clearbit.com/kone.com", 
+    "name": "KONE"
+}
+{
+    "domain": "konicaminolta.com", 
+    "logo": "https://logo.clearbit.com/konicaminolta.com", 
+    "name": "KONICA MINOLTA"
+}
+{
+    "domain": "kepco.co.kr", 
+    "logo": null, 
+    "name": "Korea Electric Power"
+}
+{
+    "domain": "kogas.or.kr", 
+    "logo": null, 
+    "name": "Korea Gas"
+}
+{
+    "domain": "koreanair.com", 
+    "logo": "https://logo.clearbit.com/koreanair.com", 
+    "name": "Korean Air"
+}
+{
+    "domain": "kotak.com", 
+    "logo": "https://logo.clearbit.com/kotak.com", 
+    "name": "Kotak Mahindra Bank"
+}
+{
+    "domain": "kockariyer.com", 
+    "logo": "https://logo.clearbit.com/kockariyer.com", 
+    "name": "Ko\u00e7 Holding"
+}
+{
+    "domain": "kroger.com", 
+    "logo": "https://logo.clearbit.com/kroger.com", 
+    "name": "Kroger"
+}
+{
+    "domain": "ktb.co.th", 
+    "logo": "https://logo.clearbit.com/ktb.co.th", 
+    "name": "Krung Thai Bank"
+}
+{
+    "domain": "kubota.com", 
+    "logo": null, 
+    "name": "Kubota"
+}
+{
+    "domain": "kuehne-nagel.com", 
+    "logo": "https://logo.clearbit.com/kuehne-nagel.com", 
+    "name": "Kuehne + Nagel"
+}
+{
+    "domain": "kfh.com", 
+    "logo": "https://logo.clearbit.com/kfh.com", 
+    "name": "Kuwait Finance House"
+}
+{
+    "domain": "kipco.com", 
+    "logo": "https://logo.clearbit.com/kipco.com", 
+    "name": "Kuwait Projects"
+}
+{
+    "domain": "kyocera.co.jp", 
+    "logo": "https://logo.clearbit.com/kyocera.co.jp", 
+    "name": "Kyocera"
+}
+{
+    "domain": "limitedbrands.com", 
+    "logo": null, 
+    "name": "L Brands"
+}
+{
+    "domain": "loreal.com", 
+    "logo": "https://logo.clearbit.com/loreal.com", 
+    "name": "L'Or\u00e9al"
+}
+{
+    "domain": "lgchem.com", 
+    "logo": "https://logo.clearbit.com/lgchem.com", 
+    "name": "LG Chem"
+}
+{
+    "domain": "lgdisplay.com", 
+    "logo": "https://logo.clearbit.com/lgdisplay.com", 
+    "name": "LG Display"
+}
+{
+    "domain": "lg.com", 
+    "logo": "https://logo.clearbit.com/lg.com", 
+    "name": "LG Electronics"
+}
+{
+    "domain": "landginternational.net", 
+    "logo": "https://logo.clearbit.com/landginternational.net", 
+    "name": "L&G International"
+}
+{
+    "domain": "lguplus.co.kr", 
+    "logo": null, 
+    "name": "LG Uplus"
+}
+{
+    "domain": "ligusb.com", 
+    "logo": null, 
+    "name": "LIG Insurance"
+}
+{
+    "domain": "lkqcorp.com", 
+    "logo": "https://logo.clearbit.com/lkqcorp.com", 
+    "name": "LKQ"
+}
+{
+    "domain": "lafargeholcim.com", 
+    "logo": "https://logo.clearbit.com/lafargeholcim.com", 
+    "name": "LafargeHolcim"
+}
+{
+    "domain": "lamresearch.com", 
+    "logo": "https://logo.clearbit.com/lamresearch.com", 
+    "name": "Lam Research"
+}
+{
+    "domain": "larsen.com", 
+    "logo": "https://logo.clearbit.com/larsen.com", 
+    "name": "Larsen"
+}
+{
+    "domain": "sands.com", 
+    "logo": "https://logo.clearbit.com/sands.com", 
+    "name": "Las Vegas Sands"
+}
+{
+    "domain": "latamairlinesgroup.net", 
+    "logo": "https://logo.clearbit.com/latamairlinesgroup.net", 
+    "name": "LATAM Airlines"
+}
+{
+    "domain": "lazard.com", 
+    "logo": "https://logo.clearbit.com/lazard.com", 
+    "name": "Lazard"
+}
+{
+    "domain": "lear.com", 
+    "logo": "https://logo.clearbit.com/lear.com", 
+    "name": "Lear"
+}
+{
+    "domain": "legal.it", 
+    "logo": null, 
+    "name": "Legal"
+}
+{
+    "domain": "lgh.ee", 
+    "logo": null, 
+    "name": "Legend Holding"
+}
+{
+    "domain": "legrand.us", 
+    "logo": "https://logo.clearbit.com/legrand.us", 
+    "name": "Legrand"
+}
+{
+    "domain": "lendlease.com", 
+    "logo": "https://logo.clearbit.com/lendlease.com", 
+    "name": "Lendlease"
+}
+{
+    "domain": "lennar.com", 
+    "logo": "https://logo.clearbit.com/lennar.com", 
+    "name": "Lennar"
+}
+{
+    "domain": "lapstars.de", 
+    "logo": "https://logo.clearbit.com/lapstars.de", 
+    "name": "Lenovo"
+}
+{
+    "domain": "leucadia.com", 
+    "logo": null, 
+    "name": "Leucadia National"
+}
+{
+    "domain": "level3.com", 
+    "logo": "https://logo.clearbit.com/level3.com", 
+    "name": "Level 3 Communications"
+}
+{
+    "domain": "kyodoprinting.co.jp", 
+    "logo": "https://logo.clearbit.com/kyodoprinting.co.jp", 
+    "name": "L&I"
+}
+{
+    "domain": "liberbank.es", 
+    "logo": "https://logo.clearbit.com/liberbank.es", 
+    "name": "Liberbank"
+}
+{
+    "domain": "libertyglobal.com", 
+    "logo": "https://logo.clearbit.com/libertyglobal.com", 
+    "name": "Liberty Global"
+}
+{
+    "domain": "libertyinteractive.com", 
+    "logo": "https://logo.clearbit.com/libertyinteractive.com", 
+    "name": "Liberty Interactive"
+}
+{
+    "domain": "linde-china.com", 
+    "logo": null, 
+    "name": "Linde"
+}
+{
+    "domain": "lindt.de", 
+    "logo": null, 
+    "name": "Lindt"
+}
+{
+    "domain": "linear.com", 
+    "logo": "https://logo.clearbit.com/linear.com", 
+    "name": "Linear Technology"
+}
+{
+    "domain": "linkhk.com", 
+    "logo": "https://logo.clearbit.com/linkhk.com", 
+    "name": "Link REIT"
+}
+{
+    "domain": "linkedin.com", 
+    "logo": "https://logo.clearbit.com/linkedin.com", 
+    "name": "LinkedIn"
+}
+{
+    "domain": "lixil.co.jp", 
+    "logo": null, 
+    "name": "LIXIL"
+}
+{
+    "domain": "lockheedmartinjobs.com", 
+    "logo": "https://logo.clearbit.com/lockheedmartinjobs.com", 
+    "name": "Lockheed Martin"
+}
+{
+    "domain": "loews.com", 
+    "logo": "https://logo.clearbit.com/loews.com", 
+    "name": "Loews"
+}
+{
+    "domain": "londonstockexchange.com", 
+    "logo": "https://logo.clearbit.com/londonstockexchange.com", 
+    "name": "London Stock Exchange"
+}
+{
+    "domain": "lottechem.com", 
+    "logo": null, 
+    "name": "Lotte Chemical"
+}
+{
+    "domain": "lowes.com", 
+    "logo": "https://logo.clearbit.com/lowes.com", 
+    "name": "Lowe's"
+}
+{
+    "domain": "lukoil.com", 
+    "logo": "https://logo.clearbit.com/lukoil.com", 
+    "name": "LUKOIL"
+}
+{
+    "domain": "lundbergs.se", 
+    "logo": null, 
+    "name": "Lundbergs"
+}
+{
+    "domain": "lupin.com", 
+    "logo": "https://logo.clearbit.com/lupin.com", 
+    "name": "Lupin"
+}
+{
+    "domain": "luxottica.com", 
+    "logo": "https://logo.clearbit.com/luxottica.com", 
+    "name": "Luxottica"
+}
+{
+    "domain": "lukb.ch", 
+    "logo": "https://logo.clearbit.com/lukb.ch", 
+    "name": "Luzerner Kantonalbank"
+}
+{
+    "domain": "demonoid.pw", 
+    "logo": "https://logo.clearbit.com/demonoid.pw", 
+    "name": "\u018a\u0404M\u01a0\u019d\u01a0\u0196\u018a"
+}
+{
+    "domain": "mapltd.com", 
+    "logo": "https://logo.clearbit.com/mapltd.com", 
+    "name": "M.A.P"
+}
+{
+    "domain": "mgmresortseliteaccess.com", 
+    "logo": "https://logo.clearbit.com/mgmresortseliteaccess.com", 
+    "name": "MGM Resorts"
+}
+{
+    "domain": "miscmagazine.com", 
+    "logo": "https://logo.clearbit.com/miscmagazine.com", 
+    "name": "MISC"
+}
+{
+    "domain": "mmiholdings.co.za", 
+    "logo": "https://logo.clearbit.com/mmiholdings.co.za", 
+    "name": "MMI Holdings"
+}
+{
+    "domain": "mssjapan.jp", 
+    "logo": "https://logo.clearbit.com/mssjapan.jp", 
+    "name": "MS\u30bd\u30ea\u30e5\u30fc\u30b7\u30e7\u30f3\u30ba"
+}
+{
+    "domain": "thecatholictraveler.com", 
+    "logo": "https://logo.clearbit.com/thecatholictraveler.com", 
+    "name": "MTN \u26f0"
+}
+{
+    "domain": "mtr.com.hk", 
+    "logo": null, 
+    "name": "MTR"
+}
+{
+    "domain": "macerich.com", 
+    "logo": null, 
+    "name": "Macerich"
+}
+{
+    "domain": "macys.com", 
+    "logo": "https://logo.clearbit.com/macys.com", 
+    "name": "Macy's"
+}
+{
+    "domain": "magna.com", 
+    "logo": "https://logo.clearbit.com/magna.com", 
+    "name": "Magna International"
+}
+{
+    "domain": "magnit-tc.by", 
+    "logo": "https://logo.clearbit.com/magnit-tc.by", 
+    "name": "\u0422\u0426  MAGNIT"
+}
+{
+    "domain": "mahindrajewels.com", 
+    "logo": "https://logo.clearbit.com/mahindrajewels.com", 
+    "name": "mahindra"
+}
+{
+    "domain": "makita.co.jp", 
+    "logo": "https://logo.clearbit.com/makita.co.jp", 
+    "name": "Makita"
+}
+{
+    "domain": "manpowerindia.net", 
+    "logo": "https://logo.clearbit.com/manpowerindia.net", 
+    "name": "Manpower"
+}
+{
+    "domain": "mapfre.es", 
+    "logo": "https://logo.clearbit.com/mapfre.es", 
+    "name": "Mapfre"
+}
+{
+    "domain": "marathonoil.com", 
+    "logo": "https://logo.clearbit.com/marathonoil.com", 
+    "name": "Marathon Oil"
+}
+{
+    "domain": "marathonpetroleum.com", 
+    "logo": "https://logo.clearbit.com/marathonpetroleum.com", 
+    "name": "Marathon Petroleum"
+}
+{
+    "domain": "markelcorp.com", 
+    "logo": "https://logo.clearbit.com/markelcorp.com", 
+    "name": "Markel"
+}
+{
+    "domain": "marks.com", 
+    "logo": "https://logo.clearbit.com/marks.com", 
+    "name": "Mark's"
+}
+{
+    "domain": "marriott.com", 
+    "logo": "https://logo.clearbit.com/marriott.com", 
+    "name": "Marriott International"
+}
+{
+    "domain": "marsh.com", 
+    "logo": "https://logo.clearbit.com/marsh.com", 
+    "name": "Marsh"
+}
+{
+    "domain": "marubeni.com", 
+    "logo": "https://logo.clearbit.com/marubeni.com", 
+    "name": "Marubeni"
+}
+{
+    "domain": "masco.com", 
+    "logo": "https://logo.clearbit.com/masco.com", 
+    "name": "Masco"
+}
+{
+    "domain": "mashreqbank.com", 
+    "logo": "https://logo.clearbit.com/mashreqbank.com", 
+    "name": "Mashreq Bank"
+}
+{
+    "domain": "mastercard.com.au", 
+    "logo": "https://logo.clearbit.com/mastercard.com.au", 
+    "name": "Mastercard"
+}
+{
+    "domain": "mattel.com", 
+    "logo": "https://logo.clearbit.com/mattel.com", 
+    "name": "Mattel"
+}
+{
+    "domain": "maxis.com.my", 
+    "logo": "https://logo.clearbit.com/maxis.com.my", 
+    "name": "Maxis"
+}
+{
+    "domain": "maybank.com", 
+    "logo": "https://logo.clearbit.com/maybank.com", 
+    "name": "Maybank"
+}
+{
+    "domain": "mazda.com", 
+    "logo": "https://logo.clearbit.com/mazda.com", 
+    "name": "Mazda Motor"
+}
+{
+    "domain": "mccormickbarstow.com", 
+    "logo": null, 
+    "name": "McCormick"
+}
+{
+    "domain": "mcdonalds.com", 
+    "logo": "https://logo.clearbit.com/mcdonalds.com", 
+    "name": "McDonald's"
+}
+{
+    "domain": "mckesson.com", 
+    "logo": "https://logo.clearbit.com/mckesson.com", 
+    "name": "McKesson"
+}
+{
+    "domain": "meadjohnson.com", 
+    "logo": "https://logo.clearbit.com/meadjohnson.com", 
+    "name": "Mead Johnson Nutrition"
+}
+{
+    "domain": "mediatek.com", 
+    "logo": "https://logo.clearbit.com/mediatek.com", 
+    "name": "MediaTek"
+}
+{
+    "domain": "medipal.co.jp", 
+    "logo": null, 
+    "name": "Medipal Holdings"
+}
+{
+    "domain": "medtronic.com", 
+    "logo": "https://logo.clearbit.com/medtronic.com", 
+    "name": "Medtronic"
+}
+{
+    "domain": "megafon.ru", 
+    "logo": "https://logo.clearbit.com/megafon.ru", 
+    "name": "MegaFon"
+}
+{
+    "domain": "merck.com", 
+    "logo": "https://logo.clearbit.com/merck.com", 
+    "name": "Merck"
+}
+{
+    "domain": "merck.com", 
+    "logo": "https://logo.clearbit.com/merck.com", 
+    "name": "Merck"
+}
+{
+    "domain": "metlife.com", 
+    "logo": "https://logo.clearbit.com/metlife.com", 
+    "name": "MetLife"
+}
+{
+    "domain": "metro.co.uk", 
+    "logo": "https://logo.clearbit.com/metro.co.uk", 
+    "name": "Metro"
+}
+{
+    "domain": "metro.co.uk", 
+    "logo": "https://logo.clearbit.com/metro.co.uk", 
+    "name": "Metro"
+}
+{
+    "domain": "metrobank.com.ph", 
+    "logo": "https://logo.clearbit.com/metrobank.com.ph", 
+    "name": "Metropolitan Bank"
+}
+{
+    "domain": "mt.com", 
+    "logo": "https://logo.clearbit.com/mt.com", 
+    "name": "Mettler Toledo International"
+}
+{
+    "domain": "michelin.fr", 
+    "logo": "https://logo.clearbit.com/michelin.fr", 
+    "name": "Michelin"
+}
+{
+    "domain": "microchip.com", 
+    "logo": "https://logo.clearbit.com/microchip.com", 
+    "name": "Microchip Technology"
+}
+{
+    "domain": "micron.com", 
+    "logo": "https://logo.clearbit.com/micron.com", 
+    "name": "Micron Technology"
+}
+{
+    "domain": "microsoft.com", 
+    "logo": "https://logo.clearbit.com/microsoft.com", 
+    "name": "Microsoft"
+}
+{
+    "domain": "midea.es", 
+    "logo": "https://logo.clearbit.com/midea.es", 
+    "name": "Midea"
+}
+{
+    "domain": "mitsubishielectric.co.jp", 
+    "logo": "https://logo.clearbit.com/mitsubishielectric.co.jp", 
+    "name": "Mitsubishi Electric"
+}
+{
+    "domain": "mhi.co.jp", 
+    "logo": null, 
+    "name": "Mitsubishi Heavy Industries"
+}
+{
+    "domain": "mitsubishi-motors.co.jp", 
+    "logo": "https://logo.clearbit.com/mitsubishi-motors.co.jp", 
+    "name": "MITSUBISHI MOTORS"
+}
+{
+    "domain": "mitsuilaw.com", 
+    "logo": null, 
+    "name": "Mitsui"
+}
+{
+    "domain": "mol.co.jp", 
+    "logo": "https://logo.clearbit.com/mol.co.jp", 
+    "name": "Mitsui OSK Lines"
+}
+{
+    "domain": "mohawkind.com", 
+    "logo": "https://logo.clearbit.com/mohawkind.com", 
+    "name": "Mohawk Industries"
+}
+{
+    "domain": "molinahealthcare.com", 
+    "logo": "https://logo.clearbit.com/molinahealthcare.com", 
+    "name": "Molina Healthcare"
+}
+{
+    "domain": "mdlzcusthelp.com", 
+    "logo": "https://logo.clearbit.com/mdlzcusthelp.com", 
+    "name": "Mondel\u0113z International"
+}
+{
+    "domain": "mondi.nl", 
+    "logo": null, 
+    "name": "Mondi"
+}
+{
+    "domain": "monsanto.com", 
+    "logo": "https://logo.clearbit.com/monsanto.com", 
+    "name": "Monsanto"
+}
+{
+    "domain": "monsterbevcorp.com", 
+    "logo": "https://logo.clearbit.com/monsterbevcorp.com", 
+    "name": "Monster Beverage"
+}
+{
+    "domain": "moodys.com", 
+    "logo": "https://logo.clearbit.com/moodys.com", 
+    "name": "Moody's"
+}
+{
+    "domain": "morganstanley.com", 
+    "logo": "https://logo.clearbit.com/morganstanley.com", 
+    "name": "Morgan Stanley"
+}
+{
+    "domain": "mosaicmagazine.com", 
+    "logo": "https://logo.clearbit.com/mosaicmagazine.com", 
+    "name": "Mosaic"
+}
+{
+    "domain": "motorolasolutions.com", 
+    "logo": "https://logo.clearbit.com/motorolasolutions.com", 
+    "name": "Motorola Solutions"
+}
+{
+    "domain": "munichre.com", 
+    "logo": "https://logo.clearbit.com/munichre.com", 
+    "name": "Munich Re"
+}
+{
+    "domain": "murphyusa.com", 
+    "logo": "https://logo.clearbit.com/murphyusa.com", 
+    "name": "Murphy USA"
+}
+{
+    "domain": "mylan.com", 
+    "logo": "https://logo.clearbit.com/mylan.com", 
+    "name": "Mylan"
+}
+{
+    "domain": "nec.com", 
+    "logo": "https://logo.clearbit.com/nec.com", 
+    "name": "NEC"
+}
+{
+    "domain": "nexon.net", 
+    "logo": "https://logo.clearbit.com/nexon.net", 
+    "name": "Nexon"
+}
+{
+    "domain": "nii.com", 
+    "logo": "https://logo.clearbit.com/nii.com", 
+    "name": "NII Holdings"
+}
+{
+    "domain": "nmdc.com", 
+    "logo": "https://logo.clearbit.com/nmdc.com", 
+    "name": "NMDC"
+}
+{
+    "domain": "nn.cz", 
+    "logo": "https://logo.clearbit.com/nn.cz", 
+    "name": "NN"
+}
+{
+    "domain": "nrg.com", 
+    "logo": "https://logo.clearbit.com/nrg.com", 
+    "name": "NRG Energy"
+}
+{
+    "domain": "nsk.com", 
+    "logo": "https://logo.clearbit.com/nsk.com", 
+    "name": "NSK"
+}
+{
+    "domain": "nvidia.com", 
+    "logo": "https://logo.clearbit.com/nvidia.com", 
+    "name": "NVIDIA"
+}
+{
+    "domain": "nvrinc.com", 
+    "logo": null, 
+    "name": "NVR"
+}
+{
+    "domain": "nxp.com", 
+    "logo": "https://logo.clearbit.com/nxp.com", 
+    "name": "NXP Semiconductors"
+}
+{
+    "domain": "naspers.com", 
+    "logo": "https://logo.clearbit.com/naspers.com", 
+    "name": "Naspers"
+}
+{
+    "domain": "nbk.com", 
+    "logo": "https://logo.clearbit.com/nbk.com", 
+    "name": "National Bank of Kuwait"
+}
+{
+    "domain": "nationalgridus.com", 
+    "logo": "https://logo.clearbit.com/nationalgridus.com", 
+    "name": "National Grid"
+}
+{
+    "domain": "mynov.com", 
+    "logo": "https://logo.clearbit.com/mynov.com", 
+    "name": "National Oilwell Varco"
+}
+{
+    "domain": "natixis.com", 
+    "logo": "https://logo.clearbit.com/natixis.com", 
+    "name": "Natixis"
+}
+{
+    "domain": "naver.com", 
+    "logo": "https://logo.clearbit.com/naver.com", 
+    "name": "Naver"
+}
+{
+    "domain": "navient.com", 
+    "logo": null, 
+    "name": "Navient"
+}
+{
+    "domain": "nelnet.com", 
+    "logo": "https://logo.clearbit.com/nelnet.com", 
+    "name": "Nelnet"
+}
+{
+    "domain": "nol.com.sg", 
+    "logo": "https://logo.clearbit.com/nol.com.sg", 
+    "name": "Neptune Orient Lines"
+}
+{
+    "domain": "eltsu.fi", 
+    "logo": null, 
+    "name": "Neste Oil"
+}
+{
+    "domain": "netapp.com", 
+    "logo": "https://logo.clearbit.com/netapp.com", 
+    "name": "NetApp"
+}
+{
+    "domain": "163.com", 
+    "logo": "https://logo.clearbit.com/163.com", 
+    "name": "NetEase"
+}
+{
+    "domain": "netflix.com", 
+    "logo": "https://logo.clearbit.com/netflix.com", 
+    "name": "Netflix"
+}
+{
+    "domain": "newcrest.com.au", 
+    "logo": "https://logo.clearbit.com/newcrest.com.au", 
+    "name": "Newcrest Mining"
+}
+{
+    "domain": "newmont.com", 
+    "logo": "https://logo.clearbit.com/newmont.com", 
+    "name": "Newmont Mining"
+}
+{
+    "domain": "next.co.uk", 
+    "logo": "https://logo.clearbit.com/next.co.uk", 
+    "name": "Next"
+}
+{
+    "domain": "nexteraenergy.com", 
+    "logo": "https://logo.clearbit.com/nexteraenergy.com", 
+    "name": "NextEra Energy"
+}
+{
+    "domain": "nisource.com", 
+    "logo": "https://logo.clearbit.com/nisource.com", 
+    "name": "NiSource"
+}
+{
+    "domain": "nidec.com", 
+    "logo": "https://logo.clearbit.com/nidec.com", 
+    "name": "Nidec"
+}
+{
+    "domain": "nielsen.com", 
+    "logo": "https://logo.clearbit.com/nielsen.com", 
+    "name": "Nielsen"
+}
+{
+    "domain": "nike.com", 
+    "logo": "https://logo.clearbit.com/nike.com", 
+    "name": "Nike"
+}
+{
+    "domain": "nintendo.com", 
+    "logo": "https://logo.clearbit.com/nintendo.com", 
+    "name": "Nintendo"
+}
+{
+    "domain": "nipponexpress.com", 
+    "logo": "https://logo.clearbit.com/nipponexpress.com", 
+    "name": "Nippon Express"
+}
+{
+    "domain": "nissan.no", 
+    "logo": "https://logo.clearbit.com/nissan.no", 
+    "name": "Nissan Motor"
+}
+{
+    "domain": "nitto.com", 
+    "logo": "https://logo.clearbit.com/nitto.com", 
+    "name": "Nitto Denko"
+}
+{
+    "domain": "nobleaudio.com", 
+    "logo": "https://logo.clearbit.com/nobleaudio.com", 
+    "name": "Noble"
+}
+{
+    "domain": "nblenergy.com", 
+    "logo": "https://logo.clearbit.com/nblenergy.com", 
+    "name": "Noble Energy"
+}
+{
+    "domain": "nobleaudio.com", 
+    "logo": "https://logo.clearbit.com/nobleaudio.com", 
+    "name": "Noble"
+}
+{
+    "domain": "nokia.com", 
+    "logo": "https://logo.clearbit.com/nokia.com", 
+    "name": "Nokia"
+}
+{
+    "domain": "nordstrom.com", 
+    "logo": "https://logo.clearbit.com/nordstrom.com", 
+    "name": "Nordstrom"
+}
+{
+    "domain": "nscorp.com", 
+    "logo": "https://logo.clearbit.com/nscorp.com", 
+    "name": "Norfolk Southern"
+}
+{
+    "domain": "hydro.com", 
+    "logo": "https://logo.clearbit.com/hydro.com", 
+    "name": "Norsk Hydro"
+}
+{
+    "domain": "ntrs.com", 
+    "logo": "https://logo.clearbit.com/ntrs.com", 
+    "name": "Northern Trust"
+}
+{
+    "domain": "northropgrumman.com", 
+    "logo": "https://logo.clearbit.com/northropgrumman.com", 
+    "name": "Northrop Grumman"
+}
+{
+    "domain": "novartis.com", 
+    "logo": "https://logo.clearbit.com/novartis.com", 
+    "name": "Novartis"
+}
+{
+    "domain": "novatek.by", 
+    "logo": "https://logo.clearbit.com/novatek.by", 
+    "name": "NOVATEK"
+}
+{
+    "domain": "novonordisk.com", 
+    "logo": "https://logo.clearbit.com/novonordisk.com", 
+    "name": "Novo Nordisk"
+}
+{
+    "domain": "novozymes.com", 
+    "logo": "https://logo.clearbit.com/novozymes.com", 
+    "name": "Novozymes"
+}
+{
+    "domain": "nucor.com", 
+    "logo": "https://logo.clearbit.com/nucor.com", 
+    "name": "Nucor"
+}
+{
+    "domain": "nuernberger-garanta.de", 
+    "logo": "https://logo.clearbit.com/nuernberger-garanta.de", 
+    "name": "N\u00dcRNBERGER"
+}
+{
+    "domain": "omron.co.jp", 
+    "logo": "https://logo.clearbit.com/omron.co.jp", 
+    "name": "\u30aa\u30e0\u30ed\u30f3 / OMRON"
+}
+{
+    "domain": "hofstaetter.biz", 
+    "logo": "https://logo.clearbit.com/hofstaetter.biz", 
+    "name": "OMV"
+}
+{
+    "domain": "otpbank.hu", 
+    "logo": "https://logo.clearbit.com/otpbank.hu", 
+    "name": "OTP Bank"
+}
+{
+    "domain": "obayashi-na.com", 
+    "logo": null, 
+    "name": "Obayashi"
+}
+{
+    "domain": "oxy.com", 
+    "logo": "https://logo.clearbit.com/oxy.com", 
+    "name": "Occidental Petroleum"
+}
+{
+    "domain": "officedepot.com", 
+    "logo": "https://logo.clearbit.com/officedepot.com", 
+    "name": "Office Depot"
+}
+{
+    "domain": "okb.co.jp", 
+    "logo": null, 
+    "name": "Ogaki Kyoritsu Bank"
+}
+{
+    "domain": "oiplay.tv", 
+    "logo": null, 
+    "name": "Oi"
+}
+{
+    "domain": "akb-oil.com.ua", 
+    "logo": null, 
+    "name": "\u0410\u043a\u043a\u0443\u043c\u0443\u043b\u044f\u0442\u043e\u0440\u044b \u0434\u043b\u044f \u0430\u0432\u0442\u043e\u043c\u043e\u0431\u0438\u043b\u0435\u0439. \u0410\u041a\u0411-OIL \u0441\u0435\u0440\u0432\u0438\u0441"
+}
+{
+    "domain": "akb-oil.com.ua", 
+    "logo": null, 
+    "name": "\u0410\u043a\u043a\u0443\u043c\u0443\u043b\u044f\u0442\u043e\u0440\u044b \u0434\u043b\u044f \u0430\u0432\u0442\u043e\u043c\u043e\u0431\u0438\u043b\u0435\u0439. \u0410\u041a\u0411-OIL \u0441\u0435\u0440\u0432\u0438\u0441"
+}
+{
+    "domain": "ojiholdings.co.jp", 
+    "logo": "https://logo.clearbit.com/ojiholdings.co.jp", 
+    "name": "OJI HOLDINGS"
+}
+{
+    "domain": "olamgroup.com", 
+    "logo": "https://logo.clearbit.com/olamgroup.com", 
+    "name": "Olam International"
+}
+{
+    "domain": "dogreatthings.co.za", 
+    "logo": "https://logo.clearbit.com/dogreatthings.co.za", 
+    "name": "Old Mutual"
+}
+{
+    "domain": "oldrepublic.com", 
+    "logo": null, 
+    "name": "Old Republic International"
+}
+{
+    "domain": "getolympus.com", 
+    "logo": "https://logo.clearbit.com/getolympus.com", 
+    "name": "Olympus"
+}
+{
+    "domain": "omni.tips", 
+    "logo": null, 
+    "name": "Omni Com"
+}
+{
+    "domain": "oneok.com", 
+    "logo": "https://logo.clearbit.com/oneok.com", 
+    "name": "ONEOK"
+}
+{
+    "domain": "onex.com", 
+    "logo": "https://logo.clearbit.com/onex.com", 
+    "name": "Onex"
+}
+{
+    "domain": "oracle.com", 
+    "logo": "https://logo.clearbit.com/oracle.com", 
+    "name": "Oracle"
+}
+{
+    "domain": "orange.com", 
+    "logo": "https://logo.clearbit.com/orange.com", 
+    "name": "Orange"
+}
+{
+    "domain": "orient.com.pk", 
+    "logo": "https://logo.clearbit.com/orient.com.pk", 
+    "name": "Orient"
+}
+{
+    "domain": "dfzq.com.cn", 
+    "logo": null, 
+    "name": "Orient Securities"
+}
+{
+    "domain": "obcindia.co.in", 
+    "logo": "https://logo.clearbit.com/obcindia.co.in", 
+    "name": "Oriental Bank of Commerce"
+}
+{
+    "domain": "originenergy.com.au", 
+    "logo": "https://logo.clearbit.com/originenergy.com.au", 
+    "name": "Origin Energy"
+}
+{
+    "domain": "orix.co.jp", 
+    "logo": "https://logo.clearbit.com/orix.co.jp", 
+    "name": "Orix"
+}
+{
+    "domain": "orkla.com", 
+    "logo": "https://logo.clearbit.com/orkla.com", 
+    "name": "Orkla"
+}
+{
+    "domain": "pbfenergy.com", 
+    "logo": null, 
+    "name": "PBF Energy"
+}
+{
+    "domain": "pg.com", 
+    "logo": "https://logo.clearbit.com/pg.com", 
+    "name": "P&G"
+}
+{
+    "domain": "pge.com", 
+    "logo": "https://logo.clearbit.com/pge.com", 
+    "name": "PG&E"
+}
+{
+    "domain": "pkobp.pl", 
+    "logo": "https://logo.clearbit.com/pkobp.pl", 
+    "name": "PKO Bank Polski"
+}
+{
+    "domain": "pldt.com", 
+    "logo": "https://logo.clearbit.com/pldt.com", 
+    "name": "PLDT"
+}
+{
+    "domain": "ppg.co.ug", 
+    "logo": "https://logo.clearbit.com/ppg.co.ug", 
+    "name": "PPG"
+}
+{
+    "domain": "ppl.cz", 
+    "logo": null, 
+    "name": "PPL"
+}
+{
+    "domain": "pvh.com", 
+    "logo": "https://logo.clearbit.com/pvh.com", 
+    "name": "PVH"
+}
+{
+    "domain": "paccar.com", 
+    "logo": "https://logo.clearbit.com/paccar.com", 
+    "name": "PACCAR"
+}
+{
+    "domain": "paloaltonetworks.com", 
+    "logo": "https://logo.clearbit.com/paloaltonetworks.com", 
+    "name": "Palo Alto Networks"
+}
+{
+    "domain": "panasonic.com", 
+    "logo": "https://logo.clearbit.com/panasonic.com", 
+    "name": "Panasonic"
+}
+{
+    "domain": "pandora.com", 
+    "logo": "https://logo.clearbit.com/pandora.com", 
+    "name": "Pandora"
+}
+{
+    "domain": "parker.com", 
+    "logo": "https://logo.clearbit.com/parker.com", 
+    "name": "Parker Hannifin"
+}
+{
+    "domain": "paypal.com", 
+    "logo": "https://logo.clearbit.com/paypal.com", 
+    "name": "PayPal"
+}
+{
+    "domain": "paychex.com", 
+    "logo": "https://logo.clearbit.com/paychex.com", 
+    "name": "Paychex"
+}
+{
+    "domain": "pearson.com", 
+    "logo": "https://logo.clearbit.com/pearson.com", 
+    "name": "Pearson"
+}
+{
+    "domain": "pegatroncorp.com", 
+    "logo": "https://logo.clearbit.com/pegatroncorp.com", 
+    "name": "Pegatron"
+}
+{
+    "domain": "pembina.com", 
+    "logo": "https://logo.clearbit.com/pembina.com", 
+    "name": "Pembina Pipeline"
+}
+{
+    "domain": "penskecars.com", 
+    "logo": "https://logo.clearbit.com/penskecars.com", 
+    "name": "Penske Automotive"
+}
+{
+    "domain": "peoples.com", 
+    "logo": "https://logo.clearbit.com/peoples.com", 
+    "name": "People's United Financial"
+}
+{
+    "domain": "pepsico.com", 
+    "logo": "https://logo.clearbit.com/pepsico.com", 
+    "name": "PepsiCo"
+}
+{
+    "domain": "permanenttsb.ie", 
+    "logo": "https://logo.clearbit.com/permanenttsb.ie", 
+    "name": "permanent tsb"
+}
+{
+    "domain": "pernod-ricard.com", 
+    "logo": "https://logo.clearbit.com/pernod-ricard.com", 
+    "name": "Pernod Ricard"
+}
+{
+    "domain": "persimmonbristol.com", 
+    "logo": null, 
+    "name": "Persimmon"
+}
+{
+    "domain": "petrorabigh.com", 
+    "logo": "https://logo.clearbit.com/petrorabigh.com", 
+    "name": "Petro Rabigh"
+}
+{
+    "domain": "petrochina.com.cn", 
+    "logo": "https://logo.clearbit.com/petrochina.com.cn", 
+    "name": "PetroChina"
+}
+{
+    "domain": "petrobras.com.br", 
+    "logo": "https://logo.clearbit.com/petrobras.com.br", 
+    "name": "Petrobras"
+}
+{
+    "domain": "peugeot.com", 
+    "logo": "https://logo.clearbit.com/peugeot.com", 
+    "name": "Peugeot"
+}
+{
+    "domain": "pfizer.com", 
+    "logo": "https://logo.clearbit.com/pfizer.com", 
+    "name": "Pfizer"
+}
+{
+    "domain": "pmi.com", 
+    "logo": "https://logo.clearbit.com/pmi.com", 
+    "name": "Philip Morris International"
+}
+{
+    "domain": "philips.com", 
+    "logo": "https://logo.clearbit.com/philips.com", 
+    "name": "Philips"
+}
+{
+    "domain": "phillips66.com", 
+    "logo": "https://logo.clearbit.com/phillips66.com", 
+    "name": "Phillips 66"
+}
+{
+    "domain": "phosagro.com", 
+    "logo": "https://logo.clearbit.com/phosagro.com", 
+    "name": "PhosAgro"
+}
+{
+    "domain": "pingan.com", 
+    "logo": "https://logo.clearbit.com/pingan.com", 
+    "name": "Ping An Insurance"
+}
+{
+    "domain": "pinnaclewest.com", 
+    "logo": null, 
+    "name": "Pinnacle West"
+}
+{
+    "domain": "pxd.com", 
+    "logo": "https://logo.clearbit.com/pxd.com", 
+    "name": "Pioneer Natural Resources"
+}
+{
+    "domain": "piraeusbank.ua", 
+    "logo": "https://logo.clearbit.com/piraeusbank.ua", 
+    "name": "Piraeus Bank"
+}
+{
+    "domain": "polaris.com", 
+    "logo": "https://logo.clearbit.com/polaris.com", 
+    "name": "Polaris Industries"
+}
+{
+    "domain": "popular.com", 
+    "logo": "https://logo.clearbit.com/popular.com", 
+    "name": "Popular"
+}
+{
+    "domain": "posco.com", 
+    "logo": "https://logo.clearbit.com/posco.com", 
+    "name": "POSCO"
+}
+{
+    "domain": "poste.it", 
+    "logo": "https://logo.clearbit.com/poste.it", 
+    "name": "Poste Italiane"
+}
+{
+    "domain": "powercorp.ca", 
+    "logo": null, 
+    "name": "Power Corp of Canada"
+}
+{
+    "domain": "pfcindia.com", 
+    "logo": "https://logo.clearbit.com/pfcindia.com", 
+    "name": "Power Finance"
+}
+{
+    "domain": "prada.com", 
+    "logo": "https://logo.clearbit.com/prada.com", 
+    "name": "Prada"
+}
+{
+    "domain": "praxair.com", 
+    "logo": "https://logo.clearbit.com/praxair.com", 
+    "name": "Praxair"
+}
+{
+    "domain": "prinfinstrat.com", 
+    "logo": "https://logo.clearbit.com/prinfinstrat.com", 
+    "name": "Principal Financial"
+}
+{
+    "domain": "progressive.com", 
+    "logo": "https://logo.clearbit.com/progressive.com", 
+    "name": "Progressive"
+}
+{
+    "domain": "prologis.com", 
+    "logo": "https://logo.clearbit.com/prologis.com", 
+    "name": "Prologis"
+}
+{
+    "domain": "firstprosperity.com", 
+    "logo": null, 
+    "name": "Prosperity Bancshares"
+}
+{
+    "domain": "pru.co.uk", 
+    "logo": null, 
+    "name": "Prudential"
+}
+{
+    "domain": "prudential.com", 
+    "logo": "https://logo.clearbit.com/prudential.com", 
+    "name": "Prudential Financial"
+}
+{
+    "domain": "pbebank.com", 
+    "logo": "https://logo.clearbit.com/pbebank.com", 
+    "name": "Public Bank"
+}
+{
+    "domain": "ppandu.com", 
+    "logo": null, 
+    "name": "Public Power"
+}
+{
+    "domain": "publicstorage.com", 
+    "logo": "https://logo.clearbit.com/publicstorage.com", 
+    "name": "Public Storage"
+}
+{
+    "domain": "publicise.dk", 
+    "logo": "https://logo.clearbit.com/publicise.dk", 
+    "name": "PUBLICISE"
+}
+{
+    "domain": "pulte.com", 
+    "logo": "https://logo.clearbit.com/pulte.com", 
+    "name": "Pulte Group"
+}
+{
+    "domain": "pnbindia.in", 
+    "logo": "https://logo.clearbit.com/pnbindia.in", 
+    "name": "Punjab National Bank"
+}
+{
+    "domain": "qbe.com", 
+    "logo": "https://logo.clearbit.com/qbe.com", 
+    "name": "QBE Insurance"
+}
+{
+    "domain": "qib.com.qa", 
+    "logo": "https://logo.clearbit.com/qib.com.qa", 
+    "name": "Qatar Islamic Bank"
+}
+{
+    "domain": "qualcomm.com", 
+    "logo": "https://logo.clearbit.com/qualcomm.com", 
+    "name": "Qualcomm"
+}
+{
+    "domain": "quantatw.com", 
+    "logo": "https://logo.clearbit.com/quantatw.com", 
+    "name": "Quanta Computer"
+}
+{
+    "domain": "quantaservices.com", 
+    "logo": "https://logo.clearbit.com/quantaservices.com", 
+    "name": "Quanta Services"
+}
+{
+    "domain": "questdiagnostics.com", 
+    "logo": "https://logo.clearbit.com/questdiagnostics.com", 
+    "name": "Quest Diagnostics"
+}
+{
+    "domain": "rsainsurance.net", 
+    "logo": "https://logo.clearbit.com/rsainsurance.net", 
+    "name": "RSA Insurance"
+}
+{
+    "domain": "rbinternational.com", 
+    "logo": "https://logo.clearbit.com/rbinternational.com", 
+    "name": "Raiffeisen Bank International"
+}
+{
+    "domain": "rakuten.com", 
+    "logo": "https://logo.clearbit.com/rakuten.com", 
+    "name": "Rakuten"
+}
+{
+    "domain": "ralphlauren.com", 
+    "logo": "https://logo.clearbit.com/ralphlauren.com", 
+    "name": "Ralph Lauren"
+}
+{
+    "domain": "ramsayhealth.com", 
+    "logo": "https://logo.clearbit.com/ramsayhealth.com", 
+    "name": "Ramsay Health Care"
+}
+{
+    "domain": "sheandmoney.com", 
+    "logo": null, 
+    "name": "Raymond James Financial"
+}
+{
+    "domain": "raytheon.com", 
+    "logo": "https://logo.clearbit.com/raytheon.com", 
+    "name": "Raytheon"
+}
+{
+    "domain": "realtyincome.com", 
+    "logo": "https://logo.clearbit.com/realtyincome.com", 
+    "name": "Realty Income"
+}
+{
+    "domain": "redhat.com", 
+    "logo": "https://logo.clearbit.com/redhat.com", 
+    "name": "Red Hat"
+}
+{
+    "domain": "regeneron.com", 
+    "logo": "https://logo.clearbit.com/regeneron.com", 
+    "name": "Regeneron Pharmaceuticals"
+}
+{
+    "domain": "regions.com", 
+    "logo": "https://logo.clearbit.com/regions.com", 
+    "name": "Regions Financial"
+}
+{
+    "domain": "reliancesteelofvt.com", 
+    "logo": null, 
+    "name": "Reliance Steel"
+}
+{
+    "domain": "renault.com", 
+    "logo": "https://logo.clearbit.com/renault.com", 
+    "name": "Renault"
+}
+{
+    "domain": "renesas.com", 
+    "logo": "https://logo.clearbit.com/renesas.com", 
+    "name": "Renesas Electronics"
+}
+{
+    "domain": "repsol.es", 
+    "logo": null, 
+    "name": "Repsol"
+}
+{
+    "domain": "republicservices.com", 
+    "logo": "https://logo.clearbit.com/republicservices.com", 
+    "name": "Republic Services"
+}
+{
+    "domain": "resmed.com", 
+    "logo": "https://logo.clearbit.com/resmed.com", 
+    "name": "ResMed"
+}
+{
+    "domain": "resona-gr.co.jp", 
+    "logo": "https://logo.clearbit.com/resona-gr.co.jp", 
+    "name": "Resona Holdings"
+}
+{
+    "domain": "rexel.com", 
+    "logo": "https://logo.clearbit.com/rexel.com", 
+    "name": "Rexel"
+}
+{
+    "domain": "reynoldsamerican.com", 
+    "logo": "https://logo.clearbit.com/reynoldsamerican.com", 
+    "name": "Reynolds American"
+}
+{
+    "domain": "richemont.com", 
+    "logo": null, 
+    "name": "Richemont"
+}
+{
+    "domain": "ricoh.com", 
+    "logo": "https://logo.clearbit.com/ricoh.com", 
+    "name": "Ricoh"
+}
+{
+    "domain": "riotinto.com", 
+    "logo": "https://logo.clearbit.com/riotinto.com", 
+    "name": "Rio Tinto"
+}
+{
+    "domain": "riteaid.com", 
+    "logo": "https://logo.clearbit.com/riteaid.com", 
+    "name": "Rite Aid"
+}
+{
+    "domain": "riyadbank.com", 
+    "logo": "https://logo.clearbit.com/riyadbank.com", 
+    "name": "Riyad Bank"
+}
+{
+    "domain": "rockwellautomation.com", 
+    "logo": "https://logo.clearbit.com/rockwellautomation.com", 
+    "name": "Rockwell Automation"
+}
+{
+    "domain": "rockwellcollins.com", 
+    "logo": "https://logo.clearbit.com/rockwellcollins.com", 
+    "name": "Rockwell Collins"
+}
+{
+    "domain": "rogers.com", 
+    "logo": "https://logo.clearbit.com/rogers.com", 
+    "name": "Rogers Communications"
+}
+{
+    "domain": "rosneft.com", 
+    "logo": "https://logo.clearbit.com/rosneft.com", 
+    "name": "Rosneft"
+}
+{
+    "domain": "rossstores.com", 
+    "logo": "https://logo.clearbit.com/rossstores.com", 
+    "name": "Ross Stores"
+}
+{
+    "domain": "rccl.com", 
+    "logo": null, 
+    "name": "Royal Caribbean Cruises"
+}
+{
+    "domain": "royalmail.com", 
+    "logo": "https://logo.clearbit.com/royalmail.com", 
+    "name": "Royal Mail"
+}
+{
+    "domain": "recindia.nic.in", 
+    "logo": "https://logo.clearbit.com/recindia.nic.in", 
+    "name": "Rural Electrification"
+}
+{
+    "domain": "rushydro.ru", 
+    "logo": "https://logo.clearbit.com/rushydro.ru", 
+    "name": "RusHydro"
+}
+{
+    "domain": "totalogistics.com", 
+    "logo": null, 
+    "name": "Ryder System"
+}
+{
+    "domain": "s-oil.com", 
+    "logo": "https://logo.clearbit.com/s-oil.com", 
+    "name": "S-OIL"
+}
+{
+    "domain": "sabmiller.uk", 
+    "logo": null, 
+    "name": "SABMiller"
+}
+{
+    "domain": "saicmotor.com", 
+    "logo": "https://logo.clearbit.com/saicmotor.com", 
+    "name": "SAIC Motor"
+}
+{
+    "domain": "sap.com", 
+    "logo": "https://logo.clearbit.com/sap.com", 
+    "name": "SAP"
+}
+{
+    "domain": "sbasite.com", 
+    "logo": null, 
+    "name": "SBA Communications"
+}
+{
+    "domain": "sca.com", 
+    "logo": "https://logo.clearbit.com/sca.com", 
+    "name": "SCA"
+}
+{
+    "domain": "scana.com", 
+    "logo": "https://logo.clearbit.com/scana.com", 
+    "name": "Scana"
+}
+{
+    "domain": "seb.fr", 
+    "logo": "https://logo.clearbit.com/seb.fr", 
+    "name": "SEB"
+}
+{
+    "domain": "ses.com", 
+    "logo": "https://logo.clearbit.com/ses.com", 
+    "name": "SES"
+}
+{
+    "domain": "sgs.com", 
+    "logo": "https://logo.clearbit.com/sgs.com", 
+    "name": "SGS"
+}
+{
+    "domain": "skhynix.com", 
+    "logo": "https://logo.clearbit.com/skhynix.com", 
+    "name": "SK hynix"
+}
+{
+    "domain": "skinnovation.io", 
+    "logo": "https://logo.clearbit.com/skinnovation.io", 
+    "name": "Skinnovation"
+}
+{
+    "domain": "sknetworks.co.kr", 
+    "logo": "https://logo.clearbit.com/sknetworks.co.kr", 
+    "name": "SK Networks"
+}
+{
+    "domain": "sktel.co.za", 
+    "logo": null, 
+    "name": "SK Telecom"
+}
+{
+    "domain": "slgreen.com", 
+    "logo": "https://logo.clearbit.com/slgreen.com", 
+    "name": "SL Green Realty"
+}
+{
+    "domain": "sminvestments.com", 
+    "logo": "https://logo.clearbit.com/sminvestments.com", 
+    "name": "SM Investments"
+}
+{
+    "domain": "smc.com.cn", 
+    "logo": null, 
+    "name": "SMC\uff08\u4e2d\u56fd\uff09\u6709\u9650\u516c\u53f8"
+}
+{
+    "domain": "snclavalin.com", 
+    "logo": "https://logo.clearbit.com/snclavalin.com", 
+    "name": "SNC-Lavalin"
+}
+{
+    "domain": "sse.co.uk", 
+    "logo": "https://logo.clearbit.com/sse.co.uk", 
+    "name": "SSE"
+}
+{
+    "domain": "stengineering.co.uk", 
+    "logo": "https://logo.clearbit.com/stengineering.co.uk", 
+    "name": "ST Engineering"
+}
+{
+    "domain": "synnex.com", 
+    "logo": "https://logo.clearbit.com/synnex.com", 
+    "name": "SYNNEX"
+}
+{
+    "domain": "sabanci.com", 
+    "logo": "https://logo.clearbit.com/sabanci.com", 
+    "name": "Sabanci Holding"
+}
+{
+    "domain": "sabre.com", 
+    "logo": "https://logo.clearbit.com/sabre.com", 
+    "name": "Sabre"
+}
+{
+    "domain": "safran-group.com", 
+    "logo": "https://logo.clearbit.com/safran-group.com", 
+    "name": "Safran"
+}
+{
+    "domain": "saint-gobain.com", 
+    "logo": "https://logo.clearbit.com/saint-gobain.com", 
+    "name": "Saint-Gobain"
+}
+{
+    "domain": "sampo.com.tw", 
+    "logo": "https://logo.clearbit.com/sampo.com.tw", 
+    "name": "Sampo"
+}
+{
+    "domain": "samsung.co.kr", 
+    "logo": null, 
+    "name": "Samsung Heavy Industries"
+}
+{
+    "domain": "samsungsdi.com", 
+    "logo": null, 
+    "name": "Samsung SDI"
+}
+{
+    "domain": "samsungsds.com", 
+    "logo": "https://logo.clearbit.com/samsungsds.com", 
+    "name": "Samsung SDS"
+}
+{
+    "domain": "sandisk.com", 
+    "logo": "https://logo.clearbit.com/sandisk.com", 
+    "name": "SanDisk"
+}
+{
+    "domain": "home.sandvik", 
+    "logo": "https://logo.clearbit.com/home.sandvik", 
+    "name": "Sandvik"
+}
+{
+    "domain": "sanlam.co.za", 
+    "logo": "https://logo.clearbit.com/sanlam.co.za", 
+    "name": "Sanlam"
+}
+{
+    "domain": "sanofi.com", 
+    "logo": "https://logo.clearbit.com/sanofi.com", 
+    "name": "Sanofi"
+}
+{
+    "domain": "saputo.com", 
+    "logo": "https://logo.clearbit.com/saputo.com", 
+    "name": "Saputo"
+}
+{
+    "domain": "sasol.com", 
+    "logo": "https://logo.clearbit.com/sasol.com", 
+    "name": "Sasol"
+}
+{
+    "domain": "se.com.sa", 
+    "logo": "https://logo.clearbit.com/se.com.sa", 
+    "name": "Saudi Electricity"
+}
+{
+    "domain": "stc.com.sa", 
+    "logo": "https://logo.clearbit.com/stc.com.sa", 
+    "name": "Saudi Telecom"
+}
+{
+    "domain": "sberbank.ru", 
+    "logo": "https://logo.clearbit.com/sberbank.ru", 
+    "name": "Sberbank"
+}
+{
+    "domain": "scentre.co", 
+    "logo": null, 
+    "name": "scentre"
+}
+{
+    "domain": "schaeffler.com", 
+    "logo": "https://logo.clearbit.com/schaeffler.com", 
+    "name": "Schaeffler"
+}
+{
+    "domain": "slb.com", 
+    "logo": "https://logo.clearbit.com/slb.com", 
+    "name": "Schlumberger"
+}
+{
+    "domain": "schneider-electric.com", 
+    "logo": "https://logo.clearbit.com/schneider-electric.com", 
+    "name": "Schneider Electric"
+}
+{
+    "domain": "schroders.com", 
+    "logo": "https://logo.clearbit.com/schroders.com", 
+    "name": "Schroders"
+}
+{
+    "domain": "scor.org", 
+    "logo": "https://logo.clearbit.com/scor.org", 
+    "name": "SCOR"
+}
+{
+    "domain": "scrippsnetworksinteractive.com", 
+    "logo": "https://logo.clearbit.com/scrippsnetworksinteractive.com", 
+    "name": "Scripps Networks Interactive"
+}
+{
+    "domain": "seadrill.com", 
+    "logo": "https://logo.clearbit.com/seadrill.com", 
+    "name": "Seadrill"
+}
+{
+    "domain": "seagate.us", 
+    "logo": null, 
+    "name": "Seagate Technology"
+}
+{
+    "domain": "sealedair.com", 
+    "logo": "https://logo.clearbit.com/sealedair.com", 
+    "name": "Sealed Air"
+}
+{
+    "domain": "searsholdings.com", 
+    "logo": "https://logo.clearbit.com/searsholdings.com", 
+    "name": "Sears Holdings"
+}
+{
+    "domain": "secom.net", 
+    "logo": "https://logo.clearbit.com/secom.net", 
+    "name": "SECOM"
+}
+{
+    "domain": "securitas.com", 
+    "logo": "https://logo.clearbit.com/securitas.com", 
+    "name": "Securitas"
+}
+{
+    "domain": "sekisuihouse.co.jp", 
+    "logo": "https://logo.clearbit.com/sekisuihouse.co.jp", 
+    "name": "Sekisui House"
+}
+{
+    "domain": "sembcorp.com", 
+    "logo": "https://logo.clearbit.com/sembcorp.com", 
+    "name": "Sembcorp Industries"
+}
+{
+    "domain": "sempra.com", 
+    "logo": "https://logo.clearbit.com/sempra.com", 
+    "name": "Sempra Energy"
+}
+{
+    "domain": "seventhlifepath.com", 
+    "logo": "https://logo.clearbit.com/seventhlifepath.com", 
+    "name": "seven"
+}
+{
+    "domain": "severstal.com", 
+    "logo": "https://logo.clearbit.com/severstal.com", 
+    "name": "Severstal"
+}
+{
+    "domain": "shaftesbury.ca", 
+    "logo": "https://logo.clearbit.com/shaftesbury.ca", 
+    "name": "Shaftesbury"
+}
+{
+    "domain": "portshanghai.com.cn", 
+    "logo": "https://logo.clearbit.com/portshanghai.com.cn", 
+    "name": "Shanghai International Port"
+}
+{
+    "domain": "sharp.co.jp", 
+    "logo": "https://logo.clearbit.com/sharp.co.jp", 
+    "name": "Sharp"
+}
+{
+    "domain": "shaw.ca", 
+    "logo": "https://logo.clearbit.com/shaw.ca", 
+    "name": "Shaw Communications"
+}
+{
+    "domain": "shengjingbank.com.cn", 
+    "logo": null, 
+    "name": "Shengjing Bank"
+}
+{
+    "domain": "sherwin-williams.com", 
+    "logo": "https://logo.clearbit.com/sherwin-williams.com", 
+    "name": "Sherwin-Williams"
+}
+{
+    "domain": "shigagin.com", 
+    "logo": null, 
+    "name": "Shiga Bank"
+}
+{
+    "domain": "shimano.com", 
+    "logo": "https://logo.clearbit.com/shimano.com", 
+    "name": "Shimano"
+}
+{
+    "domain": "shimaoproperty.com", 
+    "logo": "https://logo.clearbit.com/shimaoproperty.com", 
+    "name": "Shimao Property Holdings"
+}
+{
+    "domain": "iida-shimizu.com", 
+    "logo": null, 
+    "name": "Shimizu"
+}
+{
+    "domain": "shinseibank.com", 
+    "logo": "https://logo.clearbit.com/shinseibank.com", 
+    "name": "Shinsei Bank"
+}
+{
+    "domain": "shionogi.com", 
+    "logo": "https://logo.clearbit.com/shionogi.com", 
+    "name": "Shionogi"
+}
+{
+    "domain": "shire.es", 
+    "logo": null, 
+    "name": "Shire"
+}
+{
+    "domain": "shiseido.com", 
+    "logo": "https://logo.clearbit.com/shiseido.com", 
+    "name": "Shiseido"
+}
+{
+    "domain": "showa-shell.co.jp", 
+    "logo": "https://logo.clearbit.com/showa-shell.co.jp", 
+    "name": "Showa Shell Sekiyu"
+}
+{
+    "domain": "siemens.com", 
+    "logo": "https://logo.clearbit.com/siemens.com", 
+    "name": "Siemens"
+}
+{
+    "domain": "signatureny.com", 
+    "logo": null, 
+    "name": "Signature Bank"
+}
+{
+    "domain": "signetjewelers.com", 
+    "logo": "https://logo.clearbit.com/signetjewelers.com", 
+    "name": "Signet Jewelers"
+}
+{
+    "domain": "sika.com", 
+    "logo": "https://logo.clearbit.com/sika.com", 
+    "name": "Sika"
+}
+{
+    "domain": "singtel.com", 
+    "logo": null, 
+    "name": "Singtel"
+}
+{
+    "domain": "singaporeair.com", 
+    "logo": "https://logo.clearbit.com/singaporeair.com", 
+    "name": "Singapore Airlines"
+}
+{
+    "domain": "sinohydro.com", 
+    "logo": "https://logo.clearbit.com/sinohydro.com", 
+    "name": "Sinohydro"
+}
+{
+    "domain": "sinopec.com", 
+    "logo": null, 
+    "name": "SINOPEC"
+}
+{
+    "domain": "sinopharm.com", 
+    "logo": null, 
+    "name": "Sinopharm"
+}
+{
+    "domain": "sistema.com", 
+    "logo": null, 
+    "name": "Sistema"
+}
+{
+    "domain": "skanska.com", 
+    "logo": "https://logo.clearbit.com/skanska.com", 
+    "name": "Skanska"
+}
+{
+    "domain": "skyworksinc.com", 
+    "logo": "https://logo.clearbit.com/skyworksinc.com", 
+    "name": "Skyworks Solutions"
+}
+{
+    "domain": "smithoptics.com", 
+    "logo": "https://logo.clearbit.com/smithoptics.com", 
+    "name": "Smith"
+}
+{
+    "domain": "smithssanitationsupply.ca", 
+    "logo": "https://logo.clearbit.com/smithssanitationsupply.ca", 
+    "name": "Smith's"
+}
+{
+    "domain": "smurfitkappa.com", 
+    "logo": "https://logo.clearbit.com/smurfitkappa.com", 
+    "name": "Smurfit Kappa"
+}
+{
+    "domain": "sentieristagionali.it", 
+    "logo": "https://logo.clearbit.com/sentieristagionali.it", 
+    "name": "SNAM"
+}
+{
+    "domain": "societegenerale.com", 
+    "logo": "https://logo.clearbit.com/societegenerale.com", 
+    "name": "Soci\u00e9t\u00e9 G\u00e9n\u00e9rale"
+}
+{
+    "domain": "sodexo.com", 
+    "logo": "https://logo.clearbit.com/sodexo.com", 
+    "name": "Sodexo"
+}
+{
+    "domain": "takatsudo.co.jp", 
+    "logo": "https://logo.clearbit.com/takatsudo.co.jp", 
+    "name": "SoftBank"
+}
+{
+    "domain": "sojitz.com", 
+    "logo": "https://logo.clearbit.com/sojitz.com", 
+    "name": "Sojitz"
+}
+{
+    "domain": "solvay.com", 
+    "logo": "https://logo.clearbit.com/solvay.com", 
+    "name": "Solvay"
+}
+{
+    "domain": "sony.jp", 
+    "logo": "https://logo.clearbit.com/sony.jp", 
+    "name": "Sony"
+}
+{
+    "domain": "southerncompany.com", 
+    "logo": "https://logo.clearbit.com/southerncompany.com", 
+    "name": "Southern"
+}
+{
+    "domain": "southwest.com", 
+    "logo": "https://logo.clearbit.com/southwest.com", 
+    "name": "Southwest Airlines"
+}
+{
+    "domain": "southwestsecuritiesfsb.com", 
+    "logo": null, 
+    "name": "Southwest Securities"
+}
+{
+    "domain": "spectraenergy.com", 
+    "logo": "https://logo.clearbit.com/spectraenergy.com", 
+    "name": "Spectra Energy"
+}
+{
+    "domain": "spiritaero.com", 
+    "logo": "https://logo.clearbit.com/spiritaero.com", 
+    "name": "Spirit AeroSystems"
+}
+{
+    "domain": "sjm.com", 
+    "logo": "https://logo.clearbit.com/sjm.com", 
+    "name": "St. Jude Medical"
+}
+{
+    "domain": "sjp.co.uk", 
+    "logo": "https://logo.clearbit.com/sjp.co.uk", 
+    "name": "St. James's Place"
+}
+{
+    "domain": "standardbankpa.com", 
+    "logo": null, 
+    "name": "Standard Bank"
+}
+{
+    "domain": "sc.com", 
+    "logo": "https://logo.clearbit.com/sc.com", 
+    "name": "Standard Chartered"
+}
+{
+    "domain": "standardlife.asia", 
+    "logo": null, 
+    "name": "Standard Life"
+}
+{
+    "domain": "staples.com", 
+    "logo": "https://logo.clearbit.com/staples.com", 
+    "name": "Staples"
+}
+{
+    "domain": "starbucks.com", 
+    "logo": "https://logo.clearbit.com/starbucks.com", 
+    "name": "Starbucks"
+}
+{
+    "domain": "starwoodmediacentre.com", 
+    "logo": "https://logo.clearbit.com/starwoodmediacentre.com", 
+    "name": "Starwood Hotels"
+}
+{
+    "domain": "starwoodpropertytrust.com", 
+    "logo": null, 
+    "name": "Starwood Property Trust"
+}
+{
+    "domain": "onlinesbi.com", 
+    "logo": "https://logo.clearbit.com/onlinesbi.com", 
+    "name": "State Bank of India"
+}
+{
+    "domain": "statestreet.com", 
+    "logo": "https://logo.clearbit.com/statestreet.com", 
+    "name": "State Street"
+}
+{
+    "domain": "statoil.com", 
+    "logo": "https://logo.clearbit.com/statoil.com", 
+    "name": "Statoil"
+}
+{
+    "domain": "steinhoffinternational.com", 
+    "logo": "https://logo.clearbit.com/steinhoffinternational.com", 
+    "name": "Steinhoff International"
+}
+{
+    "domain": "storaenso.com", 
+    "logo": "https://logo.clearbit.com/storaenso.com", 
+    "name": "Stora Enso"
+}
+{
+    "domain": "storebrand.no", 
+    "logo": "https://logo.clearbit.com/storebrand.no", 
+    "name": "Storebrand"
+}
+{
+    "domain": "stryker.com", 
+    "logo": "https://logo.clearbit.com/stryker.com", 
+    "name": "Stryker"
+}
+{
+    "domain": "sumitomo-chem.co.jp", 
+    "logo": "https://logo.clearbit.com/sumitomo-chem.co.jp", 
+    "name": "Sumitomo Chemical"
+}
+{
+    "domain": "sumitomoelectric.com", 
+    "logo": "https://logo.clearbit.com/sumitomoelectric.com", 
+    "name": "Sumitomo Electric"
+}
+{
+    "domain": "sunlife.com", 
+    "logo": "https://logo.clearbit.com/sunlife.com", 
+    "name": "Sun Life Financial"
+}
+{
+    "domain": "suntrust.com", 
+    "logo": "https://logo.clearbit.com/suntrust.com", 
+    "name": "SunTrust Banks"
+}
+{
+    "domain": "suncor.com", 
+    "logo": "https://logo.clearbit.com/suncor.com", 
+    "name": "Suncor Energy"
+}
+{
+    "domain": "supervalu.ie", 
+    "logo": "https://logo.clearbit.com/supervalu.ie", 
+    "name": "SuperValu"
+}
+{
+    "domain": "surgutneftegas.ru", 
+    "logo": "https://logo.clearbit.com/surgutneftegas.ru", 
+    "name": "Surgutneftegas"
+}
+{
+    "domain": "globalsuzuki.com", 
+    "logo": "https://logo.clearbit.com/globalsuzuki.com", 
+    "name": "Suzuki Motor"
+}
+{
+    "domain": "swatch.com", 
+    "logo": "https://logo.clearbit.com/swatch.com", 
+    "name": "Swatch"
+}
+{
+    "domain": "swedbank.com", 
+    "logo": "https://logo.clearbit.com/swedbank.com", 
+    "name": "Swedbank"
+}
+{
+    "domain": "swirepacific.com", 
+    "logo": null, 
+    "name": "Swire Pacific"
+}
+{
+    "domain": "swissre.com", 
+    "logo": "https://logo.clearbit.com/swissre.com", 
+    "name": "Swiss Re"
+}
+{
+    "domain": "swisscom.ch", 
+    "logo": "https://logo.clearbit.com/swisscom.ch", 
+    "name": "Swisscom"
+}
+{
+    "domain": "symantec.com", 
+    "logo": "https://logo.clearbit.com/symantec.com", 
+    "name": "Symantec"
+}
+{
+    "domain": "mysynchrony.com", 
+    "logo": "https://logo.clearbit.com/mysynchrony.com", 
+    "name": "Synchrony Financial"
+}
+{
+    "domain": "syndicatebank.in", 
+    "logo": "https://logo.clearbit.com/syndicatebank.in", 
+    "name": "SYNDICATE BANK"
+}
+{
+    "domain": "syngenta.com", 
+    "logo": "https://logo.clearbit.com/syngenta.com", 
+    "name": "Syngenta"
+}
+{
+    "domain": "sysco.com", 
+    "logo": "https://logo.clearbit.com/sysco.com", 
+    "name": "Sysco"
+}
+{
+    "domain": "sysmex.com", 
+    "logo": "https://logo.clearbit.com/sysmex.com", 
+    "name": "Sysmex"
+}
+{
+    "domain": "troweprice.com", 
+    "logo": "https://logo.clearbit.com/troweprice.com", 
+    "name": "T. Rowe Price"
+}
+{
+    "domain": "techbang.com", 
+    "logo": "https://logo.clearbit.com/techbang.com", 
+    "name": "T\u5ba2\u90a6\u7684\u81c9\u66f8\u57fa\u5730"
+}
+{
+    "domain": "taqaglobal.com", 
+    "logo": "https://logo.clearbit.com/taqaglobal.com", 
+    "name": "TAQA"
+}
+{
+    "domain": "tdbank.com", 
+    "logo": "https://logo.clearbit.com/tdbank.com", 
+    "name": "TD Bank"
+}
+{
+    "domain": "tdk.com", 
+    "logo": "https://logo.clearbit.com/tdk.com", 
+    "name": "TDK"
+}
+{
+    "domain": "te.com", 
+    "logo": "https://logo.clearbit.com/te.com", 
+    "name": "TE Connectivity"
+}
+{
+    "domain": "telus.com", 
+    "logo": "https://logo.clearbit.com/telus.com", 
+    "name": "Telus"
+}
+{
+    "domain": "tpvtechnology.sk", 
+    "logo": null, 
+    "name": "TPV - Technology"
+}
+{
+    "domain": "tui.com", 
+    "logo": "https://logo.clearbit.com/tui.com", 
+    "name": "TUI"
+}
+{
+    "domain": "taisei.co.jp", 
+    "logo": "https://logo.clearbit.com/taisei.co.jp", 
+    "name": "Taisei"
+}
+{
+    "domain": "thsrc.com.tw", 
+    "logo": "https://logo.clearbit.com/thsrc.com.tw", 
+    "name": "Taiwan High Speed Rail"
+}
+{
+    "domain": "taiwanmobile.com", 
+    "logo": null, 
+    "name": "Taiwan Mobile"
+}
+{
+    "domain": "taiwansemi.com", 
+    "logo": null, 
+    "name": "Taiwan Semiconductor"
+}
+{
+    "domain": "takeda.com", 
+    "logo": "https://logo.clearbit.com/takeda.com", 
+    "name": "Takeda Pharmaceutical"
+}
+{
+    "domain": "talanx.com", 
+    "logo": "https://logo.clearbit.com/talanx.com", 
+    "name": "Talanx"
+}
+{
+    "domain": "target.com", 
+    "logo": "https://logo.clearbit.com/target.com", 
+    "name": "Target"
+}
+{
+    "domain": "digitalempowers.com", 
+    "logo": "https://logo.clearbit.com/digitalempowers.com", 
+    "name": "Tata Consultancy Services"
+}
+{
+    "domain": "tatamotors.com", 
+    "logo": "https://logo.clearbit.com/tatamotors.com", 
+    "name": "Tata Motors"
+}
+{
+    "domain": "tatasteel.com", 
+    "logo": "https://logo.clearbit.com/tatasteel.com", 
+    "name": "Tata Steel"
+}
+{
+    "domain": "tatneft.ru", 
+    "logo": "https://logo.clearbit.com/tatneft.ru", 
+    "name": "Tatneft"
+}
+{
+    "domain": "taylorwimpey.co.uk", 
+    "logo": "https://logo.clearbit.com/taylorwimpey.co.uk", 
+    "name": "Taylor Wimpey"
+}
+{
+    "domain": "techdata.com", 
+    "logo": "https://logo.clearbit.com/techdata.com", 
+    "name": "Tech Data"
+}
+{
+    "domain": "techmahindra.com", 
+    "logo": "https://logo.clearbit.com/techmahindra.com", 
+    "name": "Tech Mahindra"
+}
+{
+    "domain": "technip.com", 
+    "logo": "https://logo.clearbit.com/technip.com", 
+    "name": "Technip"
+}
+{
+    "domain": "teck.com", 
+    "logo": "https://logo.clearbit.com/teck.com", 
+    "name": "Teck Resources"
+}
+{
+    "domain": "telefonica.com", 
+    "logo": "https://logo.clearbit.com/telefonica.com", 
+    "name": "Telef\u00f3nica"
+}
+{
+    "domain": "telstra.com.au", 
+    "logo": "https://logo.clearbit.com/telstra.com.au", 
+    "name": "Telstra"
+}
+{
+    "domain": "tnb.com.my", 
+    "logo": "https://logo.clearbit.com/tnb.com.my", 
+    "name": "Tenaga Nasional"
+}
+{
+    "domain": "tenaris.com", 
+    "logo": "https://logo.clearbit.com/tenaris.com", 
+    "name": "Tenaris"
+}
+{
+    "domain": "tenethealth.com", 
+    "logo": "https://logo.clearbit.com/tenethealth.com", 
+    "name": "Tenet Healthcare"
+}
+{
+    "domain": "terumomedical.jobs", 
+    "logo": null, 
+    "name": "Terumo"
+}
+{
+    "domain": "tesco.com", 
+    "logo": "https://logo.clearbit.com/tesco.com", 
+    "name": "Tesco"
+}
+{
+    "domain": "teslazone.ru", 
+    "logo": "https://logo.clearbit.com/teslazone.ru", 
+    "name": "\u041d\u043e\u0432\u043e\u0441\u0442\u0438 Tesla Motors"
+}
+{
+    "domain": "tsocorp.com", 
+    "logo": "https://logo.clearbit.com/tsocorp.com", 
+    "name": "Tesoro"
+}
+{
+    "domain": "ti.com", 
+    "logo": "https://logo.clearbit.com/ti.com", 
+    "name": "Texas Instruments"
+}
+{
+    "domain": "textron.com", 
+    "logo": "https://logo.clearbit.com/textron.com", 
+    "name": "Textron"
+}
+{
+    "domain": "thaioilgroup.com", 
+    "logo": "https://logo.clearbit.com/thaioilgroup.com", 
+    "name": "Thaioil"
+}
+{
+    "domain": "thales.uk", 
+    "logo": null, 
+    "name": "Thales"
+}
+{
+    "domain": "thermofisher.com", 
+    "logo": "https://logo.clearbit.com/thermofisher.com", 
+    "name": "Thermo Fisher Scientific"
+}
+{
+    "domain": "thomascook.com", 
+    "logo": "https://logo.clearbit.com/thomascook.com", 
+    "name": "Thomas Cook"
+}
+{
+    "domain": "thomsonreuters.com", 
+    "logo": "https://logo.clearbit.com/thomsonreuters.com", 
+    "name": "Thomson Reuters"
+}
+{
+    "domain": "thyssenkrupp.com", 
+    "logo": "https://logo.clearbit.com/thyssenkrupp.com", 
+    "name": "thyssenkrupp"
+}
+{
+    "domain": "dontwastethecrumbs.com", 
+    "logo": "https://logo.clearbit.com/dontwastethecrumbs.com", 
+    "name": "Tiffany"
+}
+{
+    "domain": "timewarner.com", 
+    "logo": "https://logo.clearbit.com/timewarner.com", 
+    "name": "Time Warner"
+}
+{
+    "domain": "buytimewarnercable.com", 
+    "logo": null, 
+    "name": "Time Warner Cable"
+}
+{
+    "domain": "tohoku-epco.co.jp", 
+    "logo": "https://logo.clearbit.com/tohoku-epco.co.jp", 
+    "name": "Tohoku Electric Power"
+}
+{
+    "domain": "tel.co.jp", 
+    "logo": "https://logo.clearbit.com/tel.co.jp", 
+    "name": "Tokyo Electron"
+}
+{
+    "domain": "tokyu.co.jp", 
+    "logo": "https://logo.clearbit.com/tokyu.co.jp", 
+    "name": "Tokyu"
+}
+{
+    "domain": "toray.com", 
+    "logo": "https://logo.clearbit.com/toray.com", 
+    "name": "Toray Industries"
+}
+{
+    "domain": "torchmarkcorp.com", 
+    "logo": "https://logo.clearbit.com/torchmarkcorp.com", 
+    "name": "Torchmark"
+}
+{
+    "domain": "toshiba.com", 
+    "logo": "https://logo.clearbit.com/toshiba.com", 
+    "name": "Toshiba"
+}
+{
+    "domain": "total.com", 
+    "logo": "https://logo.clearbit.com/total.com", 
+    "name": "Total"
+}
+{
+    "domain": "tsys.com", 
+    "logo": "https://logo.clearbit.com/tsys.com", 
+    "name": "Total System Services"
+}
+{
+    "domain": "toyota-boshoku.com", 
+    "logo": "https://logo.clearbit.com/toyota-boshoku.com", 
+    "name": "Toyota Boshoku"
+}
+{
+    "domain": "toyota-industries.com", 
+    "logo": "https://logo.clearbit.com/toyota-industries.com", 
+    "name": "Toyota Industries"
+}
+{
+    "domain": "toyota-tsusho.com", 
+    "logo": "https://logo.clearbit.com/toyota-tsusho.com", 
+    "name": "Toyota Tsusho"
+}
+{
+    "domain": "tractorsupply.com", 
+    "logo": "https://logo.clearbit.com/tractorsupply.com", 
+    "name": "Tractor Supply"
+}
+{
+    "domain": "transcanada.com", 
+    "logo": "https://logo.clearbit.com/transcanada.com", 
+    "name": "TransCanada"
+}
+{
+    "domain": "deepwater.com", 
+    "logo": "https://logo.clearbit.com/deepwater.com", 
+    "name": "Transocean"
+}
+{
+    "domain": "transurban.com", 
+    "logo": "https://logo.clearbit.com/transurban.com", 
+    "name": "Transurban"
+}
+{
+    "domain": "travelers.com", 
+    "logo": "https://logo.clearbit.com/travelers.com", 
+    "name": "Travelers"
+}
+{
+    "domain": "trin.net", 
+    "logo": "https://logo.clearbit.com/trin.net", 
+    "name": "Trinity Industries"
+}
+{
+    "domain": "turkcell.com.tr", 
+    "logo": "https://logo.clearbit.com/turkcell.com.tr", 
+    "name": "Turkcell"
+}
+{
+    "domain": "turkishairlines.com", 
+    "logo": "https://logo.clearbit.com/turkishairlines.com", 
+    "name": "Turkish Airlines"
+}
+{
+    "domain": "twoharborsinvestment.com", 
+    "logo": null, 
+    "name": "Two Harbors Investment"
+}
+{
+    "domain": "tysonfoods.com", 
+    "logo": "https://logo.clearbit.com/tysonfoods.com", 
+    "name": "Tyson Foods"
+}
+{
+    "domain": "ubibanca.com", 
+    "logo": null, 
+    "name": "UBI Banca"
+}
+{
+    "domain": "ubs.com", 
+    "logo": "https://logo.clearbit.com/ubs.com", 
+    "name": "UBS"
+}
+{
+    "domain": "ucb.com", 
+    "logo": "https://logo.clearbit.com/ucb.com", 
+    "name": "UCB"
+}
+{
+    "domain": "ucobank.com", 
+    "logo": "https://logo.clearbit.com/ucobank.com", 
+    "name": "UCO Bank"
+}
+{
+    "domain": "ugicorp.com", 
+    "logo": "https://logo.clearbit.com/ugicorp.com", 
+    "name": "UGI"
+}
+{
+    "domain": "ussteel.com", 
+    "logo": "https://logo.clearbit.com/ussteel.com", 
+    "name": "U. S. Steel"
+}
+{
+    "domain": "usg.com", 
+    "logo": "https://logo.clearbit.com/usg.com", 
+    "name": "USG"
+}
+{
+    "domain": "umicore.com", 
+    "logo": "https://logo.clearbit.com/umicore.com", 
+    "name": "Umicore"
+}
+{
+    "domain": "unicreditgroup.eu", 
+    "logo": "https://logo.clearbit.com/unicreditgroup.eu", 
+    "name": "UniCredit"
+}
+{
+    "domain": "unibail-rodamco.com", 
+    "logo": "https://logo.clearbit.com/unibail-rodamco.com", 
+    "name": "Unibail - Rodamco"
+}
+{
+    "domain": "unicharm.co.jp", 
+    "logo": "https://logo.clearbit.com/unicharm.co.jp", 
+    "name": "Unicharm"
+}
+{
+    "domain": "unilever.com", 
+    "logo": "https://logo.clearbit.com/unilever.com", 
+    "name": "Unilever"
+}
+{
+    "domain": "unionbankofindia.co.in", 
+    "logo": "https://logo.clearbit.com/unionbankofindia.co.in", 
+    "name": "Union Bank of India"
+}
+{
+    "domain": "unb.com", 
+    "logo": "https://logo.clearbit.com/unb.com", 
+    "name": "Union National Bank"
+}
+{
+    "domain": "up.com", 
+    "logo": "https://logo.clearbit.com/up.com", 
+    "name": "Union Pacific"
+}
+{
+    "domain": "uniqa.at", 
+    "logo": "https://logo.clearbit.com/uniqa.at", 
+    "name": "UNIQA"
+}
+{
+    "domain": "united-internet.de", 
+    "logo": "https://logo.clearbit.com/united-internet.de", 
+    "name": "United Internet"
+}
+{
+    "domain": "uob.com.my", 
+    "logo": null, 
+    "name": "United Overseas Bank"
+}
+{
+    "domain": "unitedrentals.com", 
+    "logo": "https://logo.clearbit.com/unitedrentals.com", 
+    "name": "United Rentals"
+}
+{
+    "domain": "utc.com", 
+    "logo": "https://logo.clearbit.com/utc.com", 
+    "name": "United Technologies"
+}
+{
+    "domain": "unither.com", 
+    "logo": "https://logo.clearbit.com/unither.com", 
+    "name": "United Therapeutics"
+}
+{
+    "domain": "unitedutilities.com", 
+    "logo": "https://logo.clearbit.com/unitedutilities.com", 
+    "name": "United Utilities"
+}
+{
+    "domain": "uhcvirginia.com", 
+    "logo": "https://logo.clearbit.com/uhcvirginia.com", 
+    "name": "Universal Health"
+}
+{
+    "domain": "unum.com", 
+    "logo": "https://logo.clearbit.com/unum.com", 
+    "name": "Unum"
+}
+{
+    "domain": "vfc.com", 
+    "logo": "https://logo.clearbit.com/vfc.com", 
+    "name": "VF"
+}
+{
+    "domain": "vinci.com", 
+    "logo": "https://logo.clearbit.com/vinci.com", 
+    "name": "VINCI"
+}
+{
+    "domain": "vmware.com", 
+    "logo": "https://logo.clearbit.com/vmware.com", 
+    "name": "VMware"
+}
+{
+    "domain": "vtb.am", 
+    "logo": null, 
+    "name": "VTB BANK"
+}
+{
+    "domain": "vakifbankusa.com", 
+    "logo": null, 
+    "name": "Vakif Bank"
+}
+{
+    "domain": "vale.com", 
+    "logo": "https://logo.clearbit.com/vale.com", 
+    "name": "Vale"
+}
+{
+    "domain": "valeo.com", 
+    "logo": "https://logo.clearbit.com/valeo.com", 
+    "name": "Valeo"
+}
+{
+    "domain": "valero.com", 
+    "logo": "https://logo.clearbit.com/valero.com", 
+    "name": "Valero Energy"
+}
+{
+    "domain": "valspar.com", 
+    "logo": "https://logo.clearbit.com/valspar.com", 
+    "name": "Valspar"
+}
+{
+    "domain": "varian.com", 
+    "logo": "https://logo.clearbit.com/varian.com", 
+    "name": "Varian Medical Systems"
+}
+{
+    "domain": "ventasreit.com", 
+    "logo": "https://logo.clearbit.com/ventasreit.com", 
+    "name": "Ventas"
+}
+{
+    "domain": "vereit.com", 
+    "logo": "https://logo.clearbit.com/vereit.com", 
+    "name": "VEREIT"
+}
+{
+    "domain": "verisign.com", 
+    "logo": "https://logo.clearbit.com/verisign.com", 
+    "name": "Verisign"
+}
+{
+    "domain": "verisk.com", 
+    "logo": "https://logo.clearbit.com/verisk.com", 
+    "name": "Verisk Analytics"
+}
+{
+    "domain": "vrtx.com", 
+    "logo": "https://logo.clearbit.com/vrtx.com", 
+    "name": "Vertex Pharmaceuticals"
+}
+{
+    "domain": "via.com", 
+    "logo": "https://logo.clearbit.com/via.com", 
+    "name": "Via.com"
+}
+{
+    "domain": "vicinity.com.au", 
+    "logo": "https://logo.clearbit.com/vicinity.com.au", 
+    "name": "Vicinity Centres"
+}
+{
+    "domain": "vietinbank.vn", 
+    "logo": "https://logo.clearbit.com/vietinbank.vn", 
+    "name": "VietinBank"
+}
+{
+    "domain": "visa.com", 
+    "logo": "https://logo.clearbit.com/visa.com", 
+    "name": "Visa"
+}
+{
+    "domain": "visteon.com", 
+    "logo": "https://logo.clearbit.com/visteon.com", 
+    "name": "Visteon"
+}
+{
+    "domain": "vivendi.com", 
+    "logo": "https://logo.clearbit.com/vivendi.com", 
+    "name": "Vivendi"
+}
+{
+    "domain": "vodafone.co.uk", 
+    "logo": "https://logo.clearbit.com/vodafone.co.uk", 
+    "name": "Vodafone"
+}
+{
+    "domain": "voestalpine.com", 
+    "logo": "https://logo.clearbit.com/voestalpine.com", 
+    "name": "voestalpine"
+}
+{
+    "domain": "volkswagen.de", 
+    "logo": "https://logo.clearbit.com/volkswagen.de", 
+    "name": "Volkswagen"
+}
+{
+    "domain": "volvo.com", 
+    "logo": "https://logo.clearbit.com/volvo.com", 
+    "name": "Volvo"
+}
+{
+    "domain": "voya.com", 
+    "logo": "https://logo.clearbit.com/voya.com", 
+    "name": "Voya Financial"
+}
+{
+    "domain": "vulcanmaterials.com", 
+    "logo": "https://logo.clearbit.com/vulcanmaterials.com", 
+    "name": "Vulcan Materials"
+}
+{
+    "domain": "winc.com", 
+    "logo": "https://logo.clearbit.com/winc.com", 
+    "name": "W"
+}
+{
+    "domain": "whsoft.de", 
+    "logo": null, 
+    "name": "w+h"
+}
+{
+    "domain": "wpp.com", 
+    "logo": "https://logo.clearbit.com/wpp.com", 
+    "name": "WPP"
+}
+{
+    "domain": "wrberkley.com", 
+    "logo": "https://logo.clearbit.com/wrberkley.com", 
+    "name": "W. R. Berkley"
+}
+{
+    "domain": "wandacinemas.com", 
+    "logo": "https://logo.clearbit.com/wandacinemas.com", 
+    "name": "Wanda Cinema Line"
+}
+{
+    "domain": "want-want.com", 
+    "logo": null, 
+    "name": "Want Want China"
+}
+{
+    "domain": "wm.com", 
+    "logo": "https://logo.clearbit.com/wm.com", 
+    "name": "Waste Management"
+}
+{
+    "domain": "waters.com", 
+    "logo": "https://logo.clearbit.com/waters.com", 
+    "name": "Waters"
+}
+{
+    "domain": "wellcare.com", 
+    "logo": "https://logo.clearbit.com/wellcare.com", 
+    "name": "WellCare Health Plans"
+}
+{
+    "domain": "wellsfargo.com", 
+    "logo": "https://logo.clearbit.com/wellsfargo.com", 
+    "name": "Wells Fargo"
+}
+{
+    "domain": "welltower.com", 
+    "logo": "https://logo.clearbit.com/welltower.com", 
+    "name": "Welltower"
+}
+{
+    "domain": "wendelgroup.com", 
+    "logo": null, 
+    "name": "Wendel"
+}
+{
+    "domain": "wesfarmers.com", 
+    "logo": null, 
+    "name": "Wesfarmers"
+}
+{
+    "domain": "westjr.co.jp", 
+    "logo": "https://logo.clearbit.com/westjr.co.jp", 
+    "name": "West Japan Railway"
+}
+{
+    "domain": "westrock.com", 
+    "logo": "https://logo.clearbit.com/westrock.com", 
+    "name": "WestRock"
+}
+{
+    "domain": "wdc.com", 
+    "logo": "https://logo.clearbit.com/wdc.com", 
+    "name": "Western Digital"
+}
+{
+    "domain": "westernunion.com", 
+    "logo": "https://logo.clearbit.com/westernunion.com", 
+    "name": "Western Union"
+}
+{
+    "domain": "westfield.com", 
+    "logo": "https://logo.clearbit.com/westfield.com", 
+    "name": "Westfield"
+}
+{
+    "domain": "westlake.com", 
+    "logo": "https://logo.clearbit.com/westlake.com", 
+    "name": "Westlake Chemical"
+}
+{
+    "domain": "westpac.com.au", 
+    "logo": "https://logo.clearbit.com/westpac.com.au", 
+    "name": "Westpac Banking"
+}
+{
+    "domain": "weyerhaeuser.com", 
+    "logo": "https://logo.clearbit.com/weyerhaeuser.com", 
+    "name": "Weyerhaeuser"
+}
+{
+    "domain": "wheelock.de", 
+    "logo": "https://logo.clearbit.com/wheelock.de", 
+    "name": "wheeLock"
+}
+{
+    "domain": "whirlpool.it", 
+    "logo": null, 
+    "name": "Whirlpool"
+}
+{
+    "domain": "whitbreadgraduates.com", 
+    "logo": "https://logo.clearbit.com/whitbreadgraduates.com", 
+    "name": "Whitbread"
+}
+{
+    "domain": "wholefoodsmarket.com", 
+    "logo": "https://logo.clearbit.com/wholefoodsmarket.com", 
+    "name": "Whole Foods Market"
+}
+{
+    "domain": "williams.com", 
+    "logo": "https://logo.clearbit.com/williams.com", 
+    "name": "Williams"
+}
+{
+    "domain": "willistowerswatson.com", 
+    "logo": "https://logo.clearbit.com/willistowerswatson.com", 
+    "name": "Willis Towers Watson"
+}
+{
+    "domain": "wilmar-international.com", 
+    "logo": "https://logo.clearbit.com/wilmar-international.com", 
+    "name": "Wilmar International"
+}
+{
+    "domain": "wipro.com", 
+    "logo": "https://logo.clearbit.com/wipro.com", 
+    "name": "Wipro"
+}
+{
+    "domain": "wistron.com", 
+    "logo": "https://logo.clearbit.com/wistron.com", 
+    "name": "Wistron"
+}
+{
+    "domain": "morereasons.co.uk", 
+    "logo": null, 
+    "name": "Wm Morrison Supermarkets"
+}
+{
+    "domain": "wolterskluwer.com", 
+    "logo": "https://logo.clearbit.com/wolterskluwer.com", 
+    "name": "Wolters Kluwer"
+}
+{
+    "domain": "woolworthsgiftcardstore.com.au", 
+    "logo": "https://logo.clearbit.com/woolworthsgiftcardstore.com.au", 
+    "name": "Woolworths"
+}
+{
+    "domain": "wooribank.com", 
+    "logo": "https://logo.clearbit.com/wooribank.com", 
+    "name": "Woori Bank"
+}
+{
+    "domain": "workday.com", 
+    "logo": "https://logo.clearbit.com/workday.com", 
+    "name": "Workday"
+}
+{
+    "domain": "wfscorp.com", 
+    "logo": null, 
+    "name": "World Fuel Services"
+}
+{
+    "domain": "wyndhamworldwide.com", 
+    "logo": null, 
+    "name": "Wyndham Worldwide"
+}
+{
+    "domain": "wynnresorts.com", 
+    "logo": "https://logo.clearbit.com/wynnresorts.com", 
+    "name": "Wynn Resorts"
+}
+{
+    "domain": "wartsila.com", 
+    "logo": "https://logo.clearbit.com/wartsila.com", 
+    "name": "W\u00e4rtsil\u00e4"
+}
+{
+    "domain": "x5retail.in", 
+    "logo": null, 
+    "name": "X5 Retail"
+}
+{
+    "domain": "xlporno.net", 
+    "logo": "https://logo.clearbit.com/xlporno.net", 
+    "name": "XL \u041f\u043e\u0440\u043d\u043e \u0412\u0438\u0434\u0435\u043e"
+}
+{
+    "domain": "xpo.com", 
+    "logo": "https://logo.clearbit.com/xpo.com", 
+    "name": "XPO Logistics"
+}
+{
+    "domain": "xcelenergy.com", 
+    "logo": "https://logo.clearbit.com/xcelenergy.com", 
+    "name": "Xcel Energy"
+}
+{
+    "domain": "xerox.com", 
+    "logo": "https://logo.clearbit.com/xerox.com", 
+    "name": "Xerox"
+}
+{
+    "domain": "xilinx.com", 
+    "logo": "https://logo.clearbit.com/xilinx.com", 
+    "name": "Xilinx"
+}
+{
+    "domain": "y-tec.com.ar", 
+    "logo": "https://logo.clearbit.com/y-tec.com.ar", 
+    "name": "YPF"
+}
+{
+    "domain": "yahoo.com", 
+    "logo": "https://logo.clearbit.com/yahoo.com", 
+    "name": "Yahoo"
+}
+{
+    "domain": "yamaha-motor.com", 
+    "logo": "https://logo.clearbit.com/yamaha-motor.com", 
+    "name": "Yamaha Motor"
+}
+{
+    "domain": "yara.com", 
+    "logo": "https://logo.clearbit.com/yara.com", 
+    "name": "Yara International"
+}
+{
+    "domain": "yesbank.in", 
+    "logo": "https://logo.clearbit.com/yesbank.in", 
+    "name": "YES BANK"
+}
+{
+    "domain": "yum.com", 
+    "logo": "https://logo.clearbit.com/yum.com", 
+    "name": "Yum! Brands"
+}
+{
+    "domain": "yunnan-baiyao.com", 
+    "logo": "https://logo.clearbit.com/yunnan-baiyao.com", 
+    "name": "yunnan-baiyao"
+}
+{
+    "domain": "zte.com.cn", 
+    "logo": "https://logo.clearbit.com/zte.com.cn", 
+    "name": "ZTE"
+}
+{
+    "domain": "zain.com", 
+    "logo": "https://logo.clearbit.com/zain.com", 
+    "name": "Zain"
+}
+{
+    "domain": "globalpay.com.ng", 
+    "logo": "https://logo.clearbit.com/globalpay.com.ng", 
+    "name": "Zenith Bank"
+}
+{
+    "domain": "zoetisus.com", 
+    "logo": "https://logo.clearbit.com/zoetisus.com", 
+    "name": "Zoetis"
+}
+{
+    "domain": "zurich.com", 
+    "logo": "https://logo.clearbit.com/zurich.com", 
+    "name": "Zurich Insurance"
+}
+{
+    "domain": "ebay.com", 
+    "logo": "https://logo.clearbit.com/ebay.com", 
+    "name": "eBay"
+}
+{
+    "domain": "iheartmedia.com", 
+    "logo": "https://logo.clearbit.com/iheartmedia.com", 
+    "name": "iHeartMedia"
+}

@@ -12,3 +12,10 @@ class Logo(scrapy.Item):
     website = scrapy.Field()    # company website
     file_urls = scrapy.Field()  # built-in name for scraping binary data
     files = scrapy.Field()      # built-in name for scraping binary data
+
+    # the following attributes are optional
+
+    industry = scrapy.Field()
+    country = scrapy.Field()
+    founded = scrapy.Field()
+    employees = scrapy.Field()

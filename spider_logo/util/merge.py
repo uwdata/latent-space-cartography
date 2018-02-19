@@ -58,18 +58,37 @@ def rename (dir):
 
 def resize (dir):
     print 'Resizing ...'
+    c1 = c2 = c3 = 0
 
     for f in os.listdir(dir):
         bn, ext = os.path.splitext(f)
         
         if ext in valid_exts:
-            img = Image.open(os.path.join(dir, f))
+            fullpath = os.path.join(dir, f)
+            img = Image.open(fullpath)
             w, h = img.size
 
             # ensure all images are square in shape
             if w != h:
-                out = center_image(img)
-                out.save(os.path.join(dir, 'test', f), 'JPEG')
+                img = center_image(img)
+                c1 += 1
+            
+            # resize
+            if w != goal_size or h != goal_size:
+                c2 += 1
+                img = img.convert('RGB')
+                img.thumbnail((goal_size, goal_size), Image.BICUBIC)
+                img.save(fullpath, 'JPEG')
+
+            # remove any images that's not our target size
+            w, h = img.size
+            img.close()
+            if w != goal_size or h != goal_size:
+                os.remove(fullpath)
+                c3 += 1
+
+    print 'Done: centered {} files, resized {} files, and removed {} files.' \
+        .format(c1, c2, c3)
 
 if __name__ == '__main__':
     # copy(base, dout)

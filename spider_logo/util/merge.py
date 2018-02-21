@@ -8,7 +8,7 @@ from PIL import Image
 dout = 'merged'
 base = os.path.join(os.path.dirname(__file__), '../output/')
 valid_exts = ['.png', '.jpg']  # valid image extensions
-goal_size = 128
+goal_size = 64
 
 def copy_files (src, dst):
     count = 0
@@ -31,7 +31,14 @@ def center_image (img):
     # use alpha channel as mask
     out.paste(img, box = upper, mask = img)
 
+    img.close()
     return out
+
+def clean (dir):
+    print 'Cleaning leftovers ...'
+    if os.path.exists(dir):
+        shutil.rmtree(dir)
+    os.makedirs(dir)
 
 def copy (base, dout):
     count = 0
@@ -77,7 +84,8 @@ def resize (dir):
             if w != goal_size or h != goal_size:
                 c2 += 1
                 img = img.convert('RGB')
-                img.thumbnail((goal_size, goal_size), Image.BICUBIC)
+                # BICUBIC leads to bleeding, NEAREST leads to aliasing
+                img.thumbnail((goal_size, goal_size), Image.BILINEAR)
                 img.save(fullpath, 'JPEG')
 
             # remove any images that's not our target size
@@ -91,7 +99,9 @@ def resize (dir):
         .format(c1, c2, c3)
 
 if __name__ == '__main__':
-    # copy(base, dout)
-    # rename(os.path.join(base, dout))
+    dir = os.path.join(base, dout)
+    clean(dir)
+    copy(base, dout)
+    rename(dir)
     resize(os.path.join(base, dout))
     pass

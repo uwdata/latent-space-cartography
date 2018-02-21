@@ -69,7 +69,7 @@ def resize (dir):
 
     for f in os.listdir(dir):
         bn, ext = os.path.splitext(f)
-        
+
         if ext in valid_exts:
             fullpath = os.path.join(dir, f)
             img = Image.open(fullpath)
@@ -79,19 +79,20 @@ def resize (dir):
             if w != h:
                 img = center_image(img)
                 c1 += 1
-            
+
             # resize
             if w != goal_size or h != goal_size:
                 c2 += 1
                 img = img.convert('RGB')
                 # BICUBIC leads to bleeding, NEAREST leads to aliasing
+                # visual quality is also better than resize() with ANTIALIAS
                 img.thumbnail((goal_size, goal_size), Image.BILINEAR)
-                img.save(fullpath, 'JPEG')
+                img.save(re.sub('.png', '.jpg', fullpath), 'JPEG')
 
             # remove any images that's not our target size
             w, h = img.size
             img.close()
-            if w != goal_size or h != goal_size:
+            if w != goal_size or h != goal_size or ext == '.png':
                 os.remove(fullpath)
                 c3 += 1
 

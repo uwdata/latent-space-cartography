@@ -12,13 +12,15 @@ from keras.callbacks import ModelCheckpoint
 from keras import backend as K
 from keras import metrics
 
+latent_dim = 64
+
 # input path
 inpath = '/home/yliu0/data/logos.hdf5'
 # output path
 fpath = '/home/yliu0/data/logo_result/'
 # model path
-mpath = 'logo_model.json'
-wpath = 'logo_model.h5'
+mpath = 'logo_model_dim={}.json'.format(latent_dim)
+wpath = 'logo_model_dim={}.h5'.format(latent_dim)
 
 # input image dimensions
 img_rows, img_cols, img_chns = 64, 64, 3
@@ -27,13 +29,12 @@ filters = 64
 # convolution kernel size
 num_conv = 3
 
-epochs = 1
+epochs = 300
 batch_size = 100
 if K.image_data_format() == 'channels_first':
     original_img_size = (img_chns, img_rows, img_cols)
 else:
     original_img_size = (img_rows, img_cols, img_chns)
-latent_dim = 64
 intermediate_dim = 1024
 up_dim = img_rows / 2
 
@@ -241,7 +242,9 @@ vae.fit(x_train,
         epochs=epochs,
         batch_size=batch_size,
         validation_data=(x_test, None),
-        callbacks=[ModelCheckpoint(wpath, save_best_only=True, save_weights_only=True)])
+        callbacks=[
+            ModelCheckpoint(wpath, save_best_only=True, save_weights_only=True),
+            EarlyStopping(monitor='val_loss', patience=5, verbose=0)])
 
 # encode and decode
 x_test_encoded = encoder.predict(x_test, batch_size=batch_size)

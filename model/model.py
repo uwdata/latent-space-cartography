@@ -164,12 +164,18 @@ class Vae(object):
             vae = model_from_json(json.load(infile))
         vae.load_weights(weights)
 
-        # we still have to supply the loss funciton and compile the model
+        # recover hyper-parameters
         x = vae.get_layer('input').input
-        z_log_var = vae.get_layer('z_log_var').output
         z_mean = vae.get_layer('z_mean').output
+        hidden = vae.get_layer('hidden').output
+        self.latent_dim = int(z_mean.shape[1])
+        self.intermediate_dim = int(hidden.shape[1])
+        _, self.img_rows, self.img_cols, self.img_chns = x.get_shape().as_list()
+
+        # we still have to supply the loss funciton and compile the model
+        z_log_var = vae.get_layer('z_log_var').output
         x_decoded_mean_squash = vae.get_layer('decoder_mean_squash').output
-        
+
         # Compute VAE loss
         xent_loss = self.img_rows * self.img_cols * metrics.binary_crossentropy(
             K.flatten(x),

@@ -1,3 +1,11 @@
+#!/usr/bin/env python
+
+'''
+Start training a VAE model.
+The model architecture is defined in model.py.
+To change hyper-parameters, modify the arguments to model.Vae().
+'''
+
 from __future__ import print_function
 import h5py
 from PIL import Image

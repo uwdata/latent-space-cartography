@@ -1,3 +1,10 @@
+#!/usr/bin/env python
+
+'''
+Architecture of a variational autoencoder model.
+Refer to the constructor of class Vae for a list of tunable hyper-parameters.
+'''
+
 from __future__ import print_function
 import json
 

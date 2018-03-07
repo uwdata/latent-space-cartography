@@ -1,0 +1,17 @@
+{
+  "scripts": {
+    "checkstyle": "eslint index.js src",
+    "build": "rm -rf build && mkdir build && rollup -c",
+    "server": "python -m SimpleHTTPServer 7999"
+  },
+  "dependencies": {
+    "bootstrap": "^4.0.0",
+    "d3": "^4.13.0",
+    "lodash": "^4.17.5"
+  },
+  "devDependencies": {
+    "eslint": "^4.18.2",
+    "rollup": "^0.56.5",
+    "rollup-plugin-node-resolve": "^3.2.0"
+  }
+}

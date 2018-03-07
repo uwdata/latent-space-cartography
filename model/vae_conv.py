@@ -166,12 +166,6 @@ def recover_encoder (vae):
     return Model(x, z_mean)
 
 def recover_decoder (vae):
-    decoder_input = Input(shape=(latent_dim,))
-    out = vae.get_layer('decoder_mean_squash').get_output_at(1)
-
-    return Model(x, out)
-
-def recover_generator (vae):
     decoder_hid = vae.get_layer('decoder_hid')
     decoder_upsample = vae.get_layer('decoder_upsample')
     decoder_reshape = vae.get_layer('decoder_reshape')
@@ -213,7 +207,7 @@ def init_model (fn, weights):
         vae.compile(optimizer='rmsprop')
 
         encoder = recover_encoder(vae)
-        decoder = recover_generator(vae)
+        decoder = recover_decoder(vae)
         print('Successfully loaded model: {}'.format(mpath))
     except:
         vae, encoder, decoder = build_model()

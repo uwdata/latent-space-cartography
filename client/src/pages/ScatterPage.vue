@@ -49,6 +49,10 @@
     while (myNode.firstChild) {
       myNode.removeChild(myNode.firstChild)
     }
+
+    // reset data
+    this.images = []
+    this.recon = null
   }
 
   export default {
@@ -94,9 +98,8 @@
     methods: {
       changeDim (dim) {
         this.dim = dim
-        this.images = []
 
-        clear()
+        clear.call(this)
 
         store.getPoints(this.dim)
           .then((points) => {
@@ -107,8 +110,7 @@
           })
       },
       changeData (str) {
-        this.images = []
-        clear()
+        clear.call(this)
 
         let points = store.pca[this.dim]
 

@@ -222,6 +222,11 @@ class Vae(object):
         _x_decoded_mean_squash = decoder_mean_squash(_x_decoded_relu)
         return Model(decoder_input, _x_decoded_mean_squash)
 
+    def to_image (self, array):
+        array = array.reshape(self.img_rows, self.img_cols, self.img_chns)
+        array *= 255
+        return array.astype('uint8')
+
     '''
     Load or instantiate the VAE, encoder and decoder mdoels
     '''

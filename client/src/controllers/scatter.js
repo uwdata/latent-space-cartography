@@ -3,9 +3,9 @@ import d3Tip from 'd3-tip'
 import _ from 'lodash'
 
 const margin = {
-  top: 20,
+  top: 10,
   right: 70,
-  bottom: 50,
+  bottom: 10,
   left: 70
 }
 const outerWidth = 1050
@@ -14,6 +14,7 @@ const width = outerWidth - margin.left - margin.right
 const height = outerHeight - margin.top - margin.bottom
 
 let data = []
+let callback = () => {}
 
 function zoom (svg, x, y, xAxis, yAxis) {
   // create new scales
@@ -36,6 +37,42 @@ function zoom (svg, x, y, xAxis, yAxis) {
  */
 function setData (points) {
   data = points
+}
+
+function setCb (fn) {
+  callback = fn
+}
+
+function brushing (x, y) {
+  if (!d3.event.selection) return // empty selection
+
+  // x0, y0, x1, y1
+  let sel = _.flatten(d3.event.selection)
+  let scales = _.map(sel, (s, idx) => idx % 2 ? y.invert(s) : x.invert(s))
+
+  // change color of selected points
+  d3.selectAll('.dot')
+    .style('fill', () => '#000')
+    .filter((p) => {
+      return p.x >= scales[0] && p.x <= scales[2] && p.y >= scales[3] && p.y <=scales[1]
+    })
+    .style('fill', () => '#f00')
+}
+
+function brushended (x, y) {
+  if (!d3.event.selection) return // empty selection
+
+  // x0, y0, x1, y1
+  let sel = _.flatten(d3.event.selection)
+  let scales = _.map(sel, (s, idx) => idx % 2 ? y.invert(s) : x.invert(s))
+
+  let pts = _.filter(data, (p) => {
+    return p.x >= scales[0] && p.x <= scales[2] && p.y >= scales[3] && p.y <=scales[1]
+  })
+
+  let images = _.map(pts, (p) => `/data/logos/${p.i}.jpg`)
+
+  callback(images)
 }
 
 /**
@@ -70,12 +107,12 @@ function draw (parent) {
     .attr("class", "d3-tip")
     .offset([-10, 0])
     .html(function(d) {
-      let str = `<img src="/data/logos/${d.i}.jpg" alt="Logo Image"/>`
-      return str
-      // return `x: ${d.x}, y: ${d.y}, i: ${d.i}`
+      return `<img src="/data/logos/${d.i}.jpg" alt="Logo Image"/>`
     })
 
   let boundZoom = zoom.bind(window, svg, x, y, xAxis, yAxis)
+  let boundBrushend = brushended.bind(window, x, y)
+  let boundBrushing = brushing.bind(window, x, y)
 
   let zoomBeh = d3.zoom()
     .on("zoom", boundZoom)
@@ -92,30 +129,25 @@ function draw (parent) {
     .attr("fill", '#fff')
     .call(zoomBeh)
 
+  // Brush
+  svg.append("g")
+    .attr("class", "brush")
+    .call(d3.brush()
+      .on('brush', boundBrushing)
+      .on("end", boundBrushend))
+
   // X Axis
   svg.append("g")
     .classed("x axis", true)
     .attr("transform", "translate(0," + height + ")")
     .call(xAxis)
-    // .append("text")
-    // .classed("label", true)
-    // .attr("x", width)
-    // .attr("y", margin.bottom - 10)
-    // .style("text-anchor", "end")
-    // .text("X Axis")
 
   // Y Axis
   svg.append("g")
     .classed("y axis", true)
+    .attr("transform", "translate(10 ,0)")
     .call(yAxis)
-    // .append("text")
-    // .classed("label", true)
-    // .attr("transform", "rotate(-90)")
-    // .attr("y", -margin.left)
-    // .attr("dy", "1.5em")
-    // .style("text-anchor", "end")
-    // .text("Y Axis")
-
+  
   // Axes Lines
   let objects = svg.append("svg")
     .classed("objects", true)
@@ -130,6 +162,7 @@ function draw (parent) {
     .attr("transform", "translate(0," + height + ")")
   objects.append("svg:line")
     .classed("axisLine vAxisLine", true)
+    .attr("transform", "translate(10 ,0)")
     .attr("x1", 0)
     .attr("y1", 0)
     .attr("x2", 0)
@@ -149,4 +182,4 @@ function draw (parent) {
     .on("mouseout", tip.hide)
 }
 
-export {draw, setData}
+export {draw, setData, setCb}

@@ -5,33 +5,104 @@
       <h3 class="mb-3">Some Title.</h3>
       This is a description.
       <div id="container" class="mt-3"></div>
+
+      <!--buttons-->
+      <div class="text-left">
+        <b-dropdown text="Latent Dimensions" class="m-2">
+          <b-dropdown-item v-for="d in all_dims" @click="changeDim(d)">
+            {{d}}
+          </b-dropdown-item>
+        </b-dropdown>
+        <b-dropdown text="Data" class="m-2">
+          <b-dropdown-item v-for="c in all_data_choices" @click="changeData(c)">
+            {{c}}
+          </b-dropdown-item>
+        </b-dropdown>
+      </div>
+
+      <!--images-->
+      <div class="text-left mt-3">
+        <div v-if="images.length" class="pb-3">
+          <hr>
+        </div>
+        <span v-for="img in images">
+          <img :src="img"/>
+        </span>
+      </div>
     </div>
     <div class="col-2"></div>
   </div>
 </template>
 
 <script>
-  import {draw, setData} from '../controllers/scatter'
-  import {store, log_debug} from '../controllers/config'
+  import {draw, setData, setCb} from '../controllers/scatter'
+  import {store, log_debug, TRAIN_SPLIT} from '../controllers/config'
   import _ from 'lodash'
+
+  function clear () {
+    // remove all nodes
+    let myNode = document.getElementById("container")
+    while (myNode.firstChild) {
+      myNode.removeChild(myNode.firstChild)
+    }
+  }
 
   export default {
     name: 'ScatterPage',
     data () {
       return {
         dim: 32,
+        images: [],
+        all_dims: [32, 64, 128, 256, 512, 1024],
+        all_data_choices: ['Test Set', 'Training Set', 'All'],
         err: ''
       }
+    },
+    created: function () {
+      setCb((images) => {
+        this.images = images
+      })
     },
     mounted: function () {
       store.getPoints(this.dim)
         .then((points) => {
-          log_debug(points)
-          setData(_.slice(points, 15000))
+          setData(_.slice(points, TRAIN_SPLIT))
           draw('#container')
         }, (e) => {
           this.err = e
         })
+    },
+    methods: {
+      changeDim (dim) {
+        this.dim = dim
+        this.images = []
+
+        clear()
+
+        store.getPoints(this.dim)
+          .then((points) => {
+            setData(_.slice(points, TRAIN_SPLIT))
+            draw('#container')
+          }, (e) => {
+            this.err = e
+          })
+      },
+      changeData (str) {
+        this.images = []
+        clear()
+
+        let points = store.pca[this.dim]
+
+        if (/test/i.test(str)) {
+          setData(_.slice(points, TRAIN_SPLIT))
+        } else if (/train/i.test(str)) {
+          setData(_.slice(points, 0, TRAIN_SPLIT))
+        } else {
+          setData(points)
+        }
+
+        draw('#container')
+      }
     }
   }
 </script>

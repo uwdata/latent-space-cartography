@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 '''
-Reads an existing model and output an original/reconstructed image pair.
+Reads an existing model and do something.
 '''
 
 from __future__ import print_function
@@ -14,16 +14,11 @@ from keras import backend as K
 
 import model
 
-latent_dim = 32
 img_rows, img_cols, img_chns = 64, 64, 3
 batch_size = 100
 
-# path to stored models
-base = '/Users/yliu0/data/'
-rawpath = base + 'logos.hdf5'
-resultbase = base + '/logo_result/{}/'.format(latent_dim)
-mpath = resultbase + 'logo_model_dim={}.json'.format(latent_dim)
-wpath = resultbase + 'logo_model_dim={}.h5'.format(latent_dim)
+# path to the stored model
+base = '/home/yliu0/data/'
 
 # load training data
 def load_data (fpath, original_img_size):
@@ -75,9 +70,47 @@ def visualize (x_test, encoder, generator, suffix=''):
     img = Image.fromarray(reconstructed, 'RGB')
     img.save('{}reconstructed_{}.png'.format(imgbase, suffix))
 
-if __name__ == '__main__':
-    m = model.Vae(latent_dim = latent_dim)
-    vae, encoder, decoder = m.read(mpath, wpath)
+# run encoder through all points and save as a hdf5 file
+# indices should remain the same as raw data
+def save_encoded (fn):
+    # these will be numpy.ndarray with shape (length, latent_dim)
+    x_test_encoded = encoder.predict(x_test, batch_size=batch_size)
+    x_train_encoded = encoder.predict(x_train, batch_size=batch_size)
+    encoded = np.concatenate((x_train_encoded, x_test_encoded), axis = 0)
+
+    dim = encoded.shape[1]
+
+    # remove previous result
+    if os.path.exists(fn):
+        os.remove(fn)
     
-    x_train, x_test = load_data(rawpath, m.original_img_size)
-    visualize(x_test, encoder, decoder)
+    f = h5py.File(fn, 'w')
+    dset = f.create_dataset('latent', (1, dim), 
+            chunks=(1, dim),
+            maxshape=(None, dim),
+            dtype='float64')
+    
+    for i, val in enumerate(encoded):
+        dset.resize((i + 1, dim))
+        dset[i] = encoded[i]
+        f.flush()
+    
+    f.close()
+
+if __name__ == '__main__':
+    for latent_dim in [32, 64, 128, 256, 512, 1024]:
+        # input path
+        rawpath = base + 'logos.hdf5'
+        resultbase = base + '/logo_result/{}/'.format(latent_dim)
+        mpath = resultbase + 'logo_model_dim={}.json'.format(latent_dim)
+        wpath = resultbase + 'logo_model_dim={}.h5'.format(latent_dim)
+
+        # output path
+        encode_path = base + 'latent{}.h5'.format(latent_dim)
+
+        m = model.Vae(latent_dim = latent_dim)
+        vae, encoder, decoder = m.read(mpath, wpath)
+        
+        x_train, x_test = load_data(rawpath, m.original_img_size)
+        # visualize(x_test, encoder, decoder)
+        save_encoded(encode_path)

@@ -22,6 +22,7 @@
     "server": "python -m SimpleHTTPServer 7999"
   },
   "dependencies": {
+    "axios": "^0.18.0",
     "bluebird": "^3.5.0",
     "bootstrap": "^4.0.0",
     "bootstrap-vue": "^2.0.0-rc.1",

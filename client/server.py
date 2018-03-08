@@ -30,6 +30,9 @@ def index ():
 @app.route('/build/<path:path>')
 def serve_public (path):
     return send_from_directory('build', path)
+@app.route('/data/<path:path>')
+def serve_data (path):
+    return send_from_directory('data', path)
 
 # get pca data
 # TODO: pca is fast, we don't really need those intermediate files ...

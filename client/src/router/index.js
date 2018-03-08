@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import MainPage from '../pages/MainPage.vue'
 import ScatterCanvasPage from '../pages/ScatterCanvasPage.vue'
 import ScatterSvgPage from '../pages/ScatterSvgPage.vue'
+import ScatterPage from '../pages/ScatterPage.vue'
 
 Vue.use(Router)
 
@@ -22,6 +23,11 @@ export default new Router({
       path: '/scatter_svg',
       name: 'scatter',
       component: ScatterSvgPage
+    },
+    {
+      path: '/scatter',
+      name: 'scatter',
+      component: ScatterPage
     }
   ]
 })

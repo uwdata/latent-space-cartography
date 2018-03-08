@@ -1,3 +1,5 @@
+import Store from '../controllers/store'
+
 const DEBUG = process.env.NODE_ENV === 'development'
 
 /**
@@ -9,8 +11,14 @@ function log_debug (...args) {
   }
 }
 
+/**
+ * Shared store.
+ */
+let store = new Store()
+
 export {
   DEBUG,
+  store,
   log_debug
 }
 

@@ -73,12 +73,13 @@ def pca_back ():
         re = pca.inverse_transform(d)
 
     # project from latent space to image
-    if not latent_dim in models:
-        base = './data/models/{}/'.format(latent_dim)
-        mpath = base + 'logo_model_dim={}.json'.format(latent_dim)
-        wpath = base + 'logo_model_dim={}.h5'.format(latent_dim)
-        m = model.Vae(latent_dim = latent_dim)
-        models[latent_dim] = m.read(mpath, wpath)
+    # if not latent_dim in models:
+    # FIXME
+    base = './data/models/{}/'.format(latent_dim)
+    mpath = base + 'logo_model_dim={}.json'.format(latent_dim)
+    wpath = base + 'logo_model_dim={}.h5'.format(latent_dim)
+    m = model.Vae(latent_dim = latent_dim)
+    models[latent_dim] = m.read(mpath, wpath)
 
     vae, encoder, decoder = models[latent_dim]
     print('predicting ...')

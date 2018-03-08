@@ -18,6 +18,10 @@
             {{c}}
           </b-dropdown-item>
         </b-dropdown>
+        <span class="pull-right text-muted" v-if="recon_loading">
+          computing...
+        </span>
+        <img :src="recon" v-if="recon" class="pull-right"/>
       </div>
 
       <!--images-->
@@ -35,7 +39,7 @@
 </template>
 
 <script>
-  import {draw, setData, setCb} from '../controllers/scatter'
+  import {draw, setData, setCb, setPca} from '../controllers/scatter'
   import {store, log_debug, TRAIN_SPLIT} from '../controllers/config'
   import _ from 'lodash'
 
@@ -52,6 +56,8 @@
     data () {
       return {
         dim: 32,
+        recon: null,
+        recon_loading: false,
         images: [],
         all_dims: [32, 64, 128, 256, 512, 1024],
         all_data_choices: ['Test Set', 'Training Set', 'All'],
@@ -61,6 +67,19 @@
     created: function () {
       setCb((images) => {
         this.images = images
+      })
+      setPca((x, y, i) => {
+        this.recon = null
+        this.recon_loading = true
+        store.transformPoint(x, y, i)
+          .then((img) => {
+            log_debug(img)
+            this.recon = '/build/' + img
+            this.recon_loading = false
+          }, (e) => {
+            log_debug(e)
+            this.recon_loading = false
+          })
       })
     },
     mounted: function () {
@@ -153,5 +172,11 @@
     margin: -1px 0 0 0;
     top: 100%;
     left: 0;
+  }
+
+  .highlight {
+    fill-opacity: 1;
+    stroke: red;
+    stroke-width: 2px;
   }
 </style>

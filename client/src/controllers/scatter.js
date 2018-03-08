@@ -15,6 +15,7 @@ const height = outerHeight - margin.top - margin.bottom
 
 let data = []
 let callback = () => {}
+let pca_back = () => {}
 
 function zoom (svg, x, y, xAxis, yAxis) {
   // create new scales
@@ -39,8 +40,13 @@ function setData (points) {
   data = points
 }
 
+// TODO: fix these
 function setCb (fn) {
   callback = fn
+}
+
+function setPca (fn) {
+  pca_back = fn
 }
 
 function brushing (x, y) {
@@ -117,6 +123,35 @@ function draw (parent) {
   let zoomBeh = d3.zoom()
     .on("zoom", boundZoom)
 
+  let dragger = d3.drag()
+    .on('start', function () {
+      d3.select(this)
+        .classed('highlight', true)
+        .style('fill', '#f00')
+    })
+    .on('drag', function (d) {
+      d.x += d3.event.dx
+      d.y += d3.event.dy
+      d3.select(this).attr("transform", function(d,i) {
+        return "translate(" + [d.x, d.y] + ")"
+      })
+    })
+    .on('end', function (d) {
+      let x = d3.event.sourceEvent.offsetX
+      let y = d3.event.sourceEvent.offsetY
+
+      x = xMin + x / width * (xMax - xMin)
+      y = yMin + (1 - y / height) * (yMax - yMin)
+
+      let i = d3.event.subject.i
+
+      pca_back(x, y, i)
+
+      // TODO: turn back style?
+      d3.select(this)
+        .style('fill', '#000')
+    })
+
   svg.append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
     .call(zoomBeh)
@@ -178,8 +213,9 @@ function draw (parent) {
     .attr('cx', (d) => x(d.x))
     .attr('cy', (d) => y(d.y))
     .style("fill", () => '#000')
-    .on("mouseover", tip.show)
-    .on("mouseout", tip.hide)
+    .call(dragger)
+    // .on('mouseover', tip.show)
+    // .on("mouseout", tip.hide)
 }
 
-export {draw, setData, setCb}
+export {draw, setData, setCb, setPca}

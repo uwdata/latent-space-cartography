@@ -8,6 +8,7 @@ import _ from 'lodash'
 class Store {
   constructor () {
     this.pca = {}
+    this.latent_dim = 32
   }
 
   /**
@@ -16,6 +17,7 @@ class Store {
    * @returns {Promise}
    */
   getPoints (dim) {
+    this.latent_dim = dim
     return new Promise((resolve, reject) => {
       if (this.pca[dim]) {
         resolve(this.pca[dim])
@@ -31,6 +33,25 @@ class Store {
           if (msg) {
             this.pca[dim] = this._formatPoints(msg.data)
             resolve(this.pca[dim])
+          } else {
+            reject(`Fail to initialize.`)
+          }
+        }, () => {
+          reject(`Network error.`)
+        })
+    })
+  }
+
+  transformPoint (x, y, i) {
+    return new Promise((resolve, reject) => {
+      let payload = {'latent_dim': this.latent_dim, 'x': x, 'y': y, 'i': i}
+
+      http.post('/api/pca_back', payload)
+        .then((response) => {
+          let msg = response.data
+
+          if (msg) {
+            resolve(msg.image)
           } else {
             reject(`Fail to initialize.`)
           }

@@ -11,10 +11,10 @@
 </template>
 
 <script>
-  import {draw} from '../controllers/scatter'
+  import {draw} from '../controllers/scatter_canvas'
 
   export default {
-    name: 'ScatterPage',
+    name: 'ScatterCanvasPage',
     data () {
       return {}
     },

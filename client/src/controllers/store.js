@@ -47,24 +47,25 @@ class Store {
   /**
    * Async get the t-SNE result from server
    * @param dim
+   * @param perp t-SNE perplexity parameter.
    */
-  getTsnePoints (dim) {
-    this.latent_dim = dim
+  getTsnePoints (dim, perp) {
+    let key = `${dim}_${perp}`
     return new Promise((resolve, reject) => {
-      if (this.tsne[dim]) {
-        resolve(this.tsne[dim])
+      if (this.tsne[key]) {
+        resolve(this.tsne[key])
         return
       }
 
-      let payload = {'latent_dim': dim}
+      let payload = {'latent_dim': dim, 'perplexity': perp}
 
       http.post('/api/get_tsne', payload)
         .then((response) => {
           let msg = response.data
 
           if (msg) {
-            this.tsne[dim] = this._formatPoints(msg.data)
-            resolve(this.tsne[dim])
+            this.tsne[key] = this._formatPoints(msg.data)
+            resolve(this.tsne[key])
           } else {
             reject(`Fail to initialize.`)
           }

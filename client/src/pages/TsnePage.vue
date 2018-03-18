@@ -2,15 +2,22 @@
   <div class="row mt-5">
     <div class="col-2"></div>
     <div class="col-8 text-center">
-      <h3 class="mb-3">Some Title.</h3>
-      This is a description.
+      <h3 class="mb-3">t-SNE of Latent Space</h3>
+      You are exploring the {{dim}}-dimensional latent space of a variational auto-encoder
+      on a logo database containing 15,000 training samples and 3,656 test samples.
+      To generate this plot, we ran t-SNE with perplexity {{perplexity}} for 1,000 iterations.
       <div id="container" class="mt-3"></div>
 
       <!--buttons-->
       <div class="text-left">
-        <b-dropdown text="Latent Dimensions" class="m-2">
+        <b-dropdown :text="`Latent Dimensions: ${dim}`" class="m-2">
           <b-dropdown-item v-for="d in all_dims" @click="changeDim(d)">
             {{d}}
+          </b-dropdown-item>
+        </b-dropdown>
+        <b-dropdown :text="`Perplexity: ${perplexity}`" class="m-2">
+          <b-dropdown-item v-for="perp in all_perplexity" @click="changePerp(perp)">
+            {{perp}}
           </b-dropdown-item>
         </b-dropdown>
         <b-dropdown text="Data" class="m-2">
@@ -18,10 +25,6 @@
             {{c}}
           </b-dropdown-item>
         </b-dropdown>
-        <span class="pull-right text-muted" v-if="recon_loading">
-          computing...
-        </span>
-        <img :src="recon" v-if="recon" class="pull-right"/>
       </div>
 
       <!--images-->
@@ -39,7 +42,7 @@
 </template>
 
 <script>
-  import {draw, setData, setCb, setPca} from '../controllers/scatter'
+  import {draw, setData, setCb} from '../controllers/scatter_tsne'
   import {store, log_debug, TRAIN_SPLIT} from '../controllers/config'
   import _ from 'lodash'
 
@@ -52,7 +55,6 @@
 
     // reset data
     this.images = []
-    this.recon = null
   }
 
   export default {
@@ -60,10 +62,10 @@
     data () {
       return {
         dim: 32,
-        recon: null,
-        recon_loading: false,
+        perplexity: 30,
         images: [],
         all_dims: [32, 64, 128, 256, 512, 1024],
+        all_perplexity: [5, 10, 30, 50, 100],
         all_data_choices: ['Test Set', 'Training Set', 'All'],
         err: ''
       }
@@ -72,22 +74,9 @@
       setCb((images) => {
         this.images = images
       })
-      setPca((x, y, i) => {
-        this.recon = null
-        this.recon_loading = true
-        store.transformPoint(x, y, i)
-          .then((img) => {
-            log_debug(img)
-            this.recon = '/build/' + img
-            this.recon_loading = false
-          }, (e) => {
-            log_debug(e)
-            this.recon_loading = false
-          })
-      })
     },
     mounted: function () {
-      store.getTsnePoints(this.dim)
+      store.getTsnePoints(this.dim, this.perplexity)
         .then((points) => {
           setData(_.slice(points, TRAIN_SPLIT))
           draw('#container')
@@ -101,7 +90,20 @@
 
         clear.call(this)
 
-        store.getTsnePoints(this.dim)
+        store.getTsnePoints(this.dim, this.perplexity)
+          .then((points) => {
+            setData(_.slice(points, TRAIN_SPLIT))
+            draw('#container')
+          }, (e) => {
+            this.err = e
+          })
+      },
+      changePerp (perp) {
+        this.perplexity = perp
+
+        clear.call(this)
+
+        store.getTsnePoints(this.dim, this.perplexity)
           .then((points) => {
             setData(_.slice(points, TRAIN_SPLIT))
             draw('#container')
@@ -112,7 +114,8 @@
       changeData (str) {
         clear.call(this)
 
-        let points = store.pca[this.dim]
+        let key = `${this.dim}_${this.perplexity}`
+        let points = store.tsne[key]
 
         if (/test/i.test(str)) {
           setData(_.slice(points, TRAIN_SPLIT))

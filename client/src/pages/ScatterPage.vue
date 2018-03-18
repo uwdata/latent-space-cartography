@@ -39,7 +39,7 @@
 </template>
 
 <script>
-  import {draw, setData, setCb, setPca} from '../controllers/scatter'
+  import {draw, setData, setCb, setPca} from '../controllers/scatter_pca'
   import {store, log_debug, TRAIN_SPLIT} from '../controllers/config'
   import _ from 'lodash'
 

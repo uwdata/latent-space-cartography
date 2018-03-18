@@ -97,7 +97,8 @@ def get_tsne ():
         abort(400)
     
     latent_dim = request.json['latent_dim']
-    fn = './data/tsne/tsne{}.json'.format(latent_dim)
+    perp = request.json['perplexity']
+    fn = './data/tsne/tsne{}_perp{}.json'.format(latent_dim, perp)
     with open(fn) as data_file:
         data = json.load(data_file)
     

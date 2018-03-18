@@ -4,12 +4,12 @@ import _ from 'lodash'
 
 const margin = {
   top: 10,
-  right: 70,
+  right: 0,
   bottom: 10,
-  left: 70
+  left: 0
 }
-const outerWidth = 1050
-const outerHeight = 600
+const outerWidth = 864
+const outerHeight = 400
 const width = outerWidth - margin.left - margin.right
 const height = outerHeight - margin.top - margin.bottom
 
@@ -175,7 +175,7 @@ function draw (parent) {
     .enter()
     .append("circle")
     .classed("dot", true)
-    .attr('r', () => 5)
+    .attr('r', () => 4)
     .attr('cx', (d) => x(d.x))
     .attr('cy', (d) => y(d.y))
     .style("fill", () => '#000')

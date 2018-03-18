@@ -1,8 +1,7 @@
 <template>
-  <div class="row mt-5">
-    <div class="col-2"></div>
-    <div class="col-8 text-center">
-      <h3 class="mb-3">t-SNE of Latent Space</h3>
+  <div class="row justify-content-center mt-5">
+    <div class="text-center" style="width: 864px">
+      <h3 class="mb-3">t-SNE of the Latent Space</h3>
       You are exploring the {{dim}}-dimensional latent space of a variational auto-encoder
       on a logo database containing 15,000 training samples and 3,656 test samples.
       To generate this plot, we ran t-SNE with perplexity {{perplexity}} for 1,000 iterations.
@@ -20,7 +19,7 @@
             {{perp}}
           </b-dropdown-item>
         </b-dropdown>
-        <b-dropdown text="Data" class="m-2">
+        <b-dropdown :text="`Data: ${all_data_choices[data_slice]}`" class="m-2">
           <b-dropdown-item v-for="c in all_data_choices" @click="changeData(c)">
             {{c}}
           </b-dropdown-item>
@@ -33,11 +32,10 @@
           <hr>
         </div>
         <span v-for="img in images">
-          <img :src="img"/>
+          <img :src="img" class="img-sm"/>
         </span>
       </div>
     </div>
-    <div class="col-2"></div>
   </div>
 </template>
 
@@ -57,12 +55,28 @@
     this.images = []
   }
 
+  /**
+   * Based on the option, slice the data array differentially to be a subset.
+   * @param points An array of points, passed by reference
+   * @param option Slicing option
+   */
+  function sliceData (points, option) {
+    if (option === 0) {
+      setData(_.slice(points, TRAIN_SPLIT))
+    } else if (option === 1) {
+      setData(_.slice(points, 0, TRAIN_SPLIT))
+    } else {
+      setData(points)
+    }
+  }
+
   export default {
     name: 'ScatterPage',
     data () {
       return {
         dim: 32,
         perplexity: 30,
+        data_slice: 1,
         images: [],
         all_dims: [32, 64, 128, 256, 512, 1024],
         all_perplexity: [5, 10, 30, 50, 100],
@@ -78,7 +92,7 @@
     mounted: function () {
       store.getTsnePoints(this.dim, this.perplexity)
         .then((points) => {
-          setData(_.slice(points, TRAIN_SPLIT))
+          sliceData(points, this.data_slice)
           draw('#container')
         }, (e) => {
           this.err = e
@@ -92,7 +106,7 @@
 
         store.getTsnePoints(this.dim, this.perplexity)
           .then((points) => {
-            setData(_.slice(points, TRAIN_SPLIT))
+            sliceData(points, this.data_slice)
             draw('#container')
           }, (e) => {
             this.err = e
@@ -105,7 +119,7 @@
 
         store.getTsnePoints(this.dim, this.perplexity)
           .then((points) => {
-            setData(_.slice(points, TRAIN_SPLIT))
+            sliceData(points, this.data_slice)
             draw('#container')
           }, (e) => {
             this.err = e
@@ -118,13 +132,14 @@
         let points = store.tsne[key]
 
         if (/test/i.test(str)) {
-          setData(_.slice(points, TRAIN_SPLIT))
+          this.data_slice = 0
         } else if (/train/i.test(str)) {
-          setData(_.slice(points, 0, TRAIN_SPLIT))
+          this.data_slice = 1
         } else {
-          setData(points)
+          this.data_slice = 2
         }
 
+        sliceData(points, this.data_slice)
         draw('#container')
       }
     }
@@ -132,6 +147,11 @@
 </script>
 
 <style>
+  .img-sm {
+    width: 48px;
+    height: 48px;
+  }
+
   .axis path,
   .axis line {
     fill: none;
@@ -147,7 +167,7 @@
   }
 
   .dot {
-    fill-opacity: .5;
+    fill-opacity: .4;
   }
 
   .d3-tip {

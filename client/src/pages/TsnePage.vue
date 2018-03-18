@@ -8,7 +8,7 @@
       <div id="container" class="mt-3"></div>
 
       <!--buttons-->
-      <div class="text-left">
+      <div>
         <b-dropdown :text="`Latent Dimensions: ${dim}`" class="m-2">
           <b-dropdown-item v-for="d in all_dims" @click="changeDim(d)">
             {{d}}
@@ -24,6 +24,7 @@
             {{c}}
           </b-dropdown-item>
         </b-dropdown>
+        <b-button v-b-modal.modalStyle>I Need Details</b-button>
       </div>
 
       <!--images-->
@@ -32,10 +33,24 @@
           <hr>
         </div>
         <span v-for="img in images">
-          <img :src="img" class="img-sm"/>
+          <img :src="img" :style="{ width: img_size + 'px', height: img_size + 'px'}"/>
         </span>
       </div>
     </div>
+
+    <!--Style Modal-->
+    <b-modal id="modalStyle"
+             title="Change How Things are Plotted"
+             @ok="handleStyle">
+      <b-form-group label="Dot Radius (in Pixels):"
+                    description="Smaller number reveals finer cluster structure, but I'm trypophobia ...">
+        <b-form-input type="number" v-model="point_size"></b-form-input>
+      </b-form-group>
+      <b-form-group label="Logo Image Size (in Pixels):"
+                    description="Original image size is 64x64 pixels.">
+        <b-form-input type="number" v-model="img_size"></b-form-input>
+      </b-form-group>
+    </b-modal>
   </div>
 </template>
 
@@ -70,6 +85,15 @@
     }
   }
 
+  /**
+   * Wrap the draw function
+   * @param points
+   */
+  function lets_draw (points) {
+    sliceData(points, this.data_slice)
+    draw('#container', this.point_size)
+  }
+
   export default {
     name: 'ScatterPage',
     data () {
@@ -78,6 +102,8 @@
         perplexity: 30,
         data_slice: 1,
         images: [],
+        point_size: 4,
+        img_size: 48,
         all_dims: [32, 64, 128, 256, 512, 1024],
         all_perplexity: [5, 10, 30, 50, 100],
         all_data_choices: ['Test Set', 'Training Set', 'All'],
@@ -92,13 +118,18 @@
     mounted: function () {
       store.getTsnePoints(this.dim, this.perplexity)
         .then((points) => {
-          sliceData(points, this.data_slice)
-          draw('#container')
+          lets_draw.call(this, points)
         }, (e) => {
           this.err = e
         })
     },
     methods: {
+      handleStyle () {
+        let key = `${this.dim}_${this.perplexity}`
+        let points = store.tsne[key]
+        clear.call(this)
+        lets_draw.call(this, points)
+      },
       changeDim (dim) {
         this.dim = dim
 
@@ -106,8 +137,7 @@
 
         store.getTsnePoints(this.dim, this.perplexity)
           .then((points) => {
-            sliceData(points, this.data_slice)
-            draw('#container')
+            lets_draw.call(this, points)
           }, (e) => {
             this.err = e
           })
@@ -119,8 +149,7 @@
 
         store.getTsnePoints(this.dim, this.perplexity)
           .then((points) => {
-            sliceData(points, this.data_slice)
-            draw('#container')
+            lets_draw.call(this, points)
           }, (e) => {
             this.err = e
           })
@@ -139,19 +168,13 @@
           this.data_slice = 2
         }
 
-        sliceData(points, this.data_slice)
-        draw('#container')
+        lets_draw.call(this, points)
       }
     }
   }
 </script>
 
 <style>
-  .img-sm {
-    width: 48px;
-    height: 48px;
-  }
-
   .axis path,
   .axis line {
     fill: none;

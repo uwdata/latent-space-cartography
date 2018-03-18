@@ -8,7 +8,7 @@ const margin = {
   bottom: 10,
   left: 0
 }
-const outerWidth = 864
+const outerWidth = 864 - 200
 const outerHeight = 400
 const width = outerWidth - margin.left - margin.right
 const height = outerHeight - margin.top - margin.bottom
@@ -79,7 +79,7 @@ function brushended (x, y) {
 /**
  * Entry point.
  */
-function draw (parent) {
+function draw (parent, dot_size) {
   let x = d3.scaleLinear()
     .range([0, width]).nice()
 
@@ -146,7 +146,7 @@ function draw (parent) {
   // Y Axis
   svg.append("g")
     .classed("y axis", true)
-    .attr("transform", "translate(10 ,0)")
+    .attr("transform", "translate(20 ,0)")
     .call(yAxis)
 
   // Axes Lines
@@ -163,7 +163,7 @@ function draw (parent) {
     .attr("transform", "translate(0," + height + ")")
   objects.append("svg:line")
     .classed("axisLine vAxisLine", true)
-    .attr("transform", "translate(10 ,0)")
+    .attr("transform", "translate(0 ,0)")
     .attr("x1", 0)
     .attr("y1", 0)
     .attr("x2", 0)
@@ -175,7 +175,7 @@ function draw (parent) {
     .enter()
     .append("circle")
     .classed("dot", true)
-    .attr('r', () => 4)
+    .attr('r', () => dot_size)
     .attr('cx', (d) => x(d.x))
     .attr('cy', (d) => y(d.y))
     .style("fill", () => '#000')

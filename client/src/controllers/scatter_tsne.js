@@ -128,7 +128,7 @@ function draw (parent, dot_size) {
     .attr("height", height)
     .attr("fill", '#fff')
     .call(zoomBeh)
-    .call(tip)
+    // .call(tip)
 
   // Brush
   svg.append("g")

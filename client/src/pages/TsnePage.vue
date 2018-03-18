@@ -24,7 +24,7 @@
             {{c}}
           </b-dropdown-item>
         </b-dropdown>
-        <b-button v-b-modal.modalStyle>I Need Details</b-button>
+        <b-button v-b-modal.modalStyle>I Hate Clutter</b-button>
       </div>
 
       <!--images-->

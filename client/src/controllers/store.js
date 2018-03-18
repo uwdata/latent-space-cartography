@@ -8,7 +8,9 @@ import _ from 'lodash'
 class Store {
   constructor () {
     this.pca = {}
+    // FIXME: latent dim shouldn't be here
     this.latent_dim = 32
+    this.tsne = {}
   }
 
   /**
@@ -16,7 +18,7 @@ class Store {
    * @param dim The latent dimension (since models differ only in latent dim)
    * @returns {Promise}
    */
-  getPoints (dim) {
+  getPcaPoints (dim) {
     this.latent_dim = dim
     return new Promise((resolve, reject) => {
       if (this.pca[dim]) {
@@ -42,6 +44,43 @@ class Store {
     })
   }
 
+  /**
+   * Async get the t-SNE result from server
+   * @param dim
+   */
+  getTsnePoints (dim) {
+    this.latent_dim = dim
+    return new Promise((resolve, reject) => {
+      if (this.tsne[dim]) {
+        resolve(this.tsne[dim])
+        return
+      }
+
+      let payload = {'latent_dim': dim}
+
+      http.post('/api/get_tsne', payload)
+        .then((response) => {
+          let msg = response.data
+
+          if (msg) {
+            this.tsne[dim] = this._formatPoints(msg.data)
+            resolve(this.tsne[dim])
+          } else {
+            reject(`Fail to initialize.`)
+          }
+        }, () => {
+          reject(`Network error.`)
+        })
+    })
+  }
+
+  /**
+   * Given a point in the PCA space, transform it back to latent space and then to images.
+   * @param x
+   * @param y
+   * @param i The index.
+   * @returns {Promise}
+   */
   transformPoint (x, y, i) {
     return new Promise((resolve, reject) => {
       let payload = {'latent_dim': this.latent_dim, 'x': x, 'y': y, 'i': i}

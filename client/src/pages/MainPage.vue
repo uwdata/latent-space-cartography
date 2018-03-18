@@ -17,7 +17,8 @@
     data() {
       return {
         menus: [
-          {link: '/scatter', name: 'PCA - Scatter Plot'},
+          {link: '/tsne', name: 't-SNE'},
+          {link: '/pca', name: 'PCA - 2 Dimensions'},
           {link: '/scatter_canvas', name: 'Scatter Plot in Canvas'},
           {link: '/scatter_svg', name: 'Scatter Plot in SVG'}
         ]

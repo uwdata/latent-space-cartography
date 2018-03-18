@@ -4,6 +4,7 @@ import MainPage from '../pages/MainPage.vue'
 import ScatterCanvasPage from '../pages/ScatterCanvasPage.vue'
 import ScatterSvgPage from '../pages/ScatterSvgPage.vue'
 import ScatterPage from '../pages/ScatterPage.vue'
+import TsnePage from '../pages/TsnePage.vue'
 
 Vue.use(Router)
 
@@ -16,18 +17,23 @@ export default new Router({
     },
     {
       path: '/scatter_canvas',
-      name: 'scatter',
+      name: 'scatter_canvas',
       component: ScatterCanvasPage
     },
     {
       path: '/scatter_svg',
-      name: 'scatter',
+      name: 'scatter_svg',
       component: ScatterSvgPage
     },
     {
-      path: '/scatter',
-      name: 'scatter',
+      path: '/pca',
+      name: 'pca',
       component: ScatterPage
+    },
+    {
+      path: '/tsne',
+      name: 'tsne',
+      component: TsnePage
     }
   ]
 })

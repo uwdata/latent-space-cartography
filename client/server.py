@@ -90,5 +90,18 @@ def pca_back ():
 
     return jsonify({'latent': re[i].tolist(), 'image': img_fn}), 200
 
+# get tsne data
+@app.route('/api/get_tsne', methods=['POST'])
+def get_tsne ():
+    if not request.json or not 'latent_dim' in request.json:
+        abort(400)
+    
+    latent_dim = request.json['latent_dim']
+    fn = './data/tsne/tsne{}.json'.format(latent_dim)
+    with open(fn) as data_file:
+        data = json.load(data_file)
+    
+    return jsonify({'data': data}), 200
+
 if __name__ == '__main__':
     app.run(debug=True)

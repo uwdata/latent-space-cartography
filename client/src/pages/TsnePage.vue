@@ -87,7 +87,7 @@
       })
     },
     mounted: function () {
-      store.getPcaPoints(this.dim)
+      store.getTsnePoints(this.dim)
         .then((points) => {
           setData(_.slice(points, TRAIN_SPLIT))
           draw('#container')
@@ -101,7 +101,7 @@
 
         clear.call(this)
 
-        store.getPcaPoints(this.dim)
+        store.getTsnePoints(this.dim)
           .then((points) => {
             setData(_.slice(points, TRAIN_SPLIT))
             draw('#container')

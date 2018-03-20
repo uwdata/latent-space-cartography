@@ -18,6 +18,10 @@ from flask import request, jsonify
 # re-use keras models
 models = {}
 
+# for absolute path
+def abs_path (rel_path):
+    return os.path.join(os.path.dirname(__file__), rel_path)
+
 # global app
 app = Flask(__name__, static_url_path='')
 
@@ -36,14 +40,13 @@ def serve_data (path):
 
 # get pca data
 # TODO: pca is fast, we don't really need those intermediate files ...
-# TODO: fix all the relative paths
 @app.route('/api/get_pca', methods=['POST'])
 def get_pca ():
     if not request.json or not 'latent_dim' in request.json:
         abort(400)
     
     latent_dim = request.json['latent_dim']
-    fn = './data/pca/pca{}.json'.format(latent_dim)
+    fn = abs_path('./data/pca/pca{}.json'.format(latent_dim))
     with open(fn) as data_file:
         data = json.load(data_file)
     
@@ -61,7 +64,7 @@ def pca_back ():
     i = int(request.json['i'])
     
     # project from 2D to latent space
-    rawpath = './data/latent/latent{}.h5'.format(latent_dim)
+    rawpath = abs_path('./data/latent/latent{}.h5'.format(latent_dim))
     with h5py.File(rawpath, 'r') as f:
         raw = f['latent']
         pca = PCA(n_components=2)
@@ -75,8 +78,8 @@ def pca_back ():
     # project from latent space to image
     if not latent_dim in models:
         base = './data/models/{}/'.format(latent_dim)
-        mpath = base + 'logo_model_dim={}.json'.format(latent_dim)
-        wpath = base + 'logo_model_dim={}.h5'.format(latent_dim)
+        mpath = abs_path(base + 'logo_model_dim={}.json'.format(latent_dim))
+        wpath = abs_path(base + 'logo_model_dim={}.h5'.format(latent_dim))
         m = model.Vae(latent_dim = latent_dim)
         models[latent_dim] = m.read(mpath, wpath) + (m,)
 
@@ -86,7 +89,7 @@ def pca_back ():
 
     img = Image.fromarray(recon, 'RGB')
     img_fn = '{}.png'.format(int(time.time()))
-    img.save('./build/' + img_fn)
+    img.save(abs_path('./build/' + img_fn))
 
     return jsonify({'latent': re[i].tolist(), 'image': img_fn}), 200
 
@@ -98,11 +101,12 @@ def get_tsne ():
     
     latent_dim = request.json['latent_dim']
     perp = request.json['perplexity']
-    fn = './data/tsne/tsne{}_perp{}.json'.format(latent_dim, perp)
+    fn = abs_path('./data/tsne/tsne{}_perp{}.json'.format(latent_dim, perp))
+    print(fn)
     with open(fn) as data_file:
         data = json.load(data_file)
     
     return jsonify({'data': data}), 200
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True) # change to (host= '0.0.0.0') in production

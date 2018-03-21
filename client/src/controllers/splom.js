@@ -15,8 +15,8 @@ class Splom {
     /**
      * Related to drawing
      */
-    this.width = 960
-    this.size = 230
+    this.width = 1000
+    this.size = 120
     this.padding = 20
 
     /**
@@ -49,7 +49,7 @@ class Splom {
     let y = d3.scaleLinear()
       .range([size - padding / 2, padding / 2]).nice()
 
-    let xAxis = d3.axisBottom(x).ticks(6)
+    let xAxis = d3.axisTop(x).ticks(6)
 
     let yAxis = d3.axisLeft(y).ticks(6)
 
@@ -61,7 +61,7 @@ class Splom {
       domainByTrait[trait] = d3.extent(data, (d) => d[trait])
     })
 
-    xAxis.tickSize(size * n)
+    xAxis.tickSize(-size * n)
     yAxis.tickSize(-size * n)
 
     // brush
@@ -119,9 +119,11 @@ class Splom {
       // .fill('#000')
       // .attr('font-size', '20px')
 
-    cell.call(brush)
+    cell.filter((d) => d.i >= d.j).call(brush)
 
     function plot(p) {
+      // skip half of the matrix
+      if (p.i < p.j) return
       let cell = d3.select(this)
 
       x.domain(domainByTrait[p.x])
@@ -167,6 +169,7 @@ class Splom {
     function brushend(p) {
       if (d3.event.selection === null) {
         svg.selectAll("circle").classed("highlight", false)
+        onSelected([])
         return
       }
 

@@ -1,32 +1,35 @@
 <template>
-  <div class="row justify-content-center mt-5">
-    <div class="text-center" style="width: 960px">
+  <div>
+    <!--Title-->
+    <div class="text-center mt-5">
       <h3 class="mb-3">PCA of the Latent Space</h3>
       Total variation explained: {{`${total_var}%`}}
-      <div id="container" class="mt-3"></div>
+    </div>
+    <div class="row justify-content-center">
+      <div class="text-center col-9" style="width: 1000px">
+        <div id="container" class="mt-3"></div>
 
-      <!--buttons-->
-      <div>
-        <b-dropdown :text="`Latent Dimensions: ${dim}`" class="m-2">
-          <b-dropdown-item v-for="d in all_dims" @click="changeDim(d)">
-            {{d}}
-          </b-dropdown-item>
-        </b-dropdown>
-        <b-dropdown :text="`Data: ${all_data_choices[data_slice]}`" class="m-2">
-          <b-dropdown-item v-for="c in all_data_choices" @click="changeData(c)">
-            {{c}}
-          </b-dropdown-item>
-        </b-dropdown>
-      </div>
-
-      <!--images-->
-      <div class="text-left mt-3">
-        <div v-if="images.length" class="pb-3">
-          <hr>
+        <!--buttons-->
+        <div>
+          <b-dropdown :text="`Latent Dimensions: ${dim}`" class="m-2">
+            <b-dropdown-item v-for="d in all_dims" @click="changeDim(d)">
+              {{d}}
+            </b-dropdown-item>
+          </b-dropdown>
+          <b-dropdown :text="`Data: ${all_data_choices[data_slice]}`" class="m-2">
+            <b-dropdown-item v-for="c in all_data_choices" @click="changeData(c)">
+              {{c}}
+            </b-dropdown-item>
+          </b-dropdown>
         </div>
+      </div>
+      <div class="col-3 img-panel" :style="{marginTop: scroll_top + 'px'}">
+        <!--images-->
+        <div class="text-left mt-5">
         <span v-for="img in images">
           <img :src="img" :style="{ width: img_size + 'px', height: img_size + 'px'}"/>
         </span>
+        </div>
       </div>
     </div>
   </div>
@@ -37,7 +40,7 @@
   import {store, log_debug, TRAIN_SPLIT} from '../controllers/config'
   import _ from 'lodash'
 
-  const PCA_DIM = 4
+  const PCA_DIM = 8
   let splom = new Splom(PCA_DIM)
 
   function clear () {
@@ -91,6 +94,7 @@
         images: [],
         all_dims: [32, 64, 128, 256, 512, 1024],
         all_data_choices: ['Test Set', 'Training Set', 'All'],
+        scroll_top: 0,
         err: ''
       }
     },
@@ -98,6 +102,10 @@
       splom.onSelected = (images) => {
         this.images = images
       }
+      window.addEventListener('scroll', this.handleScroll)
+    },
+    destroyed: function () {
+      window.removeEventListener('scroll', this.handleScroll)
     },
     mounted: function () {
       store.getPcaPoints(this.dim, PCA_DIM)
@@ -135,6 +143,14 @@
         }
 
         lets_draw.call(this, points)
+      },
+      handleScroll (event) {
+        let y = window.scrollY
+        if (y > 400) {
+          this.scroll_top = 400
+        } else {
+          this.scroll_top = 0
+        }
       }
     }
   }
@@ -183,5 +199,10 @@
     fill: #000;
     fill-opacity: .125;
     stroke: #fff;
+  }
+
+  .img-panel {
+    height: 480px;
+    overflow-y: scroll;
   }
 </style>

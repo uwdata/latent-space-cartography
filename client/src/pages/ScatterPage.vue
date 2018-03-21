@@ -2,8 +2,9 @@
   <div class="row mt-5">
     <div class="col-2"></div>
     <div class="col-8 text-center">
-      <h3 class="mb-3">Some Title.</h3>
-      This is a description.
+      <h3 class="mb-3">PCA of Latent Space</h3>
+      The first two principal components account for {{formatVar(variation[0])}} and
+      {{formatVar(variation[1])}} of the variation, respectively.
       <div id="container" class="mt-3"></div>
 
       <!--buttons-->
@@ -62,6 +63,7 @@
         dim: 32,
         recon: null,
         recon_loading: false,
+        variation: [],
         images: [],
         all_dims: [32, 64, 128, 256, 512, 1024],
         all_data_choices: ['Test Set', 'Training Set', 'All'],
@@ -90,6 +92,8 @@
       store.getPcaPoints(this.dim)
         .then((points) => {
           setData(_.slice(points, TRAIN_SPLIT))
+          this.variation = store.getPcaVarSync(this.dim)
+          log_debug(points[0])
           draw('#container')
         }, (e) => {
           this.err = e
@@ -104,6 +108,7 @@
         store.getPcaPoints(this.dim)
           .then((points) => {
             setData(_.slice(points, TRAIN_SPLIT))
+            this.variation = store.getPcaVarSync(this.dim)
             draw('#container')
           }, (e) => {
             this.err = e
@@ -112,7 +117,7 @@
       changeData (str) {
         clear.call(this)
 
-        let points = store.pca[this.dim]
+        let points = store.getPcaPointsSync(this.dim)
 
         if (/test/i.test(str)) {
           setData(_.slice(points, TRAIN_SPLIT))
@@ -123,6 +128,12 @@
         }
 
         draw('#container')
+      },
+      formatVar (v) {
+        if (!v) {
+          return '0%'
+        }
+        return `${(Number(v) * 100).toFixed(2)}%`
       }
     }
   }

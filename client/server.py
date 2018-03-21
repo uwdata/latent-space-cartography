@@ -39,18 +39,24 @@ def serve_data (path):
     return send_from_directory('data', path)
 
 # get pca data
-# TODO: pca is fast, we don't really need those intermediate files ...
 @app.route('/api/get_pca', methods=['POST'])
 def get_pca ():
     if not request.json or not 'latent_dim' in request.json:
         abort(400)
     
     latent_dim = request.json['latent_dim']
-    fn = abs_path('./data/pca/pca{}.json'.format(latent_dim))
-    with open(fn) as data_file:
-        data = json.load(data_file)
-    
-    return jsonify({'data': data}), 200
+    pca_dim = int(request.json['pca_dim'])
+
+    rawpath = abs_path('./data/latent/latent{}.h5'.format(latent_dim))
+    with h5py.File(rawpath, 'r') as f:
+        raw = f['latent']
+        pca = PCA(n_components = pca_dim)
+        d = pca.fit_transform(raw)
+        va = pca.explained_variance_ratio_
+
+    print 'Explained variation per principal component: {}'.format(va)
+
+    return jsonify({'data': d.tolist(), 'variation': va.tolist()}), 200
 
 # PCA backward projection
 @app.route('/api/pca_back', methods=['POST'])

@@ -18,6 +18,7 @@
       return {
         menus: [
           {link: '/tsne', name: 't-SNE'},
+          {link: '/splom', name: 'PCA - Scatter Plots Matrix'},
           {link: '/pca', name: 'PCA - 2 Dimensions'},
           {link: '/scatter_canvas', name: 'Scatter Plot in Canvas'},
           {link: '/scatter_svg', name: 'Scatter Plot in SVG'}

@@ -5,6 +5,7 @@ import ScatterCanvasPage from '../pages/ScatterCanvasPage.vue'
 import ScatterSvgPage from '../pages/ScatterSvgPage.vue'
 import ScatterPage from '../pages/ScatterPage.vue'
 import TsnePage from '../pages/TsnePage.vue'
+import SplomPage from '../pages/SplomPage.vue'
 
 Vue.use(Router)
 
@@ -34,6 +35,11 @@ export default new Router({
       path: '/tsne',
       name: 'tsne',
       component: TsnePage
+    },
+    {
+      path: '/splom',
+      name: 'splom',
+      component: SplomPage
     }
   ]
 })

@@ -84,16 +84,17 @@ class Store {
    * Async get the t-SNE result from server
    * @param dim
    * @param perp t-SNE perplexity parameter.
+   * @param pca
    */
-  getTsnePoints (dim, perp) {
-    let key = `${dim}_${perp}`
+  getTsnePoints (dim, perp, pca = false) {
+    let key = this.tsneKey(dim, perp, pca)
     return new Promise((resolve, reject) => {
       if (this.tsne[key]) {
         resolve(this.tsne[key])
         return
       }
 
-      let payload = {'latent_dim': dim, 'perplexity': perp}
+      let payload = {'latent_dim': dim, 'perplexity': perp, 'pca': pca}
 
       http.post('/api/get_tsne', payload)
         .then((response) => {
@@ -109,6 +110,10 @@ class Store {
           reject(`Network error.`)
         })
     })
+  }
+
+  tsneKey (dim, perp, pca = false) {
+    return `${dim}_${perp}_${pca ? 'pca' : ''}`
   }
 
   /**

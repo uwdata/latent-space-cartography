@@ -24,7 +24,7 @@
             {{c}}
           </b-dropdown-item>
         </b-dropdown>
-        <b-button v-b-modal.modalStyle>I Hate Clutter</b-button>
+        <b-button v-b-modal.modalStyle>Secret</b-button>
       </div>
 
       <!--images-->
@@ -100,11 +100,12 @@
       return {
         dim: 32,
         perplexity: 30,
+        pca: false,
         data_slice: 1,
         images: [],
-        point_size: 4,
+        point_size: 2,
         img_size: 48,
-        all_dims: [32, 64, 128, 256, 512, 1024],
+        all_dims: [32, 64, 128, 256, 512, 1024, '512-PC50', '1024-PC50', '12288-PC50'],
         all_perplexity: [5, 10, 30, 50, 100],
         all_data_choices: ['Test Set', 'Training Set', 'All'],
         err: ''
@@ -125,17 +126,23 @@
     },
     methods: {
       handleStyle () {
-        let key = `${this.dim}_${this.perplexity}`
+        let key = store.tsneKey(this.dim, this.perplexity, this.pca)
         let points = store.tsne[key]
         clear.call(this)
         lets_draw.call(this, points)
       },
       changeDim (dim) {
-        this.dim = dim
+        if (typeof dim === 'number') {
+          this.dim = dim
+          this.pca = false
+        } else {
+          this.dim = Number(dim.split('-')[0])
+          this.pca = true
+        }
 
         clear.call(this)
 
-        store.getTsnePoints(this.dim, this.perplexity)
+        store.getTsnePoints(this.dim, this.perplexity, this.pca)
           .then((points) => {
             lets_draw.call(this, points)
           }, (e) => {
@@ -147,7 +154,7 @@
 
         clear.call(this)
 
-        store.getTsnePoints(this.dim, this.perplexity)
+        store.getTsnePoints(this.dim, this.perplexity, this.pca)
           .then((points) => {
             lets_draw.call(this, points)
           }, (e) => {
@@ -157,7 +164,7 @@
       changeData (str) {
         clear.call(this)
 
-        let key = `${this.dim}_${this.perplexity}`
+        let key = store.tsneKey(this.dim, this.perplexity, this.pca)
         let points = store.tsne[key]
 
         if (/test/i.test(str)) {

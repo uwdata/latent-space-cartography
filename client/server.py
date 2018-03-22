@@ -107,7 +107,8 @@ def get_tsne ():
     
     latent_dim = request.json['latent_dim']
     perp = request.json['perplexity']
-    fn = abs_path('./data/tsne/tsne{}_perp{}.json'.format(latent_dim, perp))
+    suffix = '_pca' if request.json['pca'] else ''
+    fn = abs_path('./data/tsne/tsne{}_perp{}{}.json'.format(latent_dim, perp, suffix))
     print(fn)
     with open(fn) as data_file:
         data = json.load(data_file)

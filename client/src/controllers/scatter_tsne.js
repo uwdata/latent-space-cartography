@@ -37,7 +37,7 @@ function brushing (x, y) {
 
   // change color of selected points
   d3.selectAll('.dot')
-    .style('fill', () => '#000')
+    .style('fill', () => '#aaa')
     .filter((p) => {
       return p.x >= scales[0] && p.x <= scales[2] && p.y >= scales[3] && p.y <=scales[1]
     })
@@ -144,7 +144,7 @@ function draw (parent, dot_size) {
     .attr('r', () => dot_size)
     .attr('cx', (d) => x(d.x))
     .attr('cy', (d) => y(d.y))
-    .style("fill", () => '#000')
+    .style("fill", () => '#aaa')
 
   // Brush
   objects.append("g")

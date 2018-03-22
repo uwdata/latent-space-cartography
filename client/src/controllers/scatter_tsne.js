@@ -1,5 +1,4 @@
 import * as d3 from 'd3'
-import d3Tip from 'd3-tip'
 import _ from 'lodash'
 
 const margin = {
@@ -15,21 +14,6 @@ const height = outerHeight - margin.top - margin.bottom
 
 let data = []
 let callback = () => {}
-
-function zoom (svg, x, y, xAxis, yAxis) {
-  // create new scales
-  let new_xScale = d3.event.transform.rescaleX(x)
-  let new_yScale = d3.event.transform.rescaleY(y)
-
-  // update axes
-  svg.select(".x.axis").call(xAxis.scale(new_xScale))
-  svg.select(".y.axis").call(yAxis.scale(new_yScale))
-
-  // update dots
-  svg.selectAll(".dot")
-    .attr('cx', (d) => new_xScale(d.x))
-    .attr('cy', (d) => new_yScale(d.y))
-}
 
 /**
  * Change data.
@@ -103,39 +87,21 @@ function draw (parent, dot_size) {
     .attr("width", outerWidth)
     .attr("height", outerHeight)
 
-  // Hookup tooltip and zoom
-  let tip = d3Tip()
-    .attr("class", "d3-tip")
-    .offset([-10, 0])
-    .html(function(d) {
-      return `<img src="/data/logos/${d.i}.jpg" alt="Logo Image"/>`
-    })
-
-  let boundZoom = zoom.bind(window, svg, x, y, xAxis, yAxis)
   let boundBrushend = brushended.bind(window, x, y)
   let boundBrushing = brushing.bind(window, x, y)
 
-  let zoomBeh = d3.zoom()
-    .on("zoom", boundZoom)
+  let brush = d3.brush()
+    .on('brush', boundBrushing)
+    .on("end", boundBrushend)
 
   svg.append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
-    .call(zoomBeh)
 
   // Blank
   svg.append("rect")
     .attr("width", width)
     .attr("height", height)
     .attr("fill", '#fff')
-    .call(zoomBeh)
-    // .call(tip)
-
-  // Brush
-  svg.append("g")
-    .attr("class", "brush")
-    .call(d3.brush()
-      .on('brush', boundBrushing)
-      .on("end", boundBrushend))
 
   // X Axis
   svg.append("g")
@@ -179,8 +145,11 @@ function draw (parent, dot_size) {
     .attr('cx', (d) => x(d.x))
     .attr('cy', (d) => y(d.y))
     .style("fill", () => '#000')
-    // .on('mouseover', tip.show)
-    // .on("mouseout", tip.hide)
+
+  // Brush
+  objects.append("g")
+    .attr("class", "brush")
+    .call(brush)
 }
 
 export {draw, setData, setCb}

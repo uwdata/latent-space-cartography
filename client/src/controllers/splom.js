@@ -141,7 +141,7 @@ class Splom {
         .enter().append("circle")
         .attr("cx", (d) => x(d[p.x]))
         .attr("cy", (d) => y(d[p.y]))
-        .attr("r", 3)
+        .attr("r", 2)
     }
 
     function brushstart(p) {

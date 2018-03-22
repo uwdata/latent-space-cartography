@@ -6,7 +6,7 @@
       Total variation explained: {{`${total_var}%`}}
     </div>
     <div class="row justify-content-center">
-      <div class="text-center col-9" style="width: 1000px">
+      <div class="text-center col-8" style="width: 1000px">
         <div id="container" class="mt-3"></div>
 
         <!--buttons-->
@@ -21,6 +21,17 @@
               {{c}}
             </b-dropdown-item>
           </b-dropdown>
+        </div>
+      </div>
+      <!--Side Views-->
+      <!--TODO: hardcode-->
+      <div class="col-1">
+        <div style="margin-top: 40px"></div>
+        <div v-for="pc in [0,1,2,3,4,5,6,7]" style="padding-bottom: 20px" class="pl-3">
+          <div v-for="j in [2,1,0,-1,-2]" style="height: 20px">
+            <img :src="`/data/splom/dim${dim}_pc${pc}_${j}.png`"
+                 style="width: 20px; height: 20px;"/>
+          </div>
         </div>
       </div>
       <div class="col-3 img-panel" :style="{marginTop: scroll_top + 'px'}">

@@ -12,6 +12,9 @@ base = '/Users/yliu0/data/'
 output = os.path.join(os.path.dirname(__file__), '../output/')
 merged = os.path.join(output, 'merged')
 h5 = os.path.join(base, 'logos.hdf5')
+fn_index = os.path.join(output, 'index.csv')
+fn_meta = os.path.join(output, 'meta.csv')
+fn_all = os.path.join(output, 'database.csv')
 
 img_size = 64
 
@@ -42,7 +45,7 @@ def stats ():
 # create an CSV file, mapping index to image file name
 def save_index ():
     i = 0
-    with open(os.path.join(output, 'index.csv'), 'wb') as csvfile:
+    with open(fn_index, 'wb') as csvfile:
         writer = csv.writer(csvfile, delimiter = ',')
         for img in os.listdir(merged):
             fpath = os.path.join(merged, img)
@@ -71,6 +74,7 @@ def safe_key (arr, key):
 def save_meta ():
     d = {} # key by image name
     regex = re.compile('\..+')
+    count = 0 # number of duplicates
 
     for f in os.listdir(output):
         _, ext = os.path.splitext(f)
@@ -81,11 +85,11 @@ def save_meta ():
                 for item in arr:
                     if len(item['files']) > 0:
                         fn = item['files'][0]['path']
-                        fn = re.sub(regex, '.jpg', fn) # replace weird extension
+                        if not fn.endswith('.png'):
+                            fn = re.sub(regex, '.jpg', fn) # replace weird extension
                         fn = fn.replace('full/', '', 1) # strip off prefix
                         if fn in d:
-                            if d[fn]['name'] != item['name']:
-                                print '{} has conflicting names: {}, {}'.format(fn, d[fn]['name'], item['name'])
+                            count += 1
                         else:
                             url = safe_key(item, 'website')
                             name = safe_key(item, 'name')
@@ -94,18 +98,44 @@ def save_meta ():
                             employees = safe_key(item, 'employees')
                             founded = safe_key(item, 'founded')
 
-                            # our schema: filename, name, url, industry, country, employees, founded
-                            row = [fn, name, url, industry, country, employees, founded]
-                            d[name] = row
+                            row = [fn, name, url, industry, country, employees, founded, f.replace('.json', '')]
+                            d[fn] = row
 
-    with open(os.path.join(output, 'meta.csv'), 'wb') as csvfile:
+    with open(fn_meta, 'wb') as csvfile:
         writer = csv.writer(csvfile, delimiter = ',')
-        writer.writerow(['Filename', 'Company Name', 'URL', 'Industry','Country', 'Emloyees', 'Founded'])
+        writer.writerow(['Filename', 'Company Name', 'URL', 'Industry','Country', 'Emloyees', 'Founded', 'Data Source'])
         for key in d:
             writer.writerow(d[key])
 
+    print 'Done: {} duplicates.'.format(count)
+
+# combine the two CSV files by joining image file names
+def combine ():
+    d = {} # key by image name
+    schema = ['Index']
+    with open(fn_meta, 'r') as csvfile:
+        reader = csv.reader(csvfile, delimiter = ',')
+        for row in reader:
+            if row[0] == 'Filename':
+                schema += row
+            else:
+                d[row[0]] = row
+
+    with open(fn_index, 'r') as csvfile:
+        reader = csv.reader(csvfile, delimiter = ',')
+        with open(fn_all, 'wb') as f:
+            writer = csv.writer(f, delimiter = ',')
+            writer.writerow(schema)
+            for row in reader:
+                key = row[1]
+                if not key in d:
+                    print 'Missing meta: {}'.format(key)
+                    continue
+                row = row[:-1] + d[key]
+                writer.writerow(row)
+
 if __name__ == '__main__':
-    stats()
-    save_index()
-    save_meta()
-   
+    # stats()
+    # save_index()
+    # save_meta()
+    combine()

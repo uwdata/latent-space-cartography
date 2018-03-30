@@ -6,6 +6,7 @@ import h5py
 import csv
 import json
 import re
+import numpy as np
 from PIL import Image
 
 base = '/Users/yliu0/data/'
@@ -17,6 +18,7 @@ fn_meta = os.path.join(output, 'meta.csv')
 fn_all = os.path.join(output, 'database.csv')
 
 img_size = 64
+num_chns = 3
 
 # helper function since we skipped some images
 def read_img (fn):
@@ -24,6 +26,19 @@ def read_img (fn):
     w, h = img.size
     if w != img_size or h != img_size:
         raise ValueError('Bad size.')
+
+# given an image uint array of shape (w, h, channel)
+# return a single hex color
+def average_color (arr):
+    arr = arr.reshape((img_size * img_size, num_chns))
+    avg = np.floor(np.mean(arr, axis = 0))
+    # get the hex code
+    code = ''
+    for index, x in np.ndenumerate(avg):
+        c = hex(x)[2:-1] # remove '0x' at the beginning
+        c += '0' if len(c) == 1 else '' # if number is single digit, pad with 0
+        code += c
+    return '#' + code
 
 # print out the number of valid versus invalid images
 def stats ():
@@ -43,8 +58,12 @@ def stats ():
     print '{} valid image, {} invalid'.format(i, j)
 
 # create an CSV file, mapping index to image file name
+# also augment with average color across all pixels
 def save_index ():
     i = 0
+    f = h5py.File(h5, 'r')
+    dset = f['logos']
+
     with open(fn_index, 'wb') as csvfile:
         writer = csv.writer(csvfile, delimiter = ',')
         for img in os.listdir(merged):
@@ -54,8 +73,10 @@ def save_index ():
             except:
                 continue
             
-            writer.writerow([i, img])
+            color = average_color(dset[i])
+            writer.writerow([i, img, color])
             i += 1
+    f.close()
 
 # save the i-th image from h5py, for debugging
 def visualize (i):
@@ -63,6 +84,8 @@ def visualize (i):
     dset = f['logos']
     img = Image.fromarray(dset[i], 'RGB')
     img.save('probe{}.png'.format(i))
+
+    f.close()
 
 def safe_key (arr, key):
     s = arr[key] if key in arr else None
@@ -117,7 +140,7 @@ def combine ():
         reader = csv.reader(csvfile, delimiter = ',')
         for row in reader:
             if row[0] == 'Filename':
-                schema += row
+                schema += row + ['Mean Color']
             else:
                 d[row[0]] = row
 
@@ -131,7 +154,7 @@ def combine ():
                 if not key in d:
                     print 'Missing meta: {}'.format(key)
                     continue
-                row = row[:-1] + d[key]
+                row = row[:1] + d[key] + row[-1:]
                 writer.writerow(row)
 
 if __name__ == '__main__':

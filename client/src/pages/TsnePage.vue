@@ -24,7 +24,7 @@
             {{c}}
           </b-dropdown-item>
         </b-dropdown>
-        <b-button v-b-modal.modalStyle>Secret</b-button>
+        <b-button v-b-modal.modalStyle>Style</b-button>
       </div>
 
       <!--images-->
@@ -43,7 +43,7 @@
              title="Change How Things are Plotted"
              @ok="handleStyle">
       <b-form-group label="Dot Radius (in Pixels):"
-                    description="Smaller number reveals finer cluster structure, but I'm trypophobia ...">
+                    description="Smaller number reveals finer cluster structure. Larger number cures trypophobia.">
         <b-form-input type="number" v-model="point_size"></b-form-input>
       </b-form-group>
       <b-form-group label="Logo Image Size (in Pixels):"
@@ -117,7 +117,10 @@
       })
     },
     mounted: function () {
-      store.getTsnePoints(this.dim, this.perplexity)
+      store.getMeta()
+        .then((meta) => {
+          return store.getTsnePoints(this.dim, this.perplexity)
+        })
         .then((points) => {
           lets_draw.call(this, points)
         }, (e) => {

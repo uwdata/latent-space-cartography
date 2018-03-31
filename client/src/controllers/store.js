@@ -17,8 +17,51 @@ class Store {
      */
     this.tsne = {}
 
+    /**
+     * Image meta data, including index, company name, average color, and more.
+     */
+    this.meta = []
+
     // FIXME: latent dim shouldn't be here
     this.latent_dim = 32
+  }
+
+  /**
+   * Async get the image meta data from server.
+   * @returns {Promise}
+   */
+  getMeta () {
+    return new Promise((resolve, reject) => {
+      // we already have the meta data locally
+      if (this.meta.length) {
+        resolve(this.meta)
+        return
+      }
+
+      // data schema
+      let schema = ['i', 'name', 'mean_color']
+
+      // go fetch from the server
+      http.post('/api/get_meta', {})
+        .then((response) => {
+          let msg = response.data
+
+          if (msg) {
+            this.meta = _.map(msg.data, (m) => {
+              let result = {}
+              _.each(m, (val, idx) => {
+                result[schema[idx]] = val
+              })
+              return result
+            })
+            resolve(this.meta)
+          } else {
+            reject(`Fail to initialize.`)
+          }
+        }, () => {
+          reject(`Network error.`)
+        })
+    })
   }
 
   /**
@@ -112,6 +155,14 @@ class Store {
     })
   }
 
+  /**
+   * Get the dictionary key for a particular t-SNE result.
+   * Then you can retrieve the result in this.tsne[key]
+   * @param dim
+   * @param perp
+   * @param pca
+   * @returns {string}
+   */
   tsneKey (dim, perp, pca = false) {
     return `${dim}_${perp}_${pca ? 'pca' : ''}`
   }

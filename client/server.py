@@ -14,6 +14,7 @@ import model
 
 from flask import Flask, send_from_directory, send_file
 from flask import request, jsonify
+from flaskext.mysql import MySQL
 
 # re-use keras models
 models = {}
@@ -22,8 +23,22 @@ models = {}
 def abs_path (rel_path):
     return os.path.join(os.path.dirname(__file__), rel_path)
 
-# global app
+def connect_db ():
+    # read config file
+    with open(abs_path('mysql_config.json')) as jsonfile:
+        app.config.update(json.load(jsonfile))
+    
+    mysql = MySQL()
+    mysql.init_app(app)
+    conn = mysql.connect()
+    cursor =conn.cursor()
+    print 'MySQL connected!'
+
+    return cursor
+
+# global app and DB cursor
 app = Flask(__name__, static_url_path='')
+cursor = connect_db()
 
 # static files
 @app.route('/')
@@ -113,6 +128,13 @@ def get_tsne ():
     with open(fn) as data_file:
         data = json.load(data_file)
     
+    return jsonify({'data': data}), 200
+
+# get meta data
+@app.route('/api/get_meta', methods=['POST'])
+def get_meta ():
+    cursor.execute('SELECT i,name,mean_color FROM meta')
+    data = [list(i) for i in cursor.fetchall()]
     return jsonify({'data': data}), 200
 
 if __name__ == '__main__':

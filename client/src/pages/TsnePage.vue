@@ -117,11 +117,9 @@
       })
     },
     mounted: function () {
-      store.getMeta()
-        .then((meta) => {
-          return store.getTsnePoints(this.dim, this.perplexity)
-        })
+      store.getTsnePoints(this.dim, this.perplexity)
         .then((points) => {
+          log_debug(points[0])
           lets_draw.call(this, points)
         }, (e) => {
           this.err = e
@@ -200,7 +198,12 @@
   }
 
   .dot {
-    fill-opacity: .4;
+    fill-opacity: .8;
+  }
+
+  .dot.muted {
+    fill: #aaa !important;
+    fill-opacity: .4 !important;
   }
 
   .d3-tip {

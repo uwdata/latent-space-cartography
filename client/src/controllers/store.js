@@ -80,7 +80,10 @@ class Store {
 
       let payload = {'latent_dim': dim, 'pca_dim': pca_dim}
 
-      http.post('/api/get_pca', payload)
+      this.getMeta()
+        .then(() => {
+          return http.post('/api/get_pca', payload)
+        })
         .then((response) => {
           let msg = response.data
 
@@ -139,7 +142,10 @@ class Store {
 
       let payload = {'latent_dim': dim, 'perplexity': perp, 'pca': pca}
 
-      http.post('/api/get_tsne', payload)
+      this.getMeta()
+        .then(() => {
+          return http.post('/api/get_tsne', payload)
+        })
         .then((response) => {
           let msg = response.data
 
@@ -193,9 +199,18 @@ class Store {
     })
   }
 
+  /**
+   * Perform a join between given points array and meta, with key 'i'
+   * @param points
+   * @private
+   */
+  _joinMeta (points) {
+    return _.map(points, (p) => _.assign(p, _.find(this.meta, {i: p.i})))
+  }
+
   _formatPcaPoints (points) {
     // points is a 2D array with shape: (length, n_components)
-    return _.map(points, (p, i) => {
+    return this._joinMeta(_.map(points, (p, i) => {
       // p is a 1D array containing n_components float
       let res = {i: i}
 
@@ -208,17 +223,17 @@ class Store {
       res['x'] = res['PC0']
       res['y'] = res['PC1']
       return res
-    })
+    }))
   }
 
   _formatPoints (points) {
-    return _.map(points, (p) => {
+    return this._joinMeta(_.map(points, (p) => {
       return {
         'x': Number(p.x),
         'y': Number(p.y),
         'i': p.i
       }
-    })
+    }))
   }
 }
 

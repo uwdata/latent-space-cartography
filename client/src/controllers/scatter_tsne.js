@@ -28,6 +28,10 @@ function setCb (fn) {
   callback = fn
 }
 
+function brushstart() {
+  d3.selectAll('.dot').classed('muted', false)
+}
+
 function brushing (x, y) {
   if (!d3.event.selection) return // empty selection
 
@@ -37,11 +41,10 @@ function brushing (x, y) {
 
   // change color of selected points
   d3.selectAll('.dot')
-    .style('fill', () => '#aaa')
-    .filter((p) => {
-      return p.x >= scales[0] && p.x <= scales[2] && p.y >= scales[3] && p.y <=scales[1]
+    .classed('muted', (p) => {
+      let inside = p.x >= scales[0] && p.x <= scales[2] && p.y >= scales[3] && p.y <=scales[1]
+      return !inside
     })
-    .style('fill', () => '#f00')
 }
 
 function brushended (x, y) {
@@ -89,8 +92,10 @@ function draw (parent, dot_size) {
 
   let boundBrushend = brushended.bind(window, x, y)
   let boundBrushing = brushing.bind(window, x, y)
+  let boundBrushstart = brushstart.bind(window)
 
   let brush = d3.brush()
+    .on('start', boundBrushstart)
     .on('brush', boundBrushing)
     .on("end", boundBrushend)
 
@@ -144,7 +149,7 @@ function draw (parent, dot_size) {
     .attr('r', () => dot_size)
     .attr('cx', (d) => x(d.x))
     .attr('cy', (d) => y(d.y))
-    .style("fill", () => '#aaa')
+    .style("fill", (d) => d['mean_color'])
 
   // Brush
   objects.append("g")

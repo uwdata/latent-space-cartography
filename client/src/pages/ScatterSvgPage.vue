@@ -24,7 +24,7 @@
   }
 </script>
 
-<style>
+<style scoped>
   .axis path,
   .axis line {
     fill: none;

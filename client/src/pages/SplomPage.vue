@@ -121,7 +121,7 @@
     mounted: function () {
       store.getPcaPoints(this.dim, PCA_DIM)
         .then((points) => {
-          log_debug(points)
+          log_debug(points[0])
           lets_draw.call(this, points)
         }, (e) => {
           this.err = e
@@ -198,12 +198,11 @@
   }
 
   circle {
-    fill-opacity: .4;
-    fill: #ccc;
+    fill-opacity: .8;
   }
-
-  circle.highlight {
-    fill: #d62728 !important;
+  circle.muted {
+    fill-opacity: .4 !important;
+    fill: #ccc !important;
   }
 
   .extent {

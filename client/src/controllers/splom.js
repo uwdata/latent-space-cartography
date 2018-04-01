@@ -123,7 +123,7 @@ class Splom {
 
     function plot(p) {
       // skip half of the matrix
-      if (p.i < p.j) return
+      // if (p.i < p.j) return
       let cell = d3.select(this)
 
       x.domain(domainByTrait[p.x])
@@ -142,6 +142,7 @@ class Splom {
         .attr("cx", (d) => x(d[p.x]))
         .attr("cy", (d) => y(d[p.y]))
         .attr("r", 2)
+        .style("fill", (d) => d['mean_color'])
     }
 
     function brushstart(p) {
@@ -160,15 +161,16 @@ class Splom {
       let sel = _.flatten(d3.event.selection)
       let e = _.map(sel, (s, idx) => idx % 2 ? y.invert(s) : x.invert(s))
 
-      svg.selectAll("circle").classed("highlight", (d) => {
-        return d[p.x] >= e[0] && d[p.x] <= e[2]
+      svg.selectAll("circle").classed("muted", (d) => {
+        let inside = d[p.x] >= e[0] && d[p.x] <= e[2]
           && d[p.y] >= e[3] && d[p.y] <= e[1]
+        return !inside
       })
     }
 
     function brushend(p) {
       if (d3.event.selection === null) {
-        svg.selectAll("circle").classed("highlight", false)
+        svg.selectAll("circle").classed("muted", false)
         onSelected([])
         return
       }

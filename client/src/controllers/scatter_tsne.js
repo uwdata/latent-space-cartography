@@ -30,6 +30,7 @@ function setCb (fn) {
 
 function brushstart() {
   d3.selectAll('.dot').classed('muted', false)
+  callback([])
 }
 
 function brushing (x, y) {

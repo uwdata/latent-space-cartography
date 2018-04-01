@@ -155,7 +155,11 @@
   }
 
   .dot {
-    fill-opacity: .5;
+    fill-opacity: .8;
+  }
+  .dot.muted {
+    fill: #ccc !important;
+    fill-opacity: .4 !important;
   }
 
   .d3-tip {

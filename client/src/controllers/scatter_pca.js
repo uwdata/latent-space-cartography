@@ -49,6 +49,11 @@ function setPca (fn) {
   pca_back = fn
 }
 
+function brushstart() {
+  d3.selectAll('.dot').classed('muted', false)
+  callback([])
+}
+
 function brushing (x, y) {
   if (!d3.event.selection) return // empty selection
 
@@ -58,11 +63,10 @@ function brushing (x, y) {
 
   // change color of selected points
   d3.selectAll('.dot')
-    .style('fill', () => '#000')
-    .filter((p) => {
-      return p.x >= scales[0] && p.x <= scales[2] && p.y >= scales[3] && p.y <=scales[1]
+    .classed('muted', (p) => {
+      let inside = p.x >= scales[0] && p.x <= scales[2] && p.y >= scales[3] && p.y <=scales[1]
+      return !inside
     })
-    .style('fill', () => '#f00')
 }
 
 function brushended (x, y) {
@@ -119,6 +123,7 @@ function draw (parent) {
   let boundZoom = zoom.bind(window, svg, x, y, xAxis, yAxis)
   let boundBrushend = brushended.bind(window, x, y)
   let boundBrushing = brushing.bind(window, x, y)
+  let boundBrushstart = brushstart.bind(window)
 
   let zoomBeh = d3.zoom()
     .on("zoom", boundZoom)
@@ -168,6 +173,7 @@ function draw (parent) {
   svg.append("g")
     .attr("class", "brush")
     .call(d3.brush()
+      .on('start', boundBrushstart)
       .on('brush', boundBrushing)
       .on("end", boundBrushend))
 
@@ -212,7 +218,7 @@ function draw (parent) {
     .attr('r', () => 5)
     .attr('cx', (d) => x(d.x))
     .attr('cy', (d) => y(d.y))
-    .style("fill", () => '#000')
+    .style("fill", (d) => d['mean_color'])
     .call(dragger)
     // .on('mouseover', tip.show)
     // .on("mouseout", tip.hide)

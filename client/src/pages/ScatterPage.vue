@@ -40,9 +40,11 @@
 </template>
 
 <script>
-  import {draw, setData, setCb, setPca} from '../controllers/scatter_pca'
+  import Scatter from '../controllers/scatter_pca'
   import {store, log_debug, TRAIN_SPLIT} from '../controllers/config'
   import _ from 'lodash'
+
+  let scatter = new Scatter()
 
   function clear () {
     // remove all nodes
@@ -56,11 +58,37 @@
     this.recon = null
   }
 
+  /**
+   * Based on the option, slice the data array differentially to be a subset.
+   * @param points An array of points, passed by reference
+   * @param option Slicing option
+   */
+  function sliceData (points, option) {
+    if (option === 0) {
+      scatter.setData(_.slice(points, TRAIN_SPLIT))
+    } else if (option === 1) {
+      scatter.setData(_.slice(points, 0, TRAIN_SPLIT))
+    } else {
+      scatter.setData(points)
+    }
+  }
+
+  /**
+   * Wrap the draw function
+   * @param points
+   */
+  function lets_draw (points) {
+    sliceData(points, this.data_slice)
+    this.variation = store.getPcaVarSync(this.dim)
+    scatter.draw('#container')
+  }
+
   export default {
     name: 'ScatterPage',
     data () {
       return {
         dim: 32,
+        data_slice: 0,
         recon: null,
         recon_loading: false,
         variation: [],
@@ -71,10 +99,10 @@
       }
     },
     created: function () {
-      setCb((images) => {
+      scatter.onSelected = (images) => {
         this.images = images
-      })
-      setPca((x, y, i) => {
+      }
+      scatter.onProbed = (x, y, i) => {
         this.recon = null
         this.recon_loading = true
         store.transformPoint(x, y, i)
@@ -86,15 +114,12 @@
             log_debug(e)
             this.recon_loading = false
           })
-      })
+      }
     },
     mounted: function () {
       store.getPcaPoints(this.dim)
         .then((points) => {
-          setData(_.slice(points, TRAIN_SPLIT))
-          this.variation = store.getPcaVarSync(this.dim)
-          log_debug(points[0])
-          draw('#container')
+          lets_draw.call(this, points)
         }, (e) => {
           this.err = e
         })
@@ -107,9 +132,7 @@
 
         store.getPcaPoints(this.dim)
           .then((points) => {
-            setData(_.slice(points, TRAIN_SPLIT))
-            this.variation = store.getPcaVarSync(this.dim)
-            draw('#container')
+            lets_draw.call(this, points)
           }, (e) => {
             this.err = e
           })
@@ -120,14 +143,14 @@
         let points = store.getPcaPointsSync(this.dim)
 
         if (/test/i.test(str)) {
-          setData(_.slice(points, TRAIN_SPLIT))
+          this.data_slice = 0
         } else if (/train/i.test(str)) {
-          setData(_.slice(points, 0, TRAIN_SPLIT))
+          this.data_slice = 1
         } else {
-          setData(points)
+          this.data_slice = 2
         }
 
-        draw('#container')
+        lets_draw.call(this, points)
       },
       formatVar (v) {
         if (!v) {

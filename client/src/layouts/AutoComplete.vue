@@ -7,9 +7,10 @@
            @keydown.down = 'down'
            @keydown.up = 'up'>
     <div class="dropdown-menu" style="width:100%" :class="{'show': openSuggestion}">
-      <a class="dropdown-item" v-for="(val, index) in matches" href="#"
-          :class="{'active': isActive(index)}"
-          @click="suggestionClick(index)">
+      <a class="dropdown-item text-truncate"
+         v-for="(val, index) in matches" href="#"
+         :class="{'active': isActive(index)}"
+         @click="suggestionClick(index)">
         {{ val.name }}
       </a>
     </div>

@@ -20,6 +20,8 @@ class ScatterPca {
       bottom: 10,
       left: 70
     }
+    this.background = '#fff'
+    this.dot_radius = 4
 
     /**
      * Related to PCA
@@ -111,7 +113,7 @@ class ScatterPca {
     svg.append("rect")
       .attr("width", width)
       .attr("height", height)
-      .attr("fill", '#fff')
+      .attr("fill", this.background)
       .call(zoomBeh)
 
     // Brush
@@ -131,7 +133,7 @@ class ScatterPca {
     // Y Axis
     svg.append("g")
       .classed("y axis", true)
-      .attr("transform", "translate(10 ,0)")
+      .attr("transform", "translate(20 ,0)")
       .call(yAxis)
 
     // Axes Lines
@@ -148,7 +150,7 @@ class ScatterPca {
       .attr("transform", "translate(0," + height + ")")
     objects.append("svg:line")
       .classed("axisLine vAxisLine", true)
-      .attr("transform", "translate(10 ,0)")
+      .attr("transform", "translate(20 ,0)")
       .attr("x1", 0)
       .attr("y1", 0)
       .attr("x2", 0)
@@ -160,7 +162,7 @@ class ScatterPca {
       .enter()
       .append("circle")
       .classed("dot", true)
-      .attr('r', () => 5)
+      .attr('r', () => this.dot_radius)
       .attr('cx', (d) => x(d.x))
       .attr('cy', (d) => y(d.y))
       .style("fill", (d) => d['mean_color'])
@@ -197,9 +199,7 @@ class ScatterPca {
         return p.x >= scales[0] && p.x <= scales[2] && p.y >= scales[3] && p.y <=scales[1]
       })
 
-      let images = _.map(pts, (p) => `/data/logos/${p.i}.jpg`)
-
-      that.onSelected(images)
+      that.onSelected(pts)
     }
   }
 

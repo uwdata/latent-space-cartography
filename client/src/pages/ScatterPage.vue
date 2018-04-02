@@ -99,8 +99,8 @@
       }
     },
     created: function () {
-      scatter.onSelected = (images) => {
-        this.images = images
+      scatter.onSelected = (pts) => {
+        this.images = _.map(pts, (p) => store.getImageUrl(p.i))
       }
       scatter.onProbed = (x, y, i) => {
         this.recon = null

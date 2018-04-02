@@ -200,6 +200,15 @@ class Store {
   }
 
   /**
+   * Given the index, return a relative URL to the image.
+   * @param i
+   * @returns {string}
+   */
+  getImageUrl (i) {
+    return `/data/logos/${i}.jpg`
+  }
+
+  /**
    * Perform a join between given points array and meta, with key 'i'
    * @param points
    * @private

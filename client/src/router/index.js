@@ -6,6 +6,7 @@ import ScatterSvgPage from '../pages/ScatterSvgPage.vue'
 import ScatterPage from '../pages/ScatterPage.vue'
 import TsnePage from '../pages/TsnePage.vue'
 import SplomPage from '../pages/SplomPage.vue'
+import AnalogyPage from '../pages/AnalogyPage.vue'
 
 Vue.use(Router)
 
@@ -40,6 +41,11 @@ export default new Router({
       path: '/splom',
       name: 'splom',
       component: SplomPage
+    },
+    {
+      path: '/analogy',
+      name: 'analogy',
+      component: AnalogyPage
     }
   ]
 })

@@ -206,7 +206,7 @@ class ScatterPca {
 
     function unfocusDot () {
       d3.selectAll('.dot.focused').attr('r', that.dot_radius)
-      d3.select('.focus-label').remove()
+      d3.selectAll('.focus-label').remove()
     }
 
     function dotMouseover(d) {

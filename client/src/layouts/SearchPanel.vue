@@ -5,11 +5,17 @@
     <hr>
     <div v-if="selected.length">
       <p>Selected logos:</p>
-      <div v-for="p in selected" :key="p.i" class="bd-point-item"
+      <div v-for="p in selected" :key="p.i"
+           class="bd-point-item d-flex flex-row justify-content-between"
            @mouseover="hoverLogo(p)" @mouseout="unhoverLogo">
         <div class="text-truncate">
           <img :src="imageUrl(p)" class="m-1"/>
           <span>{{p.name}}</span>
+        </div>
+        <div class="pl-2">
+          <button class="close" @click="removeItem(p)">
+            <span>&times;</span>
+          </button>
         </div>
       </div>
     </div>
@@ -42,6 +48,9 @@
       addItem (p) {
         this.selected.push(p)
         this.selected = _.uniqBy(this.selected, (p) => p.i)
+      },
+      removeItem (p) {
+        this.selected = _.filter(this.selected, (s) => s.i !== p.i)
       },
       imageUrl (p) {
         return store.getImageUrl(p.i)

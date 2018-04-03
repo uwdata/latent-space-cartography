@@ -76,7 +76,9 @@
       // When enter key pressed on the input
       enter () {
         this.$emit('input', '')
-        this.$emit('chosen', this.matches[this.current])
+        if (this.matches[this.current]) {
+          this.$emit('chosen', this.matches[this.current])
+        }
         this.open = false
       },
 
@@ -102,7 +104,9 @@
       // When one of the suggestion is clicked
       suggestionClick (index) {
         this.$emit('input', '')
-        this.$emit('chosen', this.matches[index])
+        if (this.matches[index]) {
+          this.$emit('chosen', this.matches[index])
+        }
         this.open = false
       }
     }

@@ -11,7 +11,8 @@
         </div>
       </div>
       <div class="bd-sidebar bd-right col-3">
-        <search-panel :points="all_points" class="mt-3 mr-3"></search-panel>
+        <search-panel :points="all_points" v-on:highlight="onHighlight"
+                      class="mt-3 mr-3"></search-panel>
       </div>
     </div>
   </div>
@@ -83,6 +84,15 @@
         }, (e) => {
           this.err = e
         })
+    },
+    methods: {
+      /**
+       * Ugly way to hook up outside DOM event with d3
+       * @param p
+       */
+      onHighlight (p) {
+        scatter.focusDot(p)
+      }
     }
   }
 </script>

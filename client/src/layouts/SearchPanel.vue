@@ -5,7 +5,8 @@
     <hr>
     <div v-if="selected.length">
       <p>Selected logos:</p>
-      <div v-for="p in selected" :key="p.i" class="bd-point-item">
+      <div v-for="p in selected" :key="p.i" class="bd-point-item"
+           @mouseover="hoverLogo(p)" @mouseout="unhoverLogo">
         <div class="text-truncate">
           <img :src="imageUrl(p)" class="m-1"/>
           <span>{{p.name}}</span>
@@ -44,6 +45,12 @@
       },
       imageUrl (p) {
         return store.getImageUrl(p.i)
+      },
+      hoverLogo (p) {
+        this.$emit('highlight', p)
+      },
+      unhoverLogo () {
+        this.$emit('highlight', null)
       }
     }
   }

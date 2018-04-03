@@ -29,6 +29,7 @@ class ScatterPca {
      */
     this.drag = true
     this.hover = false
+    this.dispatch = d3.dispatch('focus-one')
 
     /**
      * Related to PCA
@@ -185,8 +186,17 @@ class ScatterPca {
         .on('mouseout', dotMouseout)
     }
 
+    this.dispatch.on('focus-one.dot', (p) => {
+      if (!p) {
+        unfocusDot()
+      } else {
+        focusDot(p, d3.selectAll('.dot').filter((d) => d.i === p.i))
+      }
+    })
+
     function focusDot (d, dot) {
       dot.attr('r', () => that.dot_radius * 2)
+        .classed('focused', true)
       objects.append('text')
         .attr('x', () => Math.max(x(d.x) - 30, 15))
         .attr('y', () => Math.max(y(d.y) - 15, 15))
@@ -194,8 +204,8 @@ class ScatterPca {
         .text(() => d.name)
     }
 
-    function unfocusDot (dot) {
-      dot.attr('r', that.dot_radius)
+    function unfocusDot () {
+      d3.selectAll('.dot.focused').attr('r', that.dot_radius)
       d3.select('.focus-label').remove()
     }
 
@@ -204,7 +214,7 @@ class ScatterPca {
     }
 
     function dotMouseout () {
-      unfocusDot(d3.select(this))
+      unfocusDot()
     }
 
     function brushstart() {
@@ -240,6 +250,10 @@ class ScatterPca {
 
       that.onSelected(pts)
     }
+  }
+
+  focusDot (point) {
+    this.dispatch.call('focus-one', this, point)
   }
 
   /**

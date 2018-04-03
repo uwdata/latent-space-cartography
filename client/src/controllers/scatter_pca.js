@@ -22,6 +22,13 @@ class ScatterPca {
     }
     this.background = '#fff'
     this.dot_radius = 4
+    this.axis = true
+
+    /**
+     * Interactions
+     */
+    this.drag = true
+    this.hover = false
 
     /**
      * Related to PCA
@@ -56,7 +63,6 @@ class ScatterPca {
       .range([height, 0]).nice()
 
     let xAxis = d3.axisBottom(x).tickSize(-height)
-
     let yAxis = d3.axisLeft(y).tickSize(-width)
 
     let xMax = d3.max(data, (d) => d.x) * 1.05
@@ -85,11 +91,11 @@ class ScatterPca {
       .on('drag', function (d) {
         d.x += d3.event.dx
         d.y += d3.event.dy
-        d3.select(this).attr("transform", function(d,i) {
+        d3.select(this).attr("transform", function(d) {
           return "translate(" + [d.x, d.y] + ")"
         })
       })
-      .on('end', function (d) {
+      .on('end', function () {
         let x = d3.event.sourceEvent.offsetX
         let y = d3.event.sourceEvent.offsetY
 
@@ -124,40 +130,45 @@ class ScatterPca {
         .on('brush', brushing)
         .on("end", brushended))
 
-    // X Axis
-    svg.append("g")
-      .classed("x axis", true)
-      .attr("transform", "translate(0," + height + ")")
-      .call(xAxis)
+    if (this.axis) {
+      // X Axis
+      svg.append("g")
+        .classed("x axis", true)
+        .attr("transform", "translate(0," + height + ")")
+        .call(xAxis)
 
-    // Y Axis
-    svg.append("g")
-      .classed("y axis", true)
-      .attr("transform", "translate(20 ,0)")
-      .call(yAxis)
+      // Y Axis
+      svg.append("g")
+        .classed("y axis", true)
+        .attr("transform", "translate(20 ,0)")
+        .call(yAxis)
+    }
 
     // Axes Lines
     let objects = svg.append("svg")
       .classed("objects", true)
       .attr("width", width)
       .attr("height", height)
-    objects.append("svg:line")
-      .classed("axisLine hAxisLine", true)
-      .attr("x1", 0)
-      .attr("y1", 0)
-      .attr("x2", width)
-      .attr("y2", 0)
-      .attr("transform", "translate(0," + height + ")")
-    objects.append("svg:line")
-      .classed("axisLine vAxisLine", true)
-      .attr("transform", "translate(20 ,0)")
-      .attr("x1", 0)
-      .attr("y1", 0)
-      .attr("x2", 0)
-      .attr("y2", height)
+
+    if (this.axis) {
+      objects.append("svg:line")
+        .classed("axisLine hAxisLine", true)
+        .attr("x1", 0)
+        .attr("y1", 0)
+        .attr("x2", width)
+        .attr("y2", 0)
+        .attr("transform", "translate(0," + height + ")")
+      objects.append("svg:line")
+        .classed("axisLine vAxisLine", true)
+        .attr("transform", "translate(20 ,0)")
+        .attr("x1", 0)
+        .attr("y1", 0)
+        .attr("x2", 0)
+        .attr("y2", height)
+    }
 
     // Dots
-    objects.selectAll(".dot")
+    let dots = objects.selectAll(".dot")
       .data(data)
       .enter()
       .append("circle")
@@ -166,7 +177,35 @@ class ScatterPca {
       .attr('cx', (d) => x(d.x))
       .attr('cy', (d) => y(d.y))
       .style("fill", (d) => d['mean_color'])
-      .call(dragger)
+
+    if (this.drag) {
+      dots.call(dragger)
+    } else if (this.hover) {
+      dots.on('mouseover', dotMouseover)
+        .on('mouseout', dotMouseout)
+    }
+
+    function focusDot (d, dot) {
+      dot.attr('r', () => that.dot_radius * 2)
+      objects.append('text')
+        .attr('x', () => Math.max(x(d.x) - 30, 15))
+        .attr('y', () => Math.max(y(d.y) - 15, 15))
+        .classed('focus-label', true)
+        .text(() => d.name)
+    }
+
+    function unfocusDot (dot) {
+      dot.attr('r', that.dot_radius)
+      d3.select('.focus-label').remove()
+    }
+
+    function dotMouseover(d) {
+      focusDot(d, d3.select(this))
+    }
+
+    function dotMouseout () {
+      unfocusDot(d3.select(this))
+    }
 
     function brushstart() {
       d3.selectAll('.dot').classed('muted', false)

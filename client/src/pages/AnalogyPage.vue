@@ -44,7 +44,11 @@
       left: 15,
       right: 15
     }
-    s.dot_radius = 2
+    s.dot_radius = 3
+    s.axis = false
+
+    s.drag = false
+    s.hover = true
 
     return s
   }

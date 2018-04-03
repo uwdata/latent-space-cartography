@@ -12,12 +12,12 @@
         <!--buttons-->
         <div>
           <b-dropdown :text="`Latent Dimensions: ${dim}`" class="m-2">
-            <b-dropdown-item v-for="d in all_dims" @click="changeDim(d)" key="d">
+            <b-dropdown-item v-for="d in all_dims" @click="changeDim(d)" :key="d">
               {{d}}
             </b-dropdown-item>
           </b-dropdown>
           <b-dropdown :text="`Data: ${all_data_choices[data_slice]}`" class="m-2">
-            <b-dropdown-item v-for="c in all_data_choices" @click="changeData(c)" key="c">
+            <b-dropdown-item v-for="c in all_data_choices" @click="changeData(c)" :key="c">
               {{c}}
             </b-dropdown-item>
           </b-dropdown>

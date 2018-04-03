@@ -10,12 +10,12 @@
       <!--buttons-->
       <div class="text-left">
         <b-dropdown text="Latent Dimensions" class="m-2">
-          <b-dropdown-item v-for="d in all_dims" @click="changeDim(d)" key="d">
+          <b-dropdown-item v-for="d in all_dims" @click="changeDim(d)" :key="d">
             {{d}}
           </b-dropdown-item>
         </b-dropdown>
         <b-dropdown text="Data" class="m-2">
-          <b-dropdown-item v-for="c in all_data_choices" @click="changeData(c)" key="c">
+          <b-dropdown-item v-for="c in all_data_choices" @click="changeData(c)" :key="c">
             {{c}}
           </b-dropdown-item>
         </b-dropdown>
@@ -183,5 +183,9 @@
   .dot.muted {
     fill: #ccc !important;
     fill-opacity: .4 !important;
+  }
+
+  .dot.probe {
+    fill: #f00 !important;
   }
 </style>

@@ -79,6 +79,7 @@
       store.getPcaPoints(this.dim)
         .then((points) => {
           // set only once, since what really matters is the meta
+          log_debug(points[0])
           this.all_points = points
           lets_draw.call(this, points)
         }, (e) => {

@@ -39,7 +39,7 @@ class Store {
       }
 
       // data schema
-      let schema = ['i', 'name', 'mean_color']
+      let schema = ['i', 'name', 'mean_color', 'source', 'industry']
 
       // go fetch from the server
       http.post('/api/get_meta', {})

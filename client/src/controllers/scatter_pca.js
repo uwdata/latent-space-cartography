@@ -23,6 +23,7 @@ class ScatterPca {
     this.background = '#fff'
     this.dot_radius = 4
     this.axis = true
+    this.dot_color = 'mean_color'
 
     /**
      * Interactions
@@ -62,6 +63,8 @@ class ScatterPca {
 
     let y = d3.scaleLinear()
       .range([height, 0]).nice()
+
+    let palette = d3.scaleOrdinal(d3.schemeCategory10)
 
     let xAxis = d3.axisBottom(x).tickSize(-height)
     let yAxis = d3.axisLeft(y).tickSize(-width)
@@ -177,7 +180,7 @@ class ScatterPca {
       .attr('r', () => this.dot_radius)
       .attr('cx', (d) => x(d.x))
       .attr('cy', (d) => y(d.y))
-      .style("fill", (d) => d['mean_color'])
+      .style("fill", (d) => this._colorDot(d, palette))
 
     if (this.drag) {
       dots.call(dragger)
@@ -252,6 +255,29 @@ class ScatterPca {
     }
   }
 
+  /**
+   * Given a D3 datum, color it according to the current color attribute.
+   * @param d
+   * @param palette
+   * @returns {*}
+   * @private
+   */
+  _colorDot (d, palette) {
+    let c = this.dot_color
+
+    if (c === 'mean_color') {
+      return d['mean_color']
+    } else if (c === 'industry' || c === 'source') {
+      return palette(d[c])
+    }
+
+    return '#9467bd'
+  }
+
+  /**
+   * Focus one dot (when mouse hovering on top of it, for example)
+   * @param point
+   */
   focusDot (point) {
     this.dispatch.call('focus-one', this, point)
   }

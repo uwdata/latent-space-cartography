@@ -133,7 +133,7 @@ def get_tsne ():
 # get meta data
 @app.route('/api/get_meta', methods=['POST'])
 def get_meta ():
-    cursor.execute('SELECT i,name,mean_color FROM meta')
+    cursor.execute('SELECT i,name,mean_color,data_source,industry FROM meta')
     data = [list(i) for i in cursor.fetchall()]
     return jsonify({'data': data}), 200
 

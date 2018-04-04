@@ -1,17 +1,14 @@
 <template>
   <div>
-    <div v-if="selected.length">
-      <div class="mb-3 btn-group d-flex">
-        <button class="btn btn-secondary w-100">Show All</button>
-        <button class="btn btn-secondary w-100" :class="{disabled: subset}"
-                @click="toggleSubset">Highlight</button>
-        <button class="btn w-100 btn-secondary">Re-project</button>
-      </div>
+    <!--Top Division-->
+    <div class="m-3">
+      <auto-complete v-model="selection" v-on:chosen="addItem"
+                     :points="points"></auto-complete>
     </div>
-    <auto-complete v-model="selection" v-on:chosen="addItem"
-                   :points="points"></auto-complete>
     <hr>
-    <div v-if="selected.length">
+
+    <!--Logo List-->
+    <div v-if="selected.length" class="m-3 bd-logo-list">
       <p>Selected logos:</p>
       <div v-for="p in selected" :key="p.i"
            class="bd-point-item d-flex flex-row justify-content-between"
@@ -23,6 +20,22 @@
         <div class="pl-2">
           <button class="close" @click="removeItem(p)">
             <span>&times;</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!--Footer-->
+    <div v-if="selected.length" class="bd-panel-footer p-3">
+      <div class="d-flex justify-content-between">
+        <div class="btn-group d-flex w-100">
+          <button class="btn btn-secondary w-100" :class="{disabled: subset}"
+                  @click="toggleSubset">Highlight</button>
+          <button class="btn w-100 btn-secondary">Re-project</button>
+        </div>
+        <div class="btn-group ml-3">
+          <button class="btn btn-secondary">
+            <i class="fa fa-save"></i>
           </button>
         </div>
       </div>
@@ -87,5 +100,15 @@
   .bd-point-item img {
     width: 32px;
     height: 32px;
+  }
+
+  .bd-logo-list {
+    overflow-y: auto;
+    height: calc(100vh - 15rem);
+  }
+
+  .bd-panel-footer {
+    box-shadow: 0.5rem 0 2rem rgba(0,0,0,.03);
+    border-top: 1px solid rgba(0,0,0,.1);
   }
 </style>

@@ -12,8 +12,7 @@
       </div>
       <div class="bd-sidebar bd-right col-3">
         <search-panel :points="all_points" v-on:highlight="onHighlight"
-                      v-on:subset="onToggleSubset"
-                      class="mt-3 mr-3"></search-panel>
+                      v-on:subset="onToggleSubset"></search-panel>
       </div>
     </div>
   </div>
@@ -124,6 +123,7 @@
 
   .bd-right {
     border-left: 1px solid rgba(0,0,0,.1);
+    padding-left: 0px;
   }
 
   /*dealing with SVG*/

@@ -4,12 +4,62 @@
       <span class="ml-3">Latent Space Explorer</span>
     </header>
     <div class="row">
-      <div class="bd-sidebar bd-left col-2"></div>
-      <div class="col-7">
+      <!--Left Panel-->
+      <div class="col-3 bd-sidebar bd-left">
+
+        <!--Details of a Logo-->
+        <div class="card mb-3" v-if="detail_point">
+          <div class="card-header">Details</div>
+          <div class="card-body">
+            <p>{{detail_point.name}}</p>
+            <div class="d-flex">
+              <div class="p1">
+                <img :src="imageUrl(detail_point)" />
+              </div>
+              <div class="w-100 ml-2">
+                <div class="mb-2">
+                  <b>Industry: </b>
+                  {{detail_point.industry}}
+                </div>
+                <div class="mb-2">
+                  <b>Data Source: </b>
+                  {{detail_point.source}}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!--List of Brushed Points-->
+        <div class="card mb-3" v-if="brushed.length">
+          <div class="card-header">Brushed</div>
+          <div class="p-2">
+            <div v-for="p in brushed" :key="p.i"
+                 class="bd-point-item d-flex flex-row justify-content-between">
+              <div class="text-truncate">
+                <img :src="imageUrl(p)" class="m-1"/>
+                <span>{{p.name}}</span>
+              </div>
+              <div class="pl-2 d-flex align-items-center">
+                <button class="close" style="font-size:1em;" @click="">
+                  <i class="fa fa-plus"></i>
+                </button>
+              </div>
+            </div>
+            <button class="btn-block btn btn-light mt-3 mb-2"
+                    @click="">Add All</button>
+          </div>
+        </div>
+      </div>
+
+      <!--Main Drawing-->
+      <div class="col-6">
         <div class="d-flex justify-content-center align-items-center">
           <div id="container" class="mt-3"></div>
         </div>
       </div>
+
+      <!--Right Panel-->
       <div class="bd-sidebar bd-right col-3">
         <search-panel :points="all_points" v-on:highlight="onHighlight"
                       v-on:subset="onToggleSubset"></search-panel>
@@ -33,6 +83,10 @@
     while (myNode.firstChild) {
       myNode.removeChild(myNode.firstChild)
     }
+
+    // reset data
+    this.brushed = []
+    this.detail_point = null
   }
 
   function create_scatter () {
@@ -59,7 +113,7 @@
    * @param points
    */
   function lets_draw (points) {
-    clear()
+    clear.call(this)
     scatter.setData(_.slice(points, 0, TRAIN_SPLIT))
     scatter.draw('#container')
   }
@@ -70,16 +124,29 @@
     data () {
       return {
         all_points: [],
+        detail_point: null,
+        brushed: [],
         dim: 32,
         all_dims: [32, 64, 128, 256, 512, 1024],
         err: ''
       }
     },
+    created: function () {
+      // register all the callback of the D3 component
+      scatter.onSelected = (pts) => {
+        this.brushed = pts
+      }
+      scatter.onDotClicked = (pt) => {
+        this.detail_point = pt
+      }
+    },
     mounted: function () {
       store.getPcaPoints(this.dim)
         .then((points) => {
-          // set only once, since what really matters is the meta
+          //FIXME
+          this.detail_point = points[0]
           log_debug(points[0])
+          // set only once, since what really matters is the meta
           this.all_points = points
           lets_draw.call(this, points)
         }, (e) => {
@@ -87,6 +154,9 @@
         })
     },
     methods: {
+      imageUrl (p) {
+        return store.getImageUrl(p.i)
+      },
       /**
        * Ugly way to hook up outside DOM event with d3
        * @param p
@@ -113,17 +183,18 @@
     position: sticky;
     top: 4rem;
     z-index: 1000;
-    background-color: #fafafa;
     height: calc(100vh - 4rem);
   }
 
   .bd-left {
-    border-right: 1px solid rgba(0,0,0,.1);
+    /*border-right: 1px solid rgba(0,0,0,.1);*/
+    overflow-y: auto;
   }
 
   .bd-right {
     border-left: 1px solid rgba(0,0,0,.1);
-    padding-left: 0px;
+    background-color: #fafafa;
+    padding-left: 0;
   }
 
   /*dealing with SVG*/
@@ -152,5 +223,10 @@
   .focus-label {
     font-size: 20px;
     font-weight: 500;
+  }
+
+  .brushed-img {
+    width: 32px;
+    height: 32px;
   }
 </style>

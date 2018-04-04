@@ -52,6 +52,7 @@ class ScatterPca {
      */
     this.onSelected = () => {}
     this.onProbed = () => {}
+    this.onDotClicked = () => {}
   }
 
   /**
@@ -191,6 +192,7 @@ class ScatterPca {
       .attr('cx', (d) => x(d.x))
       .attr('cy', (d) => y(d.y))
       .style("fill", (d) => this._colorDot(d, palette))
+      .on('click', dotClick)
 
     if (this.drag) {
       dots.call(dragger)
@@ -280,6 +282,10 @@ class ScatterPca {
 
     function dotMouseout () {
       unfocusDot()
+    }
+
+    function dotClick (d) {
+      that.onDotClicked(d)
     }
 
     function brushstart() {

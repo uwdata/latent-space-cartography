@@ -2,6 +2,16 @@ import * as d3 from 'd3'
 import _ from 'lodash'
 
 /**
+ * Move D3 selection elements to the front.
+ * @param selection
+ */
+function moveToFront (selection) {
+  selection.each(function () {
+    this.parentNode.appendChild(this)
+  })
+}
+
+/**
  * Handles drawing a scatter plot for 2-dimensional PCA data.
  */
 class ScatterPca {
@@ -30,7 +40,7 @@ class ScatterPca {
      */
     this.drag = true
     this.hover = false
-    this.dispatch = d3.dispatch('focus-one')
+    this.dispatch = d3.dispatch('focus-one', 'focus-set')
 
     /**
      * Related to PCA
@@ -197,19 +207,71 @@ class ScatterPca {
       }
     })
 
+    this.dispatch.on('focus-set.dot', (points) => {
+      if (points) {
+        focusSet(points)
+      } else {
+        unfocusSet()
+      }
+    })
+
     function focusDot (d, dot) {
       dot.attr('r', () => that.dot_radius * 2)
         .classed('focused', true)
-      objects.append('text')
-        .attr('x', () => Math.max(x(d.x) - 30, 15))
-        .attr('y', () => Math.max(y(d.y) - 15, 15))
-        .classed('focus-label', true)
-        .text(() => d.name)
+      moveToFront(dot)
+
+      let t = null
+      d3.selectAll('text')
+        .each(function () {
+          // really ugly hack because text has no binding data
+          if (d3.select(this).text() === d.name) {
+            t = d3.select(this)
+          }
+        })
+      if (!t) {
+        objects.append('text')
+          .attr('x', () => Math.max(x(d.x) - 30, 15))
+          .attr('y', () => Math.max(y(d.y) - 15, 15))
+          .classed('focus-label', true)
+          .text(() => d.name)
+      } else {
+        t.classed('focus-label', true)
+      }
     }
 
     function unfocusDot () {
       d3.selectAll('.dot.focused').attr('r', that.dot_radius)
-      d3.selectAll('.focus-label').remove()
+      d3.selectAll('.focus-label:not(.focused-set)').remove()
+      d3.selectAll('.focus-label').classed('focus-label', false)
+    }
+
+    function focusSet (pts) {
+      let indices = {}
+      _.each(pts, (pt) => indices[pt.i] = true)
+
+      let grapes = d3.selectAll('.dot')
+        .filter((d) => indices[d.i])
+        .classed('focused-set', true)
+      moveToFront(grapes)
+
+      d3.selectAll('.dot')
+        .filter((d) => !indices[d.i])
+        .style('fill', (d) => '#ccc')
+
+      _.each(pts, (d) => {
+        objects.append('text')
+          .attr('x', () => Math.max(x(d.x) - 30, 15))
+          .attr('y', () => Math.max(y(d.y) - 15, 15))
+          .classed('focused-set', true)
+          .text(() => d.name)
+      })
+    }
+
+    function unfocusSet () {
+      d3.selectAll('.dot')
+        .style("fill", (d) => that._colorDot(d, palette))
+      d3.selectAll('.dot.focused-set').attr('r', that.dot_radius)
+      d3.selectAll('text.focused-set').remove()
     }
 
     function dotMouseover(d) {
@@ -280,6 +342,10 @@ class ScatterPca {
    */
   focusDot (point) {
     this.dispatch.call('focus-one', this, point)
+  }
+
+  focusSet (points) {
+    this.dispatch.call('focus-set', this, points)
   }
 
   /**

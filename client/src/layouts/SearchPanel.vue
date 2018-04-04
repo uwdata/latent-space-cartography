@@ -1,5 +1,13 @@
 <template>
   <div>
+    <div v-if="selected.length">
+      <div class="mb-3 btn-group d-flex">
+        <button class="btn btn-secondary w-100">Show All</button>
+        <button class="btn btn-secondary w-100" :class="{disabled: subset}"
+                @click="toggleSubset">Highlight</button>
+        <button class="btn w-100 btn-secondary">Re-project</button>
+      </div>
+    </div>
     <auto-complete v-model="selection" v-on:chosen="addItem"
                    :points="points"></auto-complete>
     <hr>
@@ -41,10 +49,15 @@
     data () {
       return {
         selection: '',
-        selected: []
+        selected: [],
+        subset: false
       }
     },
     methods: {
+      toggleSubset () {
+        this.subset = !this.subset
+        this.$emit('subset', this.subset ? this.selected : null)
+      },
       addItem (p) {
         this.selected.push(p)
         this.selected = _.uniqBy(this.selected, (p) => p.i)

@@ -12,6 +12,7 @@
       </div>
       <div class="bd-sidebar bd-right col-3">
         <search-panel :points="all_points" v-on:highlight="onHighlight"
+                      v-on:subset="onToggleSubset"
                       class="mt-3 mr-3"></search-panel>
       </div>
     </div>
@@ -60,7 +61,7 @@
    */
   function lets_draw (points) {
     clear()
-    scatter.setData(_.slice(points, 0, 500))
+    scatter.setData(_.slice(points, 0, TRAIN_SPLIT))
     scatter.draw('#container')
   }
 
@@ -93,6 +94,9 @@
        */
       onHighlight (p) {
         scatter.focusDot(p)
+      },
+      onToggleSubset (pts) {
+        scatter.focusSet(pts)
       }
     }
   }
@@ -143,5 +147,10 @@
   .dot.muted {
     fill: #ccc !important;
     fill-opacity: .4 !important;
+  }
+
+  .focus-label {
+    font-size: 20px;
+    font-weight: 500;
   }
 </style>

@@ -13,61 +13,74 @@
       </div>
     </div>
     <div class="row">
-      <!--Left Panel-->
-      <div class="col-3 bd-sidebar bd-left">
+      <div class="col-9 pr-0">
+        <div class="row mr-0">
+          <!--Left Panel-->
+          <div class="col-4 bd-sidebar bd-left">
 
-        <!--Details of a Logo-->
-        <div class="card mb-3" v-if="detail_point">
-          <div class="card-header">Details</div>
-          <div class="card-body">
-            <p>{{detail_point.name}}</p>
-            <div class="d-flex" style="font-size: 0.8em;">
-              <div class="p1">
-                <img :src="imageUrl(detail_point)" />
-              </div>
-              <div class="w-100 ml-2">
-                <div class="mb-2">
-                  <b>Industry: </b>
-                  {{detail_point.industry}}
-                </div>
-                <div class="mb-2">
-                  <b>Data Source: </b>
-                  {{detail_point.source}}
+            <!--Details of a Logo-->
+            <div class="card mb-3" v-if="detail_point">
+              <div class="card-header">Details</div>
+              <div class="card-body">
+                <p>{{detail_point.name}}</p>
+                <div class="d-flex" style="font-size: 0.8em;">
+                  <div class="p1">
+                    <img :src="imageUrl(detail_point)" />
+                  </div>
+                  <div class="w-100 ml-2">
+                    <div class="mb-2">
+                      <b>Industry: </b>
+                      {{detail_point.industry}}
+                    </div>
+                    <div class="mb-2">
+                      <b>Data Source: </b>
+                      {{detail_point.source}}
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        </div>
 
-        <!--List of Brushed Points-->
-        <div class="card mb-3" v-if="brushed.length">
-          <div class="card-header">Brushed</div>
-          <div class="p-2">
-            <div v-for="p in brushed" :key="p.i"
-                 @click="setDetail(p)"
-                 @mouseover="onHighlight(p)"
-                 @mouseout="onHighlight()"
-                 class="bd-point-item d-flex flex-row justify-content-between">
-              <div class="text-truncate">
-                <img :src="imageUrl(p)" class="m-1"/>
-                <span>{{p.name}}</span>
-              </div>
-              <div class="pl-2 d-flex align-items-center">
-                <button class="close" style="font-size:1em;" @click.stop="">
-                  <i class="fa fa-plus"></i>
-                </button>
+            <!--List of Brushed Points-->
+            <div class="card mb-3" v-if="brushed.length">
+              <div class="card-header">Brushed</div>
+              <div class="p-2">
+                <div v-for="p in brushed" :key="p.i"
+                     @click="setDetail(p)"
+                     @mouseover="onHighlight(p)"
+                     @mouseout="onHighlight()"
+                     class="bd-point-item d-flex flex-row justify-content-between">
+                  <div class="text-truncate">
+                    <img :src="imageUrl(p)" class="m-1"/>
+                    <span>{{p.name}}</span>
+                  </div>
+                  <div class="pl-2 d-flex align-items-center">
+                    <button class="close" style="font-size:1em;" @click.stop="">
+                      <i class="fa fa-plus"></i>
+                    </button>
+                  </div>
+                </div>
+                <button class="btn-block btn btn-light mt-3 mb-2"
+                        @click="">Add All</button>
               </div>
             </div>
-            <button class="btn-block btn btn-light mt-3 mb-2"
-                    @click="">Add All</button>
+          </div>
+
+          <!--Main Drawing-->
+          <div class="col-8">
+            <div class="d-flex justify-content-center align-items-center">
+              <div id="container" class="mt-3"></div>
+            </div>
           </div>
         </div>
-      </div>
-
-      <!--Main Drawing-->
-      <div class="col-6">
-        <div class="d-flex justify-content-center align-items-center">
-          <div id="container" class="mt-3"></div>
+        <div class="bd-app-footer">
+          <div class="m-3 text-left">
+            <b-dropdown :text="`Latent Dimensions: ${dim}`" variant="light">
+              <b-dropdown-item v-for="d in all_dims" @click="changeDim(d)" :key="d">
+                {{d}}
+              </b-dropdown-item>
+            </b-dropdown>
+          </div>
         </div>
       </div>
 
@@ -180,6 +193,21 @@
       setDetail (p) {
         this.detail_point = p
       },
+      changeDim (dim) {
+        this.dim = dim
+
+        clear.call(this)
+
+        this.loading = true
+        store.getPcaPoints(this.dim)
+          .then((points) => {
+            this.loading = false
+            lets_draw.call(this, points)
+          }, (e) => {
+            this.loading = false
+            this.err = e
+          })
+      },
       /**
        * Ugly way to hook up outside DOM event with d3
        * @param p
@@ -211,6 +239,7 @@
 
   .bd-left {
     /*border-right: 1px solid rgba(0,0,0,.1);*/
+    height: calc(100vh - 8.56rem) !important;
     overflow-y: auto;
   }
 
@@ -261,5 +290,14 @@
     z-index: 10000;
     width: 100%;
     height: calc(100vh - 4rem);
+  }
+
+  .bd-app-footer {
+    position: sticky;
+    bottom: 0;
+    height: 4.56em;
+    z-index: 1000;
+    border-top: 1px solid rgba(0,0,0,.1);
+    box-shadow: 0.5rem 0 2rem rgba(0,0,0,.03);
   }
 </style>

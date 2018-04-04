@@ -3,6 +3,15 @@
     <header class="navbar bd-navbar">
       <span class="ml-3">Latent Space Explorer</span>
     </header>
+    <div v-if="loading"
+         class="loading-block d-flex align-items-center justify-content-center">
+      <div class="card w-25 h-25">
+        <div class="card-body d-flex align-items-center">
+          <vue-loading type="spiningDubbles" color="#4b2e83"
+                       :size="{ width: '50px', height: '50px' }"></vue-loading>
+        </div>
+      </div>
+    </div>
     <div class="row">
       <!--Left Panel-->
       <div class="col-3 bd-sidebar bd-left">
@@ -78,6 +87,7 @@
   import Scatter from '../controllers/scatter_pca'
   import {store, log_debug, TRAIN_SPLIT} from '../controllers/config'
   import _ from 'lodash'
+  import VueLoading from 'vue-loading-template'
 
   // PCA plot of all points
   let scatter = create_scatter()
@@ -124,7 +134,10 @@
   }
 
   export default {
-    components: {SearchPanel},
+    components: {
+      SearchPanel,
+      VueLoading
+    },
     name: 'AnalogyPage',
     data () {
       return {
@@ -133,6 +146,7 @@
         brushed: [],
         dim: 32,
         all_dims: [32, 64, 128, 256, 512, 1024],
+        loading: true,
         err: ''
       }
     },
@@ -146,14 +160,17 @@
       }
     },
     mounted: function () {
+      this.loading = true
       store.getPcaPoints(this.dim)
         .then((points) => {
+          this.loading = false
           log_debug(points[0])
           // set only once, since what really matters is the meta
           this.all_points = points
           lets_draw.call(this, points)
         }, (e) => {
           this.err = e
+          this.loading = false
         })
     },
     methods: {
@@ -234,5 +251,15 @@
   .brushed-img {
     width: 32px;
     height: 32px;
+  }
+
+  .loading-block {
+    position: absolute;
+    left: 0;
+    top: 4rem;
+    background-color: rgba(0, 0, 0, 0.2);
+    z-index: 10000;
+    width: 100%;
+    height: calc(100vh - 4rem);
   }
 </style>

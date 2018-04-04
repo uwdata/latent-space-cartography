@@ -12,7 +12,7 @@
           <div class="card-header">Details</div>
           <div class="card-body">
             <p>{{detail_point.name}}</p>
-            <div class="d-flex">
+            <div class="d-flex" style="font-size: 0.8em;">
               <div class="p1">
                 <img :src="imageUrl(detail_point)" />
               </div>
@@ -35,13 +35,16 @@
           <div class="card-header">Brushed</div>
           <div class="p-2">
             <div v-for="p in brushed" :key="p.i"
+                 @click="setDetail(p)"
+                 @mouseover="onHighlight(p)"
+                 @mouseout="onHighlight()"
                  class="bd-point-item d-flex flex-row justify-content-between">
               <div class="text-truncate">
                 <img :src="imageUrl(p)" class="m-1"/>
                 <span>{{p.name}}</span>
               </div>
               <div class="pl-2 d-flex align-items-center">
-                <button class="close" style="font-size:1em;" @click="">
+                <button class="close" style="font-size:1em;" @click.stop="">
                   <i class="fa fa-plus"></i>
                 </button>
               </div>
@@ -61,7 +64,9 @@
 
       <!--Right Panel-->
       <div class="bd-sidebar bd-right col-3">
-        <search-panel :points="all_points" v-on:highlight="onHighlight"
+        <search-panel :points="all_points"
+                      v-on:detail="setDetail"
+                      v-on:highlight="onHighlight"
                       v-on:subset="onToggleSubset"></search-panel>
       </div>
     </div>
@@ -143,8 +148,6 @@
     mounted: function () {
       store.getPcaPoints(this.dim)
         .then((points) => {
-          //FIXME
-          this.detail_point = points[0]
           log_debug(points[0])
           // set only once, since what really matters is the meta
           this.all_points = points
@@ -156,6 +159,9 @@
     methods: {
       imageUrl (p) {
         return store.getImageUrl(p.i)
+      },
+      setDetail (p) {
+        this.detail_point = p
       },
       /**
        * Ugly way to hook up outside DOM event with d3

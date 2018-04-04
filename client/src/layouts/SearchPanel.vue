@@ -2,8 +2,9 @@
   <div>
     <!--Top Division-->
     <div class="m-3">
-      <auto-complete v-model="selection" v-on:chosen="addItem"
-                     :points="points"></auto-complete>
+      <auto-complete v-model="selection" :points="points"
+                     v-on:chosen="addItem"
+                     v-on:tentative="hoverItem"></auto-complete>
     </div>
     <hr>
 
@@ -12,13 +13,17 @@
       <p>Selected logos:</p>
       <div v-for="p in selected" :key="p.i"
            class="bd-point-item d-flex flex-row justify-content-between"
-           @mouseover="hoverLogo(p)" @mouseout="unhoverLogo">
+           @click="clickLogo(p)"
+           @mouseover="hoverLogo(p)"
+           @mouseout="unhoverLogo">
         <div class="text-truncate">
           <img :src="imageUrl(p)" class="m-1"/>
           <span>{{p.name}}</span>
         </div>
         <div class="pl-2">
-          <button class="close" @click="removeItem(p)">
+          <button class="close"
+                  @mouseover.stop=""
+                  @click.stop="removeItem(p)">
             <span>&times;</span>
           </button>
         </div>
@@ -35,7 +40,7 @@
         </div>
         <div class="btn-group ml-3">
           <button class="btn btn-secondary">
-            <i class="fa fa-save"></i>
+            <i class="fa fa-cloud-upload"></i>
           </button>
         </div>
       </div>
@@ -78,8 +83,16 @@
       removeItem (p) {
         this.selected = _.filter(this.selected, (s) => s.i !== p.i)
       },
+      hoverItem(p) {
+        if (p) {
+          this.$emit('detail', p)
+        }
+      },
       imageUrl (p) {
         return store.getImageUrl(p.i)
+      },
+      clickLogo (p) {
+        this.$emit('detail', p)
       },
       hoverLogo (p) {
         this.$emit('highlight', p)

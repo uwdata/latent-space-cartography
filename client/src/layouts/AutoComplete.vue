@@ -10,6 +10,7 @@
       <a class="dropdown-item text-truncate"
          v-for="(val, index) in matches" href="#"
          :class="{'active': isActive(index)}"
+         @mouseover="suggestionHover(index)"
          @click="suggestionClick(index)">
         {{ val.name }}
       </a>
@@ -87,6 +88,7 @@
         if (this.current > 0) {
           this.current--
         }
+        this.suggestionHover(this.current)
       },
 
       // When down arrow pressed while suggestions are open
@@ -94,6 +96,7 @@
         if (this.current < this.matches.length - 1) {
           this.current++
         }
+        this.suggestionHover(this.current)
       },
 
       // For highlighting element
@@ -108,6 +111,11 @@
           this.$emit('chosen', this.matches[index])
         }
         this.open = false
+      },
+
+      // When one of the suggestion is hovered
+      suggestionHover (index) {
+        this.$emit('tentative', this.matches[index])
       }
     }
   }

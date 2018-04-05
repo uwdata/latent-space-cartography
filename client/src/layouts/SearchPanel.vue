@@ -100,6 +100,7 @@
 
       // button "highlight"
       toggleSubset () {
+        if (this.view_mode === 3) return
         this.view_mode = 2
         this.$emit('subset', store.selected)
       },

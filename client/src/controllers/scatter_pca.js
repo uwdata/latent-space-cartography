@@ -1,5 +1,6 @@
 import * as d3 from 'd3'
 import _ from 'lodash'
+import {store} from '../controllers/config'
 
 /**
  * Move D3 selection elements to the front.
@@ -34,6 +35,7 @@ class ScatterPca {
     this.dot_radius = 4
     this.axis = true
     this.dot_color = 'mean_color'
+    this.mark_type = 1 //FIXME: create a new file
 
     /**
      * Interactions
@@ -183,22 +185,39 @@ class ScatterPca {
     }
 
     // Dots
-    let dots = objects.selectAll(".dot")
-      .data(data)
-      .enter()
-      .append("circle")
-      .classed("dot", true)
-      .attr('r', () => this.dot_radius)
-      .attr('cx', (d) => x(d.x))
-      .attr('cy', (d) => y(d.y))
-      .style("fill", (d) => this._colorDot(d, palette))
-      .on('click', dotClick)
+    if (this.mark_type === 1) {
+      let dots = objects.selectAll(".dot")
+        .data(data)
+        .enter()
+        .append("circle")
+        .classed("dot", true)
+        .attr('r', () => this.dot_radius)
+        .attr('cx', (d) => x(d.x))
+        .attr('cy', (d) => y(d.y))
+        .style("fill", (d) => this._colorDot(d, palette))
+        .on('click', dotClick)
 
-    if (this.drag) {
-      dots.call(dragger)
-    } else if (this.hover) {
-      dots.on('mouseover', dotMouseover)
-        .on('mouseout', dotMouseout)
+      if (this.drag) {
+        dots.call(dragger)
+      } else if (this.hover) {
+        dots.on('mouseover', dotMouseover)
+          .on('mouseout', dotMouseout)
+      }
+    } else if (this.mark_type === 2) {
+      let img_size = 20
+
+      // draw logos directly
+      objects.selectAll(".mark-img")
+        .data(data)
+        .enter()
+        .append("image")
+        .classed("mark-img", true)
+        .attr('x', (d) => x(d.x) - img_size * 0.5)
+        .attr('y', (d) => y(d.y) - img_size * 0.5)
+        .attr('width', () => img_size)
+        .attr('height', () => img_size)
+        .attr('xlink:href', (d) => store.getImageUrl(d.i))
+        .on('click', dotClick)
     }
 
     this.dispatch.on('focus-one.dot', (p) => {

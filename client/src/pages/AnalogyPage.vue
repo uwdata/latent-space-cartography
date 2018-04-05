@@ -217,6 +217,7 @@
           .then((points) => {
             this.loading = false
             this.points = points
+            scatter.mark_type = 1
             lets_draw.call(this, points)
           }, (e) => {
             this.loading = false
@@ -231,6 +232,7 @@
           .then((points) => {
             this.loading = false
             this.points = points
+            scatter.mark_type = 2
             log_debug(points)
             lets_draw.call(this, points)
           }, (e) => {

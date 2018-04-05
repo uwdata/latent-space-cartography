@@ -231,6 +231,7 @@ class Store {
   }
 
   /**
+   * FIXME: put this function to config.js
    * Given the index, return a relative URL to the image.
    * @param i
    * @returns {string}

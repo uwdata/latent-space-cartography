@@ -43,11 +43,14 @@
                   @click="toggleSubset">Highlight</button>
           <button class="btn btn-outline-secondary w-100"
                   :class="{active: view_mode === 3}"
-                  @click="reproject">Re-project</button>
+                  @click="reproject">Isolate</button>
         </div>
         <div class="btn-group btn-group-sm ml-3">
+          <button class="btn btn-outline-secondary" @click="removeAll">
+            <i class="fa fa-fw fa-trash"></i>
+          </button>
           <button class="btn btn-outline-secondary">
-            <i class="fa fa-cloud-upload"></i>
+            <i class="fa fa-fw fa-cloud-upload"></i>
           </button>
         </div>
       </div>
@@ -89,7 +92,7 @@
       toggleAll () {
         if (this.view_mode === 2) {
           this.$emit('subset', null)
-        } else {
+        } else if (this.view_mode === 3) {
           this.$emit('original')
         }
         this.view_mode = 1
@@ -120,6 +123,14 @@
         let idx = _.findIndex(store.selected, (i) => i === p.i)
         store.selected.splice(idx, 1)
         console.log(store.selected, this.selected)
+      },
+      removeAll () {
+        while (store.selected.length) {
+          store.selected.splice(0, 1)
+        }
+
+        // switch to default mode
+        this.toggleAll()
       },
       hoverItem(p) {
         if (p) {

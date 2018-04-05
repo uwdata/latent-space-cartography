@@ -22,6 +22,12 @@ class Store {
      */
     this.meta = []
 
+    /**
+     * An array of indices of user's favorite points.
+     * Warning: do not re-assign the pointer! Only mutate the content of the array.
+     */
+    this.selected = []
+
     // FIXME: latent dim shouldn't be here
     this.latent_dim = 32
   }

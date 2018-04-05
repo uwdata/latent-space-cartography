@@ -11,7 +11,7 @@
     <!--Logo List-->
     <div v-if="selected.length" class="m-3 bd-logo-list">
       <p>Selected logos:</p>
-      <div v-for="p in selected" :key="p.i"
+      <div v-for="p in selected_points" :key="p.i"
            class="bd-point-item d-flex flex-row justify-content-between"
            @click="clickLogo(p)"
            @mouseover="hoverLogo(p)"
@@ -57,6 +57,7 @@
   export default {
     name: 'SearchPanel',
     props: {
+      // Note that these points only contain index and meta information.
       points: {
         type: Array,
         required: true
@@ -68,32 +69,40 @@
     data () {
       return {
         selection: '',
-        selected: [],
+        selected: store.selected,
         subset: false
+      }
+    },
+    computed: {
+      selected_points: function () {
+        return _.map(this.selected, (i) => this.points[i])
       }
     },
     methods: {
       // button "highlight"
       toggleSubset () {
         this.subset = !this.subset
-        this.$emit('subset', this.subset ? this.selected : null)
+        this.$emit('subset', this.subset ? store.selected : null)
       },
 
       // button "re-project"
       reproject () {
         // TODO: tell user you can't PCA with less than 3 points
-        if (this.selected.length > 3) {
-          this.$emit('reproject', _.map(this.selected, (p) => p.i))
+        if (store.selected.length > 3) {
+          this.$emit('reproject', store.selected)
         }
       },
 
       // modify the list
       addItem (p) {
-        this.selected.push(p)
-        this.selected = _.uniqBy(this.selected, (p) => p.i)
+        if (!_.includes(store.selected, p.i)) {
+          store.selected.push(p.i)
+        }
       },
       removeItem (p) {
-        this.selected = _.filter(this.selected, (s) => s.i !== p.i)
+        let idx = _.findIndex(store.selected, (i) => i === p.i)
+        store.selected.splice(idx, 1)
+        console.log(store.selected, this.selected)
       },
       hoverItem(p) {
         if (p) {
@@ -106,7 +115,7 @@
         this.$emit('detail', p)
       },
       hoverLogo (p) {
-        this.$emit('highlight', p)
+        this.$emit('highlight', p.i)
       },
       unhoverLogo () {
         this.$emit('highlight', null)

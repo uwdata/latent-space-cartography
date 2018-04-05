@@ -47,7 +47,7 @@
               <div class="p-2">
                 <div v-for="p in brushed" :key="p.i"
                      @click="setDetail(p)"
-                     @mouseover="onHighlight(p)"
+                     @mouseover="onHighlight(p.i)"
                      @mouseout="onHighlight()"
                      class="bd-point-item d-flex flex-row justify-content-between">
                   <div class="text-truncate">
@@ -55,13 +55,13 @@
                     <span>{{p.name}}</span>
                   </div>
                   <div class="pl-2 d-flex align-items-center">
-                    <button class="close" style="font-size:1em;" @click.stop="">
+                    <button class="close" style="font-size:1em;" @click.stop="addOne(p)">
                       <i class="fa fa-plus"></i>
                     </button>
                   </div>
                 </div>
                 <button class="btn-block btn btn-light mt-3 mb-2"
-                        @click="">Add All</button>
+                        @click="addAll()">Add All</button>
               </div>
             </div>
           </div>
@@ -86,7 +86,7 @@
 
       <!--Right Panel-->
       <div class="bd-sidebar bd-right col-3">
-        <search-panel :points="all_points"
+        <search-panel :points="suggestions"
                       v-on:detail="setDetail"
                       v-on:highlight="onHighlight"
                       v-on:reproject="reproject"
@@ -118,6 +118,7 @@
     this.detail_point = null
   }
 
+  // Customize the style of scatter plot
   function create_scatter () {
     let s = new Scatter()
     s.outerWidth = 600
@@ -147,6 +148,15 @@
     scatter.draw('#container')
   }
 
+  /**
+   * Helper function, looking up the points array for a point with matching index.
+   * @param i
+   * @param points
+   */
+  function indexToPoint (i, points) {
+    return _.find(points, (p) => p.i === i)
+  }
+
   export default {
     components: {
       SearchPanel,
@@ -155,7 +165,8 @@
     name: 'AnalogyPage',
     data () {
       return {
-        all_points: [],
+        suggestions: [],
+        points: [],
         detail_point: null,
         brushed: [],
         dim: 32,
@@ -178,9 +189,10 @@
       store.getPcaPoints(this.dim)
         .then((points) => {
           this.loading = false
+          this.points = points
           log_debug(points[0])
           // set only once, since what really matters is the meta
-          this.all_points = points
+          this.suggestions = store.meta
           lets_draw.call(this, points)
         }, (e) => {
           this.err = e
@@ -188,12 +200,12 @@
         })
     },
     methods: {
+      // helper
       imageUrl (p) {
         return store.getImageUrl(p.i)
       },
-      setDetail (p) {
-        this.detail_point = p
-      },
+
+      // change latent dimensions
       changeDim (dim) {
         this.dim = dim
 
@@ -203,17 +215,21 @@
         store.getPcaPoints(this.dim)
           .then((points) => {
             this.loading = false
+            this.points = points
             lets_draw.call(this, points)
           }, (e) => {
             this.loading = false
             this.err = e
           })
       },
+
+      // redo PCA using only selected points
       reproject (indices) {
         this.loading = true
         store.getPcaPoints(this.dim, 2, indices)
           .then((points) => {
             this.loading = false
+            this.points = points
             log_debug(points)
             lets_draw.call(this, points)
           }, (e) => {
@@ -221,15 +237,33 @@
             this.loading = false
           })
       },
+
+      // change the content of details card
+      setDetail (p) {
+        this.detail_point = p
+      },
+
+      // Add brushed points to the selected list
+      addOne (p) {
+        if (!_.includes(store.selected, p.i)) {
+          store.selected.push(p.i)
+        }
+      },
+      addAll () {
+        _.each(this.brushed, (p) => this.addOne(p))
+      },
+
       /**
        * Ugly way to hook up outside DOM event with d3
-       * @param p
+       * @param i
        */
-      onHighlight (p) {
-        scatter.focusDot(p)
+      onHighlight (i) {
+        scatter.focusDot(indexToPoint(i, this.points))
       },
+
       // FIXME: new points won't appear
-      onToggleSubset (pts) {
+      onToggleSubset (indices) {
+        let pts = _.map(indices, (i) => indexToPoint(i, this.points))
         scatter.focusSet(pts)
       }
     }

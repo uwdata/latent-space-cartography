@@ -89,6 +89,7 @@
         <search-panel :points="all_points"
                       v-on:detail="setDetail"
                       v-on:highlight="onHighlight"
+                      v-on:reproject="reproject"
                       v-on:subset="onToggleSubset"></search-panel>
       </div>
     </div>
@@ -208,6 +209,18 @@
             this.err = e
           })
       },
+      reproject (indices) {
+        this.loading = true
+        store.getPcaPoints(this.dim, 2, indices)
+          .then((points) => {
+            this.loading = false
+            log_debug(points)
+            lets_draw.call(this, points)
+          }, (e) => {
+            this.err = e
+            this.loading = false
+          })
+      },
       /**
        * Ugly way to hook up outside DOM event with d3
        * @param p
@@ -215,6 +228,7 @@
       onHighlight (p) {
         scatter.focusDot(p)
       },
+      // FIXME: new points won't appear
       onToggleSubset (pts) {
         scatter.focusSet(pts)
       }

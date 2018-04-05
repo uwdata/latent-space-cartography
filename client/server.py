@@ -61,10 +61,15 @@ def get_pca ():
     
     latent_dim = request.json['latent_dim']
     pca_dim = int(request.json['pca_dim'])
+    indices = np.asarray(request.json['indices'], dtype=np.int16)
 
     rawpath = abs_path('./data/latent/latent{}.h5'.format(latent_dim))
     with h5py.File(rawpath, 'r') as f:
-        raw = f['latent']
+        raw = np.asarray(f['latent'])
+        length = indices.shape[0]
+        if length > 0:
+            raw = raw[indices]
+
         pca = PCA(n_components = pca_dim)
         d = pca.fit_transform(raw)
         va = pca.explained_variance_ratio_

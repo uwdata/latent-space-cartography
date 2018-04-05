@@ -68,17 +68,18 @@ class Store {
    * Async get the points after PCA from server
    * @param dim The latent dimension (since models differ only in latent dim)
    * @param pca_dim The number of principal components in PCA
+   * @param subset If non-empty, perform PCA on just these points
    * @returns {Promise}
    */
-  getPcaPoints (dim, pca_dim = 2) {
+  getPcaPoints (dim, pca_dim = 2, subset = []) {
     this.latent_dim = dim
     return new Promise((resolve, reject) => {
-      if (this.pca[dim]) {
+      if (!subset.length && this.pca[dim]) {
         resolve(this.pca[dim].points)
         return
       }
 
-      let payload = {'latent_dim': dim, 'pca_dim': pca_dim}
+      let payload = {'latent_dim': dim, 'pca_dim': pca_dim, 'indices': subset}
 
       this.getMeta()
         .then(() => {
@@ -89,7 +90,7 @@ class Store {
 
           if (msg) {
             this.pca[dim] = {
-              points: this._formatPcaPoints(msg.data),
+              points: this._formatPcaPoints(msg.data, subset),
               variation: msg.variation
             }
             resolve(this.pca[dim].points)
@@ -217,11 +218,11 @@ class Store {
     return _.map(points, (p) => _.assign(p, _.find(this.meta, {i: p.i})))
   }
 
-  _formatPcaPoints (points) {
+  _formatPcaPoints (points, indices = []) {
     // points is a 2D array with shape: (length, n_components)
     return this._joinMeta(_.map(points, (p, i) => {
       // p is a 1D array containing n_components float
-      let res = {i: i}
+      let res = {i: indices.length ? indices[i] : i}
 
       _.forEach(p, (pp, j) => {
         let key = `PC${j}`

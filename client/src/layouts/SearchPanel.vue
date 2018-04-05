@@ -36,7 +36,8 @@
         <div class="btn-group d-flex w-100">
           <button class="btn btn-secondary w-100" :class="{disabled: subset}"
                   @click="toggleSubset">Highlight</button>
-          <button class="btn w-100 btn-secondary">Re-project</button>
+          <button class="btn w-100 btn-secondary"
+                  @click="reproject">Re-project</button>
         </div>
         <div class="btn-group ml-3">
           <button class="btn btn-secondary">
@@ -72,10 +73,21 @@
       }
     },
     methods: {
+      // button "highlight"
       toggleSubset () {
         this.subset = !this.subset
         this.$emit('subset', this.subset ? this.selected : null)
       },
+
+      // button "re-project"
+      reproject () {
+        // TODO: tell user you can't PCA with less than 3 points
+        if (this.selected.length > 3) {
+          this.$emit('reproject', _.map(this.selected, (p) => p.i))
+        }
+      },
+
+      // modify the list
       addItem (p) {
         this.selected.push(p)
         this.selected = _.uniqBy(this.selected, (p) => p.i)
@@ -88,9 +100,8 @@
           this.$emit('detail', p)
         }
       },
-      imageUrl (p) {
-        return store.getImageUrl(p.i)
-      },
+
+      // interactions of the logo list
       clickLogo (p) {
         this.$emit('detail', p)
       },
@@ -99,6 +110,11 @@
       },
       unhoverLogo () {
         this.$emit('highlight', null)
+      },
+
+      // helper
+      imageUrl (p) {
+        return store.getImageUrl(p.i)
       }
     }
   }

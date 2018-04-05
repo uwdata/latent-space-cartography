@@ -74,18 +74,17 @@ class Store {
    * Async get the points after PCA from server
    * @param dim The latent dimension (since models differ only in latent dim)
    * @param pca_dim The number of principal components in PCA
-   * @param subset If non-empty, perform PCA on just these points
    * @returns {Promise}
    */
-  getPcaPoints (dim, pca_dim = 2, subset = []) {
+  getPcaPoints (dim, pca_dim = 2) {
     this.latent_dim = dim
     return new Promise((resolve, reject) => {
-      if (!subset.length && this.pca[dim]) {
+      if (this.pca[dim]) {
         resolve(this.pca[dim].points)
         return
       }
 
-      let payload = {'latent_dim': dim, 'pca_dim': pca_dim, 'indices': subset}
+      let payload = {'latent_dim': dim, 'pca_dim': pca_dim, 'indices': []}
 
       this.getMeta()
         .then(() => {
@@ -96,10 +95,35 @@ class Store {
 
           if (msg) {
             this.pca[dim] = {
-              points: this._formatPcaPoints(msg.data, subset),
+              points: this._formatPcaPoints(msg.data, []),
               variation: msg.variation
             }
             resolve(this.pca[dim].points)
+          } else {
+            reject(`Fail to initialize.`)
+          }
+        }, () => {
+          reject(`Network error.`)
+        })
+    })
+  }
+
+  /**
+   *
+   * @param dim
+   * @param subset If non-empty, perform PCA on just these points
+   */
+  customPca (dim, subset = []) {
+    return new Promise((resolve, reject) => {
+      let payload = {'latent_dim': dim, 'pca_dim': 2, 'indices': subset}
+
+      http.post('/api/get_pca', payload)
+        .then((response) => {
+          let msg = response.data
+
+          if (msg) {
+            let points = this._formatPcaPoints(msg.data, subset)
+            resolve(points)
           } else {
             reject(`Fail to initialize.`)
           }

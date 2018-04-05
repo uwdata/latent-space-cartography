@@ -33,14 +33,20 @@
     <!--Footer-->
     <div v-if="selected.length" class="bd-panel-footer p-3">
       <div class="d-flex justify-content-between">
-        <div class="btn-group d-flex w-100">
-          <button class="btn btn-secondary w-100" :class="{disabled: subset}"
+        <!--View Buttons-->
+        <div class="btn-group btn-group-sm d-flex w-100">
+          <button class="btn btn-outline-secondary w-100"
+                  :class="{active: view_mode === 1}"
+                  @click="toggleAll">Show All</button>
+          <button class="btn btn-outline-secondary w-100"
+                  :class="{active: view_mode === 2}"
                   @click="toggleSubset">Highlight</button>
-          <button class="btn w-100 btn-secondary"
+          <button class="btn btn-outline-secondary w-100"
+                  :class="{active: view_mode === 3}"
                   @click="reproject">Re-project</button>
         </div>
-        <div class="btn-group ml-3">
-          <button class="btn btn-secondary">
+        <div class="btn-group btn-group-sm ml-3">
+          <button class="btn btn-outline-secondary">
             <i class="fa fa-cloud-upload"></i>
           </button>
         </div>
@@ -70,7 +76,7 @@
       return {
         selection: '',
         selected: store.selected,
-        subset: false
+        view_mode: 1 // 1 - All, 2 - Subset, 3 - Reprojected
       }
     },
     computed: {
@@ -79,14 +85,25 @@
       }
     },
     methods: {
+      // button "show all"
+      toggleAll () {
+        if (this.view_mode === 2) {
+          this.$emit('subset', null)
+        } else {
+          this.$emit('original')
+        }
+        this.view_mode = 1
+      },
+
       // button "highlight"
       toggleSubset () {
-        this.subset = !this.subset
-        this.$emit('subset', this.subset ? store.selected : null)
+        this.view_mode = 2
+        this.$emit('subset', store.selected)
       },
 
       // button "re-project"
       reproject () {
+        this.view_mode = 3
         // TODO: tell user you can't PCA with less than 3 points
         if (store.selected.length > 3) {
           this.$emit('reproject', store.selected)

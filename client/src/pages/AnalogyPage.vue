@@ -90,6 +90,7 @@
                       v-on:detail="setDetail"
                       v-on:highlight="onHighlight"
                       v-on:reproject="reproject"
+                      v-on:original="showOriginal"
                       v-on:subset="onToggleSubset"></search-panel>
       </div>
     </div>
@@ -226,7 +227,7 @@
       // redo PCA using only selected points
       reproject (indices) {
         this.loading = true
-        store.getPcaPoints(this.dim, 2, indices)
+        store.customPca(this.dim, indices)
           .then((points) => {
             this.loading = false
             this.points = points
@@ -263,8 +264,14 @@
 
       // FIXME: new points won't appear
       onToggleSubset (indices) {
-        let pts = _.map(indices, (i) => indexToPoint(i, this.points))
+        let pts = indices ? _.map(indices, (i) => indexToPoint(i, this.points)) : null
         scatter.focusSet(pts)
+      },
+
+      // draw original
+      showOriginal () {
+        // too lazy to rewrite ...
+        this.changeDim(this.dim)
       }
     }
   }

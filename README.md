@@ -17,6 +17,11 @@ npm install
 # transpile client-side code
 npm run dev
 
+# install dependencies for the server
+# you may want to use tools like virtualenv to manange python deps ...
+pip install numpy scipy pyyaml h5py keras pillow matplotlib sklearn
+pip install flask-mysql Flask
+
 # start the server
 python server.py
 ```

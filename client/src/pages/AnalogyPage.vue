@@ -86,12 +86,13 @@
 
       <!--Right Panel-->
       <div class="bd-sidebar bd-right col-3">
-        <search-panel :points="suggestions"
-                      v-on:detail="setDetail"
-                      v-on:highlight="onHighlight"
-                      v-on:reproject="reproject"
-                      v-on:original="showOriginal"
-                      v-on:subset="onToggleSubset"></search-panel>
+      <div class="list-group">
+        <button type="button" class="list-group-item list-group-item-action" v-on:click="filter('1')">CATEGORY 1</button>
+        <button type="button" class="list-group-item list-group-item-action" v-on:click="filter('2')">CATEGORY 2</button>
+        <button type="button" class="list-group-item list-group-item-action" v-on:click="filter('3')">CATEGORY 3</button>
+        <button type="button" class="list-group-item list-group-item-action" v-on:click="filter('4')">CATEGORY 4</button>
+        <button type="button" class="list-group-item list-group-item-action" v-on:click="filter('all')">ALL</button>
+      </div>
       </div>
     </div>
   </div>
@@ -201,6 +202,9 @@
         })
     },
     methods: {
+      filter(category) {
+        console.log(category);
+      },
       // helper
       imageUrl (p) {
         return store.getImageUrl(p.i)

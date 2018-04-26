@@ -27,7 +27,7 @@ def connect_db ():
     # read config file
     with open(abs_path('mysql_config.json')) as jsonfile:
         app.config.update(json.load(jsonfile))
-    
+
     mysql = MySQL()
     mysql.init_app(app)
     conn = mysql.connect()
@@ -58,7 +58,7 @@ def serve_data (path):
 def get_pca ():
     if not request.json or not 'latent_dim' in request.json:
         abort(400)
-    
+
     latent_dim = request.json['latent_dim']
     pca_dim = int(request.json['pca_dim'])
     indices = np.asarray(request.json['indices'], dtype=np.int16)
@@ -83,12 +83,12 @@ def get_pca ():
 def pca_back ():
     if not request.json:
         abort(400)
-    
+
     latent_dim = request.json['latent_dim']
     x = float(request.json['x'])
     y = float(request.json['y'])
     i = int(request.json['i'])
-    
+
     # project from 2D to latent space
     rawpath = abs_path('./data/latent/latent{}.h5'.format(latent_dim))
     with h5py.File(rawpath, 'r') as f:
@@ -124,7 +124,7 @@ def pca_back ():
 def get_tsne ():
     if not request.json or not 'latent_dim' in request.json:
         abort(400)
-    
+
     latent_dim = request.json['latent_dim']
     perp = request.json['perplexity']
     suffix = '_pca' if request.json['pca'] else ''
@@ -132,11 +132,11 @@ def get_tsne ():
     print(fn)
     with open(fn) as data_file:
         data = json.load(data_file)
-    
+
     return jsonify({'data': data}), 200
 
 # get meta data
-@app.route('/api/get_meta', methods=['POST'])
+@app.route('/api/get_meta', methods=['GET'])
 def get_meta ():
     cursor.execute('SELECT i,name,mean_color,data_source,industry FROM meta')
     data = [list(i) for i in cursor.fetchall()]

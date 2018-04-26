@@ -48,7 +48,7 @@ class Store {
       let schema = ['i', 'name', 'mean_color', 'source', 'industry']
 
       // go fetch from the server
-      http.post('/api/get_meta', {})
+      http.get('/api/get_meta', {})
         .then((response) => {
           let msg = response.data
 

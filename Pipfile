@@ -1,0 +1,21 @@
+[[source]]
+url = "https://pypi.python.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+matplotlib = "*"
+numpy = "*"
+sklearn = "*"
+scipy = "*"
+pyyaml = "*"
+"h5py" = "*"
+keras = "*"
+pillow = "*"
+flask-mysql = "*"
+flask = "*"
+
+[dev-packages]
+
+[requires]
+python_version = "2.7.14"

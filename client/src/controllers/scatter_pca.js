@@ -94,6 +94,11 @@ class ScatterPca {
       .append("svg")
       .attr("width", outerWidth)
       .attr("height", outerHeight)
+      .call(d3.zoom().on("zoom", function () {
+              svg.attr("transform", d3.event.transform)
+      }))
+      .append("g")
+
 
     let boundZoom = zoom.bind(window, svg, x, y, xAxis, yAxis)
     let zoomBeh = d3.zoom()
@@ -128,16 +133,25 @@ class ScatterPca {
           .style('fill', '#000')
       })
 
-    svg.append("g")
-      .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
-      .call(zoomBeh)
+    // svg.append("g")
+    //   .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+    //   .call(zoomBeh)
 
     // Blank
+    // svg.append("rect")
+    //   .attr("id", 'graph')
+    //   .attr("width", width)
+    //   .attr("height", height)
+    //   .attr("fill", this.background)
+    //   .call(zoomBeh)
+
+    // Add a rectangle overlay
     svg.append("rect")
+      .attr("id", 'graph')
       .attr("width", width)
       .attr("height", height)
       .attr("fill", this.background)
-      .call(zoomBeh)
+
 
     // Brush
     svg.append("g")

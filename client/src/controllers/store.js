@@ -48,12 +48,13 @@ class Store {
       let schema = ['i', 'name', 'mean_color', 'source', 'industry']
 
       // go fetch from the server
-      http.post('/api/get_meta', {})
+      http.get('/api/get_meta', {})
         .then((response) => {
           let msg = response.data
 
           if (msg) {
             this.meta = _.map(msg.data, (m) => {
+              // console.log(msg.data)
               let result = {}
               _.each(m, (val, idx) => {
                 result[schema[idx]] = val

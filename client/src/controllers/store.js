@@ -54,6 +54,7 @@ class Store {
 
           if (msg) {
             this.meta = _.map(msg.data, (m) => {
+              // console.log(msg.data)
               let result = {}
               _.each(m, (val, idx) => {
                 result[schema[idx]] = val

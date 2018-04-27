@@ -72,6 +72,7 @@
               <div id="container" class="mt-3"></div>
             </div>
           </div>
+
         </div>
         <div class="bd-app-footer">
           <div class="m-3 text-left">
@@ -86,27 +87,37 @@
 
       <!--Right Panel-->
       <div class="bd-sidebar bd-right col-3">
-      <div class="list-group">
-        <button type="button" class="list-group-item list-group-item-action" v-on:click="filter('1')">CATEGORY 1</button>
-        <button type="button" class="list-group-item list-group-item-action" v-on:click="filter('2')">CATEGORY 2</button>
-        <button type="button" class="list-group-item list-group-item-action" v-on:click="filter('3')">CATEGORY 3</button>
-        <button type="button" class="list-group-item list-group-item-action" v-on:click="filter('4')">CATEGORY 4</button>
-        <button type="button" class="list-group-item list-group-item-action" v-on:click="filter('all')">ALL</button>
-      </div>
+        <button type="button" class="list-group-item list-group-item-action" @click="filter('Travel');">Travel</button>
+        <button type="button" class="list-group-item list-group-item-action" @click="filter('Food');">Food</button>
+        <button type="button" class="list-group-item list-group-item-action" @click="filter('Auto');">Auto</button>
+        <button type="button" class="list-group-item list-group-item-action" @click="filter('Media');">Media</button>
+      <!-- <filter-panel :industry="Travel"
+          @click="filter(this.industry)"></filter-panel> -->
       </div>
     </div>
   </div>
 </template>
 
 <script>
-  import SearchPanel from '../layouts/SearchPanel.vue'
+  // import SearchPanel from '../layouts/SearchPanel.vue'
+  import FilterPanel from '../layouts/FilterPanel.vue'
   import Scatter from '../controllers/scatter_pca'
   import {store, log_debug, TRAIN_SPLIT} from '../controllers/config'
   import _ from 'lodash'
   import VueLoading from 'vue-loading-template'
+  import * as d3 from 'd3'
 
   // PCA plot of all points
   let scatter = create_scatter()
+
+  // var svg = d3.select("#graph")
+  //     .append("svg")
+  //     .attr("width", "100%")
+  //     .attr("height", "100%")
+  //     .call(d3.zoom().on("zoom", function () {
+  //             svg.attr("transform", d3.event.transform)
+  //     }))
+  //     .append("g")
 
   function clear () {
     // remove all nodes
@@ -161,7 +172,7 @@
 
   export default {
     components: {
-      SearchPanel,
+      FilterPanel,
       VueLoading
     },
     name: 'AnalogyPage',
@@ -204,6 +215,18 @@
     methods: {
       filter(category) {
         console.log(category);
+        console.log(this.points);
+          //use the category to filter the meta data
+          var cat_meta = _.filter(store.meta, function(e){ return e.industry === category});
+
+          //get the PCA points
+          var cat_points = _.forEach(cat_meta, function(m) {
+            console.log(m);
+            return _.concat(cat_points, _.indexToPoint(m.i, this.points));
+          });
+
+          //redraw the PCA points
+          lets_draw(cat_points);
       },
       // helper
       imageUrl (p) {

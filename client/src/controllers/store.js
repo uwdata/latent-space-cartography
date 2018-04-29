@@ -246,7 +246,8 @@ class Store {
    * @private
    */
   _joinMeta (points) {
-    return _.map(points, (p) => _.assign(p, _.find(this.meta, {i: p.i})))
+    let meta_dict = _.keyBy(this.meta, 'i')
+    return _.map(points, (p) => _.assign(p, meta_dict[p.i]))
   }
 
   _formatPcaPoints (points, indices = []) {

@@ -97,6 +97,17 @@
                 {{d}}
               </b-dropdown-item>
             </b-dropdown>
+            <b-dropdown :text="`Projection: ${projection}`" variant="light" class="ml-2">
+              <b-dropdown-item v-for="pr in all_projections" :key="pr" @click="changeProjection(pr)">
+                {{pr}}
+              </b-dropdown-item>
+            </b-dropdown>
+            <b-dropdown :text="`Perplexity: ${perplexity}`" variant="light" class="ml-2"
+                        v-if="projection === 't-SNE'">
+              <b-dropdown-item v-for="perp in all_perplexity" @click="changePerp(perp)" :key="perp">
+                {{perp}}
+              </b-dropdown-item>
+            </b-dropdown>
           </div>
         </div>
       </div>
@@ -162,9 +173,30 @@
    */
   function lets_draw (points) {
     clear.call(this)
-//    scatter.setData(_.slice(points, 0, TRAIN_SPLIT))
-    scatter.setData(_.slice(points, 0, 1000)) //fixme
+    scatter.setData(_.slice(points, 0, TRAIN_SPLIT))
+//    scatter.setData(_.slice(points, 0, 1000)) //fixme
     scatter.draw('#container')
+  }
+
+  function lets_load (callback) {
+    clear.call(this)
+    this.loading = true
+    let func = this.projection === 't-SNE' ? store.getTsnePoints : store.getPcaPoints
+    let args = [this.dim]
+    if (this.projection === 't-SNE') {
+      args.push(this.perplexity)
+    }
+
+    func.call(store, ...args)
+      .then((points) => {
+        this.loading = false
+        this.points = points
+        callback()
+        lets_draw.call(this, points)
+      }, (e) => {
+        this.err = e
+        this.loading = false
+      })
   }
 
   /**
@@ -190,6 +222,10 @@
         brushed: [],
         dim: 32,
         all_dims: [32, 64, 128, 256, 512, 1024],
+        projection: 't-SNE',
+        all_projections: ['PCA', 't-SNE'],
+        perplexity: 30,
+        all_perplexity: [5, 10, 30, 50, 100],
         loading: true,
         night: false,
         err: ''
@@ -206,19 +242,10 @@
       }
 
       // Get points from server
-      this.loading = true
-      store.getPcaPoints(this.dim)
-        .then((points) => {
-          this.loading = false
-          this.points = points
-          log_debug(points[0])
-          // set only once, since what really matters is the meta
-          this.suggestions = store.meta
-          lets_draw.call(this, points)
-        }, (e) => {
-          this.err = e
-          this.loading = false
-        })
+      lets_load.call(this, () => {
+        // set only once, since what really matters is the meta
+        this.suggestions = store.meta
+      })
     },
     methods: {
       // helper
@@ -229,20 +256,23 @@
       // change latent dimensions
       changeDim (dim) {
         this.dim = dim
+        lets_load.call(this, () => {
+          scatter.mark_type = 1
+        })
+      },
 
-        clear.call(this)
+      // change projection method
+      changeProjection (proj) {
+        this.projection = proj
+        lets_load.call(this, () => {
+          scatter.mark_type = 1
+        })
+      },
 
-        this.loading = true
-        store.getPcaPoints(this.dim)
-          .then((points) => {
-            this.loading = false
-            this.points = points
-            scatter.mark_type = 1
-            lets_draw.call(this, points)
-          }, (e) => {
-            this.loading = false
-            this.err = e
-          })
+      // change perplexity of t-SNE
+      changePerp (perp) {
+        this.perplexity = perp
+        lets_load.call(this, () => {})
       },
 
       // redo PCA using only selected points

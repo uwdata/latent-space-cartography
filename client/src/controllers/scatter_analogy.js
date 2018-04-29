@@ -136,20 +136,22 @@ class Scatter {
           .style('fill', '#000')
       })
 
-    svg.call(zoomBeh)
     svg.append("g")
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
 
     // Blank
-    svg.append("rect")
+    let rect = svg.append("rect")
       .attr("width", width)
       .attr("height", height)
       .attr("fill", this.background)
 
-    // Brush
-    let brushBox = svg.append("g")
-      .attr("class", "brush")
-      .call(brushBeh)
+    // Brush & Zoom
+    // if you bind zoomBeh to rect, zoom & brush appears mutually exclusive
+    svg.call(zoomBeh)
+    toggleZoomBrush()
+    d3.select(window)
+      .on('keydown', toggleZoomBrush)
+      .on('keyup', toggleZoomBrush)
 
     if (this.axis) {
       // X Axis
@@ -311,6 +313,25 @@ class Scatter {
       that.onDotClicked(d)
     }
 
+    /**
+     * Holding SHIFT key removes brush behavior.
+     */
+    function toggleZoomBrush () {
+      let shift = d3.event ? d3.event.shiftKey : false
+      if (shift) {
+        // remove brush
+        d3.select('.brush')
+          .call(brushBeh.move, null)
+          .remove()
+      } else {
+        // create brush holder and put it just after "rect"
+        svg.append('g').attr('class', 'brush').call(brushBeh)
+        d3.select('.brush').each(function () {
+          this.parentNode.insertBefore(this, rect.node().nextSibling)
+        })
+      }
+    }
+
     function brushstart() {
       d3.selectAll('.dot').classed('muted', false)
       that.onSelected([])
@@ -362,7 +383,7 @@ class Scatter {
         .attr('cy', (d) => currentY(d.y))
 
       // clear brush
-      brushBox.call(brushBeh.move, null);
+      d3.select('.brush').call(brushBeh.move, null)
     }
   }
 

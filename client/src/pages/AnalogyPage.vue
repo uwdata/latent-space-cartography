@@ -16,7 +16,7 @@
       <div class="col-9 pr-0">
         <div class="row mr-0">
           <!--Left Panel-->
-          <div class="col-4 bd-sidebar bd-left">
+          <div class="col-4  bd-left">
 
             <!--Details of a Logo-->
             <div class="card mb-3" v-if="detail_point">
@@ -69,7 +69,7 @@
           <!--Main Drawing-->
           <div class="col-8">
             <div class="d-flex justify-content-center align-items-center">
-              <div id="container" class="mt-3"></div>
+              <div id="container" class="mt-3" ref="chart"></div>
             </div>
           </div>
         </div>
@@ -85,7 +85,7 @@
       </div>
 
       <!--Right Panel-->
-      <div class="bd-sidebar bd-right col-3">
+      <div class=" bd-right col-3">
         <search-panel :points="suggestions"
                       v-on:detail="setDetail"
                       v-on:highlight="onHighlight"
@@ -99,13 +99,13 @@
 
 <script>
   import SearchPanel from '../layouts/SearchPanel.vue'
-  import Scatter from '../controllers/scatter_pca'
+  import Scatter from '../controllers/scatter_analogy'
   import {store, log_debug, TRAIN_SPLIT} from '../controllers/config'
   import _ from 'lodash'
   import VueLoading from 'vue-loading-template'
 
   // PCA plot of all points
-  let scatter = create_scatter()
+  let scatter = null
 
   function clear () {
     // remove all nodes
@@ -122,13 +122,13 @@
   // Customize the style of scatter plot
   function create_scatter () {
     let s = new Scatter()
-    s.outerWidth = 600
-    s.outerHeight = 600
+    s.outerWidth = this.$refs.chart.clientWidth
+    s.outerHeight = this.$refs.chart.clientHeight
     s.margin = {
-      top: 15,
-      bottom: 15,
-      left: 15,
-      right: 15
+      top: 0,
+      bottom: 0,
+      left: 0,
+      right: 0
     }
     s.dot_radius = 3
     s.axis = false
@@ -145,7 +145,8 @@
    */
   function lets_draw (points) {
     clear.call(this)
-    scatter.setData(_.slice(points, 0, TRAIN_SPLIT))
+//    scatter.setData(_.slice(points, 0, TRAIN_SPLIT))
+    scatter.setData(_.slice(points, 0, 1000)) //fixme
     scatter.draw('#container')
   }
 
@@ -176,16 +177,17 @@
         err: ''
       }
     },
-    created: function () {
+    mounted: function () {
       // register all the callback of the D3 component
+      scatter = create_scatter.call(this)
       scatter.onSelected = (pts) => {
         this.brushed = pts
       }
       scatter.onDotClicked = (pt) => {
         this.detail_point = pt
       }
-    },
-    mounted: function () {
+
+      // Get points from server
       this.loading = true
       store.getPcaPoints(this.dim)
         .then((points) => {
@@ -287,7 +289,7 @@
     box-shadow: 0 0.5rem 1rem rgba(0,0,0,.05), inset 0 -1px 0 rgba(0,0,0,.1);
   }
 
-  .bd-sidebar {
+  . {
     position: sticky;
     top: 4rem;
     z-index: 1000;
@@ -349,11 +351,17 @@
     height: calc(100vh - 4rem);
   }
 
+  #container {
+    width: 100%;
+    height: calc(100vh - 8.56rem - 30px);
+  }
+
   .bd-app-footer {
     position: sticky;
     bottom: 0;
     height: 4.56em;
     z-index: 1000;
+    background-color: #fff;
     border-top: 1px solid rgba(0,0,0,.1);
     box-shadow: 0.5rem 0 2rem rgba(0,0,0,.03);
   }

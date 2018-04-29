@@ -13,9 +13,9 @@ function moveToFront (selection) {
 }
 
 /**
- * Handles drawing a scatter plot for 2-dimensional PCA data.
+ * Handles drawing a scatter plot for 2-dimensional data.
  */
-class ScatterPca {
+class Scatter {
   /**
    * Constructor
    */
@@ -396,4 +396,4 @@ function zoom (svg, x, y, xAxis, yAxis) {
     .attr('cy', (d) => new_yScale(d.y))
 }
 
-export default ScatterPca
+export default Scatter

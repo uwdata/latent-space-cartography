@@ -67,12 +67,29 @@
           </div>
 
           <!--Main Drawing-->
-          <div class="col-8">
+          <div class="col-8 pr-0 pl-0">
             <div class="d-flex justify-content-center align-items-center">
-              <div id="container" class="mt-3" ref="chart"></div>
+              <!--SVG-->
+              <div id="container" ref="chart"></div>
+
+              <!--Buttons-->
+              <div class="chart-btn-group pt-3 pr-3">
+                <div class="btn-group-vertical btn-group-sm">
+                  <b-btn class="btn btn-outline-secondary"
+                         id="btn-night"
+                         :class="{active: night}"
+                         @click="toggleBackground">
+                    <i class="fa fa-fw fa-moon-o"></i>
+                  </b-btn>
+                </div>
+                <b-tooltip target="btn-night" title="Toggle Background Color"
+                           placement="left"></b-tooltip>
+              </div>
             </div>
           </div>
         </div>
+
+        <!--Footer-->
         <div class="bd-app-footer">
           <div class="m-3 text-left">
             <b-dropdown :text="`Latent Dimensions: ${dim}`" variant="light">
@@ -174,6 +191,7 @@
         dim: 32,
         all_dims: [32, 64, 128, 256, 512, 1024],
         loading: true,
+        night: false,
         err: ''
       }
     },
@@ -241,6 +259,11 @@
             this.err = e
             this.loading = false
           })
+      },
+
+      toggleBackground () {
+        this.night = !this.night
+        scatter.toggleBackground(this.night ? '#000' : '#fff')
       },
 
       // change the content of details card
@@ -353,7 +376,14 @@
 
   #container {
     width: 100%;
-    height: calc(100vh - 8.56rem - 30px);
+    height: calc(100vh - 8.56rem);
+  }
+
+  .chart-btn-group {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 1000;
   }
 
   .bd-app-footer {

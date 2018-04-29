@@ -42,7 +42,7 @@ class Scatter {
      */
     this.drag = true
     this.hover = false
-    this.dispatch = d3.dispatch('focus-one', 'focus-set')
+    this.dispatch = d3.dispatch('focus-one', 'focus-set', 'toggle-background')
 
     /**
      * Related to PCA
@@ -226,6 +226,9 @@ class Scatter {
         .on('click', dotClick)
     }
 
+    /**
+     * Register event handlers for dispatcher, to communicate with outside.
+     */
     this.dispatch.on('focus-one.dot', (p) => {
       if (!p) {
         unfocusDot()
@@ -240,6 +243,10 @@ class Scatter {
       } else {
         unfocusSet()
       }
+    })
+
+    this.dispatch.on('toggle-background', () => {
+      rect.attr("fill", this.background)
     })
 
     function focusDot (d, dot) {
@@ -416,6 +423,15 @@ class Scatter {
 
   focusSet (points) {
     this.dispatch.call('focus-set', this, points)
+  }
+
+  /**
+   * Change background without re-draw.
+   * @param color Background color.
+   */
+  toggleBackground (color) {
+    this.background = color
+    this.dispatch.call('toggle-background', this)
   }
 
   /**

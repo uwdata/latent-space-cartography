@@ -77,6 +77,9 @@ class Scatter {
     let y = d3.scaleLinear()
       .range([height, 0]).nice()
 
+    let currentX = x
+    let currentY = y
+
     let palette = d3.scaleOrdinal(d3.schemeCategory10)
 
     let xAxis = d3.axisBottom(x).tickSize(-height)
@@ -95,11 +98,15 @@ class Scatter {
       .attr("width", outerWidth)
       .attr("height", outerHeight)
 
-    let boundZoom = zoom.bind(window, svg, x, y, xAxis, yAxis)
+    // Zoom, brush and drag
     let zoomBeh = d3.zoom()
-      .on("zoom", boundZoom)
-    svg.call(zoomBeh)
-
+      // .extent([margin.left, margin.top], [outerWidth - margin.right, outerHeight - margin.bottom])
+      .scaleExtent([0.5, 3])
+      .on("zoom", zoom)
+    let brushBeh = d3.brush()
+      .on('start', brushstart)
+      .on('brush', brushing)
+      .on("end", brushended)
     let dragger = d3.drag()
       .on('start', function () {
         d3.select(this)
@@ -129,6 +136,7 @@ class Scatter {
           .style('fill', '#000')
       })
 
+    svg.call(zoomBeh)
     svg.append("g")
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
 
@@ -139,12 +147,9 @@ class Scatter {
       .attr("fill", this.background)
 
     // Brush
-    svg.append("g")
+    let brushBox = svg.append("g")
       .attr("class", "brush")
-      .call(d3.brush()
-        .on('start', brushstart)
-        .on('brush', brushing)
-        .on("end", brushended))
+      .call(brushBeh)
 
     if (this.axis) {
       // X Axis
@@ -250,8 +255,8 @@ class Scatter {
         })
       if (!t) {
         objects.append('text')
-          .attr('x', () => Math.max(x(d.x) - 30, 15))
-          .attr('y', () => Math.max(y(d.y) - 15, 15))
+          .attr('x', () => Math.max(currentX(d.x) - 30, 15))
+          .attr('y', () => Math.max(currentY(d.y) - 15, 15))
           .classed('focus-label', true)
           .text(() => d.name)
       } else {
@@ -280,8 +285,8 @@ class Scatter {
 
       _.each(pts, (d) => {
         objects.append('text')
-          .attr('x', () => Math.max(x(d.x) - 30, 15))
-          .attr('y', () => Math.max(y(d.y) - 15, 15))
+          .attr('x', () => Math.max(currentX(d.x) - 30, 15))
+          .attr('y', () => Math.max(currentY(d.y) - 15, 15))
           .classed('focused-set', true)
           .text(() => d.name)
       })
@@ -312,11 +317,12 @@ class Scatter {
     }
 
     function brushing () {
-      if (!d3.event.selection) return // empty selection
+      // empty selection
+      if (!d3.event.selection) return
 
       // x0, y0, x1, y1
       let sel = _.flatten(d3.event.selection)
-      let scales = _.map(sel, (s, idx) => idx % 2 ? y.invert(s) : x.invert(s))
+      let scales = _.map(sel, (s, idx) => idx % 2 ? currentY.invert(s) : currentX.invert(s))
 
       // change color of selected points
       d3.selectAll('.dot')
@@ -327,17 +333,36 @@ class Scatter {
     }
 
     function brushended () {
-      if (!d3.event.selection) return // empty selection
+      // empty selection
+      if (!d3.event.selection) return
 
       // x0, y0, x1, y1
       let sel = _.flatten(d3.event.selection)
-      let scales = _.map(sel, (s, idx) => idx % 2 ? y.invert(s) : x.invert(s))
+      let scales = _.map(sel, (s, idx) => idx % 2 ? currentY.invert(s) : currentX.invert(s))
 
       let pts = _.filter(data, (p) => {
         return p.x >= scales[0] && p.x <= scales[2] && p.y >= scales[3] && p.y <=scales[1]
       })
 
       that.onSelected(pts)
+    }
+
+    function zoom () {
+      // create new scales
+      currentX = d3.event.transform.rescaleX(x)
+      currentY = d3.event.transform.rescaleY(y)
+
+      // update axes
+      svg.select(".x.axis").call(xAxis.scale(currentX))
+      svg.select(".y.axis").call(yAxis.scale(currentY))
+
+      // update dots
+      svg.selectAll(".dot")
+        .attr('cx', (d) => currentX(d.x))
+        .attr('cy', (d) => currentY(d.y))
+
+      // clear brush
+      brushBox.call(brushBeh.move, null);
     }
   }
 
@@ -379,21 +404,6 @@ class Scatter {
   setData (points) {
     this.data = points
   }
-}
-
-function zoom (svg, x, y, xAxis, yAxis) {
-  // create new scales
-  let new_xScale = d3.event.transform.rescaleX(x)
-  let new_yScale = d3.event.transform.rescaleY(y)
-
-  // update axes
-  svg.select(".x.axis").call(xAxis.scale(new_xScale))
-  svg.select(".y.axis").call(yAxis.scale(new_yScale))
-
-  // update dots
-  svg.selectAll(".dot")
-    .attr('cx', (d) => new_xScale(d.x))
-    .attr('cy', (d) => new_yScale(d.y))
 }
 
 export default Scatter

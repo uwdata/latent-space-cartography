@@ -43,18 +43,21 @@
                   :class="{active: view_mode === 2}"
                   @click="toggleSubset">Highlight</button>
           <b-btn class="btn btn-outline-secondary w-100"
-                 v-b-tooltip.hover title="PCA over the selected logos"
+                 v-b-tooltip.hover title="PCA over selected logos"
                  :class="{active: view_mode === 3}"
                  :disabled="!canPca()"
                  @click="reproject">Isolate</b-btn>
         </div>
         <div class="btn-group btn-group-sm ml-3">
-          <button class="btn btn-outline-secondary" @click="removeAll">
+          <b-btn class="btn btn-outline-secondary"
+                 v-b-tooltip.hover title="Clear the selection"
+                 @click="removeAll">
             <i class="fa fa-fw fa-trash"></i>
-          </button>
-          <button class="btn btn-outline-secondary">
+          </b-btn>
+          <b-btn class="btn btn-outline-secondary"
+                 v-b-tooltip.hover title="Save (not implemented yet!)">
             <i class="fa fa-fw fa-cloud-upload"></i>
-          </button>
+          </b-btn>
         </div>
       </div>
     </div>

@@ -2,11 +2,18 @@
   <div>
     <!--Top Division-->
     <div class="m-3">
-      <auto-complete v-model="selection" :points="points"
+      <auto-complete v-model="selection" :points="points" hint="Search a brand ..."
                      v-on:chosen="addItem"
                      v-on:tentative="hoverItem"></auto-complete>
     </div>
     <hr>
+
+    <!--Hint-->
+    <div v-if="!selected.length" class="m-5 d-flex align-items-center bd-logo-list">
+      <div class="text-muted text-center">
+        Start by brushing the dots, or searching for a brand name!
+      </div>
+    </div>
 
     <!--Logo List-->
     <div v-if="selected.length" class="m-3 bd-logo-list">

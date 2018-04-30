@@ -2,6 +2,7 @@
   <div>
     <header class="navbar bd-navbar">
       <span class="ml-3" style="font-weight: 500;">Latent Space Explorer</span>
+      <help-button class="ml-3"></help-button>
     </header>
     <div v-if="loading"
          class="loading-block d-flex align-items-center justify-content-center">
@@ -117,6 +118,8 @@
 <script>
   import SearchPanel from '../layouts/SearchPanel.vue'
   import ChartButtons from '../layouts/ChartButtons.vue'
+  import HelpButton from '../layouts/HelpButton.vue'
+
   import Scatter from '../controllers/scatter_analogy'
   import {store, log_debug, TRAIN_SPLIT} from '../controllers/config'
   import _ from 'lodash'
@@ -196,6 +199,7 @@
     components: {
       SearchPanel,
       ChartButtons,
+      HelpButton,
       VueLoading
     },
     name: 'AnalogyPage',

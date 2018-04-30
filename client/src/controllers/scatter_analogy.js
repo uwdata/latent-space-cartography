@@ -42,7 +42,11 @@ class Scatter {
      */
     this.drag = true
     this.hover = false
-    this.dispatch = d3.dispatch('focus-one', 'focus-set', 'toggle-background')
+    this.dispatch = d3.dispatch(
+      'focus-one',
+      'focus-set',
+      'toggle-background',
+      'zoom-view')
 
     /**
      * Related to PCA
@@ -146,8 +150,8 @@ class Scatter {
       .attr("fill", this.background)
 
     // Brush & Zoom
-    // if you bind zoomBeh to rect, zoom & brush appears mutually exclusive
-    svg.call(zoomBeh)
+    // if you bind zoomBeh to svg, you can zoom with brush
+    rect.call(zoomBeh)
     toggleZoomBrush()
     d3.select(window)
       .on('keydown', toggleZoomBrush)
@@ -227,6 +231,7 @@ class Scatter {
     }
 
     /**
+     * =========================
      * Register event handlers for dispatcher, to communicate with outside.
      */
     this.dispatch.on('focus-one.dot', (p) => {
@@ -249,6 +254,14 @@ class Scatter {
       rect.attr("fill", this.background)
     })
 
+    this.dispatch.on('zoom-view', (factor) => {
+      rect.transition().duration(1000).call(zoomBeh.scaleBy, factor)
+    })
+
+    /**
+     * =========================
+     * Event handlers
+     */
     function focusDot (d, dot) {
       dot.attr('r', () => that.dot_radius * 2)
         .classed('focused', true)
@@ -432,6 +445,14 @@ class Scatter {
   toggleBackground (color) {
     this.background = color
     this.dispatch.call('toggle-background', this)
+  }
+
+  /**
+   * Zoom.
+   * @param factor
+   */
+  zoomView (factor) {
+    this.dispatch.call('zoom-view', this, factor)
   }
 
   /**

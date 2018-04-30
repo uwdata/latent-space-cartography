@@ -57,13 +57,13 @@
         this.chart.toggleBackground(this.night ? '#000' : '#fff')
       },
       zoomIn () {
-
+        this.chart.zoomView(1.5)
       },
       zoomOut () {
-
+        this.chart.zoomView(0.7)
       },
       resetZoom () {
-
+        this.$emit('reset')
       }
     }
   }
@@ -78,7 +78,7 @@
   }
 
   .chart-btn {
-    color: #acb5bd;
-    border-color: #acb5bd;
+    color: #8c858d;
+    border-color: #8c858d;
   }
 </style>

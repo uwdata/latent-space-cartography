@@ -73,7 +73,7 @@
               <div id="container" ref="chart"></div>
 
               <!--Buttons-->
-              <chart-buttons :chart="scatter"></chart-buttons>
+              <chart-buttons :chart="scatter" v-on:reset="showOriginal"></chart-buttons>
             </div>
           </div>
         </div>

@@ -1,7 +1,7 @@
 <template>
   <div>
     <header class="navbar bd-navbar">
-      <span class="ml-3">Latent Space Explorer</span>
+      <span class="ml-3" style="font-weight: 500;">Latent Space Explorer</span>
     </header>
     <div v-if="loading"
          class="loading-block d-flex align-items-center justify-content-center">
@@ -73,18 +73,7 @@
               <div id="container" ref="chart"></div>
 
               <!--Buttons-->
-              <div class="chart-btn-group pt-3 pr-3">
-                <div class="btn-group-vertical btn-group-sm">
-                  <b-btn class="btn btn-outline-secondary"
-                         id="btn-night"
-                         :class="{active: night}"
-                         @click="toggleBackground">
-                    <i class="fa fa-fw fa-moon-o"></i>
-                  </b-btn>
-                </div>
-                <b-tooltip target="btn-night" title="Toggle Background Color"
-                           placement="left"></b-tooltip>
-              </div>
+              <chart-buttons :chart="scatter"></chart-buttons>
             </div>
           </div>
         </div>
@@ -127,13 +116,11 @@
 
 <script>
   import SearchPanel from '../layouts/SearchPanel.vue'
+  import ChartButtons from '../layouts/ChartButtons.vue'
   import Scatter from '../controllers/scatter_analogy'
   import {store, log_debug, TRAIN_SPLIT} from '../controllers/config'
   import _ from 'lodash'
   import VueLoading from 'vue-loading-template'
-
-  // PCA plot of all points
-  let scatter = null
 
   function clear () {
     // remove all nodes
@@ -148,8 +135,7 @@
   }
 
   // Customize the style of scatter plot
-  function create_scatter () {
-    let s = new Scatter()
+  function customize_scatter (s) {
     s.outerWidth = this.$refs.chart.clientWidth
     s.outerHeight = this.$refs.chart.clientHeight
     s.margin = {
@@ -163,8 +149,6 @@
 
     s.drag = false
     s.hover = true
-
-    return s
   }
 
   /**
@@ -173,9 +157,9 @@
    */
   function lets_draw (points) {
     clear.call(this)
-    scatter.setData(_.slice(points, 0, TRAIN_SPLIT))
+    this.scatter.setData(_.slice(points, 0, TRAIN_SPLIT))
 //    scatter.setData(_.slice(points, 0, 1000)) //fixme
-    scatter.draw('#container')
+    this.scatter.draw('#container')
   }
 
   function lets_load (callback) {
@@ -211,11 +195,13 @@
   export default {
     components: {
       SearchPanel,
+      ChartButtons,
       VueLoading
     },
     name: 'AnalogyPage',
     data () {
       return {
+        scatter: new Scatter(),
         suggestions: [],
         points: [],
         detail_point: null,
@@ -233,11 +219,11 @@
     },
     mounted: function () {
       // register all the callback of the D3 component
-      scatter = create_scatter.call(this)
-      scatter.onSelected = (pts) => {
+      customize_scatter.call(this, this.scatter)
+      this.scatter.onSelected = (pts) => {
         this.brushed = pts
       }
-      scatter.onDotClicked = (pt) => {
+      this.scatter.onDotClicked = (pt) => {
         this.detail_point = pt
       }
 
@@ -257,7 +243,7 @@
       changeDim (dim) {
         this.dim = dim
         lets_load.call(this, () => {
-          scatter.mark_type = 1
+          this.scatter.mark_type = 1
         })
       },
 
@@ -265,7 +251,7 @@
       changeProjection (proj) {
         this.projection = proj
         lets_load.call(this, () => {
-          scatter.mark_type = 1
+          this.scatter.mark_type = 1
         })
       },
 
@@ -282,18 +268,13 @@
           .then((points) => {
             this.loading = false
             this.points = points
-            scatter.mark_type = 2
+            this.scatter.mark_type = 2
             log_debug(points)
             lets_draw.call(this, points)
           }, (e) => {
             this.err = e
             this.loading = false
           })
-      },
-
-      toggleBackground () {
-        this.night = !this.night
-        scatter.toggleBackground(this.night ? '#000' : '#fff')
       },
 
       // change the content of details card
@@ -316,13 +297,13 @@
        * @param i
        */
       onHighlight (i) {
-        scatter.focusDot(indexToPoint(i, this.points))
+        this.scatter.focusDot(indexToPoint(i, this.points))
       },
 
       // FIXME: new points won't appear
       onToggleSubset (indices) {
         let pts = indices ? _.map(indices, (i) => indexToPoint(i, this.points)) : null
-        scatter.focusSet(pts)
+        this.scatter.focusSet(pts)
       },
 
       // draw original
@@ -407,13 +388,6 @@
   #container {
     width: 100%;
     height: calc(100vh - 8.56rem);
-  }
-
-  .chart-btn-group {
-    position: absolute;
-    top: 0;
-    right: 0;
-    z-index: 1000;
   }
 
   .bd-app-footer {

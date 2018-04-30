@@ -35,15 +35,18 @@
       <div class="d-flex justify-content-between">
         <!--View Buttons-->
         <div class="btn-group btn-group-sm d-flex w-100">
-          <button class="btn btn-outline-secondary w-100"
-                  :class="{active: view_mode === 1}"
-                  @click="toggleAll">Show All</button>
-          <button class="btn btn-outline-secondary w-100"
+          <b-btn class="btn btn-outline-secondary w-100"
+                 v-b-tooltip.hover title="Display all logos"
+                 :class="{active: view_mode === 1}"
+                 @click="toggleAll">Show All</b-btn>
+          <button class="btn btn-outline-secondary w-100 d-none"
                   :class="{active: view_mode === 2}"
                   @click="toggleSubset">Highlight</button>
-          <button class="btn btn-outline-secondary w-100"
-                  :class="{active: view_mode === 3}"
-                  @click="reproject">Isolate</button>
+          <b-btn class="btn btn-outline-secondary w-100"
+                 v-b-tooltip.hover title="PCA over the selected logos"
+                 :class="{active: view_mode === 3}"
+                 :disabled="!canPca()"
+                 @click="reproject">Isolate</b-btn>
         </div>
         <div class="btn-group btn-group-sm ml-3">
           <button class="btn btn-outline-secondary" @click="removeAll">
@@ -108,10 +111,14 @@
       // button "re-project"
       reproject () {
         this.view_mode = 3
-        // TODO: tell user you can't PCA with less than 3 points
-        if (store.selected.length > 3) {
+        if (this.canPca()) {
           this.$emit('reproject', store.selected)
         }
+      },
+
+      // you need more than 3 points for PCA
+      canPca () {
+        return store.selected.length > 3
       },
 
       // modify the list

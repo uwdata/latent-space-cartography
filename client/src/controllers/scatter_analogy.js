@@ -327,13 +327,13 @@ class Scatter {
       let shift = d3.event ? d3.event.shiftKey : false
       if (shift) {
         // remove brush
-        d3.select('.brush')
+        d3.selectAll('.brush')
           .call(brushBeh.move, null)
           .remove()
       } else {
         // create brush holder and put it just after "rect"
         svg.append('g').attr('class', 'brush').call(brushBeh)
-        d3.select('.brush').each(function () {
+        d3.selectAll('.brush').each(function () {
           this.parentNode.insertBefore(this, rect.node().nextSibling)
         })
       }

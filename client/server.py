@@ -34,11 +34,11 @@ def connect_db ():
     cursor =conn.cursor()
     print 'MySQL connected!'
 
-    return cursor
+    return conn, cursor
 
 # global app and DB cursor
 app = Flask(__name__, static_url_path='')
-cursor = connect_db()
+db, cursor = connect_db()
 
 # static files
 @app.route('/')
@@ -141,6 +141,45 @@ def get_meta ():
     cursor.execute('SELECT i,name,mean_color,data_source,industry FROM meta')
     data = [list(i) for i in cursor.fetchall()]
     return jsonify({'data': data}), 200
+
+# save logo list
+@app.route('/api/save_logo_list', methods=['POST'])
+def save_logo_list ():
+    if not request.json or not 'ids' in request.json:
+        abort(400)
+
+    ids = request.json['ids']
+    alias = request.json['alias'] if 'alias' in request.json else ''
+
+    query = """
+    INSERT INTO logo_list (alias, list)
+    VALUES('{}', '{}')
+    """.format(alias, ids)
+    print query
+
+    try:
+        cursor.execute(query)
+        db.commit()
+        return jsonify({'status': 'success'}), 200
+    except Exception as e:
+        print("Could not insert: \n" + str(e))
+        return jsonify({'status': 'fail'}), 200
+
+# create logo list table
+@app.route('/api/_create_logo_list', methods=['POST'])
+def _create_logo_list ():
+    query = """
+    CREATE TABLE `logo_list` (
+        `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+        `alias` varchar(255) DEFAULT NULL,
+        `list` TEXT,
+        `creation_time` DATETIME DEFAULT CURRENT_TIMESTAMP,
+        `timestamp` TIMESTAMP,
+        PRIMARY KEY (`id`)
+    ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+    """
+    cursor.execute(query)
+    return jsonify({'status': 'success'}), 200
 
 if __name__ == '__main__':
     app.run(debug=True) # change to (host= '0.0.0.0') in production

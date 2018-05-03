@@ -311,6 +311,31 @@ class Store {
   }
 
   /**
+   * Apply the analogy vector
+   * @param latent_dim
+   * @param pid
+   */
+  applyAnalogy (latent_dim, pid) {
+    return new Promise((resolve, reject) => {
+      let payload = {pid: pid, latent_dim: latent_dim}
+      console.log(payload)
+
+      http.post('/api/apply_analogy', payload)
+        .then((response) => {
+          let msg = response['data']
+
+          if (msg) {
+            resolve(msg['anchors'])
+          } else {
+            reject()
+          }
+        }, () => {
+          reject(`Could not connect to the server.`)
+        })
+    })
+  }
+
+  /**
    * FIXME: put this function to config.js
    * Given the index, return a relative URL to the image.
    * @param i

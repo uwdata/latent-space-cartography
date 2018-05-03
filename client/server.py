@@ -19,6 +19,9 @@ from flaskext.mysql import MySQL
 # re-use keras models
 models = {}
 
+# FIXME: store in DB
+last_vec = {}
+
 # for absolute path
 def abs_path (rel_path):
     return os.path.join(os.path.dirname(__file__), rel_path)
@@ -145,6 +148,56 @@ def get_meta ():
     data = [list(i) for i in cursor.fetchall()]
     return jsonify({'data': data}), 200
 
+# apply analogy
+@app.route('/api/apply_analogy', methods=['POST'])
+def apply_analogy ():
+    latent_dim = request.json['latent_dim']
+    pid = request.json['pid']
+
+    vec = last_vec['temp'] if 'temp' in last_vec else np.zeros(1)
+
+    if latent_dim != vec.shape[0]:
+        print 'Could not apply analogy because last vector is shape {}'.format(last_vec.shape)
+        return jsonify({}), 400
+
+    # read latent space
+    rawpath = abs_path('./data/latent/latent{}.h5'.format(latent_dim))
+    with h5py.File(rawpath, 'r') as f:
+        raw = np.asarray(f['latent'])
+    start = raw[int(pid)]
+    end = start + vec
+
+    print(vec)
+
+    # sample the points along the vector
+    # TODO: now only works for two groups
+    n_samples = 7
+    loc = []
+    for i in range(n_samples + 1):
+        k = float(i) / n_samples
+        loc.append((1-k) * start + k * end)
+    # overshoot
+    k = 2
+    loc.append((1-k) * start + k * end)
+
+    # generate these images
+    if not latent_dim in models:
+        create_model(latent_dim)
+    vae, encoder, decoder, m = models[latent_dim]
+
+    print('predicting ...')
+    fns = []
+    for idx, val in enumerate(loc):
+        val = val.reshape((1, latent_dim))
+        recon = m.to_image(decoder.predict(val))
+        img = Image.fromarray(recon, 'RGB')
+        img_fn = 'analogy_{}_{}.png'.format(pid, idx)
+        fns.append(img_fn)
+        img.save(abs_path('./build/' + img_fn))
+
+    return jsonify({'anchors': fns}), 200
+
+
 # interpolate between the centroids of two groups
 @app.route('/api/interpolate_group', methods=['POST'])
 def interpolate_group ():
@@ -170,6 +223,9 @@ def interpolate_group ():
         centroid = np.sum(raw[indices], axis=0) / indices.shape[0]
         centroids.append(centroid)
 
+    #FIXME
+    last_vec['temp'] = centroids[1] - centroids[0]
+
     # sample the points along the vector
     # TODO: now only works for two groups
     n_samples = 7
@@ -177,6 +233,9 @@ def interpolate_group ():
     for i in range(n_samples + 1):
         k = float(i) / n_samples
         loc.append((1-k) * centroids[0] + k * centroids[1])
+    # overshoot
+    k = 2
+    loc.append((1-k) * centroids[0] + k * centroids[1])
 
     # generate these images
     if not latent_dim in models:

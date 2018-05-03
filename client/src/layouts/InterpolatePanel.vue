@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="d-flex flex-row">
     <div class="d-flex flex-column p-3">
       <button class="btn btn-outline-secondary img-48"
               @click="clickStart"
@@ -25,6 +25,28 @@
       <button class="btn btn-warning mt-3" style="width: 48px"
               :disabled="!groups[0] && !groups[1]"
               @click="interpolate">
+        Go
+      </button>
+    </div>
+
+    <div v-if="groups[0] && groups[1]" class="d-flex flex-column p-3">
+      <div class="img-48" style="border: 1px solid #eee">
+        <i v-if="!detail" class="fa fa-fw fa-question"></i>
+        <img v-if="detail" :src="getUrl(detail)" class="img-48" />
+      </div>
+      <div style="min-height: 384px" class="mt-3 mb-3">
+        <div v-if="loading_analogy">Generating ...</div>
+        <div v-if="!loading_analogy" class="d-flex flex-column">
+          <div v-for="img in analogy">
+            <img :src="`/build/${img}`" class="img-48" />
+          </div>
+        </div>
+      </div>
+      <div class="img-48"></div>
+
+      <button class="btn btn-warning mt-3" style="width: 48px"
+              :disabled="!groups[0] && !groups[1]"
+              @click="runAnalogy">
         Go
       </button>
     </div>
@@ -59,6 +81,9 @@
       latent_dim: {
         type: Number,
         required: true
+      },
+      detail: {
+        required: true
       }
     },
     data (){
@@ -66,12 +91,24 @@
         groups: [null, null],
         trigger: 0,
         loading: false,
+        loading_analogy: false,
         loading_list: false,
         logo_lists: [],
-        generated: []
+        generated: [],
+        analogy: []
       }
     },
     methods: {
+      runAnalogy () {
+        this.loading_analogy = true
+        store.applyAnalogy(this.latent_dim, this.detail.i)
+          .then((data) => {
+            this.loading_analogy = false
+            this.analogy = data
+          }, () => {
+            this.loading_analogy = false
+          })
+      },
       interpolate () {
         this.loading = true
         store.interpolateBetween(this.groups, this.latent_dim)
@@ -103,6 +140,9 @@
       clickGroup (id) {
         this.groups[this.trigger] = id
         this.$refs.modalGroup.hide()
+      },
+      getUrl (point) {
+        return store.getImageUrl(point.i)
       },
       formatTime (t) {
         return moment(t).fromNow()

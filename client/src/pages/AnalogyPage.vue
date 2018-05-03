@@ -18,7 +18,8 @@
         <div class="row mr-0">
           <!--Left Panel for Interpolating-->
           <div v-bind:class="{'d-none': brushed.length}" class="col-4 bd-left">
-            <interpolate-panel :latent_dim="dim"></interpolate-panel>
+            <interpolate-panel :latent_dim="dim" :detail="detail_point">
+            </interpolate-panel>
           </div>
 
           <!--Left Panel-->

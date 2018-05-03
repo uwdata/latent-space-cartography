@@ -36,6 +36,13 @@ def connect_db ():
 
     return conn, cursor
 
+def create_model (latent_dim):
+    base = './data/models/{}/'.format(latent_dim)
+    mpath = abs_path(base + 'logo_model_dim={}.json'.format(latent_dim))
+    wpath = abs_path(base + 'logo_model_dim={}.h5'.format(latent_dim))
+    m = model.Vae(latent_dim = latent_dim)
+    models[latent_dim] = m.read(mpath, wpath) + (m,)
+
 # global app and DB cursor
 app = Flask(__name__, static_url_path='')
 db, cursor = connect_db()
@@ -103,11 +110,7 @@ def pca_back ():
 
     # project from latent space to image
     if not latent_dim in models:
-        base = './data/models/{}/'.format(latent_dim)
-        mpath = abs_path(base + 'logo_model_dim={}.json'.format(latent_dim))
-        wpath = abs_path(base + 'logo_model_dim={}.h5'.format(latent_dim))
-        m = model.Vae(latent_dim = latent_dim)
-        models[latent_dim] = m.read(mpath, wpath) + (m,)
+        create_model(latent_dim)
 
     vae, encoder, decoder, m = models[latent_dim]
     print('predicting ...')
@@ -165,7 +168,13 @@ def save_logo_list ():
         print("Could not insert: \n" + str(e))
         return jsonify({'status': 'fail'}), 200
 
-# create logo list table
+@app.route('/api/get_logo_lists', methods=['POST'])
+def get_logo_lists ():
+    cursor.execute('SELECT id, alias, list, timestamp FROM logo_list')
+    data = [list(i) for i in cursor.fetchall()]
+    return jsonify({'data': data}), 200
+
+# create logo list table. internal use only
 @app.route('/api/_create_logo_list', methods=['POST'])
 def _create_logo_list ():
     query = """

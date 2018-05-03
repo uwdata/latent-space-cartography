@@ -10,8 +10,11 @@
 
     <!--Hint-->
     <div v-if="!selected.length" class="m-5 d-flex align-items-center bd-logo-list">
-      <div class="text-muted text-center">
-        Start by brushing the dots, or searching for a brand name!
+      <div>
+        <div class="text-muted text-center">
+          Start by brushing the dots, or searching for a brand name!
+        </div>
+        <button class="w-100 m-3 btn btn-warning" v-b-modal.modal-save>Load</button>
       </div>
     </div>
 
@@ -57,17 +60,51 @@
         </div>
         <div class="btn-group btn-group-sm ml-3">
           <b-btn class="btn btn-outline-secondary"
-                 v-b-tooltip.hover title="Clear the selection"
+                 v-b-tooltip.hover title="Clear your selection"
                  @click="removeAll">
             <i class="fa fa-fw fa-trash"></i>
           </b-btn>
           <b-btn class="btn btn-outline-secondary"
-                 v-b-tooltip.hover title="Save (not implemented yet!)">
+                 v-b-modal.modal-save
+                 v-b-tooltip.hover title="Save your selection">
             <i class="fa fa-fw fa-cloud-upload"></i>
           </b-btn>
         </div>
       </div>
     </div>
+
+    <!--Save and Load Modal-->
+    <b-modal id="modal-save" ref="modalSave"
+             title="Save and Load"
+             @shown="fetchSaves">
+      <div class="d-flex justify-content-between">
+        <input class="w-100" placeholder="(optional) title" v-model="current_alias">
+        <button class="btn btn-primary ml-3"
+                :disabled="saving"
+                @click="save">Save</button>
+      </div>
+      <hr>
+      <div v-if="loading_list">Loading ...</div>
+      <div v-if="!loading_list">
+        <div v-for="list in logo_lists" class="d-flex justify-content-between">
+          <div>
+            <b>{{list.alias || 'Untitled'}}</b>
+            <span class="ml-2 text-muted">{{formatTime(list.timestamp)}}</span>
+          </div>
+          <div class="btn-group btn-group-sm">
+            <b-btn class="btn btn-outline-secondary"
+                   @click="load(list.list)"
+                   v-b-tooltip.hover title="Load">
+              <i class="fa fa-fw fa-cloud-download"></i>
+            </b-btn>
+            <b-btn class="btn btn-outline-secondary"
+                   v-b-tooltip.hover title="Delete">
+              <i class="fa fa-fw fa-trash-o"></i>
+            </b-btn>
+          </div>
+        </div>
+      </div>
+    </b-modal>
   </div>
 </template>
 
@@ -75,6 +112,7 @@
   import AutoComplete from './AutoComplete.vue'
   import {store} from '../controllers/config'
   import _ from 'lodash'
+  import moment from 'moment'
 
   export default {
     name: 'SearchPanel',
@@ -92,6 +130,10 @@
       return {
         selection: '',
         selected: store.selected,
+        logo_lists: [],
+        current_alias: '',
+        loading_list: false,
+        saving: false,
         view_mode: 1 // 1 - All, 2 - Subset, 3 - Reprojected
       }
     },
@@ -126,6 +168,45 @@
         }
       },
 
+      // button "save"
+      save () {
+        this.saving = true
+        store.saveLogoList(store.selected, this.current_alias)
+          .then(() => {
+            this.saving = false
+            this.$refs.modalSave.hide()
+          }, () => {
+            this.saving = false
+            //TODO: handle error
+          })
+      },
+
+      // button "load"
+      load (list) {
+        while (store.selected.length) {
+          store.selected.splice(0, 1)
+        }
+
+        _.each(list, (i) => {
+          store.selected.push(i)
+        })
+
+        this.$refs.modalSave.hide()
+      },
+
+      fetchSaves () {
+        this.loading_list = true
+        store.getLogoLists()
+          .then((list) => {
+            console.log(list)
+            this.loading_list = false
+            this.logo_lists = list
+          }, () => {
+            this.loading_list = false
+            //TODO: handle error
+          })
+      },
+
       // you need more than 3 points for PCA
       canPca () {
         return store.selected.length > 3
@@ -140,7 +221,6 @@
       removeItem (p) {
         let idx = _.findIndex(store.selected, (i) => i === p.i)
         store.selected.splice(idx, 1)
-        console.log(store.selected, this.selected)
       },
       removeAll () {
         while (store.selected.length) {
@@ -170,6 +250,10 @@
       // helper
       imageUrl (p) {
         return store.getImageUrl(p.i)
+      },
+
+      formatTime (t) {
+        return moment(t).fromNow()
       }
     }
   }

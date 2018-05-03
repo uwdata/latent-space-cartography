@@ -231,6 +231,61 @@ class Store {
   }
 
   /**
+   * Save a list of logo id to the server.
+   * @param ids A list of logo id.
+   * @param alias Optional alias to identify this save.
+   */
+  saveLogoList (ids, alias = '') {
+    return new Promise((resolve, reject) => {
+      let payload = {'alias': alias, ids: ids.join(',')}
+
+      http.post('/api/save_logo_list', payload)
+        .then((response) => {
+          let msg = response.data
+
+          if (msg && msg['status'] === 'success') {
+            resolve()
+          } else {
+            reject(`Could not save to the database.`)
+          }
+        }, () => {
+          reject(`Could not connect to the server.`)
+        })
+    })
+  }
+
+  /**
+   * Get all logo lists
+   */
+  getLogoLists () {
+    return new Promise((resolve, reject) => {
+      http.post('/api/get_logo_lists', {})
+        .then((response) => {
+          let msg = response['data']
+
+          let schema = ['id', 'alias', 'list', 'timestamp']
+
+          if (msg) {
+            let lists = _.map(msg['data'], (arr) => {
+              let result = {}
+              _.each(arr, (val, idx) => {
+                result[schema[idx]] = val
+              })
+              result.list = _.map(result.list.split(','), (i) => Number(i))
+              return result
+            })
+
+            resolve(lists)
+          } else {
+            reject(`Could not get the list.`)
+          }
+        }, () => {
+          reject(`Could not connect to the server.`)
+        })
+    })
+  }
+
+  /**
    * FIXME: put this function to config.js
    * Given the index, return a relative URL to the image.
    * @param i

@@ -145,6 +145,55 @@ def get_meta ():
     data = [list(i) for i in cursor.fetchall()]
     return jsonify({'data': data}), 200
 
+# interpolate between the centroids of two groups
+@app.route('/api/interpolate_group', methods=['POST'])
+def interpolate_group ():
+    latent_dim = request.json['latent_dim']
+    gid = request.json['groups'].split(',')
+
+    # read latent space
+    rawpath = abs_path('./data/latent/latent{}.h5'.format(latent_dim))
+    with h5py.File(rawpath, 'r') as f:
+        raw = np.asarray(f['latent'])
+    
+    # find image indices in each group
+    ids = []
+    for g in gid:
+        cursor.execute('SELECT list FROM logo_list WHERE id={}'.format(g))
+        d = cursor.fetchone()[0]
+        ids.append(d.split(','))
+    
+    # compute centroid
+    centroids = []
+    for id_list in ids:
+        indices = np.asarray(id_list, dtype=np.int16)
+        centroid = np.sum(raw[indices], axis=0) / indices.shape[0]
+        centroids.append(centroid)
+
+    # sample the points along the vector
+    # TODO: now only works for two groups
+    n_samples = 7
+    loc = []
+    for i in range(n_samples + 1):
+        k = float(i) / n_samples
+        loc.append(k * centroids[0] + (1-k) * centroids[1])
+
+    # generate these images
+    if not latent_dim in models:
+        create_model(latent_dim)
+    vae, encoder, decoder, m = models[latent_dim]
+
+    print('predicting ...')
+    for idx, val in enumerate(loc):
+        val = val.reshape((1, latent_dim))
+        recon = m.to_image(decoder.predict(val))
+        img = Image.fromarray(recon, 'RGB')
+        img_fn = '{}_{}.png'.format('to'.join(gid), idx)
+        img.save(abs_path('./build/' + img_fn))
+
+    return jsonify({'status': 'success'}), 200
+    # return jsonify({'latent': re[i].tolist(), 'image': img_fn}), 200
+
 # save logo list
 @app.route('/api/save_logo_list', methods=['POST'])
 def save_logo_list ():

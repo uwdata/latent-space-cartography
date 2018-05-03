@@ -286,6 +286,31 @@ class Store {
   }
 
   /**
+   * Interpolate between the centroid of two groups
+   * @param groups Array of database ID of the first group
+   * @param latent_dim
+   */
+  interpolateBetween (groups, latent_dim) {
+    return new Promise((resolve, reject) => {
+      let payload = {groups: groups.join(','), latent_dim: latent_dim}
+      console.log(payload)
+
+      http.post('/api/interpolate_group', payload)
+        .then((response) => {
+          let msg = response['data']
+
+          if (msg) {
+            resolve(msg['anchors'])
+          } else {
+            reject()
+          }
+        }, () => {
+          reject(`Could not connect to the server.`)
+        })
+    })
+  }
+
+  /**
    * FIXME: put this function to config.js
    * Given the index, return a relative URL to the image.
    * @param i

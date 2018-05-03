@@ -176,7 +176,7 @@ def interpolate_group ():
     loc = []
     for i in range(n_samples + 1):
         k = float(i) / n_samples
-        loc.append(k * centroids[0] + (1-k) * centroids[1])
+        loc.append((1-k) * centroids[0] + k * centroids[1])
 
     # generate these images
     if not latent_dim in models:
@@ -184,14 +184,16 @@ def interpolate_group ():
     vae, encoder, decoder, m = models[latent_dim]
 
     print('predicting ...')
+    fns = []
     for idx, val in enumerate(loc):
         val = val.reshape((1, latent_dim))
         recon = m.to_image(decoder.predict(val))
         img = Image.fromarray(recon, 'RGB')
         img_fn = '{}_{}.png'.format('to'.join(gid), idx)
+        fns.append(img_fn)
         img.save(abs_path('./build/' + img_fn))
 
-    return jsonify({'status': 'success'}), 200
+    return jsonify({'anchors': fns}), 200
     # return jsonify({'latent': re[i].tolist(), 'image': img_fn}), 200
 
 # save logo list

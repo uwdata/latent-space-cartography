@@ -16,8 +16,13 @@
     <div class="row">
       <div class="col-9 pr-0">
         <div class="row mr-0">
+          <!--Left Panel for Interpolating-->
+          <div v-bind:class="{'d-none': brushed.length}" class="col-4 bd-left">
+            <interpolate-panel :latent_dim="dim"></interpolate-panel>
+          </div>
+
           <!--Left Panel-->
-          <div class="col-4  bd-left">
+          <div v-if="brushed.length" class="col-4 bd-left">
 
             <!--Details of a Logo-->
             <div class="card mb-3" v-if="detail_point">
@@ -119,6 +124,7 @@
   import SearchPanel from '../layouts/SearchPanel.vue'
   import ChartButtons from '../layouts/ChartButtons.vue'
   import HelpButton from '../layouts/HelpButton.vue'
+  import InterpolatePanel from '../layouts/InterpolatePanel.vue'
 
   import Scatter from '../controllers/scatter_analogy'
   import {store, log_debug, TRAIN_SPLIT} from '../controllers/config'
@@ -200,6 +206,7 @@
       SearchPanel,
       ChartButtons,
       HelpButton,
+      InterpolatePanel,
       VueLoading
     },
     name: 'AnalogyPage',

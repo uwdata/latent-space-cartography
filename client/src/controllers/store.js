@@ -1,5 +1,6 @@
 import http from 'axios'
 import _ from 'lodash'
+import {DATASET} from './config'
 
 /**
  * Handles client-server connection and serves as a central data store for client.
@@ -336,13 +337,12 @@ class Store {
   }
 
   /**
-   * FIXME: put this function to config.js
    * Given the index, return a relative URL to the image.
    * @param i
    * @returns {string}
    */
   getImageUrl (i) {
-    return `/data/logos/${i}.jpg`
+    return `/data/${DATASET}/images/${i}.jpg`
   }
 
   /**

@@ -1,5 +1,7 @@
 import Store from '../controllers/store'
 
+const DATASET = 'logo'
+
 const DEBUG = process.env.NODE_ENV === 'development'
 const TRAIN_SPLIT = 15000
 
@@ -20,6 +22,7 @@ let store = new Store()
 export {
   DEBUG,
   TRAIN_SPLIT,
+  DATASET,
   store,
   log_debug
 }

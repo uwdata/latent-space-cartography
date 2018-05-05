@@ -19,6 +19,9 @@ from flaskext.mysql import MySQL
 # re-use keras models
 models = {}
 
+# dataset we're working with
+dset = 'logo'
+
 # FIXME: store in DB
 last_vec = {}
 
@@ -40,9 +43,9 @@ def connect_db ():
     return conn, cursor
 
 def create_model (latent_dim):
-    base = './data/models/{}/'.format(latent_dim)
-    mpath = abs_path(base + 'logo_model_dim={}.json'.format(latent_dim))
-    wpath = abs_path(base + 'logo_model_dim={}.h5'.format(latent_dim))
+    base = './data/{}/models/{}/'.format(dset, latent_dim)
+    mpath = abs_path(base + '{}_model_dim={}.json'.format(dset, latent_dim))
+    wpath = abs_path(base + '{}_model_dim={}.h5'.format(dset, latent_dim))
     m = model.Vae(latent_dim = latent_dim)
     models[latent_dim] = m.read(mpath, wpath) + (m,)
 
@@ -73,7 +76,7 @@ def get_pca ():
     pca_dim = int(request.json['pca_dim'])
     indices = np.asarray(request.json['indices'], dtype=np.int16)
 
-    rawpath = abs_path('./data/latent/latent{}.h5'.format(latent_dim))
+    rawpath = abs_path('./data/{}/latent/latent{}.h5'.format(dset, latent_dim))
     with h5py.File(rawpath, 'r') as f:
         raw = np.asarray(f['latent'])
         length = indices.shape[0]
@@ -100,7 +103,7 @@ def pca_back ():
     i = int(request.json['i'])
     
     # project from 2D to latent space
-    rawpath = abs_path('./data/latent/latent{}.h5'.format(latent_dim))
+    rawpath = abs_path('./data/{}/latent/latent{}.h5'.format(dset, latent_dim))
     with h5py.File(rawpath, 'r') as f:
         raw = f['latent']
         pca = PCA(n_components=2)
@@ -134,7 +137,7 @@ def get_tsne ():
     latent_dim = request.json['latent_dim']
     perp = request.json['perplexity']
     suffix = '_pca' if request.json['pca'] else ''
-    fn = abs_path('./data/tsne/tsne{}_perp{}{}.json'.format(latent_dim, perp, suffix))
+    fn = abs_path('./data/{}/tsne/tsne{}_perp{}{}.json'.format(dset, latent_dim, perp, suffix))
     print(fn)
     with open(fn) as data_file:
         data = json.load(data_file)
@@ -161,7 +164,7 @@ def apply_analogy ():
         return jsonify({}), 400
 
     # read latent space
-    rawpath = abs_path('./data/latent/latent{}.h5'.format(latent_dim))
+    rawpath = abs_path('./data/{}/latent/latent{}.h5'.format(dset, latent_dim))
     with h5py.File(rawpath, 'r') as f:
         raw = np.asarray(f['latent'])
     start = raw[int(pid)]
@@ -205,7 +208,7 @@ def interpolate_group ():
     gid = request.json['groups'].split(',')
 
     # read latent space
-    rawpath = abs_path('./data/latent/latent{}.h5'.format(latent_dim))
+    rawpath = abs_path('./data/{}/latent/latent{}.h5'.format(dset, latent_dim))
     with h5py.File(rawpath, 'r') as f:
         raw = np.asarray(f['latent'])
     

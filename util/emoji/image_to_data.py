@@ -9,7 +9,7 @@ import csv
 import numpy as np
 from PIL import Image
 
-base = '/Users/yliu0/data/'
+base = '/Users/yliu0/data/emoji/'
 din = base + 'emoji_raw'
 dout = base + 'emoji'
 h5 = base + 'emoji.h5'

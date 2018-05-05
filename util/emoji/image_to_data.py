@@ -11,7 +11,7 @@ from PIL import Image
 
 base = '/Users/yliu0/data/emoji/'
 din = base + 'emoji_raw'
-dout = base + 'emoji'
+dout = base + 'images'
 h5 = base + 'emoji.h5'
 mapping = base + 'emoji_index.csv'
 
@@ -108,7 +108,7 @@ def gen_data (dir, out, log):
         fpath = os.path.join(dir, img)
         try:
             data = read_img(fpath)
-            mp.append([i, fpath])
+            mp.append([i, img])
         except: # IOError:
             print 'was not able to read', fpath
             continue

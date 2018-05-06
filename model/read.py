@@ -13,20 +13,20 @@ import os
 from keras import backend as K
 
 import model
+from config_emoji import *
 
-img_rows, img_cols, img_chns = 64, 64, 3
 batch_size = 100
 
 # path to the stored model
-base = '/home/yliu0/data/'
+base = '/home/yliu0/data/{}/'.format(dset)
 
 # load training data
 def load_data (fpath, original_img_size):
     f = h5py.File(fpath, 'r')
-    dset = f['logos']
+    dset = f[key_raw]
 
-    x_train = dset[:15000]
-    x_test = dset[15000:]
+    x_train = dset[:train_split]
+    x_test = dset[train_split:]
 
     x_train = x_train.astype('float32') / 255.
     x_train = x_train.reshape((x_train.shape[0],) + original_img_size)
@@ -65,9 +65,9 @@ def visualize (x_test, encoder, generator, suffix=''):
             reconstructed[i * img_rows: (i + 1) * img_rows,
                 j * img_cols: (j + 1) * img_cols] = re
 
-    img = Image.fromarray(original, 'RGB')
+    img = Image.fromarray(original, img_mode)
     img.save('{}original.png'.format(imgbase))
-    img = Image.fromarray(reconstructed, 'RGB')
+    img = Image.fromarray(reconstructed, img_mode)
     img.save('{}reconstructed_{}.png'.format(imgbase, suffix))
 
 # run encoder through all points and save as a hdf5 file
@@ -98,17 +98,17 @@ def save_encoded (fn):
     f.close()
 
 if __name__ == '__main__':
-    for latent_dim in [32, 64, 128, 256, 512, 1024]:
+    for latent_dim in dims:
         # input path
-        rawpath = base + 'logos.hdf5'
-        resultbase = base + '/logo_result/{}/'.format(latent_dim)
-        mpath = resultbase + 'logo_model_dim={}.json'.format(latent_dim)
-        wpath = resultbase + 'logo_model_dim={}.h5'.format(latent_dim)
+        rawpath = base + fn_raw
+        resultbase = base + '{}_result/{}/'.format(dset, latent_dim)
+        mpath = resultbase + '{}_model_dim={}.json'.format(dset, latent_dim)
+        wpath = resultbase + '{}_model_dim={}.h5'.format(dset, latent_dim)
 
         # output path
         encode_path = base + 'latent{}.h5'.format(latent_dim)
 
-        m = model.Vae(latent_dim = latent_dim)
+        m = model.Vae(latent_dim = latent_dim, img_dim=(img_chns, img_rows, img_cols))
         vae, encoder, decoder = m.read(mpath, wpath)
         
         x_train, x_test = load_data(rawpath, m.original_img_size)

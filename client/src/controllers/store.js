@@ -1,6 +1,6 @@
 import http from 'axios'
 import _ from 'lodash'
-import {DATASET} from './config'
+import {DATASET, IMG_EXT} from './config'
 
 /**
  * Handles client-server connection and serves as a central data store for client.
@@ -342,7 +342,7 @@ class Store {
    * @returns {string}
    */
   getImageUrl (i) {
-    return `/data/${DATASET}/images/${i}.jpg`
+    return `/data/${DATASET}/images/${i}.${IMG_EXT}`
   }
 
   /**

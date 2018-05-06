@@ -59,9 +59,7 @@ function brushended (x, y) {
     return p.x >= scales[0] && p.x <= scales[2] && p.y >= scales[3] && p.y <=scales[1]
   })
 
-  let images = _.map(pts, (p) => `/data/logos/${p.i}.jpg`)
-
-  callback(images)
+  callback(pts)
 }
 
 /**

@@ -112,8 +112,8 @@
       }
     },
     created: function () {
-      setCb((images) => {
-        this.images = images
+      setCb((pts) => {
+        this.images = _.map(pts, (p) => store.getImageUrl(p.i))
       })
     },
     mounted: function () {

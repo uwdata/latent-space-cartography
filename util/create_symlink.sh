@@ -1,7 +1,8 @@
 #!/bin/bash
 # create appropriate symbolic link from client/data to /data
 
-dset="logo"
+# TODO: make this a parameter
+dset="emoji"
 
 # find out where I am
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"

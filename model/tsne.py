@@ -12,6 +12,7 @@ import csv
 import os
 import time
 
+# dataset config
 from config_emoji import *
 
 # path to the stored model

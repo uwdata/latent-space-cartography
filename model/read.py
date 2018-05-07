@@ -13,6 +13,8 @@ import os
 from keras import backend as K
 
 import model
+
+# dataset config
 from config_emoji import *
 
 batch_size = 100

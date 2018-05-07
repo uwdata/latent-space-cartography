@@ -12,21 +12,26 @@ import csv
 import os
 import time
 
+from config_emoji import *
+
 # path to the stored model
-base = '/home/yliu0/data/'
+base = '/home/yliu0/data/{}/'.format(dset)
 
 if __name__ == '__main__':
     log = [['Latent Dimensions', 'Perplexity', 'KL Divergence', 'Iterations']]
-    for latent_dim in [32, 64, 128, 256, 512, 1024]:
+    for latent_dim in dims:
         for perp in [5, 10, 30, 50, 100]:
             # input path
             inpath = base + 'latent/latent{}.h5'.format(latent_dim)
 
             # output path
+            tsne_base = base + 'tsne'
             json_path = base + 'tsne/tsne{}_perp{}.json'.format(latent_dim, perp)
             h5_path = base + 'tsne/tsne{}_perp{}.h5'.format(latent_dim, perp)
 
             # remove previous results
+            if not os.path.exists(tsne_base):
+                os.makedirs(tsne_base)
             if os.path.exists(h5_path):
                 os.remove(h5_path)
             if os.path.exists(json_path):

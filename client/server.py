@@ -20,7 +20,7 @@ from flaskext.mysql import MySQL
 models = {}
 
 # dataset we're working with
-dset = 'logo'
+dset = 'emoji'
 
 # FIXME: store in DB
 last_vec = {}
@@ -147,7 +147,11 @@ def get_tsne ():
 # get meta data
 @app.route('/api/get_meta', methods=['POST'])
 def get_meta ():
-    cursor.execute('SELECT i,name,mean_color,data_source,industry FROM meta')
+    if dset == 'logo':
+        query = 'SELECT i,name,mean_color,data_source,industry FROM logo_meta'
+    elif dset == 'emoji':
+        query = 'SELECT i, mean_color FROM emoji_meta'
+    cursor.execute(query)
     data = [list(i) for i in cursor.fetchall()]
     return jsonify({'data': data}), 200
 

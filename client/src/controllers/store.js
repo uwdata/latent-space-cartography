@@ -1,6 +1,6 @@
 import http from 'axios'
 import _ from 'lodash'
-import {DATASET, IMG_EXT} from './config'
+import {DATASET, IMG_EXT, SCHEMAS} from './config'
 
 /**
  * Handles client-server connection and serves as a central data store for client.
@@ -46,7 +46,7 @@ class Store {
       }
 
       // data schema
-      let schema = ['i', 'name', 'mean_color', 'source', 'industry']
+      let schema = SCHEMAS[DATASET].meta
 
       // go fetch from the server
       http.post('/api/get_meta', {})

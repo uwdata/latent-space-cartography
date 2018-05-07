@@ -15,12 +15,24 @@ const config_emoji = {
 /**
  * Toggle dataset here!
  */
-let c = config_logo
+let c = config_emoji
 
 const DEBUG = process.env.NODE_ENV === 'development'
 const DATASET = c.dataset
 const TRAIN_SPLIT = c.train_split
 const IMG_EXT = c.ext
+
+/**
+ * Database schemas, keyed by dataset name first, then table name.
+ */
+let SCHEMAS = {}
+
+SCHEMAS[config_logo.dataset] = {
+  'meta': ['i', 'name', 'mean_color', 'source', 'industry']
+}
+SCHEMAS[config_emoji.dataset] = {
+  'meta': ['i', 'mean_color']
+}
 
 /**
  * Only outputs if we are in dev build.
@@ -41,6 +53,7 @@ export {
   TRAIN_SPLIT,
   IMG_EXT,
   DATASET,
+  SCHEMAS,
   store,
   log_debug
 }

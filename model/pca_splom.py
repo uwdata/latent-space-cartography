@@ -8,17 +8,24 @@ from sklearn.decomposition import PCA
 import model
 import os
 import h5py
+import shutil
 from PIL import Image
+
+# dataset config
+from config_emoji import *
 
 # number of PC
 pca_dim = 8
 
 # path to the stored model
-base = '/Users/yliu0/data/'
-outbase = os.path.join(os.path.dirname(__file__), '../client/data/splom/')
+base = '/Users/yliu0/data/{}/'.format(dset)
+outbase = os.path.join(os.path.dirname(__file__), '../client/data/{}/splom/'.format(dset))
 
 if __name__ == '__main__':
-    for latent_dim in [32, 64, 128, 256, 512, 1024]:
+    if os.path.exists(outbase):
+        shutil.rmtree(outbase)
+    os.makedirs(outbase)
+    for latent_dim in dims:
         print 'Latent Dim: {}'.format(latent_dim)
         # input path
         inpath = base + 'latent/latent{}.h5'.format(latent_dim)
@@ -31,10 +38,10 @@ if __name__ == '__main__':
 
         # decoder
         # TODO: fix relative path
-        model_base = '../client/data/models/{}/'.format(latent_dim)
-        mpath = model_base + 'logo_model_dim={}.json'.format(latent_dim)
-        wpath = model_base + 'logo_model_dim={}.h5'.format(latent_dim)
-        m = model.Vae(latent_dim = latent_dim)
+        model_base = '../client/data/{}/models/{}/'.format(dset, latent_dim)
+        mpath = model_base + '{}_model_dim={}.json'.format(dset, latent_dim)
+        wpath = model_base + '{}_model_dim={}.h5'.format(dset, latent_dim)
+        m = model.Vae(latent_dim = latent_dim, img_dim=(img_chns, img_rows, img_cols))
         vae, encoder, decoder = m.read(mpath, wpath)
 
         for i in range(pca_dim):
@@ -47,6 +54,6 @@ if __name__ == '__main__':
                 re = pca.inverse_transform(d)
                 recon = m.to_image(decoder.predict(re[0:1]))
 
-                img = Image.fromarray(recon, 'RGB')
+                img = Image.fromarray(recon, img_mode)
                 img_fn = outbase + 'dim{}_pc{}_{}.png'.format(latent_dim, i, j)
                 img.save(img_fn)

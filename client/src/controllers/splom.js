@@ -184,9 +184,7 @@ class Splom {
           && d[p.y] >= e[3] && d[p.y] <= e[1]
       })
 
-      let images = _.map(pts, (p) => `/data/logos/${p.i}.jpg`)
-
-      onSelected(images)
+      onSelected(pts)
     }
   }
 

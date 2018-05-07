@@ -29,7 +29,7 @@
         <div style="margin-top: 40px"></div>
         <div v-for="pc in [0,1,2,3,4,5,6,7]" style="padding-bottom: 20px" class="pl-3">
           <div v-for="j in [2,1,0,-1,-2]" style="height: 20px">
-            <img :src="`/data/splom/dim${dim}_pc${pc}_${j}.png`"
+            <img :src="sideviewUrl(pc, j)"
                  style="width: 20px; height: 20px;"/>
           </div>
         </div>
@@ -37,8 +37,8 @@
       <div class="col-3 img-panel" :style="{marginTop: scroll_top + 'px'}">
         <!--images-->
         <div class="text-left mt-5">
-        <span v-for="img in images">
-          <img :src="img" :style="{ width: img_size + 'px', height: img_size + 'px'}"/>
+        <span v-for="p in images">
+          <img :src="imageUrl(p)" :style="{ width: img_size + 'px', height: img_size + 'px'}"/>
         </span>
         </div>
       </div>
@@ -48,7 +48,7 @@
 
 <script>
   import Splom from '../controllers/splom'
-  import {store, log_debug, TRAIN_SPLIT} from '../controllers/config'
+  import {store, log_debug, TRAIN_SPLIT, DATASET} from '../controllers/config'
   import _ from 'lodash'
 
   const PCA_DIM = 8
@@ -74,7 +74,7 @@
     if (option === 0) {
 //      splom.setData(_.slice(points, TRAIN_SPLIT))
       // TODO: deal with performance issue
-      splom.setData(_.slice(points, 18000))
+      splom.setData(_.slice(points, 16000))
     } else if (option === 1) {
       splom.setData(_.slice(points, 0, TRAIN_SPLIT))
     } else {
@@ -135,7 +135,7 @@
 
         store.getPcaPoints(this.dim, PCA_DIM)
           .then((points) => {
-            lets_draw.call(this, points)
+            lets_draw.call(this, points[0])
           }, (e) => {
             this.err = e
           })
@@ -162,6 +162,12 @@
         } else {
           this.scroll_top = 0
         }
+      },
+      sideviewUrl (pc, j) {
+        return `/data/${DATASET}/splom/dim${this.dim}_pc${pc}_${j}.png`
+      },
+      imageUrl (p) {
+        return store.getImageUrl(p.i)
       }
     }
   }

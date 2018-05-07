@@ -18,20 +18,23 @@ from keras import backend as K
 
 import model
 
+# dataset config
+from config_emoji import *
+
 latent_dim = 64
 
-base = '/Users/yliu0/data/'
+base = '/home/yliu0/data/{}/'.format(dset)
 # input path
-inpath = base + 'logos.hdf5'
+inpath = base + fn_raw
 # output path
-outbase = base + '/logo_result/{}/'.format(latent_dim)
+outbase = base + '/{}_result/{}/'.format(dset, latent_dim)
 # saved model and weights
-mpath = outbase + 'logo_model_dim={}.json'.format(latent_dim)
-wpath = outbase + 'logo_model_dim={}.h5'.format(latent_dim)
-logpath = outbase + 'logo_log_dim={}.csv'.format(latent_dim)
+mpath = outbase + '{}_model_dim={}.json'.format(dset, latent_dim)
+wpath = outbase + '{}_model_dim={}.h5'.format(dset, latent_dim)
+logpath = outbase + '{}_log_dim={}.csv'.format(dset, latent_dim)
 
 # input image dimensions
-img_rows, img_cols, img_chns = 64, 64, 3
+# img_rows, img_cols, img_chns = 64, 64, 3 # these are defined in config
 epochs = 300
 batch_size = 100
 
@@ -40,10 +43,10 @@ batch_size = 100
 '''
 def load_data (fpath):
     f = h5py.File(fpath, 'r')
-    dset = f['logos']
+    dset = f[key_raw]
 
-    x_train = dset[:15000]
-    x_test = dset[15000:]
+    x_train = dset[:train_split]
+    x_test = dset[train_split:]
 
     return x_train, x_test
 
@@ -70,7 +73,7 @@ class Visualizer(Callback):
 '''
 def train ():
     # initialize our VAE model
-    m = model.Vae(latent_dim = latent_dim)
+    m = model.Vae(latent_dim = latent_dim, img_dim=(img_chns, img_rows, img_cols))
     vae, encoder, generator = m.init_model(mpath, wpath)
     vae.summary()
 
@@ -124,9 +127,9 @@ def visualize (x_test, encoder, generator, suffix=''):
             reconstructed[i * img_rows: (i + 1) * img_rows,
                 j * img_cols: (j + 1) * img_cols] = re
 
-    img = Image.fromarray(original, 'RGB')
+    img = Image.fromarray(original, img_mode)
     img.save('{}original.png'.format(outbase))
-    img = Image.fromarray(reconstructed, 'RGB')
+    img = Image.fromarray(reconstructed, img_mode)
     img.save('{}reconstructed_{}.png'.format(outbase, suffix))
 
 if __name__ == '__main__':

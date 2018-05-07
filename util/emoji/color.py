@@ -5,6 +5,7 @@ import os
 import csv
 import numpy as np
 import h5py
+from PIL import Image
 
 dset = 'emoji'
 
@@ -20,7 +21,6 @@ img_rows, img_cols = 64, 64
 def average_color (arr):
     num_chns = 3
     # discard alpha channel
-    arr = np.asarray(arr, dtype=np.uint8)
     arr = arr[:, :, :num_chns]
 
     arr = arr.reshape((img_rows * img_cols, num_chns))
@@ -33,6 +33,15 @@ def average_color (arr):
         code += c
     return '#' + code
 
+def better_average_color (img):
+    x = np.array(img)
+    r, g, b, a = np.rollaxis(x, axis = -1)
+    r[a == 0] = 255
+    g[a == 0] = 255
+    b[a == 0] = 255
+
+    return average_color(x)
+
 # compute mean color from the data array
 def gen_mean_color ():
     f = h5py.File(h5, 'r')
@@ -43,10 +52,34 @@ def gen_mean_color ():
         writer = csv.writer(csvfile, delimiter = ',')
 
         for i in range(n):
-            color = average_color(data[i])
+            color = average_color(np.asarray(data[i], dtype=np.uint8))
             writer.writerow([i, color])
     
     f.close()
 
+# compute mean color from image, so we can handle alpha mask properly
+def gen_better_mean_color ():
+    count = 0
+    d = {}
+
+    for f in os.listdir(img_base):
+        i, ext = os.path.splitext(f)
+
+        # ignore weird hidden files
+        if ext != '.png':
+            continue
+
+        img = Image.open(img_base + f).convert('RGBA')
+        color = better_average_color(img)
+        img.close()
+        count += 1
+        d[int(i)] = color
+
+    with open(out, 'wb') as csvfile:
+        writer = csv.writer(csvfile, delimiter = ',')
+        for j in range(count):
+            writer.writerow([j, d[j]])
+
 if __name__ == '__main__':
-    gen_mean_color()
+    # gen_mean_color()
+    gen_better_mean_color()

@@ -275,12 +275,22 @@ def project_axis ():
     y = pca.components_[0]
     va = pca.explained_variance_ratio_
 
-    print 'Variation explained: {}'.format(va)
+    print 'Explained variance ratio: {}'.format(va)
 
     U = np.append(v, y.reshape(1, -1), axis=0)
     X_transformed = np.dot(X, U.T)
 
-    #TODO: compute the variation of v
+    #TODO: compuate side views for x and y axes
+
+    # compute the variation of v
+    # FIXME: the variance doesn't seem correct
+    print 'Explained variance: {}'.format(pca.explained_variance_)
+    total_var = pca.explained_variance_.sum()
+    print 'Total variance: {}'.format(total_var)
+    n_samples = X.shape[0]
+    s = np.dot(X, v.T)
+    s = np.sum(s ** 2) / (n_samples - 1)
+    print 'Variance of x axis: {}, {}%'.format(s, s / total_var)
 
     return jsonify({'data': X_transformed.tolist()}), 200
 

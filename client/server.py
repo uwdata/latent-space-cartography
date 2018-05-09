@@ -47,6 +47,38 @@ def create_model (latent_dim):
     m = model.Vae(latent_dim = latent_dim)
     models[latent_dim] = m.read(mpath, wpath) + (m,)
 
+# given a list of points in latent space, generate their corresponding images
+def _generate (latent_dim, points):
+    if not latent_dim in models:
+        create_model(latent_dim)
+    vae, encoder, decoder, m = models[latent_dim]
+
+    print('predicting ...')
+    images = []
+    for idx, val in enumerate(points):
+        val = val.reshape((1, latent_dim))
+        recon = m.to_image(decoder.predict(val))
+        img = Image.fromarray(recon, 'RGB')
+        images.append(img)
+
+    return images
+
+# interpolate between two points in a latent space
+# return a list of images sampled at equal steps along the path
+def _interpolate (latent_dim, start, end):
+    # sample the points along the vector
+    n_samples = 7
+    loc = []
+    for i in range(n_samples + 1):
+        k = float(i) / n_samples
+        loc.append((1-k) * start + k * end)
+    # overshoot
+    k = 2
+    loc.append((1-k) * start + k * end)
+
+    # generate these images
+    return _generate(latent_dim, loc)
+
 # global app and DB cursor
 app = Flask(__name__, static_url_path='')
 db, cursor = connect_db()
@@ -113,14 +145,7 @@ def pca_back ():
         re = pca.inverse_transform(d)
 
     # project from latent space to image
-    if not latent_dim in models:
-        create_model(latent_dim)
-
-    vae, encoder, decoder, m = models[latent_dim]
-    print('predicting ...')
-    recon = m.to_image(decoder.predict(re[i:i+1]))
-
-    img = Image.fromarray(recon, 'RGB')
+    img =  _generate(latent_dim, re[i:i+1])[0]
     img_fn = '{}.png'.format(int(time.time()))
     img.save(abs_path('./build/' + img_fn))
 
@@ -152,34 +177,6 @@ def get_meta ():
     cursor.execute(query)
     data = [list(i) for i in cursor.fetchall()]
     return jsonify({'data': data}), 200
-
-# interpolate between two points in a latent space
-# return a list of images sampled at equal steps along the path
-def _interpolate (latent_dim, start, end):
-    # sample the points along the vector
-    n_samples = 7
-    loc = []
-    for i in range(n_samples + 1):
-        k = float(i) / n_samples
-        loc.append((1-k) * start + k * end)
-    # overshoot
-    k = 2
-    loc.append((1-k) * start + k * end)
-
-    # generate these images
-    if not latent_dim in models:
-        create_model(latent_dim)
-    vae, encoder, decoder, m = models[latent_dim]
-
-    print('predicting ...')
-    images = []
-    for idx, val in enumerate(loc):
-        val = val.reshape((1, latent_dim))
-        recon = m.to_image(decoder.predict(val))
-        img = Image.fromarray(recon, 'RGB')
-        images.append(img)
-    
-    return images
 
 # apply analogy
 @app.route('/api/apply_analogy', methods=['POST'])

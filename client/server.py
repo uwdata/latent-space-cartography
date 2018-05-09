@@ -1,6 +1,7 @@
 #!flask/bin/python
 import json
 from sklearn.decomposition import PCA
+from sklearn import preprocessing
 import numpy as np
 import h5py
 import sys
@@ -21,9 +22,6 @@ models = {}
 
 # dataset we're working with
 dset = 'logo'
-
-# FIXME: store in DB
-last_vec = {}
 
 # for absolute path
 def abs_path (rel_path):
@@ -188,11 +186,10 @@ def _interpolate (latent_dim, start, end):
 def apply_analogy ():
     latent_dim = request.json['latent_dim']
     pid = request.json['pid']
-
-    vec = last_vec['temp'] if 'temp' in last_vec else np.zeros(1)
+    vec = np.asarray(request.json['vec'], dtype=np.float64)
 
     if latent_dim != vec.shape[0]:
-        print 'Could not apply analogy because last vector is shape {}'.format(last_vec.shape)
+        print 'Could not apply analogy because last vector is shape {}'.format(vec.shape)
         return jsonify({}), 400
 
     # read latent space
@@ -237,8 +234,7 @@ def interpolate_group ():
         centroid = np.sum(raw[indices], axis=0) / indices.shape[0]
         centroids.append(centroid)
 
-    #FIXME
-    last_vec['temp'] = centroids[1] - centroids[0]
+    vec = centroids[1] - centroids[0]
 
     images = _interpolate(latent_dim, centroids[0], centroids[1])
     fns = []
@@ -247,7 +243,49 @@ def interpolate_group ():
         fns.append(img_fn)
         img.save(abs_path('./build/' + img_fn))
 
-    return jsonify({'anchors': fns}), 200
+    return jsonify({'anchors': fns, 'vec': vec.tolist()}), 200
+
+# linear orthogonal transformation of all points to the given axis
+@app.route('/api/project_axis', methods=['POST'])
+def project_axis ():
+    latent_dim = request.json['latent_dim']
+    axis = request.json['axis']
+
+    # 1. make the axis a unit vector
+    axis = np.asarray(axis, dtype=np.float64)
+    v = preprocessing.normalize(axis.reshape(1, -1))
+
+    # v is a row vector of shape (1, latent_dim)
+    if v.shape[1] != latent_dim:
+        print 'Could not project to axis because axis and latent dimension shape mismatch.'
+        return jsonify({'status': 'fail'}), 200
+
+    # read latent space
+    rawpath = abs_path('./data/{}/latent/latent{}.h5'.format(dset, latent_dim))
+    with h5py.File(rawpath, 'r') as f:
+        X = np.asarray(f['latent'])
+
+    # 2. center X to mean
+    mean_ = np.mean(X, axis=0)
+    X -= mean_
+
+    # 3. substract the first axis from X (project X to the d-1 orthogonal space of axis)
+    X_hat = X - np.dot(X, np.dot(v.T, v))
+
+    # 4. perform PCA
+    pca = PCA(n_components = 2)
+    pca.fit(X_hat)
+    y = pca.components_[0]
+    va = pca.explained_variance_ratio_
+
+    print 'Variation explained: {}'.format(va)
+
+    U = np.append(v, y.reshape(1, -1), axis=0)
+    X_transformed = np.dot(X, U.T)
+
+    #TODO: compute the variation of v
+
+    return jsonify({'data': X_transformed.tolist()}), 200
 
 # save logo list
 @app.route('/api/save_logo_list', methods=['POST'])

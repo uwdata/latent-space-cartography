@@ -301,7 +301,8 @@ class Store {
           let msg = response['data']
 
           if (msg) {
-            resolve(msg['anchors'])
+            console.log(msg)
+            resolve([msg['anchors'], msg['vec']])
           } else {
             reject()
           }
@@ -315,10 +316,11 @@ class Store {
    * Apply the analogy vector
    * @param latent_dim
    * @param pid
+   * @param vec The analogy vector.
    */
-  applyAnalogy (latent_dim, pid) {
+  applyAnalogy (latent_dim, pid, vec) {
     return new Promise((resolve, reject) => {
-      let payload = {pid: pid, latent_dim: latent_dim}
+      let payload = {pid: pid, latent_dim: latent_dim, vec: vec}
       console.log(payload)
 
       http.post('/api/apply_analogy', payload)
@@ -327,6 +329,27 @@ class Store {
 
           if (msg) {
             resolve(msg['anchors'])
+          } else {
+            reject()
+          }
+        }, () => {
+          reject(`Could not connect to the server.`)
+        })
+    })
+  }
+
+  projectToAxis (latent_dim, axis) {
+    return new Promise((resolve, reject) => {
+      let payload = {latent_dim: latent_dim, axis: axis}
+      console.log(payload)
+
+      http.post('/api/project_axis', payload)
+        .then((response) => {
+          let msg = response['data']
+
+          if (msg) {
+            let points = this._formatPcaPoints(msg['data'])
+            resolve(points)
           } else {
             reject()
           }

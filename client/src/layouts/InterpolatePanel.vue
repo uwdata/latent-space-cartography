@@ -51,6 +51,12 @@
       </button>
     </div>
 
+    <div class="p-3">
+      <button class="btn btn-secondary btn-sm"
+              :disabled="!analogy_vector || analogy_vector.length != latent_dim"
+              @click="project">Project</button>
+    </div>
+
     <!--TODO: refactor this modal-->
     <b-modal id="modal-group" ref="modalGroup"
              title="Choose a Group ..."
@@ -93,6 +99,7 @@
         loading: false,
         loading_analogy: false,
         loading_list: false,
+        analogy_vector: null,
         logo_lists: [],
         generated: [],
         analogy: []
@@ -101,7 +108,7 @@
     methods: {
       runAnalogy () {
         this.loading_analogy = true
-        store.applyAnalogy(this.latent_dim, this.detail.i)
+        store.applyAnalogy(this.latent_dim, this.detail.i, this.analogy_vector)
           .then((data) => {
             this.loading_analogy = false
             this.analogy = data
@@ -112,12 +119,19 @@
       interpolate () {
         this.loading = true
         store.interpolateBetween(this.groups, this.latent_dim)
-          .then((data) => {
+          .then((all) => {
             this.loading = false
-            this.generated = data
+            this.generated = all[0]
+            this.analogy_vector = all[1]
           }, () => {
             this.loading = false
           })
+      },
+      project () {
+        this.$emit('project', this.analogy_vector)
+      },
+      reset () {
+        this.$emit('reset')
       },
       fetchSaves () {
         this.loading_list = true

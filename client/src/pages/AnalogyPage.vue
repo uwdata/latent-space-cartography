@@ -18,7 +18,9 @@
         <div class="row mr-0">
           <!--Left Panel for Interpolating-->
           <div v-bind:class="{'d-none': brushed.length}" class="col-4 bd-left">
-            <interpolate-panel :latent_dim="dim" :detail="detail_point">
+            <interpolate-panel :latent_dim="dim" :detail="detail_point"
+                               v-on:reset="showOriginal"
+                               v-on:project="projectAxis">
             </interpolate-panel>
           </div>
 
@@ -269,6 +271,21 @@
           }, (e) => {
             this.err = e
             this.loading = false
+          })
+      },
+
+      projectAxis (analogy_vector) {
+        this.loading = true
+        store.projectToAxis(this.dim, analogy_vector)
+          .then((points) => {
+            this.loading = false
+            log_debug(points[0])
+            this.points = points
+            this.scatter.mark_type = 1
+            lets_draw.call(this, points)
+          }, () => {
+            this.loading = false
+            //handle error
           })
       },
 

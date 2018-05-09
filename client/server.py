@@ -20,7 +20,7 @@ from flaskext.mysql import MySQL
 models = {}
 
 # dataset we're working with
-dset = 'emoji'
+dset = 'logo'
 
 # FIXME: store in DB
 last_vec = {}
@@ -155,6 +155,34 @@ def get_meta ():
     data = [list(i) for i in cursor.fetchall()]
     return jsonify({'data': data}), 200
 
+# interpolate between two points in a latent space
+# return a list of images sampled at equal steps along the path
+def _interpolate (latent_dim, start, end):
+    # sample the points along the vector
+    n_samples = 7
+    loc = []
+    for i in range(n_samples + 1):
+        k = float(i) / n_samples
+        loc.append((1-k) * start + k * end)
+    # overshoot
+    k = 2
+    loc.append((1-k) * start + k * end)
+
+    # generate these images
+    if not latent_dim in models:
+        create_model(latent_dim)
+    vae, encoder, decoder, m = models[latent_dim]
+
+    print('predicting ...')
+    images = []
+    for idx, val in enumerate(loc):
+        val = val.reshape((1, latent_dim))
+        recon = m.to_image(decoder.predict(val))
+        img = Image.fromarray(recon, 'RGB')
+        images.append(img)
+    
+    return images
+
 # apply analogy
 @app.route('/api/apply_analogy', methods=['POST'])
 def apply_analogy ():
@@ -174,30 +202,9 @@ def apply_analogy ():
     start = raw[int(pid)]
     end = start + vec
 
-    print(vec)
-
-    # sample the points along the vector
-    # TODO: now only works for two groups
-    n_samples = 7
-    loc = []
-    for i in range(n_samples + 1):
-        k = float(i) / n_samples
-        loc.append((1-k) * start + k * end)
-    # overshoot
-    k = 2
-    loc.append((1-k) * start + k * end)
-
-    # generate these images
-    if not latent_dim in models:
-        create_model(latent_dim)
-    vae, encoder, decoder, m = models[latent_dim]
-
-    print('predicting ...')
+    images = _interpolate(latent_dim, start, end)
     fns = []
-    for idx, val in enumerate(loc):
-        val = val.reshape((1, latent_dim))
-        recon = m.to_image(decoder.predict(val))
-        img = Image.fromarray(recon, 'RGB')
+    for idx, img in enumerate(images):
         img_fn = 'analogy_{}_{}.png'.format(pid, idx)
         fns.append(img_fn)
         img.save(abs_path('./build/' + img_fn))
@@ -233,34 +240,14 @@ def interpolate_group ():
     #FIXME
     last_vec['temp'] = centroids[1] - centroids[0]
 
-    # sample the points along the vector
-    # TODO: now only works for two groups
-    n_samples = 7
-    loc = []
-    for i in range(n_samples + 1):
-        k = float(i) / n_samples
-        loc.append((1-k) * centroids[0] + k * centroids[1])
-    # overshoot
-    k = 2
-    loc.append((1-k) * centroids[0] + k * centroids[1])
-
-    # generate these images
-    if not latent_dim in models:
-        create_model(latent_dim)
-    vae, encoder, decoder, m = models[latent_dim]
-
-    print('predicting ...')
+    images = _interpolate(latent_dim, centroids[0], centroids[1])
     fns = []
-    for idx, val in enumerate(loc):
-        val = val.reshape((1, latent_dim))
-        recon = m.to_image(decoder.predict(val))
-        img = Image.fromarray(recon, 'RGB')
+    for idx, img in enumerate(images):
         img_fn = '{}_{}.png'.format('to'.join(gid), idx)
         fns.append(img_fn)
         img.save(abs_path('./build/' + img_fn))
 
     return jsonify({'anchors': fns}), 200
-    # return jsonify({'latent': re[i].tolist(), 'image': img_fn}), 200
 
 # save logo list
 @app.route('/api/save_logo_list', methods=['POST'])

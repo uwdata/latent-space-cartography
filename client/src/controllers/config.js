@@ -15,7 +15,7 @@ const config_emoji = {
 /**
  * Toggle dataset here!
  */
-let c = config_emoji
+let c = config_logo
 
 const DEBUG = process.env.NODE_ENV === 'development'
 const DATASET = c.dataset

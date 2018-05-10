@@ -59,6 +59,7 @@ class Scatter {
     this.onSelected = () => {}
     this.onProbed = () => {}
     this.onDotClicked = () => {}
+    this.onDotHovered = () => {}
   }
 
   /**
@@ -262,27 +263,29 @@ class Scatter {
      * =========================
      * Event handlers
      */
-    function focusDot (d, dot) {
+    function focusDot (d, dot, hideText) {
       dot.attr('r', () => that.dot_radius * 2)
         .classed('focused', true)
       moveToFront(dot)
 
-      let t = null
-      d3.selectAll('text')
-        .each(function () {
-          // really ugly hack because text has no binding data
-          if (d3.select(this).text() === d.name) {
-            t = d3.select(this)
-          }
-        })
-      if (!t) {
-        objects.append('text')
-          .attr('x', () => Math.max(currentX(d.x) - 30, 15))
-          .attr('y', () => Math.max(currentY(d.y) - 15, 15))
-          .classed('focus-label', true)
-          .text(() => d.name)
-      } else {
-        t.classed('focus-label', true)
+      if (!hideText) {
+        let t = null
+        d3.selectAll('text')
+          .each(function () {
+            // really ugly hack because text has no binding data
+            if (d3.select(this).text() === d.name) {
+              t = d3.select(this)
+            }
+          })
+        if (!t) {
+          objects.append('text')
+            .attr('x', () => Math.max(currentX(d.x) - 30, 15))
+            .attr('y', () => Math.max(currentY(d.y) - 15, 15))
+            .classed('focus-label', true)
+            .text(() => d.name)
+        } else {
+          t.classed('focus-label', true)
+        }
       }
     }
 
@@ -305,28 +308,30 @@ class Scatter {
         .filter((d) => !indices[d.i])
         .style('fill', (d) => '#ccc')
 
-      _.each(pts, (d) => {
-        objects.append('text')
-          .attr('x', () => Math.max(currentX(d.x) - 30, 15))
-          .attr('y', () => Math.max(currentY(d.y) - 15, 15))
-          .classed('focused-set', true)
-          .text(() => d.name)
-      })
+      // _.each(pts, (d) => {
+      //   objects.append('text')
+      //     .attr('x', () => Math.max(currentX(d.x) - 30, 15))
+      //     .attr('y', () => Math.max(currentY(d.y) - 15, 15))
+      //     .classed('focused-set', true)
+      //     .text(() => d.name)
+      // })
     }
 
     function unfocusSet () {
       d3.selectAll('.dot')
         .style("fill", (d) => that._colorDot(d, palette))
       d3.selectAll('.dot.focused-set').attr('r', that.dot_radius)
-      d3.selectAll('text.focused-set').remove()
+      // d3.selectAll('text.focused-set').remove()
     }
 
     function dotMouseover(d) {
-      focusDot(d, d3.select(this))
+      focusDot(d, d3.select(this), true)
+      that.onDotHovered(d, currentX(d.x), currentY(d. y))
     }
 
     function dotMouseout () {
       unfocusDot()
+      that.onDotHovered(null)
     }
 
     function dotClick (d) {

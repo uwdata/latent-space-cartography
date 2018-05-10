@@ -59,6 +59,10 @@
           <!--Main Drawing-->
           <div class="col-8 pr-0 pl-0">
             <div class="d-flex justify-content-center align-items-center">
+              <!--Detail -->
+              <detail-tip :detail_point="hovered_point"
+                          v-if="hovered_point"></detail-tip>
+
               <!--SVG-->
               <div id="container" ref="chart"></div>
 
@@ -110,6 +114,7 @@
   import HelpButton from '../layouts/HelpButton.vue'
   import InterpolatePanel from '../layouts/InterpolatePanel.vue'
   import DetailCard from '../layouts/DetailCard.vue'
+  import DetailTip from '../layouts/DetailTip.vue'
 
   import Scatter from '../controllers/scatter_analogy'
   import {store, log_debug, TRAIN_SPLIT} from '../controllers/config'
@@ -193,6 +198,7 @@
       HelpButton,
       InterpolatePanel,
       DetailCard,
+      DetailTip,
       VueLoading
     },
     name: 'AnalogyPage',
@@ -202,6 +208,7 @@
         suggestions: [],
         points: [],
         detail_point: null,
+        hovered_point: null,
         brushed: [],
         dim: 32,
         all_dims: [32, 64, 128, 256, 512, 1024],
@@ -222,6 +229,13 @@
       }
       this.scatter.onDotClicked = (pt) => {
         this.detail_point = pt
+      }
+      this.scatter.onDotHovered = (pt, x, y) => {
+        if (pt) {
+          pt.screenX = x
+          pt.screenY = y
+        }
+        this.hovered_point = pt
       }
 
       // Get points from server

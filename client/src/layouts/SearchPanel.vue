@@ -49,7 +49,7 @@
                  v-b-tooltip.hover title="Display all logos"
                  :class="{active: view_mode === 1}"
                  @click="toggleAll">Show All</b-btn>
-          <button class="btn btn-outline-secondary w-100 d-none"
+          <button class="btn btn-outline-secondary w-100"
                   :class="{active: view_mode === 2}"
                   @click="toggleSubset">Highlight</button>
           <b-btn class="btn btn-outline-secondary w-100"

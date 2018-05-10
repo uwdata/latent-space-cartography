@@ -1,17 +1,22 @@
 <template>
   <div class="d-flex flex-row">
-    <div class="d-flex flex-column p-3">
+    <div class="d-flex flex-column pl-3 pt-3">
       <button class="btn btn-outline-secondary img-48"
               @click="clickStart"
               v-b-modal.modal-group>
         <i v-if="!groups[0]" class="fa fa-fw fa-circle-o"></i>
         {{groups[0]}}
       </button>
-      <div style="min-height: 384px" class="mt-3 mb-3">
+      <div style="min-height: 432px" class="mt-3 mb-3 d-flex">
         <div v-if="loading">Generating ...</div>
         <div v-if="!loading" class="d-flex flex-column">
           <div v-for="img in generated">
             <img :src="`/build/${img}`" class="img-48" />
+          </div>
+        </div>
+        <div v-if="!loading" class="d-flex flex-column text-muted pl-1">
+          <div v-for="count in generated_neighbors">
+            <div class="align-middle div-48">{{count}}</div>
           </div>
         </div>
       </div>
@@ -34,11 +39,16 @@
         <i v-if="!detail" class="fa fa-fw fa-question"></i>
         <img v-if="detail" :src="getUrl(detail)" class="img-48" />
       </div>
-      <div style="min-height: 384px" class="mt-3 mb-3">
+      <div style="min-height: 432px" class="mt-3 mb-3 d-flex">
         <div v-if="loading_analogy">Generating ...</div>
         <div v-if="!loading_analogy" class="d-flex flex-column">
           <div v-for="img in analogy">
             <img :src="`/build/${img}`" class="img-48" />
+          </div>
+        </div>
+        <div v-if="!loading_analogy" class="d-flex flex-column text-muted pl-1">
+          <div v-for="count in analogy_neighbors">
+            <div class="align-middle div-48 ">{{count}}</div>
           </div>
         </div>
       </div>
@@ -102,16 +112,19 @@
         analogy_vector: null,
         logo_lists: [],
         generated: [],
-        analogy: []
+        generated_neighbors: [],
+        analogy: [],
+        analogy_neighbors: []
       }
     },
     methods: {
       runAnalogy () {
         this.loading_analogy = true
         store.applyAnalogy(this.latent_dim, this.detail.i, this.analogy_vector)
-          .then((data) => {
+          .then((all) => {
             this.loading_analogy = false
-            this.analogy = data
+            this.analogy = all[0]
+            this.analogy_neighbors = all[1]
           }, () => {
             this.loading_analogy = false
           })
@@ -123,6 +136,9 @@
             this.loading = false
             this.generated = all[0]
             this.analogy_vector = all[1]
+            this.generated_neighbors = all[2]
+
+            console.log('generated_neighbors', this.generated_neighbors)
           }, () => {
             this.loading = false
           })
@@ -169,5 +185,10 @@
   .img-48 {
     width: 48px;
     height: 48px;
+  }
+
+  .div-48 {
+    line-height: 48px;
+    font-size: 0.7em;
   }
 </style>

@@ -53,19 +53,35 @@ def _generate (latent_dim, points):
         create_model(latent_dim)
     vae, encoder, decoder, m = models[latent_dim]
 
-    print('predicting ...')
+    print('Predicting ...')
     images = []
     for idx, val in enumerate(points):
         val = val.reshape((1, latent_dim))
         recon = m.to_image(decoder.predict(val))
         img = Image.fromarray(recon, 'RGB')
         images.append(img)
+    print('Done.')
 
     return images
 
+# number of points within L2 distance of a given point
+def _num_neighbors (X, points, distance = 3.0):
+    res = []
+    n, latent_dim = X.shape
+    for idx, p in enumerate(points):
+        P = np.repeat(p.reshape(1, -1), n, axis = 0)
+        # d = np.abs(X - P)
+        d = np.linalg.norm(X - P, axis = 1) # L2 distance
+        qualify = np.less_equal(d, np.repeat(distance, n))
+        indices = np.where(qualify)[0]
+        res.append(len(indices))
+    return res
+
 # interpolate between two points in a latent space
 # return a list of images sampled at equal steps along the path
-def _interpolate (latent_dim, start, end):
+def _interpolate (X, start, end):
+    n, latent_dim = X.shape
+
     # sample the points along the vector
     n_samples = 7
     loc = []
@@ -77,7 +93,7 @@ def _interpolate (latent_dim, start, end):
     loc.append((1-k) * start + k * end)
 
     # generate these images
-    return _generate(latent_dim, loc)
+    return _generate(latent_dim, loc), _num_neighbors(X, loc)
 
 # global app and DB cursor
 app = Flask(__name__, static_url_path='')
@@ -196,14 +212,14 @@ def apply_analogy ():
     start = raw[int(pid)]
     end = start + vec
 
-    images = _interpolate(latent_dim, start, end)
+    images, count = _interpolate(raw, start, end)
     fns = []
     for idx, img in enumerate(images):
         img_fn = 'analogy_{}_{}.png'.format(pid, idx)
         fns.append(img_fn)
         img.save(abs_path('./build/' + img_fn))
 
-    return jsonify({'anchors': fns}), 200
+    return jsonify({'anchors': fns, 'neighbors': count}), 200
 
 
 # interpolate between the centroids of two groups
@@ -233,14 +249,14 @@ def interpolate_group ():
 
     vec = centroids[1] - centroids[0]
 
-    images = _interpolate(latent_dim, centroids[0], centroids[1])
+    images, count = _interpolate(raw, centroids[0], centroids[1])
     fns = []
     for idx, img in enumerate(images):
         img_fn = '{}_{}.png'.format('to'.join(gid), idx)
         fns.append(img_fn)
         img.save(abs_path('./build/' + img_fn))
 
-    return jsonify({'anchors': fns, 'vec': vec.tolist()}), 200
+    return jsonify({'anchors': fns, 'vec': vec.tolist(), 'neighbors': count}), 200
 
 # linear orthogonal transformation of all points to the given axis
 @app.route('/api/project_axis', methods=['POST'])

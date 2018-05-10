@@ -302,7 +302,7 @@ class Store {
 
           if (msg) {
             console.log(msg)
-            resolve([msg['anchors'], msg['vec']])
+            resolve([msg['anchors'], msg['vec'], msg['neighbors']])
           } else {
             reject()
           }
@@ -328,7 +328,7 @@ class Store {
           let msg = response['data']
 
           if (msg) {
-            resolve(msg['anchors'])
+            resolve([msg['anchors'], msg['neighbors']])
           } else {
             reject()
           }

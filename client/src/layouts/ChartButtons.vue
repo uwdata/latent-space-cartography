@@ -1,6 +1,12 @@
 <template>
   <div class="chart-btn-group pt-3 pr-3">
     <div class="btn-group-vertical btn-group-sm">
+      <b-btn class="btn btn-outline-primary chart-btn"
+             :class="{active: brush}"
+             @click="toggleBrush"
+             id="btn-brush">
+        <i class="fa fa-fw fa-sticky-note-o"></i>
+      </b-btn>
       <b-btn class="btn btn-outline-warning chart-btn"
              id="btn-night"
              :class="{active: night}"
@@ -26,6 +32,7 @@
         <i class="fa fa-fw fa-crosshairs"></i>
       </b-btn>
     </div>
+
     <b-tooltip target="btn-night" title="Toggle Background Color"
                placement="left"></b-tooltip>
     <b-tooltip target="btn-zoomin" title="Zoom In"
@@ -33,6 +40,8 @@
     <b-tooltip target="btn-zoomout" title="Zoom Out"
                placement="left"></b-tooltip>
     <b-tooltip target="btn-reset" title="Reset View"
+               placement="left"></b-tooltip>
+    <b-tooltip target="btn-brush" title="Toggle Brush"
                placement="left"></b-tooltip>
   </div>
 </template>
@@ -48,13 +57,18 @@
     },
     data () {
       return {
-        night: false
+        night: false,
+        brush: false
       }
     },
     methods: {
       toggleBackground () {
         this.night = !this.night
         this.chart.toggleBackground(this.night ? '#000' : '#fff')
+      },
+      toggleBrush () {
+        this.brush = !this.brush
+        this.chart.toggleBrushing(this.brush)
       },
       zoomIn () {
         this.chart.zoomView(1.5)

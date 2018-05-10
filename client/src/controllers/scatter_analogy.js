@@ -46,6 +46,7 @@ class Scatter {
       'focus-one',
       'focus-set',
       'toggle-background',
+      'toggle-brushing',
       'zoom-view')
 
     /**
@@ -259,6 +260,10 @@ class Scatter {
       rect.transition().duration(1000).call(zoomBeh.scaleBy, factor)
     })
 
+    this.dispatch.on('toggle-brushing', (on) => {
+      toggleBrushing(on)
+    })
+
     /**
      * =========================
      * Event handlers
@@ -343,7 +348,7 @@ class Scatter {
      */
     function toggleZoomBrush () {
       let shift = d3.event ? d3.event.shiftKey : false
-      if (shift) {
+      if (!shift) {
         // remove brush
         d3.selectAll('.brush')
           .call(brushBeh.move, null)
@@ -354,6 +359,18 @@ class Scatter {
         d3.selectAll('.brush').each(function () {
           this.parentNode.insertBefore(this, rect.node().nextSibling)
         })
+      }
+    }
+
+    function toggleBrushing (on) {
+      if (on) {
+        // create brush that is on top of everything
+        svg.append('g').attr('class', 'brush').call(brushBeh)
+      } else {
+        // remove brush
+        d3.selectAll('.brush')
+          .call(brushBeh.move, null)
+          .remove()
       }
     }
 
@@ -369,6 +386,7 @@ class Scatter {
       // x0, y0, x1, y1
       let sel = _.flatten(d3.event.selection)
       let scales = _.map(sel, (s, idx) => idx % 2 ? currentY.invert(s) : currentX.invert(s))
+      console.log('brushing')
 
       // change color of selected points
       d3.selectAll('.dot')
@@ -389,6 +407,7 @@ class Scatter {
       let pts = _.filter(data, (p) => {
         return p.x >= scales[0] && p.x <= scales[2] && p.y >= scales[3] && p.y <=scales[1]
       })
+      console.log('brushend', pts.length)
 
       that.onSelected(pts)
     }
@@ -441,6 +460,14 @@ class Scatter {
 
   focusSet (points) {
     this.dispatch.call('focus-set', this, points)
+  }
+
+  /**
+   * Toggle brushing.
+   * @param on Whether to turn brushing on.
+   */
+  toggleBrushing (on) {
+    this.dispatch.call('toggle-brushing', this, on)
   }
 
   /**

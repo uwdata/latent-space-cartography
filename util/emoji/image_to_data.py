@@ -127,6 +127,6 @@ def gen_data (dir, out, log):
             writer.writerow(m)
 
 if __name__ == '__main__':
-    # clean(din, dout)
-    # resize(dout)
+    clean(din, dout)
+    resize(dout)
     gen_data(dout, h5, mapping)

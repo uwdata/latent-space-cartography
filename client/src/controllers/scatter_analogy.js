@@ -33,21 +33,20 @@ class Scatter {
     }
     this.background = '#fff'
     this.dot_radius = 4
-    this.axis = true
     this.dot_color = 'mean_color'
     this.mark_type = 1 //FIXME: create a new file
 
     /**
      * Interactions
      */
-    this.drag = true
-    this.hover = false
+    this.hover = true
     this.dispatch = d3.dispatch(
       'focus-one',
       'focus-set',
       'toggle-background',
       'toggle-brushing',
       'zoom-view')
+    this.mode_brush = false // whether we are in brushing mode
 
     /**
      * Related to PCA
@@ -88,9 +87,6 @@ class Scatter {
 
     let palette = d3.scaleOrdinal(d3.schemeCategory10)
 
-    let xAxis = d3.axisBottom(x).tickSize(-height)
-    let yAxis = d3.axisLeft(y).tickSize(-width)
-
     let xMax = d3.max(data, (d) => d.x) * 1.05
     let xMin = d3.min(data, (d) => d.x) * 1.05
     let yMax = d3.max(data, (d) => d.y) * 1.05
@@ -106,41 +102,12 @@ class Scatter {
 
     // Zoom, brush and drag
     let zoomBeh = d3.zoom()
-      // .extent([margin.left, margin.top], [outerWidth - margin.right, outerHeight - margin.bottom])
       .scaleExtent([0.5, 3])
       .on("zoom", zoom)
     let brushBeh = d3.brush()
       .on('start', brushstart)
       .on('brush', brushing)
       .on("end", brushended)
-    let dragger = d3.drag()
-      .on('start', function () {
-        d3.select(this)
-          .classed('highlight', true)
-          .style('fill', '#f00')
-      })
-      .on('drag', function (d) {
-        d.x += d3.event.dx
-        d.y += d3.event.dy
-        d3.select(this).attr("transform", function(d) {
-          return "translate(" + [d.x, d.y] + ")"
-        })
-      })
-      .on('end', function () {
-        let x = d3.event.sourceEvent.offsetX
-        let y = d3.event.sourceEvent.offsetY
-
-        x = xMin + x / width * (xMax - xMin)
-        y = yMin + (1 - y / height) * (yMax - yMin)
-
-        let i = d3.event.subject.i
-
-        that.onProbed(x, y, i)
-
-        // TODO: turn back style?
-        d3.select(this)
-          .style('fill', '#000')
-      })
 
     svg.append("g")
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
@@ -152,49 +119,14 @@ class Scatter {
       .attr("fill", this.background)
 
     // Brush & Zoom
-    // if you bind zoomBeh to svg, you can zoom with brush
     rect.call(zoomBeh)
-    toggleZoomBrush()
-    d3.select(window)
-      .on('keydown', toggleZoomBrush)
-      .on('keyup', toggleZoomBrush)
+    toggleBrushing()
 
-    if (this.axis) {
-      // X Axis
-      svg.append("g")
-        .classed("x axis", true)
-        .attr("transform", "translate(0," + height + ")")
-        .call(xAxis)
-
-      // Y Axis
-      svg.append("g")
-        .classed("y axis", true)
-        .attr("transform", "translate(20 ,0)")
-        .call(yAxis)
-    }
-
-    // Axes Lines
+    // Object Container
     let objects = svg.append("svg")
       .classed("objects", true)
       .attr("width", width)
       .attr("height", height)
-
-    if (this.axis) {
-      objects.append("svg:line")
-        .classed("axisLine hAxisLine", true)
-        .attr("x1", 0)
-        .attr("y1", 0)
-        .attr("x2", width)
-        .attr("y2", 0)
-        .attr("transform", "translate(0," + height + ")")
-      objects.append("svg:line")
-        .classed("axisLine vAxisLine", true)
-        .attr("transform", "translate(20 ,0)")
-        .attr("x1", 0)
-        .attr("y1", 0)
-        .attr("x2", 0)
-        .attr("y2", height)
-    }
 
     // Dots
     if (this.mark_type === 1) {
@@ -209,9 +141,7 @@ class Scatter {
         .style("fill", (d) => this._colorDot(d, palette))
         .on('click', dotClick)
 
-      if (this.drag) {
-        dots.call(dragger)
-      } else if (this.hover) {
+      if (this.hover) {
         dots.on('mouseover', dotMouseover)
           .on('mouseout', dotMouseout)
       }
@@ -260,8 +190,8 @@ class Scatter {
       rect.transition().duration(1000).call(zoomBeh.scaleBy, factor)
     })
 
-    this.dispatch.on('toggle-brushing', (on) => {
-      toggleBrushing(on)
+    this.dispatch.on('toggle-brushing', () => {
+      toggleBrushing()
     })
 
     /**
@@ -312,21 +242,12 @@ class Scatter {
       d3.selectAll('.dot')
         .filter((d) => !indices[d.i])
         .style('fill', (d) => '#ccc')
-
-      // _.each(pts, (d) => {
-      //   objects.append('text')
-      //     .attr('x', () => Math.max(currentX(d.x) - 30, 15))
-      //     .attr('y', () => Math.max(currentY(d.y) - 15, 15))
-      //     .classed('focused-set', true)
-      //     .text(() => d.name)
-      // })
     }
 
     function unfocusSet () {
       d3.selectAll('.dot')
         .style("fill", (d) => that._colorDot(d, palette))
       d3.selectAll('.dot.focused-set').attr('r', that.dot_radius)
-      // d3.selectAll('text.focused-set').remove()
     }
 
     function dotMouseover(d) {
@@ -343,27 +264,8 @@ class Scatter {
       that.onDotClicked(d)
     }
 
-    /**
-     * Holding SHIFT key removes brush behavior.
-     */
-    function toggleZoomBrush () {
-      let shift = d3.event ? d3.event.shiftKey : false
-      if (!shift) {
-        // remove brush
-        d3.selectAll('.brush')
-          .call(brushBeh.move, null)
-          .remove()
-      } else {
-        // create brush holder and put it just after "rect"
-        svg.append('g').attr('class', 'brush').call(brushBeh)
-        d3.selectAll('.brush').each(function () {
-          this.parentNode.insertBefore(this, rect.node().nextSibling)
-        })
-      }
-    }
-
-    function toggleBrushing (on) {
-      if (on) {
+    function toggleBrushing () {
+      if (that.mode_brush) {
         // create brush that is on top of everything
         svg.append('g').attr('class', 'brush').call(brushBeh)
       } else {
@@ -386,7 +288,6 @@ class Scatter {
       // x0, y0, x1, y1
       let sel = _.flatten(d3.event.selection)
       let scales = _.map(sel, (s, idx) => idx % 2 ? currentY.invert(s) : currentX.invert(s))
-      console.log('brushing')
 
       // change color of selected points
       d3.selectAll('.dot')
@@ -407,7 +308,6 @@ class Scatter {
       let pts = _.filter(data, (p) => {
         return p.x >= scales[0] && p.x <= scales[2] && p.y >= scales[3] && p.y <=scales[1]
       })
-      console.log('brushend', pts.length)
 
       that.onSelected(pts)
     }
@@ -416,10 +316,6 @@ class Scatter {
       // create new scales
       currentX = d3.event.transform.rescaleX(x)
       currentY = d3.event.transform.rescaleY(y)
-
-      // update axes
-      svg.select(".x.axis").call(xAxis.scale(currentX))
-      svg.select(".y.axis").call(yAxis.scale(currentY))
 
       // update dots
       svg.selectAll(".dot")
@@ -467,7 +363,8 @@ class Scatter {
    * @param on Whether to turn brushing on.
    */
   toggleBrushing (on) {
-    this.dispatch.call('toggle-brushing', this, on)
+    this.mode_brush = on
+    this.dispatch.call('toggle-brushing', this)
   }
 
   /**

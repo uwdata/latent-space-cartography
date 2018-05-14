@@ -144,10 +144,6 @@
       right: 0
     }
     s.dot_radius = 3
-    s.axis = false
-
-    s.drag = false
-    s.hover = true
   }
 
   /**
@@ -157,7 +153,6 @@
   function lets_draw (points) {
     clear.call(this)
     this.scatter.setData(_.slice(points, 0, TRAIN_SPLIT))
-//    scatter.setData(_.slice(points, 0, 1000)) //fixme
     this.scatter.draw('#container')
   }
 

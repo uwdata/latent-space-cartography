@@ -219,13 +219,13 @@
     mounted: function () {
       // register all the callback of the D3 component
       customize_scatter.call(this, this.scatter)
-      this.scatter.onSelected = (pts) => {
+      this.scatter.emitter.onSelected = (pts) => {
         this.brushed = pts
       }
-      this.scatter.onDotClicked = (pt) => {
+      this.scatter.emitter.onDotClicked = (pt) => {
         this.detail_point = pt
       }
-      this.scatter.onDotHovered = (pt, x, y) => {
+      this.scatter.emitter.onDotHovered = (pt, x, y) => {
         if (pt) {
           pt.screenX = x
           pt.screenY = y

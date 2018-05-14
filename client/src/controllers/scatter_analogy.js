@@ -3,6 +3,7 @@ import _ from 'lodash'
 import {store} from '../controllers/config'
 
 import Scales from './analogy/scales'
+import DotBrush from './analogy/brush'
 
 /**
  * Move D3 selection elements to the front.
@@ -58,10 +59,12 @@ class Scatter {
     /**
      * Callbacks
      */
-    this.onSelected = () => {}
-    this.onProbed = () => {}
-    this.onDotClicked = () => {}
-    this.onDotHovered = () => {}
+    this.emitter = {
+      onSelected: () => {},
+      onDotClicked: () => {},
+      onDotHovered: () => {}
+    }
+
   }
 
   /**
@@ -75,6 +78,7 @@ class Scatter {
     let that = this
 
     let data = this.data
+    let emitter = this.emitter
 
     let scales = new Scales(data, outerWidth, outerHeight, margin)
 
@@ -87,10 +91,7 @@ class Scatter {
     let zoomBeh = d3.zoom()
       .scaleExtent([0.5, 3])
       .on("zoom", zoom)
-    let brushBeh = d3.brush()
-      .on('start', brushstart)
-      .on('brush', brushing)
-      .on("end", brushended)
+    let dot_brush = new DotBrush(data, scales, emitter)
 
     svg.append("g")
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
@@ -149,7 +150,7 @@ class Scatter {
      * =========================
      * Register event handlers for dispatcher, to communicate with outside.
      */
-    this.dispatch.on('focus-one.dot', (p) => {
+    this.dispatch.on('focus-one', (p) => {
       if (!p) {
         unfocusDot()
       } else {
@@ -157,7 +158,7 @@ class Scatter {
       }
     })
 
-    this.dispatch.on('focus-set.dot', (points) => {
+    this.dispatch.on('focus-set', (points) => {
       if (points) {
         focusSet(points)
       } else {
@@ -235,64 +236,26 @@ class Scatter {
 
     function dotMouseover(d) {
       focusDot(d, d3.select(this), true)
-      that.onDotHovered(d, scales.x(d.x), scales.y(d. y))
+      emitter.onDotHovered(d, scales.x(d.x), scales.y(d. y))
     }
 
     function dotMouseout () {
       unfocusDot()
-      that.onDotHovered(null)
+      emitter.onDotHovered(null)
     }
 
     function dotClick (d) {
-      that.onDotClicked(d)
+      emitter.onDotClicked(d)
     }
 
     function toggleBrushing () {
       if (that.mode_brush) {
         // create brush that is on top of everything
-        svg.append('g').attr('class', 'brush').call(brushBeh)
+        dot_brush.attach(svg)
       } else {
         // remove brush
-        d3.selectAll('.brush')
-          .call(brushBeh.move, null)
-          .remove()
+        dot_brush.remove()
       }
-    }
-
-    function brushstart() {
-      d3.selectAll('.dot').classed('muted', false)
-      that.onSelected([])
-    }
-
-    function brushing () {
-      // empty selection
-      if (!d3.event.selection) return
-
-      // x0, y0, x1, y1
-      let sel = _.flatten(d3.event.selection)
-      let bounds = _.map(sel, (s, idx) => idx % 2 ? scales.y.invert(s) : scales.x.invert(s))
-
-      // change color of selected points
-      d3.selectAll('.dot')
-        .classed('muted', (p) => {
-          let inside = p.x >= bounds[0] && p.x <= bounds[2] && p.y >= bounds[3] && p.y <=bounds[1]
-          return !inside
-        })
-    }
-
-    function brushended () {
-      // empty selection
-      if (!d3.event.selection) return
-
-      // x0, y0, x1, y1
-      let sel = _.flatten(d3.event.selection)
-      let bounds = _.map(sel, (s, idx) => idx % 2 ? scales.y.invert(s) : scales.x.invert(s))
-
-      let pts = _.filter(data, (p) => {
-        return p.x >= bounds[0] && p.x <= bounds[2] && p.y >= bounds[3] && p.y <=bounds[1]
-      })
-
-      that.onSelected(pts)
     }
 
     function zoom () {
@@ -306,7 +269,7 @@ class Scatter {
         .attr('cy', (d) => scales.y(d.y))
 
       // clear brush
-      d3.select('.brush').call(brushBeh.move, null)
+      dot_brush.clear()
     }
   }
 

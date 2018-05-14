@@ -1,19 +1,8 @@
 import * as d3 from 'd3'
-import _ from 'lodash'
-import {store} from '../controllers/config'
 
 import Scales from './analogy/scales'
 import DotBrush from './analogy/brush'
-
-/**
- * Move D3 selection elements to the front.
- * @param selection
- */
-function moveToFront (selection) {
-  selection.each(function () {
-    this.parentNode.appendChild(this)
-  })
-}
+import Dots from './analogy/dots'
 
 /**
  * Handles drawing a scatter plot for 2-dimensional data.
@@ -42,10 +31,9 @@ class Scatter {
     /**
      * Interactions
      */
-    this.hover = true
     this.dispatch = d3.dispatch(
-      'focus-one',
-      'focus-set',
+      'dot-focus-one',
+      'dot-focus-set',
       'toggle-background',
       'toggle-brushing',
       'zoom-view')
@@ -113,59 +101,14 @@ class Scatter {
       .attr("height", scales.height())
 
     // Dots
-    if (this.mark_type === 1) {
-      let dots = objects.selectAll(".dot")
-        .data(data)
-        .enter()
-        .append("circle")
-        .classed("dot", true)
-        .attr('r', () => this.dot_radius)
-        .attr('cx', (d) => scales.x(d.x))
-        .attr('cy', (d) => scales.y(d.y))
-        .style("fill", (d) => this._colorDot(d, scales.palette))
-        .on('click', dotClick)
-
-      if (this.hover) {
-        dots.on('mouseover', dotMouseover)
-          .on('mouseout', dotMouseout)
-      }
-    } else if (this.mark_type === 2) {
-      let img_size = 20
-
-      // draw logos directly
-      objects.selectAll(".mark-img")
-        .data(data)
-        .enter()
-        .append("image")
-        .classed("mark-img", true)
-        .attr('x', (d) => scales.x(d.x) - img_size * 0.5)
-        .attr('y', (d) => scales.y(d.y) - img_size * 0.5)
-        .attr('width', () => img_size)
-        .attr('height', () => img_size)
-        .attr('xlink:href', (d) => store.getImageUrl(d.i))
-        .on('click', dotClick)
-    }
+    let dots = new Dots(scales, objects, this.dot_radius,
+      this.dot_color, this.mark_type)
+    dots.draw(data, emitter, this.dispatch)
 
     /**
      * =========================
      * Register event handlers for dispatcher, to communicate with outside.
      */
-    this.dispatch.on('focus-one', (p) => {
-      if (!p) {
-        unfocusDot()
-      } else {
-        focusDot(p, d3.selectAll('.dot').filter((d) => d.i === p.i))
-      }
-    })
-
-    this.dispatch.on('focus-set', (points) => {
-      if (points) {
-        focusSet(points)
-      } else {
-        unfocusSet()
-      }
-    })
-
     this.dispatch.on('toggle-background', () => {
       rect.attr("fill", this.background)
     })
@@ -182,72 +125,6 @@ class Scatter {
      * =========================
      * Event handlers
      */
-    function focusDot (d, dot, hideText) {
-      dot.attr('r', () => that.dot_radius * 2)
-        .classed('focused', true)
-      moveToFront(dot)
-
-      if (!hideText) {
-        let t = null
-        d3.selectAll('text')
-          .each(function () {
-            // really ugly hack because text has no binding data
-            if (d3.select(this).text() === d.name) {
-              t = d3.select(this)
-            }
-          })
-        if (!t) {
-          objects.append('text')
-            .attr('x', () => Math.max(scales.x(d.x) - 30, 15))
-            .attr('y', () => Math.max(scales.y(d.y) - 15, 15))
-            .classed('focus-label', true)
-            .text(() => d.name)
-        } else {
-          t.classed('focus-label', true)
-        }
-      }
-    }
-
-    function unfocusDot () {
-      d3.selectAll('.dot.focused').attr('r', that.dot_radius)
-      d3.selectAll('.focus-label:not(.focused-set)').remove()
-      d3.selectAll('.focus-label').classed('focus-label', false)
-    }
-
-    function focusSet (pts) {
-      let indices = {}
-      _.each(pts, (pt) => indices[pt.i] = true)
-
-      let grapes = d3.selectAll('.dot')
-        .filter((d) => indices[d.i])
-        .classed('focused-set', true)
-      moveToFront(grapes)
-
-      d3.selectAll('.dot')
-        .filter((d) => !indices[d.i])
-        .style('fill', (d) => '#ccc')
-    }
-
-    function unfocusSet () {
-      d3.selectAll('.dot')
-        .style("fill", (d) => that._colorDot(d, scales.palette))
-      d3.selectAll('.dot.focused-set').attr('r', that.dot_radius)
-    }
-
-    function dotMouseover(d) {
-      focusDot(d, d3.select(this), true)
-      emitter.onDotHovered(d, scales.x(d.x), scales.y(d. y))
-    }
-
-    function dotMouseout () {
-      unfocusDot()
-      emitter.onDotHovered(null)
-    }
-
-    function dotClick (d) {
-      emitter.onDotClicked(d)
-    }
-
     function toggleBrushing () {
       if (that.mode_brush) {
         // create brush that is on top of everything
@@ -274,34 +151,15 @@ class Scatter {
   }
 
   /**
-   * Given a D3 datum, color it according to the current color attribute.
-   * @param d
-   * @param palette
-   * @returns {*}
-   * @private
-   */
-  _colorDot (d, palette) {
-    let c = this.dot_color
-
-    if (c === 'mean_color') {
-      return d['mean_color']
-    } else if (c === 'industry' || c === 'source') {
-      return palette(d[c])
-    }
-
-    return '#9467bd'
-  }
-
-  /**
    * Focus one dot (when mouse hovering on top of it, for example)
    * @param point
    */
   focusDot (point) {
-    this.dispatch.call('focus-one', this, point)
+    this.dispatch.call('dot-focus-one', this, point)
   }
 
   focusSet (points) {
-    this.dispatch.call('focus-set', this, points)
+    this.dispatch.call('dot-focus-set', this, points)
   }
 
   /**

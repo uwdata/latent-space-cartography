@@ -240,7 +240,7 @@ class Store {
     return new Promise((resolve, reject) => {
       let payload = {'alias': alias, ids: ids.join(',')}
 
-      http.post('/api/save_logo_list', payload)
+      http.post('/api/save_group', payload)
         .then((response) => {
           let msg = response.data
 
@@ -260,7 +260,7 @@ class Store {
    */
   getLogoLists () {
     return new Promise((resolve, reject) => {
-      http.post('/api/get_logo_lists', {})
+      http.post('/api/get_groups', {})
         .then((response) => {
           let msg = response['data']
 

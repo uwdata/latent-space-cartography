@@ -236,7 +236,7 @@ def interpolate_group ():
     # find image indices in each group
     ids = []
     for g in gid:
-        cursor.execute('SELECT list FROM logo_list WHERE id={}'.format(g))
+        cursor.execute('SELECT list FROM {}_group WHERE id={}'.format(dset, g))
         d = cursor.fetchone()[0]
         ids.append(d.split(','))
     
@@ -311,8 +311,8 @@ def project_axis ():
     return jsonify({'data': X_transformed.tolist()}), 200
 
 # save logo list
-@app.route('/api/save_logo_list', methods=['POST'])
-def save_logo_list ():
+@app.route('/api/save_group', methods=['POST'])
+def save_group ():
     if not request.json or not 'ids' in request.json:
         abort(400)
 
@@ -320,9 +320,9 @@ def save_logo_list ():
     alias = request.json['alias'] if 'alias' in request.json else ''
 
     query = """
-    INSERT INTO logo_list (alias, list)
+    INSERT INTO {}_group (alias, list)
     VALUES('{}', '{}')
-    """.format(alias, ids)
+    """.format(dset, alias, ids)
     print query
 
     try:
@@ -333,17 +333,18 @@ def save_logo_list ():
         print("Could not insert: \n" + str(e))
         return jsonify({'status': 'fail'}), 200
 
-@app.route('/api/get_logo_lists', methods=['POST'])
-def get_logo_lists ():
-    cursor.execute('SELECT id, alias, list, timestamp FROM logo_list')
+@app.route('/api/get_groups', methods=['POST'])
+def get_groups ():
+    query = 'SELECT id, alias, list, timestamp FROM {}_group'.format(dset)
+    cursor.execute(query)
     data = [list(i) for i in cursor.fetchall()]
     return jsonify({'data': data}), 200
 
-# create logo list table. internal use only
-@app.route('/api/_create_logo_list', methods=['POST'])
-def _create_logo_list ():
+# create the groups table. internal use only
+@app.route('/api/_create_table_group', methods=['POST'])
+def _create_table_group ():
     query = """
-    CREATE TABLE `logo_list` (
+    CREATE TABLE `{}_group` (
         `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
         `alias` varchar(255) DEFAULT NULL,
         `list` TEXT,
@@ -351,7 +352,7 @@ def _create_logo_list ():
         `timestamp` TIMESTAMP,
         PRIMARY KEY (`id`)
     ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-    """
+    """.format(dset)
     cursor.execute(query)
     return jsonify({'status': 'success'}), 200
 

@@ -340,6 +340,52 @@ def get_groups ():
     data = [list(i) for i in cursor.fetchall()]
     return jsonify({'data': data}), 200
 
+@app.route('/api/create_vector', methods=['POST'])
+def create_vector():
+    start = request.json['start']
+    end = request.json['end']
+    desc = request.json['desc']
+
+    query = """INSERT INTO {}_vector (start, end, description)
+    VALUES('{}', '{}', '{}')""".format(dset, start, end, desc)
+    print query
+
+    try:
+        cursor.execute(query)
+        db.commit()
+        return jsonify({'status': 'success'}), 200
+    except Exception as e:
+        print("Could not insert: \n" + str(e))
+        return jsonify({'status': 'fail'}), 200
+
+@app.route('/api/get_vectors', methods=['POST'])
+def get_vectors ():
+    query = """
+    SELECT a.id, a.description, a.timestamp, a.start, a.end, b.list AS list_start,
+      c.list AS list_end, b.alias AS alias_start, c.alias AS alias_end
+    FROM {}_vector a
+    LEFT OUTER JOIN (SELECT id, list, alias FROM {}_group) AS b ON a.start = b.id
+    LEFT OUTER JOIN (SELECT id, list, alias FROM {}_group) AS c ON a.end = c.id
+    """.format(dset, dset, dset)
+    cursor.execute(query)
+    data = [list(i) for i in cursor.fetchall()]
+    return jsonify({'data': data}), 200
+
+@app.route('/api/delete_vector', methods=['POST'])
+def delete_vector ():
+    vid = request.json['id']
+
+    query = 'DELETE FROM {}_vector WHERE id={}'.format(dset, vid)
+    print query
+
+    try:
+        cursor.execute(query)
+        db.commit()
+        return jsonify({'status': 'success'}), 200
+    except Exception as e:
+        print("Could not delete: \n" + str(e))
+        return jsonify({'status': 'fail'}), 200
+
 # create the groups table. internal use only
 @app.route('/api/_create_table_group', methods=['POST'])
 def _create_table_group ():
@@ -348,6 +394,23 @@ def _create_table_group ():
         `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
         `alias` varchar(255) DEFAULT NULL,
         `list` TEXT,
+        `creation_time` DATETIME DEFAULT CURRENT_TIMESTAMP,
+        `timestamp` TIMESTAMP,
+        PRIMARY KEY (`id`)
+    ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+    """.format(dset)
+    cursor.execute(query)
+    return jsonify({'status': 'success'}), 200
+
+# create the vectors table. internal use only
+@app.route('/api/_create_table_vector', methods=['POST'])
+def _create_table_vector ():
+    query = """
+    CREATE TABLE `{}_vector` (
+        `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+        `description` varchar(255) DEFAULT NULL,
+        `start` int(11),
+        `end` int(11),
         `creation_time` DATETIME DEFAULT CURRENT_TIMESTAMP,
         `timestamp` TIMESTAMP,
         PRIMARY KEY (`id`)

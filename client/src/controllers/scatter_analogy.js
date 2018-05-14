@@ -2,6 +2,8 @@ import * as d3 from 'd3'
 import _ from 'lodash'
 import {store} from '../controllers/config'
 
+import Scales from './analogy/scales'
+
 /**
  * Move D3 selection elements to the front.
  * @param selection
@@ -70,30 +72,11 @@ class Scatter {
     let outerWidth = this.outerWidth
     let outerHeight = this.outerHeight
     let margin = this.margin
-    let width = outerWidth - margin.left - margin.right
-    let height = outerHeight - margin.top - margin.bottom
     let that = this
 
     let data = this.data
 
-    let x = d3.scaleLinear()
-      .range([0, width]).nice()
-
-    let y = d3.scaleLinear()
-      .range([height, 0]).nice()
-
-    let currentX = x
-    let currentY = y
-
-    let palette = d3.scaleOrdinal(d3.schemeCategory10)
-
-    let xMax = d3.max(data, (d) => d.x) * 1.05
-    let xMin = d3.min(data, (d) => d.x) * 1.05
-    let yMax = d3.max(data, (d) => d.y) * 1.05
-    let yMin = d3.min(data, (d) => d.y) * 1.05
-
-    x.domain([xMin, xMax])
-    y.domain([yMin, yMax])
+    let scales = new Scales(data, outerWidth, outerHeight, margin)
 
     let svg = d3.select(parent)
       .append("svg")
@@ -114,8 +97,8 @@ class Scatter {
 
     // Blank
     let rect = svg.append("rect")
-      .attr("width", width)
-      .attr("height", height)
+      .attr("width", scales.width())
+      .attr("height", scales.height())
       .attr("fill", this.background)
 
     // Brush & Zoom
@@ -125,8 +108,8 @@ class Scatter {
     // Object Container
     let objects = svg.append("svg")
       .classed("objects", true)
-      .attr("width", width)
-      .attr("height", height)
+      .attr("width", scales.width())
+      .attr("height", scales.height())
 
     // Dots
     if (this.mark_type === 1) {
@@ -136,9 +119,9 @@ class Scatter {
         .append("circle")
         .classed("dot", true)
         .attr('r', () => this.dot_radius)
-        .attr('cx', (d) => x(d.x))
-        .attr('cy', (d) => y(d.y))
-        .style("fill", (d) => this._colorDot(d, palette))
+        .attr('cx', (d) => scales.x(d.x))
+        .attr('cy', (d) => scales.y(d.y))
+        .style("fill", (d) => this._colorDot(d, scales.palette))
         .on('click', dotClick)
 
       if (this.hover) {
@@ -154,8 +137,8 @@ class Scatter {
         .enter()
         .append("image")
         .classed("mark-img", true)
-        .attr('x', (d) => x(d.x) - img_size * 0.5)
-        .attr('y', (d) => y(d.y) - img_size * 0.5)
+        .attr('x', (d) => scales.x(d.x) - img_size * 0.5)
+        .attr('y', (d) => scales.y(d.y) - img_size * 0.5)
         .attr('width', () => img_size)
         .attr('height', () => img_size)
         .attr('xlink:href', (d) => store.getImageUrl(d.i))
@@ -214,8 +197,8 @@ class Scatter {
           })
         if (!t) {
           objects.append('text')
-            .attr('x', () => Math.max(currentX(d.x) - 30, 15))
-            .attr('y', () => Math.max(currentY(d.y) - 15, 15))
+            .attr('x', () => Math.max(scales.x(d.x) - 30, 15))
+            .attr('y', () => Math.max(scales.y(d.y) - 15, 15))
             .classed('focus-label', true)
             .text(() => d.name)
         } else {
@@ -246,13 +229,13 @@ class Scatter {
 
     function unfocusSet () {
       d3.selectAll('.dot')
-        .style("fill", (d) => that._colorDot(d, palette))
+        .style("fill", (d) => that._colorDot(d, scales.palette))
       d3.selectAll('.dot.focused-set').attr('r', that.dot_radius)
     }
 
     function dotMouseover(d) {
       focusDot(d, d3.select(this), true)
-      that.onDotHovered(d, currentX(d.x), currentY(d. y))
+      that.onDotHovered(d, scales.x(d.x), scales.y(d. y))
     }
 
     function dotMouseout () {
@@ -287,12 +270,12 @@ class Scatter {
 
       // x0, y0, x1, y1
       let sel = _.flatten(d3.event.selection)
-      let scales = _.map(sel, (s, idx) => idx % 2 ? currentY.invert(s) : currentX.invert(s))
+      let bounds = _.map(sel, (s, idx) => idx % 2 ? scales.y.invert(s) : scales.x.invert(s))
 
       // change color of selected points
       d3.selectAll('.dot')
         .classed('muted', (p) => {
-          let inside = p.x >= scales[0] && p.x <= scales[2] && p.y >= scales[3] && p.y <=scales[1]
+          let inside = p.x >= bounds[0] && p.x <= bounds[2] && p.y >= bounds[3] && p.y <=bounds[1]
           return !inside
         })
     }
@@ -303,10 +286,10 @@ class Scatter {
 
       // x0, y0, x1, y1
       let sel = _.flatten(d3.event.selection)
-      let scales = _.map(sel, (s, idx) => idx % 2 ? currentY.invert(s) : currentX.invert(s))
+      let bounds = _.map(sel, (s, idx) => idx % 2 ? scales.y.invert(s) : scales.x.invert(s))
 
       let pts = _.filter(data, (p) => {
-        return p.x >= scales[0] && p.x <= scales[2] && p.y >= scales[3] && p.y <=scales[1]
+        return p.x >= bounds[0] && p.x <= bounds[2] && p.y >= bounds[3] && p.y <=bounds[1]
       })
 
       that.onSelected(pts)
@@ -314,13 +297,13 @@ class Scatter {
 
     function zoom () {
       // create new scales
-      currentX = d3.event.transform.rescaleX(x)
-      currentY = d3.event.transform.rescaleY(y)
+      scales.x = d3.event.transform.rescaleX(scales.initialX)
+      scales.y = d3.event.transform.rescaleY(scales.initialY)
 
       // update dots
       svg.selectAll(".dot")
-        .attr('cx', (d) => currentX(d.x))
-        .attr('cy', (d) => currentY(d.y))
+        .attr('cx', (d) => scales.x(d.x))
+        .attr('cy', (d) => scales.y(d.y))
 
       // clear brush
       d3.select('.brush').call(brushBeh.move, null)

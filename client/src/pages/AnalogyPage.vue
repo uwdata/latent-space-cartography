@@ -18,10 +18,10 @@
         <div class="row mr-0">
           <!--Left Panel for Interpolating-->
           <div v-bind:class="{'d-none': brushed.length}" class="col-4 bd-left">
-            <interpolate-panel :latent_dim="dim" :detail="detail_point"
-                               v-on:reset="showOriginal"
-                               v-on:project="projectAxis">
-            </interpolate-panel>
+            <!--<interpolate-panel :latent_dim="dim" :detail="detail_point"-->
+                               <!--v-on:reset="showOriginal"-->
+                               <!--v-on:project="projectAxis">-->
+            <!--</interpolate-panel>-->
           </div>
 
           <!--Left Panel-->
@@ -103,7 +103,7 @@
                       v-on:reproject="reproject"
                       v-on:original="showOriginal"
                       v-on:subset="onToggleSubset"></search-panel>
-        <vector-panel></vector-panel>
+        <vector-panel :latent_dim="dim"></vector-panel>
       </div>
     </div>
   </div>

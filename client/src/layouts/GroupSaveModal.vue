@@ -14,11 +14,8 @@
     <div v-if="!loading" class="bd-group">
       <div v-for="list in groups" class="d-flex justify-content-between bd-group-item">
         <div>
-          <div class="bd-image-container">
-            <img v-for="pi in list.list.slice(0, 6)" :src="imageUrl(pi)"
-                 class="bd-image-inline"/>
-          </div>
-          <b @click="load(list)" v-b-tooltip.hover title="Load images in the group"
+          <group-thumb :group="list"></group-thumb>
+          <b @click="load(list)"
              class="bd-link ml-2">{{list.alias || 'Untitled'}}</b>
           <small class="ml-2 text-muted">{{formatTime(list.timestamp)}}</small>
         </div>
@@ -38,6 +35,7 @@
   import {store} from '../controllers/config'
   import moment from 'moment'
   import _ from 'lodash'
+  import GroupThumb from './GroupThumbnail.vue'
 
   export default {
     name: 'GroupSaveModal',
@@ -49,14 +47,17 @@
         groups: []
       }
     },
+    components: {
+      GroupThumb
+    },
     methods: {
       // load the list of groups
       fetchSaves () {
         this.loading = true
         store.getLogoLists()
-          .then((list) => {
+          .then(() => {
             this.loading = false
-            this.groups = list
+            this.groups = store.groups
           }, () => {
             this.loading = false
             //TODO: handle error
@@ -93,10 +94,6 @@
           })
       },
 
-      imageUrl (i) {
-        return store.getImageUrl(i)
-      },
-
       formatTime (t) {
         return moment(t).fromNow()
       }
@@ -128,16 +125,5 @@
   .bd-link:hover {
     color: #007bff;
     text-decoration: underline;
-  }
-
-  .bd-image-inline {
-    width: 1rem;
-    height: 1rem;
-  }
-
-  .bd-image-container {
-    max-width: 3rem;
-    display: inline-block;
-    line-height: 0.8rem;
   }
 </style>

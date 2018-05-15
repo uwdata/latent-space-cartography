@@ -310,7 +310,7 @@ def project_axis ():
 
     return jsonify({'data': X_transformed.tolist()}), 200
 
-# save logo list
+# save a group
 @app.route('/api/save_group', methods=['POST'])
 def save_group ():
     if not request.json or not 'ids' in request.json:
@@ -333,6 +333,7 @@ def save_group ():
         print("Could not insert: \n" + str(e))
         return jsonify({'status': 'fail'}), 200
 
+# get all groups
 @app.route('/api/get_groups', methods=['POST'])
 def get_groups ():
     query = 'SELECT id, alias, list, timestamp FROM {}_group'.format(dset)
@@ -340,6 +341,7 @@ def get_groups ():
     data = [list(i) for i in cursor.fetchall()]
     return jsonify({'data': data}), 200
 
+# delete a group
 @app.route('/api/delete_group', methods=['POST'])
 def delete_group ():
     gid = request.json['id']
@@ -350,6 +352,7 @@ def delete_group ():
     db.commit()
     return jsonify({'status': 'success'}), 200
 
+# create a vector
 @app.route('/api/create_vector', methods=['POST'])
 def create_vector():
     start = request.json['start']
@@ -368,6 +371,7 @@ def create_vector():
         print("Could not insert: \n" + str(e))
         return jsonify({'status': 'fail'}), 200
 
+# get all vectors
 @app.route('/api/get_vectors', methods=['POST'])
 def get_vectors ():
     query = """
@@ -381,6 +385,7 @@ def get_vectors ():
     data = [list(i) for i in cursor.fetchall()]
     return jsonify({'data': data}), 200
 
+# delete a vector
 @app.route('/api/delete_vector', methods=['POST'])
 def delete_vector ():
     vid = request.json['id']

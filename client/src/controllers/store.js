@@ -29,6 +29,11 @@ class Store {
      */
     this.selected = []
 
+    /**
+     * Groups of logos.
+     */
+    this.groups = []
+
     // FIXME: latent dim shouldn't be here
     this.latent_dim = 32
 
@@ -274,7 +279,7 @@ class Store {
           let schema = ['id', 'alias', 'list', 'timestamp']
 
           if (msg) {
-            let lists = _.map(msg['data'], (arr) => {
+            this.groups = _.map(msg['data'], (arr) => {
               let result = {}
               _.each(arr, (val, idx) => {
                 result[schema[idx]] = val
@@ -282,8 +287,7 @@ class Store {
               result.list = _.map(result.list.split(','), (i) => Number(i))
               return result
             })
-
-            resolve(lists)
+            resolve()
           } else {
             reject(`Could not get the list.`)
           }
@@ -310,6 +314,68 @@ class Store {
             resolve()
           } else {
             reject(`Could not delete from database.`)
+          }
+        }, () => {
+          reject(`Could not connect to the server.`)
+        })
+    })
+  }
+
+  /**
+   * Save a vector to database.
+   * @param start
+   * @param end
+   * @param description
+   * @returns {Promise}
+   */
+  createVector (start, end, description = '') {
+    return new Promise((resolve, reject) => {
+      let payload = {'start': start, 'end': end, 'desc': description}
+
+      http.post('/api/create_vector', payload)
+        .then((response) => {
+          let msg = response.data
+
+          if (msg && msg['status'] === 'success') {
+            resolve()
+          } else {
+            reject(`Could not save to the database.`)
+          }
+        }, () => {
+          reject(`Could not connect to the server.`)
+        })
+    })
+  }
+
+  /**
+   * Get all vectors.
+   * @returns {Promise}
+   */
+  getVectors () {
+    return new Promise((resolve, reject) => {
+      let payload = {}
+
+      http.post('/api/get_vectors', payload)
+        .then((response) => {
+          let msg = response.data
+
+          let schema = ['id', 'description', 'timestamp', 'start', 'end',
+            'list_start', 'list_end', 'alias_start', 'alias_end']
+
+          if (msg) {
+            let vectors = _.map(msg['data'], (arr) => {
+              let result = {}
+              _.each(arr, (val, idx) => {
+                result[schema[idx]] = val
+              })
+              result.list_start = _.map(result.list_start.split(','), (i) => Number(i))
+              result.list_end = _.map(result.list_end.split(','), (i) => Number(i))
+              return result
+            })
+
+            resolve(vectors)
+          } else {
+            reject(`Could not read from database.`)
           }
         }, () => {
           reject(`Could not connect to the server.`)

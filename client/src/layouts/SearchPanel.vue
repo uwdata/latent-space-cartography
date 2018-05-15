@@ -52,27 +52,28 @@
         <!--View Buttons-->
         <div class="btn-group btn-group-sm d-flex w-100">
           <b-btn class="btn btn-outline-secondary w-100"
-                 v-b-tooltip.hover title="Display all logos"
+                 v-b-tooltip.hover :title="`Display all logos`"
                  :class="{active: view_mode === 1}"
                  @click="toggleAll">Show All</b-btn>
           <button class="btn btn-outline-secondary w-100"
                   :class="{active: view_mode === 2}"
+                  v-b-tooltip.hover :title="`Display the selected logos`"
                   @click="toggleSubset">Highlight</button>
           <b-btn class="btn btn-outline-secondary w-100"
-                 v-b-tooltip.hover title="PCA over selected logos"
+                 v-b-tooltip.hover :title="`PCA over selected logos`"
                  :class="{active: view_mode === 3}"
                  :disabled="!canPca()"
                  @click="reproject">Isolate</b-btn>
         </div>
         <div class="btn-group btn-group-sm ml-3">
           <b-btn class="btn btn-outline-secondary"
-                 v-b-tooltip.hover title="Clear your selection"
+                 v-b-tooltip.hover :title="`Clear your selection`"
                  @click="removeAll">
             <i class="fa fa-fw fa-trash"></i>
           </b-btn>
           <b-btn class="btn btn-outline-secondary"
                  v-b-modal.modal-save
-                 v-b-tooltip.hover title="Save your selection">
+                 v-b-tooltip.hover :title="`Save your selection`">
             <i class="fa fa-fw fa-cloud-upload"></i>
           </b-btn>
         </div>

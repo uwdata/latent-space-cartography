@@ -7,11 +7,8 @@
     <div v-if="!loading" class="bd-group">
       <div v-for="list in groups" class="d-flex justify-content-between bd-group-item">
         <div>
-          <div class="bd-image-container">
-            <img v-for="pi in list.list.slice(0, 6)" :src="imageUrl(pi)"
-                 class="bd-image-inline"/>
-          </div>
-          <b @click="clickGroup(list)" v-b-tooltip.hover title="Set as endpoint"
+          <group-thumb :group="list"></group-thumb>
+          <b @click="clickGroup(list)"
              class="bd-link ml-2">{{list.alias || 'Untitled'}}</b>
           <small class="ml-2 text-muted">{{formatTime(list.timestamp)}}</small>
         </div>
@@ -23,6 +20,7 @@
 <script>
   import {store} from '../controllers/config'
   import moment from 'moment'
+  import GroupThumb from './GroupThumbnail.vue'
 
   export default {
     name: 'GroupModal',
@@ -32,14 +30,17 @@
         groups: []
       }
     },
+    components: {
+      GroupThumb
+    },
     methods: {
       // load the list of groups
       fetchSaves () {
         this.loading = true
         store.getLogoLists()
-          .then((list) => {
+          .then(() => {
             this.loading = false
-            this.groups = list
+            this.groups = store.groups
           }, () => {
             this.loading = false
             //TODO: handle error

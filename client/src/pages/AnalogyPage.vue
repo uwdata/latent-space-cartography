@@ -103,6 +103,7 @@
                       v-on:reproject="reproject"
                       v-on:original="showOriginal"
                       v-on:subset="onToggleSubset"></search-panel>
+        <vector-panel></vector-panel>
       </div>
     </div>
   </div>
@@ -110,6 +111,7 @@
 
 <script>
   import SearchPanel from '../layouts/SearchPanel.vue'
+  import VectorPanel from '../layouts/VectorPanel.vue'
   import ChartButtons from '../layouts/ChartButtons.vue'
   import HelpButton from '../layouts/HelpButton.vue'
   import InterpolatePanel from '../layouts/InterpolatePanel.vue'
@@ -189,6 +191,7 @@
   export default {
     components: {
       SearchPanel,
+      VectorPanel,
       ChartButtons,
       HelpButton,
       InterpolatePanel,

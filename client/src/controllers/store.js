@@ -31,6 +31,13 @@ class Store {
 
     // FIXME: latent dim shouldn't be here
     this.latent_dim = 32
+
+    /**
+     * Coordination between UI components
+     */
+    this.tab = {
+      index: 0 // 0 - group, 1 - vector
+    }
   }
 
   /**

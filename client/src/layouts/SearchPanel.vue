@@ -1,5 +1,11 @@
 <template>
-  <div>
+  <div v-if="tab.index === 0">
+    <!--Tabs-->
+    <b-nav justified tabs class="ml-3 mr-3 mt-1">
+      <b-nav-item active>Groups</b-nav-item>
+      <b-nav-item @click="clickTab">Vectors</b-nav-item>
+    </b-nav>
+
     <!--Top Division-->
     <div class="m-3">
       <auto-complete v-model="selection" :points="points" hint="Search a brand ..."
@@ -101,6 +107,7 @@
       return {
         selection: '',
         selected: store.selected,
+        tab: store.tab,
         view_mode: 1 // 1 - All, 2 - Subset, 3 - Reprojected
       }
     },
@@ -144,6 +151,11 @@
         _.each(group.list, (i) => {
           store.selected.push(i)
         })
+      },
+
+      // the tab at top
+      clickTab () {
+        store.tab.index = 1
       },
 
       // you need more than 3 points for PCA
@@ -207,7 +219,7 @@
 
   .bd-logo-list {
     overflow-y: auto;
-    height: calc(100vh - 15rem);
+    height: calc(100vh - 17.9rem);
   }
 
   .bd-panel-footer {

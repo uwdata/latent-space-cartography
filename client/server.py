@@ -340,6 +340,16 @@ def get_groups ():
     data = [list(i) for i in cursor.fetchall()]
     return jsonify({'data': data}), 200
 
+@app.route('/api/delete_group', methods=['POST'])
+def delete_group ():
+    gid = request.json['id']
+    query = 'DELETE FROM {}_group WHERE id={}'.format(dset, gid)
+    print query
+
+    cursor.execute(query)
+    db.commit()
+    return jsonify({'status': 'success'}), 200
+
 @app.route('/api/create_vector', methods=['POST'])
 def create_vector():
     start = request.json['start']

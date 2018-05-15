@@ -24,6 +24,7 @@
             <i class="fa fa-fw fa-cloud-download"></i>
           </b-btn>
           <b-btn class="btn btn-outline-secondary"
+                 @click="clickDelete(list.id)"
                  v-b-tooltip.hover title="Delete">
             <i class="fa fa-fw fa-trash-o"></i>
           </b-btn>
@@ -36,6 +37,7 @@
 <script>
   import {store} from '../controllers/config'
   import moment from 'moment'
+  import _ from 'lodash'
 
   export default {
     name: 'GroupSaveModal',
@@ -78,6 +80,17 @@
       load (group) {
         this.$emit('load', group)
         this.$refs.modalSave.hide()
+      },
+
+      // delete the group
+      clickDelete (id) {
+        store.deleteLogoList(id)
+          .then(() => {
+            let i = _.findIndex(this.groups, (g) => g.id === id)
+            this.groups.splice(i, 1)
+          }, () => {
+            //TODO: handle error
+          })
       },
 
       formatTime (t) {

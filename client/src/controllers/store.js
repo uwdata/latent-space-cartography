@@ -287,6 +287,30 @@ class Store {
   }
 
   /**
+   * Delete a logo group by its group id.
+   * @param id
+   * @returns {Promise}
+   */
+  deleteLogoList (id) {
+    return new Promise((resolve, reject) => {
+      let payload = {id: id}
+
+      http.post('/api/delete_group', payload)
+        .then((response) => {
+          let msg = response.data
+
+          if (msg && msg['status'] === 'success') {
+            resolve()
+          } else {
+            reject(`Could not delete from database.`)
+          }
+        }, () => {
+          reject(`Could not connect to the server.`)
+        })
+    })
+  }
+
+  /**
    * Interpolate between the centroid of two groups
    * @param groups Array of database ID of the first group
    * @param latent_dim

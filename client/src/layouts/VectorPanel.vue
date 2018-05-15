@@ -15,7 +15,7 @@
         <button v-if="!start" class="btn btn-outline-secondary">
           <i class="fa fa-fw fa-circle-o"></i>
         </button>
-        <group-thumb v-if="start" :group="start" :width="4"
+        <group-thumb v-if="start" :list="start.list" :width="4"
                      class="m-1"></group-thumb>
       </div>
 
@@ -30,14 +30,33 @@
       <div class="d-inline-block" @click="which = 'end'"
            title="Choose an ending group"
            v-b-modal.modal-group v-b-tooltip.hover>
-        <group-thumb v-if="end" :group="end" :width="4"
+        <group-thumb v-if="end" :list="end.list" :width="4"
                      class="m-1"></group-thumb>
         <button v-if="!end" class="btn btn-outline-secondary">
           <i class="fa fa-fw fa-circle-o"></i>
         </button>
       </div>
     </div>
-    <hr>
+
+    <!--Vector List-->
+    <div class="bd-vector-list m-3 mt-4">
+      <div v-for="v in vectors" class="d-flex bd-vector">
+        <div class="mr-1 d-flex flex-column">
+          <div class="bd-arrow-vertical h-100"></div>
+          <i class="fa fa-fw fa-angle-down text-muted bd-arrow-head"></i>
+        </div>
+        <div class="w-100">
+          <div>
+            <group-thumb :list="v.list_start" :width="4" :height="1"></group-thumb>
+            <span>{{v.alias_start}}</span>
+          </div>
+          <div>
+            <group-thumb :list="v.list_end" :width="4" :height="1"></group-thumb>
+            <span>{{v.alias_end}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <!--Modal-->
     <group-modal v-on:clickGroup="clickGroup"></group-modal>
@@ -46,6 +65,7 @@
 
 <script>
   import {store} from '../controllers/config'
+  import moment from 'moment'
   import GroupModal from './GroupModal.vue'
   import GroupThumb from './GroupThumbnail.vue'
 
@@ -70,7 +90,18 @@
         tab: store.tab
       }
     },
+    mounted: function () {
+      this.fetchVectors()
+    },
     methods: {
+      fetchVectors () {
+        store.getVectors()
+          .then((vectors) => {
+            this.vectors = vectors
+          }, (e) => {
+            alert(e)
+          })
+      },
       // the tab at top
       clickTab () {
         store.tab.index = 0
@@ -89,19 +120,52 @@
           .then(() => {
             this.start = null
             this.end = null
+            this.fetchVectors() // TODO: only query for a single vector
           }, (e) => {
             alert(e)
           })
+      },
+      formatTime (t) {
+        return moment(t).fromNow()
       }
     }
   }
 </script>
 
 <style>
+  .bd-vector {
+    border-left: #ddd 1px solid;
+    border-right: #ddd 1px solid;
+    border-top: #ddd 1px solid;
+    padding: 10px;
+    background-color: #fff;
+  }
+  .bd-vector:last-child {
+    border-bottom: #ddd 1px solid;
+  }
+  .bd-vector:hover {
+    background-color: #fafafa;
+  }
+
+  .bd-vector-list {
+    overflow-y: auto;
+    height: calc(100vh - 13rem);
+  }
+
   .bd-arrow {
     border-bottom: 1px dotted #6c757d;
     margin-left: 15px;
     margin-right: 15px;
+  }
+
+  .bd-arrow-vertical {
+    border-right: 2px dotted #6c757d;
+    width: calc(50% + 1px);
+    margin-top: 0.5rem;
+  }
+
+  .bd-arrow-head {
+    margin-top: -0.5rem;
   }
 
   .bd-arrow-btn {

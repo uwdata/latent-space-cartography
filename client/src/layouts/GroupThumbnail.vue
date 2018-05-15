@@ -1,6 +1,6 @@
 <template>
   <div class="bd-image-container" :style="containerStyle">
-    <img v-for="pi in group.list.slice(0, totalImages)" :src="imageUrl(pi)"
+    <img v-for="pi in list.slice(0, totalImages)" :src="imageUrl(pi)"
          class="bd-image-inline"/>
   </div>
 </template>
@@ -19,8 +19,8 @@
         type: Number,
         default: 2
       },
-      group: {
-        type: Object,
+      list: {
+        type: Array,
         required: true
       }
     },

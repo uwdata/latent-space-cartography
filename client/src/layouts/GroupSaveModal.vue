@@ -14,7 +14,7 @@
     <div v-if="!loading" class="bd-group">
       <div v-for="list in groups" class="d-flex justify-content-between bd-group-item">
         <div>
-          <group-thumb :group="list"></group-thumb>
+          <group-thumb :list="list.list"></group-thumb>
           <b @click="load(list)"
              class="bd-link ml-2">{{list.alias || 'Untitled'}}</b>
           <small class="ml-2 text-muted">{{formatTime(list.timestamp)}}</small>

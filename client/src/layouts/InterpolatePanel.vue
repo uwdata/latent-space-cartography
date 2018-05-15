@@ -67,29 +67,13 @@
               @click="project">Project</button>
     </div>
 
-    <!--TODO: refactor this modal-->
-    <b-modal id="modal-group" ref="modalGroup"
-             title="Choose a Group ..."
-             @shown="fetchSaves">
-      <div v-if="loading_list">Loading ...</div>
-      <div v-if="!loading_list">
-        <div v-for="list in logo_lists" class="d-flex justify-content-between">
-          <a @click="clickGroup(list.id)" href="#">
-            <div>
-              <span class="text-muted mr-1">{{list.id}}.</span>
-              <b>{{list.alias || 'Untitled'}}</b>
-              <span class="ml-2 text-muted">{{formatTime(list.timestamp)}}</span>
-            </div>
-          </a>
-        </div>
-      </div>
-    </b-modal>
+    <group-modal v-on:clickGroup="clickGroup"></group-modal>
   </div>
 </template>
 
 <script>
   import {store} from '../controllers/config'
-  import moment from 'moment'
+  import GroupModal from './GroupModal.vue'
 
   export default {
     name: 'InterpolatePanel',
@@ -102,15 +86,16 @@
         required: true
       }
     },
+    components: {
+      GroupModal
+    },
     data (){
       return {
         groups: [null, null],
         trigger: 0,
         loading: false,
         loading_analogy: false,
-        loading_list: false,
         analogy_vector: null,
-        logo_lists: [],
         generated: [],
         generated_neighbors: [],
         analogy: [],
@@ -149,17 +134,6 @@
       reset () {
         this.$emit('reset')
       },
-      fetchSaves () {
-        this.loading_list = true
-        store.getLogoLists()
-          .then((list) => {
-            this.loading_list = false
-            this.logo_lists = list
-          }, () => {
-            this.loading_list = false
-            //TODO: handle error
-          })
-      },
       clickStart () {
         // since they share a modal, we distinguish the trigger
         this.trigger = 0
@@ -167,15 +141,11 @@
       clickEnd () {
         this.trigger = 1
       },
-      clickGroup (id) {
-        this.groups[this.trigger] = id
-        this.$refs.modalGroup.hide()
+      clickGroup (group) {
+        this.groups[this.trigger] = group.id
       },
       getUrl (point) {
         return store.getImageUrl(point.i)
-      },
-      formatTime (t) {
-        return moment(t).fromNow()
       }
     }
   }

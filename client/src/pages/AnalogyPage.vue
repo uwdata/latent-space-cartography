@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="bd-outer">
     <header class="navbar bd-navbar">
       <span class="ml-3" style="font-weight: 500;">Latent Space Explorer</span>
       <help-button class="ml-3"></help-button>
@@ -337,6 +337,10 @@
 </script>
 
 <style>
+  .bd-outer {
+    overflow-y:hidden;
+    overflow-x:hidden;
+  }
   .bd-navbar {
     color: #fff;
     min-height: 4rem;
@@ -344,7 +348,7 @@
     box-shadow: 0 0.5rem 1rem rgba(0,0,0,.05), inset 0 -1px 0 rgba(0,0,0,.1);
   }
 
-  . {
+  .bd-sidebar {
     position: sticky;
     top: 4rem;
     z-index: 1000;

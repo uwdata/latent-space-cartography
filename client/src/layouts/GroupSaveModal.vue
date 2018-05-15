@@ -11,18 +11,18 @@
     </div>
     <hr>
     <div v-if="loading">Loading ...</div>
-    <div v-if="!loading">
-      <div v-for="list in groups" class="d-flex justify-content-between">
+    <div v-if="!loading" class="bd-group">
+      <div v-for="list in groups" class="d-flex justify-content-between bd-group-item">
         <div>
-          <b>{{list.alias || 'Untitled'}}</b>
-          <span class="ml-2 text-muted">{{formatTime(list.timestamp)}}</span>
+          <div class="bd-image-container">
+            <img v-for="pi in list.list.slice(0, 6)" :src="imageUrl(pi)"
+                 class="bd-image-inline"/>
+          </div>
+          <b @click="load(list)" v-b-tooltip.hover title="Load images in the group"
+             class="bd-link ml-2">{{list.alias || 'Untitled'}}</b>
+          <small class="ml-2 text-muted">{{formatTime(list.timestamp)}}</small>
         </div>
         <div class="btn-group btn-group-sm">
-          <b-btn class="btn btn-outline-secondary"
-                 @click="load(list)"
-                 v-b-tooltip.hover title="Load">
-            <i class="fa fa-fw fa-cloud-download"></i>
-          </b-btn>
           <b-btn class="btn btn-outline-secondary"
                  @click="clickDelete(list.id)"
                  v-b-tooltip.hover title="Delete">
@@ -93,9 +93,51 @@
           })
       },
 
+      imageUrl (i) {
+        return store.getImageUrl(i)
+      },
+
       formatTime (t) {
         return moment(t).fromNow()
       }
     }
   }
 </script>
+
+<style>
+  .bd-group {
+    overflow-y: auto;
+    max-height: calc(50vh);
+  }
+
+  .bd-group-item {
+    border-left: #eee 1px solid;
+    border-right: #eee 1px solid;
+    border-top: #eee 1px solid;
+    padding: 10px;
+  }
+
+  .bd-group-item:hover {
+    background-color: #fafafa;
+  }
+
+  .bd-link {
+    cursor: pointer;
+  }
+
+  .bd-link:hover {
+    color: #007bff;
+    text-decoration: underline;
+  }
+
+  .bd-image-inline {
+    width: 1rem;
+    height: 1rem;
+  }
+
+  .bd-image-container {
+    max-width: 3rem;
+    display: inline-block;
+    line-height: 0.8rem;
+  }
+</style>

@@ -4,15 +4,17 @@
            title="Choose a Group ..."
            @shown="fetchSaves">
     <div v-if="loading">Loading ...</div>
-    <div v-if="!loading">
-      <div v-for="list in groups" class="d-flex justify-content-between">
-        <a @click="clickGroup(list)" href="#">
-          <div>
-            <span class="text-muted mr-1">{{list.id}}.</span>
-            <b>{{list.alias || 'Untitled'}}</b>
-            <span class="ml-2 text-muted">{{formatTime(list.timestamp)}}</span>
+    <div v-if="!loading" class="bd-group">
+      <div v-for="list in groups" class="d-flex justify-content-between bd-group-item">
+        <div>
+          <div class="bd-image-container">
+            <img v-for="pi in list.list.slice(0, 6)" :src="imageUrl(pi)"
+                 class="bd-image-inline"/>
           </div>
-        </a>
+          <b @click="clickGroup(list)" v-b-tooltip.hover title="Set as endpoint"
+             class="bd-link ml-2">{{list.alias || 'Untitled'}}</b>
+          <small class="ml-2 text-muted">{{formatTime(list.timestamp)}}</small>
+        </div>
       </div>
     </div>
   </b-modal>
@@ -48,6 +50,10 @@
       clickGroup (group) {
         this.$emit('clickGroup', group)
         this.$refs.modalGroup.hide()
+      },
+
+      imageUrl (i) {
+        return store.getImageUrl(i)
       },
 
       formatTime (t) {

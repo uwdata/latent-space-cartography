@@ -42,18 +42,19 @@
     <div class="bd-vector-list m-3 mt-4">
       <div v-for="v in vectors" @click="focusVector(v)"
            class="d-flex bd-vector">
-        <div class="mr-1 d-flex flex-column">
+        <div class="mr-2 d-flex flex-column">
+          <i class="fa fa-fw fa-circle-o bd-arrow-end mt-1"></i>
           <div class="bd-arrow-vertical h-100"></div>
-          <i class="fa fa-fw fa-angle-down text-muted bd-arrow-head"></i>
+          <i class="fa fa-fw fa-circle-o bd-arrow-end"></i>
         </div>
         <div class="w-100">
           <div>
             <group-thumb :list="v.list_start" :width="4" :height="1"></group-thumb>
-            <span>{{v.alias_start}}</span>
+            <span class="ml-2 text-truncate">{{v.alias_start}}</span>
           </div>
           <div>
             <group-thumb :list="v.list_end" :width="4" :height="1"></group-thumb>
-            <span>{{v.alias_end}}</span>
+            <span class="ml-2 text-truncate">{{v.alias_end}}</span>
           </div>
         </div>
       </div>
@@ -141,8 +142,9 @@
     border-left: #ddd 1px solid;
     border-right: #ddd 1px solid;
     border-top: #ddd 1px solid;
-    padding: 10px;
+    padding: 15px;
     background-color: #fff;
+    cursor: pointer;
   }
   .bd-vector:last-child {
     border-bottom: #ddd 1px solid;
@@ -165,11 +167,11 @@
   .bd-arrow-vertical {
     border-right: 2px dotted #6c757d;
     width: calc(50% + 1px);
-    margin-top: 0.5rem;
   }
 
-  .bd-arrow-head {
-    margin-top: -0.5rem;
+  .bd-arrow-end {
+    color: #8c959d;
+    font-size: 0.9em;
   }
 
   .bd-arrow-btn {

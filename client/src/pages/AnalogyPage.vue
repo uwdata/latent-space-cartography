@@ -280,16 +280,22 @@
           })
       },
 
-      focusVector (start, end) {
+      focusVector (vector) {
         this.loading = true
-        store.focusVector(this.dim, start, end)
+        store.focusVector(this.dim, vector.start, vector.end)
           .then((all) => {
+            // 1. draw points
             let points = all[0]
             this.loading = false
             log_debug(points[0])
             this.points = points
             this.scatter.mark_type = 1
             lets_draw.call(this, points)
+
+            // 2. draw line
+            vector.line = all[1]
+            log_debug(vector.line)
+            this.scatter.drawVector(vector.line)
           }, () => {
             this.loading = false
             //handle error

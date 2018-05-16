@@ -77,23 +77,27 @@ def _num_neighbors (X, points, distance = 3.0):
         res.append(len(indices))
     return res
 
-# interpolate between two points in a latent space
-# return a list of images sampled at equal steps along the path
-def _interpolate (X, start, end):
-    n, latent_dim = X.shape
-
-    # sample the points along the vector
-    n_samples = 7
+# sample points along a vector
+def _sample_vec (start, end, n_samples = 8, over = True):
     loc = []
     for i in range(n_samples + 1):
         k = float(i) / n_samples
         loc.append((1-k) * start + k * end)
+
     # overshoot
-    k = 2
-    loc.append((1-k) * start + k * end)
+    if over:
+        k = 1.5
+        loc.append((1-k) * start + k * end)
+    return loc
+
+# interpolate between two points in a latent space
+# return a list of images sampled at equal steps along the path
+def _interpolate (X, start, end):
+    n, latent_dim = X.shape
+    loc = _sample_vec(start, end)
 
     # generate these images
-    return _generate(latent_dim, loc), _num_neighbors(X, loc)
+    return loc, _generate(latent_dim, loc), _num_neighbors(X, loc)
 
 # linear orthogonal transformation of all points to the given axis
 def _project_axis (X, axis):
@@ -135,7 +139,7 @@ def _project_axis (X, axis):
     s = np.sum(s ** 2) / (n - 1)
     print 'Variance of x axis: {}, {}%'.format(s, s / total_var)
 
-    return X_transformed
+    return X_transformed, U
 
 # compute the centroid of a group
 def _compute_group_centroid (X, gid):
@@ -267,7 +271,7 @@ def apply_analogy ():
     start = raw[int(pid)]
     end = start + vec
 
-    images, count = _interpolate(raw, start, end)
+    loc, images, count = _interpolate(raw, start, end)
     fns = []
     for idx, img in enumerate(images):
         img_fn = 'analogy_{}_{}.png'.format(pid, idx)
@@ -293,7 +297,7 @@ def focus_vector():
     vec = end - start
 
     # interpolate
-    images, count = _interpolate(X, start, end)
+    loc, images, count = _interpolate(X, start, end)
     fns = []
     for idx, img in enumerate(images):
         img_fn = '{}_{}.png'.format('to'.join(gid), idx)
@@ -301,11 +305,12 @@ def focus_vector():
         img.save(abs_path('./build/' + img_fn))
 
     # project
-    X_transformed = _project_axis(X, vec)
+    X_transformed, U = _project_axis(X, vec)
+    loc = np.dot(loc, U.T)
 
     reply = {
-        'anchors': fns,
-        'vec': vec.tolist(),
+        'images': fns,
+        'locations': loc.tolist(),
         'neighbors': count,
         'points': X_transformed.tolist()
     }

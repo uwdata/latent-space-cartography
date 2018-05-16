@@ -41,7 +41,7 @@ class Store {
      * Coordination between UI components
      */
     this.tab = {
-      index: 0 // 0 - group, 1 - vector
+      index: 1 // 0 - group, 1 - vector
     }
   }
 
@@ -401,7 +401,8 @@ class Store {
           if (msg) {
             console.log(msg)
             let points = this._formatPcaPoints(msg['points'])
-            resolve([points, msg['anchors'], msg['vec'], msg['neighbors']])
+            let line = this._formatVectorLine(msg['locations'], msg['neighbors'], msg['images'])
+            resolve([points, line])
           } else {
             reject()
           }
@@ -454,6 +455,18 @@ class Store {
   _joinMeta (points) {
     let meta_dict = _.keyBy(this.meta, 'i')
     return _.map(points, (p) => _.assign(p, meta_dict[p.i]))
+  }
+
+  _formatVectorLine (locations, neighbors, images) {
+    let n = neighbors.length
+    return _.range(n).map((j) => {
+      return {
+        x: locations[j][0],
+        y: locations[j][1],
+        neighbors: neighbors[j],
+        image: images[j]
+      }
+    })
   }
 
   _formatPcaPoints (points, indices = []) {

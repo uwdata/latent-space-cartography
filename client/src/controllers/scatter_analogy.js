@@ -3,6 +3,7 @@ import * as d3 from 'd3'
 import Scales from './analogy/scales'
 import DotBrush from './analogy/brush'
 import Dots from './analogy/dots'
+import Vectors from './analogy/vectors'
 
 /**
  * Handles drawing a scatter plot for 2-dimensional data.
@@ -53,6 +54,11 @@ class Scatter {
       onDotHovered: () => {}
     }
 
+    /**
+     * Private
+     */
+    this._scales = null
+    this._vectors = null
   }
 
   /**
@@ -69,6 +75,7 @@ class Scatter {
     let emitter = this.emitter
 
     let scales = new Scales(data, outerWidth, outerHeight, margin)
+    this._scales = scales
 
     let svg = d3.select(parent)
       .append("svg")
@@ -104,6 +111,9 @@ class Scatter {
     let dots = new Dots(scales, objects, this.dot_radius,
       this.dot_color, this.mark_type)
     dots.draw(data, emitter, this.dispatch)
+
+    // Lines
+    this._vectors = new Vectors(scales, objects)
 
     /**
      * =========================
@@ -148,6 +158,10 @@ class Scatter {
       // clear brush
       dot_brush.clear()
     }
+  }
+
+  drawVector (vector) {
+    this._vectors.drawOne(vector)
   }
 
   /**

@@ -139,7 +139,7 @@
       },
       focusVector (vector) {
         this.focus = vector
-        this.$emit('focus', vector.start, vector.end)
+        this.$emit('focus', vector)
       },
       unfocus () {
         this.focus = null

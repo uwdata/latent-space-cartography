@@ -40,7 +40,8 @@
 
     <!--Vector List-->
     <div class="bd-vector-list m-3 mt-4">
-      <div v-for="v in vectors" class="d-flex bd-vector">
+      <div v-for="v in vectors" @click="focusVector(v)"
+           class="d-flex bd-vector">
         <div class="mr-1 d-flex flex-column">
           <div class="bd-arrow-vertical h-100"></div>
           <i class="fa fa-fw fa-angle-down text-muted bd-arrow-head"></i>
@@ -124,6 +125,9 @@
           }, (e) => {
             alert(e)
           })
+      },
+      focusVector (vector) {
+        this.$emit('focus', vector.start, vector.end)
       },
       formatTime (t) {
         return moment(t).fromNow()

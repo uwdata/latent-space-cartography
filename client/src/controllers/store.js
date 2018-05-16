@@ -384,22 +384,24 @@ class Store {
   }
 
   /**
-   * Interpolate between the centroid of two groups
-   * @param groups Array of database ID of the first group
+   * Bring a vector to focus.
    * @param latent_dim
+   * @param start Group id of the starting group.
+   * @param end Group id of the ending group.
+   * @returns {Promise}
    */
-  interpolateBetween (groups, latent_dim) {
+  focusVector (latent_dim, start, end) {
     return new Promise((resolve, reject) => {
-      let payload = {groups: groups.join(','), latent_dim: latent_dim}
-      console.log(payload)
+      let payload = {groups: [start, end].join(','), latent_dim: latent_dim}
 
-      http.post('/api/interpolate_group', payload)
+      http.post('/api/focus_vector', payload)
         .then((response) => {
           let msg = response['data']
 
           if (msg) {
             console.log(msg)
-            resolve([msg['anchors'], msg['vec'], msg['neighbors']])
+            let points = this._formatPcaPoints(msg['points'])
+            resolve([points, msg['anchors'], msg['vec'], msg['neighbors']])
           } else {
             reject()
           }
@@ -426,27 +428,6 @@ class Store {
 
           if (msg) {
             resolve([msg['anchors'], msg['neighbors']])
-          } else {
-            reject()
-          }
-        }, () => {
-          reject(`Could not connect to the server.`)
-        })
-    })
-  }
-
-  projectToAxis (latent_dim, axis) {
-    return new Promise((resolve, reject) => {
-      let payload = {latent_dim: latent_dim, axis: axis}
-      console.log(payload)
-
-      http.post('/api/project_axis', payload)
-        .then((response) => {
-          let msg = response['data']
-
-          if (msg) {
-            let points = this._formatPcaPoints(msg['data'])
-            resolve(points)
           } else {
             reject()
           }

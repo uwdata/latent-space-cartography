@@ -16,16 +16,8 @@
     <div class="row">
       <div class="col-9 pr-0">
         <div class="row mr-0">
-          <!--Left Panel for Interpolating-->
-          <div v-bind:class="{'d-none': brushed.length}" class="col-4 bd-left">
-            <!--<interpolate-panel :latent_dim="dim" :detail="detail_point"-->
-                               <!--v-on:reset="showOriginal"-->
-                               <!--v-on:project="projectAxis">-->
-            <!--</interpolate-panel>-->
-          </div>
-
           <!--Left Panel-->
-          <div v-if="brushed.length" class="col-4 bd-left">
+          <div class="col-4 bd-left">
 
             <!--Details of a Logo-->
             <detail-card :detail_point="detail_point"
@@ -103,7 +95,8 @@
                       v-on:reproject="reproject"
                       v-on:original="showOriginal"
                       v-on:subset="onToggleSubset"></search-panel>
-        <vector-panel :latent_dim="dim"></vector-panel>
+        <vector-panel :latent_dim="dim"
+                      v-on:focus="focusVector"></vector-panel>
       </div>
     </div>
   </div>
@@ -286,10 +279,11 @@
           })
       },
 
-      projectAxis (analogy_vector) {
+      focusVector (start, end) {
         this.loading = true
-        store.projectToAxis(this.dim, analogy_vector)
-          .then((points) => {
+        store.focusVector(this.dim, start, end)
+          .then((all) => {
+            let points = all[0]
             this.loading = false
             log_debug(points[0])
             this.points = points

@@ -95,6 +95,61 @@ def _interpolate (X, start, end):
     # generate these images
     return _generate(latent_dim, loc), _num_neighbors(X, loc)
 
+# linear orthogonal transformation of all points to the given axis
+def _project_axis (X, axis):
+    n, latent_dim = X.shape
+
+    # 1. make the axis a unit vector
+    axis = np.asarray(axis, dtype=np.float64)
+    v = preprocessing.normalize(axis.reshape(1, -1))
+
+    # v is a row vector of shape (1, latent_dim)
+    if v.shape[1] != latent_dim:
+        print 'Could not project to axis because axis and latent dimension shape mismatch.'
+        return jsonify({'status': 'fail'}), 200
+
+    # 2. center X to mean
+    mean_ = np.mean(X, axis=0)
+    X -= mean_
+
+    # 3. substract the first axis from X (project X to the d-1 orthogonal space of axis)
+    X_hat = X - np.dot(X, np.dot(v.T, v))
+
+    # 4. perform PCA
+    pca = PCA(n_components = 2)
+    pca.fit(X_hat)
+    y = pca.components_[0]
+    va = pca.explained_variance_ratio_
+
+    print 'Explained variance ratio: {}'.format(va)
+
+    U = np.append(v, y.reshape(1, -1), axis=0)
+    X_transformed = np.dot(X, U.T)
+
+    # compute the variation of v
+    # FIXME: the variance doesn't seem correct
+    print 'Explained variance: {}'.format(pca.explained_variance_)
+    total_var = pca.explained_variance_.sum()
+    print 'Total variance: {}'.format(total_var)
+    s = np.dot(X, v.T)
+    s = np.sum(s ** 2) / (n - 1)
+    print 'Variance of x axis: {}, {}%'.format(s, s / total_var)
+
+    return X_transformed
+
+# compute the centroid of a group
+def _compute_group_centroid (X, gid):
+    # find image indices in each group
+    cursor.execute('SELECT list FROM {}_group WHERE id={}'.format(dset, gid))
+    d = cursor.fetchone()[0]
+    id_list = d.split(',')
+
+    # compute centroid
+    indices = np.asarray(id_list, dtype=np.int16)
+    centroid = np.sum(X[indices], axis=0) / indices.shape[0]
+
+    return centroid
+
 # global app and DB cursor
 app = Flask(__name__, static_url_path='')
 db, cursor = connect_db()
@@ -221,94 +276,41 @@ def apply_analogy ():
 
     return jsonify({'anchors': fns, 'neighbors': count}), 200
 
-
-# interpolate between the centroids of two groups
-@app.route('/api/interpolate_group', methods=['POST'])
-def interpolate_group ():
+# bring a vector to focus: interpolate along the path, and reproject all points
+@app.route('/api/focus_vector', methods=['POST'])
+def focus_vector():
     latent_dim = request.json['latent_dim']
     gid = request.json['groups'].split(',')
 
     # read latent space
     rawpath = abs_path('./data/{}/latent/latent{}.h5'.format(dset, latent_dim))
     with h5py.File(rawpath, 'r') as f:
-        raw = np.asarray(f['latent'])
-    
-    # find image indices in each group
-    ids = []
-    for g in gid:
-        cursor.execute('SELECT list FROM {}_group WHERE id={}'.format(dset, g))
-        d = cursor.fetchone()[0]
-        ids.append(d.split(','))
+        X = np.asarray(f['latent'])
     
     # compute centroid
-    centroids = []
-    for id_list in ids:
-        indices = np.asarray(id_list, dtype=np.int16)
-        centroid = np.sum(raw[indices], axis=0) / indices.shape[0]
-        centroids.append(centroid)
+    start = _compute_group_centroid(X, gid[0])
+    end = _compute_group_centroid(X, gid[1])
+    vec = end - start
 
-    vec = centroids[1] - centroids[0]
-
-    images, count = _interpolate(raw, centroids[0], centroids[1])
+    # interpolate
+    images, count = _interpolate(X, start, end)
     fns = []
     for idx, img in enumerate(images):
         img_fn = '{}_{}.png'.format('to'.join(gid), idx)
         fns.append(img_fn)
         img.save(abs_path('./build/' + img_fn))
 
-    return jsonify({'anchors': fns, 'vec': vec.tolist(), 'neighbors': count}), 200
+    # project
+    X_transformed = _project_axis(X, vec)
 
-# linear orthogonal transformation of all points to the given axis
-@app.route('/api/project_axis', methods=['POST'])
-def project_axis ():
-    latent_dim = request.json['latent_dim']
-    axis = request.json['axis']
+    reply = {
+        'anchors': fns,
+        'vec': vec.tolist(),
+        'neighbors': count,
+        'points': X_transformed.tolist()
+    }
 
-    # 1. make the axis a unit vector
-    axis = np.asarray(axis, dtype=np.float64)
-    v = preprocessing.normalize(axis.reshape(1, -1))
-
-    # v is a row vector of shape (1, latent_dim)
-    if v.shape[1] != latent_dim:
-        print 'Could not project to axis because axis and latent dimension shape mismatch.'
-        return jsonify({'status': 'fail'}), 200
-
-    # read latent space
-    rawpath = abs_path('./data/{}/latent/latent{}.h5'.format(dset, latent_dim))
-    with h5py.File(rawpath, 'r') as f:
-        X = np.asarray(f['latent'])
-
-    # 2. center X to mean
-    mean_ = np.mean(X, axis=0)
-    X -= mean_
-
-    # 3. substract the first axis from X (project X to the d-1 orthogonal space of axis)
-    X_hat = X - np.dot(X, np.dot(v.T, v))
-
-    # 4. perform PCA
-    pca = PCA(n_components = 2)
-    pca.fit(X_hat)
-    y = pca.components_[0]
-    va = pca.explained_variance_ratio_
-
-    print 'Explained variance ratio: {}'.format(va)
-
-    U = np.append(v, y.reshape(1, -1), axis=0)
-    X_transformed = np.dot(X, U.T)
-
-    #TODO: compuate side views for x and y axes
-
-    # compute the variation of v
-    # FIXME: the variance doesn't seem correct
-    print 'Explained variance: {}'.format(pca.explained_variance_)
-    total_var = pca.explained_variance_.sum()
-    print 'Total variance: {}'.format(total_var)
-    n_samples = X.shape[0]
-    s = np.dot(X, v.T)
-    s = np.sum(s ** 2) / (n_samples - 1)
-    print 'Variance of x axis: {}, {}%'.format(s, s / total_var)
-
-    return jsonify({'data': X_transformed.tolist()}), 200
+    return jsonify(reply), 200
 
 # save a group
 @app.route('/api/save_group', methods=['POST'])

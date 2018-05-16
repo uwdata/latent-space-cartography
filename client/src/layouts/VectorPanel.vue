@@ -6,59 +6,66 @@
       <b-nav-item active>Vectors</b-nav-item>
     </b-nav>
 
-    <!--Top Division-->
-    <div class="m-3 d-flex">
-      <!--Start-->
-      <div class="d-inline-block" @click="which = 'start'"
-           title="Choose a starting group"
-           v-b-modal.modal-group v-b-tooltip.hover>
-        <button v-if="!start" class="btn btn-outline-secondary">
-          <i class="fa fa-fw fa-circle-o"></i>
-        </button>
-        <group-thumb v-if="start" :list="start.list" :width="4"
-                     class="m-1"></group-thumb>
+    <!--List View-->
+    <div v-if="!focus">
+      <!--Top Division-->
+      <div class="m-3 d-flex">
+        <!--Start-->
+        <div class="d-inline-block" @click="which = 'start'"
+             title="Choose a starting group"
+             v-b-modal.modal-group v-b-tooltip.hover>
+          <button v-if="!start" class="btn btn-outline-secondary">
+            <i class="fa fa-fw fa-circle-o"></i>
+          </button>
+          <group-thumb v-if="start" :list="start.list" :width="4"
+                       class="m-1"></group-thumb>
+        </div>
+
+        <!--Middle-->
+        <div class="d-inline-block w-100">
+          <div class="bd-arrow h-50"></div>
+          <button class="btn btn-secondary btn-sm bd-arrow-btn"
+                  @click="clickAdd" :disabled="!start || !end">Add</button>
+        </div>
+
+        <!--End-->
+        <div class="d-inline-block" @click="which = 'end'"
+             title="Choose an ending group"
+             v-b-modal.modal-group v-b-tooltip.hover>
+          <group-thumb v-if="end" :list="end.list" :width="4"
+                       class="m-1"></group-thumb>
+          <button v-if="!end" class="btn btn-outline-secondary">
+            <i class="fa fa-fw fa-circle-o"></i>
+          </button>
+        </div>
       </div>
 
-      <!--Middle-->
-      <div class="d-inline-block w-100">
-        <div class="bd-arrow h-50"></div>
-        <button class="btn btn-secondary btn-sm bd-arrow-btn"
-                @click="clickAdd" :disabled="!start || !end">Add</button>
-      </div>
-
-      <!--End-->
-      <div class="d-inline-block" @click="which = 'end'"
-           title="Choose an ending group"
-           v-b-modal.modal-group v-b-tooltip.hover>
-        <group-thumb v-if="end" :list="end.list" :width="4"
-                     class="m-1"></group-thumb>
-        <button v-if="!end" class="btn btn-outline-secondary">
-          <i class="fa fa-fw fa-circle-o"></i>
-        </button>
+      <!--Vector List-->
+      <div class="bd-vector-list m-3 mt-4">
+        <div v-for="v in vectors" @click="focusVector(v)"
+             class="d-flex bd-vector">
+          <div class="mr-2 d-flex flex-column">
+            <i class="fa fa-fw fa-circle-o bd-arrow-end mt-1"></i>
+            <div class="bd-arrow-vertical h-100"></div>
+            <i class="fa fa-fw fa-circle-o bd-arrow-end"></i>
+          </div>
+          <div class="w-100">
+            <div>
+              <group-thumb :list="v.list_start" :width="4" :height="1"></group-thumb>
+              <span class="ml-2 text-truncate">{{v.alias_start}}</span>
+            </div>
+            <div>
+              <group-thumb :list="v.list_end" :width="4" :height="1"></group-thumb>
+              <span class="ml-2 text-truncate">{{v.alias_end}}</span>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
-    <!--Vector List-->
-    <div class="bd-vector-list m-3 mt-4">
-      <div v-for="v in vectors" @click="focusVector(v)"
-           class="d-flex bd-vector">
-        <div class="mr-2 d-flex flex-column">
-          <i class="fa fa-fw fa-circle-o bd-arrow-end mt-1"></i>
-          <div class="bd-arrow-vertical h-100"></div>
-          <i class="fa fa-fw fa-circle-o bd-arrow-end"></i>
-        </div>
-        <div class="w-100">
-          <div>
-            <group-thumb :list="v.list_start" :width="4" :height="1"></group-thumb>
-            <span class="ml-2 text-truncate">{{v.alias_start}}</span>
-          </div>
-          <div>
-            <group-thumb :list="v.list_end" :width="4" :height="1"></group-thumb>
-            <span class="ml-2 text-truncate">{{v.alias_end}}</span>
-          </div>
-        </div>
-      </div>
-    </div>
+    <!--Focus View-->
+    <vector-focus v-if="focus" :focus="focus"
+                  v-on:back="unfocus"></vector-focus>
 
     <!--Modal-->
     <group-modal v-on:clickGroup="clickGroup"></group-modal>
@@ -70,6 +77,7 @@
   import moment from 'moment'
   import GroupModal from './GroupModal.vue'
   import GroupThumb from './GroupThumbnail.vue'
+  import VectorFocus from './VectorFocusView.vue'
 
   export default {
     name: 'VectorPanel',
@@ -81,7 +89,8 @@
     },
     components: {
       GroupModal,
-      GroupThumb
+      GroupThumb,
+      VectorFocus
     },
     data () {
       return {
@@ -89,6 +98,7 @@
         end: null,
         which: 'start',
         vectors: [],
+        focus: null,
         tab: store.tab
       }
     },
@@ -128,7 +138,12 @@
           })
       },
       focusVector (vector) {
+        this.focus = vector
         this.$emit('focus', vector.start, vector.end)
+      },
+      unfocus () {
+        this.focus = null
+        this.$emit('reset')
       },
       formatTime (t) {
         return moment(t).fromNow()

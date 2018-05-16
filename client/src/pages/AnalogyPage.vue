@@ -96,7 +96,8 @@
                       v-on:original="showOriginal"
                       v-on:subset="onToggleSubset"></search-panel>
         <vector-panel :latent_dim="dim"
-                      v-on:focus="focusVector"></vector-panel>
+                      v-on:focus="focusVector"
+                      v-on:reset="showOriginal"></vector-panel>
       </div>
     </div>
   </div>

@@ -95,7 +95,7 @@
                       v-on:reproject="reproject"
                       v-on:original="showOriginal"
                       v-on:subset="onToggleSubset"></search-panel>
-        <vector-panel :latent_dim="dim"
+        <vector-panel :latent_dim="dim" :detail="detail_point" :chart="scatter"
                       v-on:focus="focusVector"
                       v-on:reset="showOriginal"></vector-panel>
       </div>
@@ -148,7 +148,8 @@
    */
   function lets_draw (points) {
     clear.call(this)
-    this.scatter.setData(_.slice(points, 0, TRAIN_SPLIT))
+//    this.scatter.setData(_.slice(points, 0, TRAIN_SPLIT))
+    this.scatter.setData(_.slice(points, 0, 1000)) //fixme
     this.scatter.draw('#container')
   }
 
@@ -295,7 +296,7 @@
             // 2. draw line
             vector.line = all[1]
             log_debug(vector.line)
-            this.scatter.drawVector(vector.line)
+            this.scatter._vectors.drawOne(vector.line)
           }, () => {
             this.loading = false
             //handle error
@@ -406,7 +407,7 @@
 
   .vector-connector {
     stroke-width: 0;
-    transition: all 0.3s;
+    transition: all 0.5s;
   }
   .vector-connector.focused {
     stroke-width: 2px;
@@ -414,7 +415,7 @@
   }
 
   .vector-dot {
-    transition: all 0.3s;
+    transition: all 0.5s;
   }
   .vector-dot.focused {
     stroke: #d62728 !important;

@@ -160,10 +160,6 @@ class Scatter {
     }
   }
 
-  drawVector (vector) {
-    this._vectors.drawOne(vector)
-  }
-
   /**
    * Focus one dot (when mouse hovering on top of it, for example)
    * @param point

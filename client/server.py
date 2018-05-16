@@ -23,6 +23,9 @@ models = {}
 # dataset we're working with
 dset = 'logo'
 
+# FIXME: hack
+temp_store = {}
+
 # for absolute path
 def abs_path (rel_path):
     return os.path.join(os.path.dirname(__file__), rel_path)
@@ -258,27 +261,43 @@ def get_meta ():
 def apply_analogy ():
     latent_dim = request.json['latent_dim']
     pid = request.json['pid']
-    vec = np.asarray(request.json['vec'], dtype=np.float64)
+    gid = request.json['groups'].split(',')
 
-    if latent_dim != vec.shape[0]:
-        print 'Could not apply analogy because last vector is shape {}'.format(vec.shape)
+    # FIXME
+    if not 'U' in temp_store or temp_store['U'].shape[1] != latent_dim:
+        print 'Could not apply anaology because projection is corrupt.'
+        print temp_store['U'].shape
         return jsonify({}), 400
+    U = temp_store['U']
 
     # read latent space
     rawpath = abs_path('./data/{}/latent/latent{}.h5'.format(dset, latent_dim))
     with h5py.File(rawpath, 'r') as f:
-        raw = np.asarray(f['latent'])
-    start = raw[int(pid)]
+        X = np.asarray(f['latent'])
+
+    # compute centroid
+    vec = _compute_group_centroid(X, gid[1]) - _compute_group_centroid(X, gid[0])
+
+    start = X[int(pid)]
     end = start + vec
 
-    loc, images, count = _interpolate(raw, start, end)
+    loc, images, count = _interpolate(X, start, end)
     fns = []
     for idx, img in enumerate(images):
         img_fn = 'analogy_{}_{}.png'.format(pid, idx)
         fns.append(img_fn)
         img.save(abs_path('./build/' + img_fn))
 
-    return jsonify({'anchors': fns, 'neighbors': count}), 200
+    # project to visualize path
+    loc = np.dot(loc, U.T)
+
+    reply = {
+        'images': fns,
+        'locations': loc.tolist(),
+        'neighbors': count
+    }
+
+    return jsonify(reply), 200
 
 # bring a vector to focus: interpolate along the path, and reproject all points
 @app.route('/api/focus_vector', methods=['POST'])
@@ -307,6 +326,7 @@ def focus_vector():
     # project
     X_transformed, U = _project_axis(X, vec)
     loc = np.dot(loc, U.T)
+    temp_store['U'] = U #FIXME
 
     reply = {
         'images': fns,

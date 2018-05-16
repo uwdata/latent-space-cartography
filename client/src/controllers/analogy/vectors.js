@@ -15,7 +15,7 @@ class Vectors {
     this._parent = parent
   }
 
-  drawOne (vector, name = 'main') {
+  drawOne (vector, name = 'v-main') {
     let scales = this._scales
     let img_size = 20
     let img_padding = 10
@@ -28,6 +28,7 @@ class Vectors {
     // group
     let group = this._parent.append('g')
       .classed(name, true)
+      .on('mouseover', () => {moveToFront(group)})
 
     // background
     this._drawLine(line, vector, group)
@@ -102,7 +103,6 @@ class Vectors {
       match('.vector-dot', which).classed('focused', true)
       match('.vector-connector', which).classed('focused', true)
       // _styleImage(match('.vector-img', which), 64, img_padding)
-      moveToFront(group)
     }
 
     function _unfocusLoc (which) {
@@ -118,6 +118,11 @@ class Vectors {
         .attr('width', () => size)
         .attr('height', () => size)
     }
+  }
+
+  clearByName (name) {
+    this._parent.selectAll(`.${name}`)
+      .remove()
   }
 
   /**

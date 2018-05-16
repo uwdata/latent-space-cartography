@@ -64,8 +64,8 @@
     </div>
 
     <!--Focus View-->
-    <vector-focus v-if="focus" :focus="focus"
-                  v-on:back="unfocus"></vector-focus>
+    <vector-focus v-if="focus" :focus="focus" :detail="detail" :chart="chart"
+                  :latent_dim="latent_dim" v-on:back="unfocus"></vector-focus>
 
     <!--Modal-->
     <group-modal v-on:clickGroup="clickGroup"></group-modal>
@@ -84,6 +84,12 @@
     props: {
       latent_dim: {
         type: Number,
+        required: true
+      },
+      detail: {
+        required: true
+      },
+      chart: {
         required: true
       }
     },

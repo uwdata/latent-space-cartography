@@ -415,12 +415,13 @@ class Store {
   /**
    * Apply the analogy vector
    * @param latent_dim
-   * @param pid
-   * @param vec The analogy vector.
+   * @param pid Number Point index of the data point to apply analogy to.
+   * @param start Number Group ID of the starting group.
+   * @param end Number Group ID of the ending group.
    */
-  applyAnalogy (latent_dim, pid, vec) {
+  applyAnalogy (latent_dim, pid, start, end) {
     return new Promise((resolve, reject) => {
-      let payload = {pid: pid, latent_dim: latent_dim, vec: vec}
+      let payload = {pid: pid, latent_dim: latent_dim, groups: `${start},${end}`}
       console.log(payload)
 
       http.post('/api/apply_analogy', payload)
@@ -428,7 +429,9 @@ class Store {
           let msg = response['data']
 
           if (msg) {
-            resolve([msg['anchors'], msg['neighbors']])
+            console.log(msg)
+            let line = this._formatVectorLine(msg['locations'], msg['neighbors'], msg['images'])
+            resolve(line)
           } else {
             reject()
           }

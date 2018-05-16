@@ -1,5 +1,6 @@
 import * as d3 from 'd3'
 import _ from 'lodash'
+import {moveToFront} from './util'
 
 const NEIGHBOR_BIN = [0, 10, 100, 500]
 
@@ -18,6 +19,7 @@ class Vectors {
     let scales = this._scales
     let img_size = 20
     let img_padding = 10
+    let chart_height = img_size + img_padding + 5
 
     let line = d3.line()
       .x((d) => scales.x(d.x))
@@ -32,7 +34,7 @@ class Vectors {
       .style('stroke', '#ffffff')
       .style('stroke-opacity', 0.8)
       .style('stroke-linecap', 'round')
-      .style('stroke-width', (img_size + img_padding + 5) * 2)
+      .style('stroke-width', chart_height * 2)
 
     // draw lines with different textures
     _.each(NEIGHBOR_BIN, (num, j) => {
@@ -41,9 +43,24 @@ class Vectors {
       this._styleTexture(path, j)
     })
 
+    // area chart
+    let yy = d3.scaleLinear()
+      .range([0, chart_height])
+      .domain([0, d3.max(vector, (d) => d.neighbors)])
+    let area = d3.area()
+      .x((d) => scales.x(d.x))
+      .y0((d) => scales.y(d.y) + 1)
+      .y1((d) => scales.y(d.y) + yy(d.neighbors))
+    group.append('path')
+      .datum(vector)
+      .classed('nb-area', true)
+      .attr('d', area)
+      .style('fill', '#eee')
+      .style('opacity', 0.8)
+
     // connector
     let link = d3.linkVertical()
-      .source((d) => [scales.x(d.x), scales.y(d.y)])
+      .source((d) => [scales.x(d.x), scales.y(d.y) + yy(d.neighbors)])
       .target((d) => [scales.x(d.x), scales.y(d.y) - img_padding])
 
     group.selectAll('.vector-connector')
@@ -84,13 +101,14 @@ class Vectors {
     function _focusLoc (which) {
       match('.vector-dot', which).classed('focused', true)
       match('.vector-connector', which).classed('focused', true)
-      _styleImage(match('.vector-img', which), 64, img_padding)
+      // _styleImage(match('.vector-img', which), 64, img_padding)
+      moveToFront(group)
     }
 
     function _unfocusLoc (which) {
       match('.vector-dot', which).classed('focused', false)
       match('.vector-connector', which).classed('focused', false)
-      _styleImage(match('.vector-img', which), img_size, img_padding)
+      // _styleImage(match('.vector-img', which), img_size, img_padding)
     }
 
     function _styleImage(img, size, padding) {

@@ -371,7 +371,7 @@
     padding-left: 0;
   }
 
-  /*dealing with SVG*/
+  /* ------- D3 STYLE START ------- */
   .axis path,
   .axis line {
     fill: none;
@@ -403,6 +403,23 @@
     width: 32px;
     height: 32px;
   }
+
+  .vector-connector {
+    stroke-width: 0;
+    transition: all 0.3s;
+  }
+  .vector-connector.focused {
+    stroke-width: 2px;
+    stroke: #d62728;
+  }
+
+  .vector-dot {
+    transition: all 0.3s;
+  }
+  .vector-dot.focused {
+    stroke: #d62728 !important;
+  }
+  /* ------- D3 STYLE END ------- */
 
   .loading-block {
     position: absolute;

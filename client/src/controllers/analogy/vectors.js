@@ -3,6 +3,7 @@ import _ from 'lodash'
 import {moveToFront} from './util'
 
 const NEIGHBOR_BIN = [0, 10, 100, 500]
+const MAX_NEIGHBORS = 1000
 
 class Vectors {
   constructor (scales, parent) {
@@ -13,9 +14,11 @@ class Vectors {
      */
     this._scales = scales
     this._parent = parent
+
+    this._max_neighbors = MAX_NEIGHBORS
   }
 
-  drawOne (vector) {
+  drawOne (vector, main = false) {
     let scales = this._scales
     let img_size = 20
     let img_padding = 10
@@ -46,9 +49,12 @@ class Vectors {
     })
 
     // area chart
+    if (main) {
+      this._max_neighbors = Math.max(d3.max(vector, (d) => d.neighbors), MAX_NEIGHBORS)
+    }
     let yy = d3.scaleLinear()
       .range([0, chart_height])
-      .domain([0, d3.max(vector, (d) => d.neighbors)])
+      .domain([0, this._max_neighbors])
     let area = d3.area()
       .x((d) => scales.x(d.x))
       .y0((d) => scales.y(d.y) + 1)

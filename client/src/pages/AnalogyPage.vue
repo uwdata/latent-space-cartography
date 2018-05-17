@@ -296,7 +296,7 @@
             // 2. draw line
             vector.line = all[1]
             log_debug(vector.line)
-            this.scatter._vectors.drawOne(vector.line)
+            this.scatter._vectors.drawOne(vector.line, true)
           }, () => {
             this.loading = false
             //handle error

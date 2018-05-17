@@ -186,7 +186,7 @@ class Vectors {
       case 0:
         return path
           .style('stroke', '#aaa')
-          .style('stroke-dasharray', '4, 4')
+          .style('stroke-dasharray', '2, 2')
           .style('stroke-width', 1)
       case 1:
         return path

@@ -148,8 +148,7 @@
    */
   function lets_draw (points) {
     clear.call(this)
-//    this.scatter.setData(_.slice(points, 0, TRAIN_SPLIT))
-    this.scatter.setData(_.slice(points, 0, 1000)) //fixme
+    this.scatter.setData(_.slice(points, 0, TRAIN_SPLIT))
     this.scatter.draw('#container')
   }
 

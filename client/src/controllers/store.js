@@ -41,7 +41,7 @@ class Store {
      * Coordination between UI components
      */
     this.tab = {
-      index: 1 // 0 - group, 1 - vector
+      index: 0 // 0 - group, 1 - vector
     }
   }
 

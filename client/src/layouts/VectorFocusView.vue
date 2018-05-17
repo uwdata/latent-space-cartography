@@ -24,7 +24,7 @@
     <hr class="mt-0">
 
     <!--Main View-->
-    <div>
+    <div class="bd-focus-panel-body">
       <div class="d-flex m-3">
         <!--Start Group-->
         <div class="bd-panel-card bd-pointer" @click="viewGroup(focus.list_start)">
@@ -76,6 +76,24 @@
           <button class="btn btn-light btn-block" @click="applyAnalogy">Apply Analogy</button>
         </div>
       </div>
+
+      <!--Vector Details-->
+      <div class="d-flex m-3" v-if="analogy && original">
+        <div class="w-50 d-flex flex-column m-3">
+          <p class="text-right"><b>Original</b></p>
+          <div v-for="d in original" class="div-48 text-right">
+            <span class="text-muted ml-2">{{d.neighbors}}</span>
+            <img :src="`/build/${d.image}`" class="img-48" />
+          </div>
+        </div>
+        <div class="w-50 d-flex flex-column m-3">
+          <p><b>Analogy</b></p>
+          <div v-for="d in analogy" class="div-48">
+            <img :src="`/build/${d.image}`" class="img-48" />
+            <span class="text-muted ml-2">{{d.neighbors}}</span>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -104,7 +122,8 @@
     data () {
       return {
         totalImage: 5,
-        prev_vec: null
+        analogy: null,
+        original: null
       }
     },
     computed: {
@@ -143,13 +162,16 @@
       },
 
       applyAnalogy () {
-        if (this.prev_vec) {
-          this.chart._vectors.removeOne(this.prev_vec)
+        // FIXME: hack
+        this.original = this.focus.line
+
+        if (this.analogy) {
+          this.chart._vectors.removeOne(this.analogy)
         }
         store.applyAnalogy(this.latent_dim, this.detail.i,
           this.focus.start, this.focus.end)
           .then((line) => {
-            this.prev_vec = line
+            this.analogy = line
             this.chart._vectors.drawOne(line)
           }, (e) => {
             alert(e)
@@ -190,5 +212,20 @@
 
   .bd-pointer {
     cursor: pointer;
+  }
+
+  .bd-focus-panel-body {
+    height: calc(100vh - 12rem);
+    overflow-y: auto;
+  }
+
+  .img-48 {
+    width: 48px;
+    height: 48px;
+  }
+
+  .div-48 {
+    line-height: 48px;
+    font-size: 0.7em;
   }
 </style>

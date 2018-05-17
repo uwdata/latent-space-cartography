@@ -124,7 +124,7 @@ class Scatter {
     })
 
     this.dispatch.on('zoom-view', (factor) => {
-      rect.transition().duration(1000).call(zoomBeh.scaleBy, factor)
+      rect.call(zoomBeh.scaleBy, factor)
     })
 
     this.dispatch.on('toggle-brushing', () => {
@@ -154,6 +154,9 @@ class Scatter {
       svg.selectAll(".dot")
         .attr('cx', (d) => scales.x(d.x))
         .attr('cy', (d) => scales.y(d.y))
+
+      // update vectors
+      that._vectors.redraw()
 
       // clear brush
       dot_brush.clear()

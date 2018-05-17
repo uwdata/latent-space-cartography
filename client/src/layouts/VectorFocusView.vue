@@ -104,6 +104,7 @@
     data () {
       return {
         totalImage: 5,
+        prev_vec: null
       }
     },
     computed: {
@@ -133,11 +134,14 @@
       },
 
       applyAnalogy () {
-        this.chart._vectors.clearByName('v-analogy')
+        if (this.prev_vec) {
+          this.chart._vectors.removeOne(this.prev_vec)
+        }
         store.applyAnalogy(this.latent_dim, this.detail.i,
           this.focus.start, this.focus.end)
           .then((line) => {
-            this.chart._vectors.drawOne(line, 'v-analogy')
+            this.prev_vec = line
+            this.chart._vectors.drawOne(line)
           }, (e) => {
             alert(e)
           })

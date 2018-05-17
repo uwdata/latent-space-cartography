@@ -15,7 +15,7 @@ class Vectors {
     this._parent = parent
   }
 
-  drawOne (vector, name = 'v-main') {
+  drawOne (vector) {
     let scales = this._scales
     let img_size = 20
     let img_padding = 10
@@ -27,7 +27,8 @@ class Vectors {
 
     // group
     let group = this._parent.append('g')
-      .classed(name, true)
+      .datum(vector) // so we can retrieve later
+      .classed('vector-group', true)
       .on('mouseover', () => {moveToFront(group)})
 
     // background
@@ -39,7 +40,7 @@ class Vectors {
 
     // draw lines with different textures
     _.each(NEIGHBOR_BIN, (num, j) => {
-      let bin = _.filter(vector, (d) => d.neighbors > num)
+      let bin = _.filter(vector, (d) => d.neighbors >= num)
       let path = this._drawLine(line, bin, group)
       this._styleTexture(path, j)
     })
@@ -120,8 +121,28 @@ class Vectors {
     }
   }
 
-  clearByName (name) {
-    this._parent.selectAll(`.${name}`)
+  /**
+   * Redraw everything (e.g. because scale is updated)
+   */
+  redraw () {
+    let vectors = []
+    d3.selectAll('.vector-group')
+      .each((vector) => {
+        vectors.push(vector)
+      })
+      .remove()
+
+    _.each(vectors, (vector) => this.drawOne(vector))
+  }
+
+  /**
+   * Remove a vector with matching data.
+   * @param vector
+   */
+  removeOne (vector) {
+    // FIXME: d may be undefined
+    d3.selectAll('.vector-group')
+      .filter((d) => d[0].x === vector[0].x && d[0].y === vector[0].y)
       .remove()
   }
 

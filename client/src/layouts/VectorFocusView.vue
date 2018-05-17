@@ -82,7 +82,7 @@
         <div class="w-50 d-flex flex-column m-3">
           <p class="text-right"><b>Original</b></p>
           <div v-for="d in original" class="div-48 text-right">
-            <span class="text-muted ml-2">{{d.neighbors}}</span>
+            <span class="text-muted mr-2">{{d.neighbors}}</span>
             <img :src="`/build/${d.image}`" class="img-48" />
           </div>
         </div>

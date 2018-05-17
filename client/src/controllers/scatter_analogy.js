@@ -113,7 +113,8 @@ class Scatter {
     dots.draw(data, emitter, this.dispatch)
 
     // Lines
-    this._vectors = new Vectors(scales, objects)
+    let vector_style = {background: this.background}
+    this._vectors = new Vectors(scales, objects, this.dispatch, vector_style)
 
     /**
      * =========================
@@ -190,7 +191,7 @@ class Scatter {
    */
   toggleBackground (color) {
     this.background = color
-    this.dispatch.call('toggle-background', this)
+    this.dispatch.call('toggle-background', this, color)
   }
 
   /**

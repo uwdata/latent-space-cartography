@@ -6,16 +6,26 @@ const NEIGHBOR_BIN = [0, 10, 100, 500]
 const MAX_NEIGHBORS = 1000
 
 class Vectors {
-  constructor (scales, parent) {
-    this.lineWidth = 2
+  constructor (scales, parent, dispatch, styles = {}) {
+    /**
+     * Public
+     */
+    this.lineWidth = styles.lineWidth || 2
+    this.background = styles.background || '#fff'
 
     /**
      * Private
      */
     this._scales = scales
     this._parent = parent
+    this._dispatch = dispatch
 
     this._max_neighbors = MAX_NEIGHBORS
+
+    /**
+     * Initialization
+     */
+    this._registerCallback()
   }
 
   drawOne (vector, main = false) {
@@ -36,7 +46,8 @@ class Vectors {
 
     // background
     this._drawLine(line, vector, group)
-      .style('stroke', '#ffffff')
+      .classed('vector-background', true)
+      .style('stroke', this.background)
       .style('stroke-opacity', 0.8)
       .style('stroke-linecap', 'round')
       .style('stroke-width', chart_height * 2)
@@ -150,6 +161,18 @@ class Vectors {
     d3.selectAll('.vector-group')
       .filter((d) => d[0].x === vector[0].x && d[0].y === vector[0].y)
       .remove()
+  }
+
+  /**
+   * Register callbacks to dispatcher.
+   * @private
+   */
+  _registerCallback () {
+    this._dispatch.on('toggle-background.vector', (color) => {
+      this.background = color
+      d3.selectAll('.vector-background')
+        .style('stroke', color)
+    })
   }
 
   /**

@@ -43,15 +43,15 @@ class Dots {
     let that = this
 
     if (this.mark_type === 1) {
-      let dots = parent.selectAll(".dot")
+      let dots = parent.selectAll('.dot')
         .data(data)
         .enter()
-        .append("circle")
-        .classed("dot", true)
+        .append('circle')
+        .classed('dot', true)
         .attr('r', () => this.radius)
         .attr('cx', (d) => scales.x(d.x))
         .attr('cy', (d) => scales.y(d.y))
-        .style("fill", (d) => this._colorDot(d, scales.palette))
+        .style('fill', (d) => this._colorDot(d, scales.palette))
         .on('click', dotClick)
 
       dots.on('mouseover', dotMouseover)
@@ -60,11 +60,11 @@ class Dots {
       let img_size = 20
 
       // draw logos directly
-      parent.selectAll(".mark-img")
+      parent.selectAll('.mark-img')
         .data(data)
         .enter()
-        .append("image")
-        .classed("mark-img", true)
+        .append('image')
+        .classed('mark-img', true)
         .attr('x', (d) => scales.x(d.x) - img_size * 0.5)
         .attr('y', (d) => scales.y(d.y) - img_size * 0.5)
         .attr('width', () => img_size)
@@ -181,7 +181,7 @@ class Dots {
    */
   _unfocusSet () {
     d3.selectAll('.dot')
-      .style("fill", (d) => this._colorDot(d, this._scales.palette))
+      .style('fill', (d) => this._colorDot(d, this._scales.palette))
     d3.selectAll('.dot.focused-set').attr('r', this.radius)
   }
 

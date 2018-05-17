@@ -78,34 +78,34 @@ class Scatter {
     this._scales = scales
 
     let svg = d3.select(parent)
-      .append("svg")
-      .attr("width", outerWidth)
-      .attr("height", outerHeight)
+      .append('svg')
+      .attr('width', outerWidth)
+      .attr('height', outerHeight)
 
     // Zoom, brush and drag
     let zoomBeh = d3.zoom()
       .scaleExtent([0.5, 3])
-      .on("zoom", zoom)
+      .on('zoom', zoom)
     let dot_brush = new DotBrush(data, scales, emitter)
 
-    svg.append("g")
-      .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+    svg.append('g')
+      .attr('transform', `translate(${margin.left},${margin.top})`)
 
     // Blank
-    let rect = svg.append("rect")
-      .attr("width", scales.width())
-      .attr("height", scales.height())
-      .attr("fill", this.background)
+    let rect = svg.append('rect')
+      .attr('width', scales.width())
+      .attr('height', scales.height())
+      .attr('fill', this.background)
 
     // Brush & Zoom
     rect.call(zoomBeh)
     toggleBrushing()
 
     // Object Container
-    let objects = svg.append("svg")
-      .classed("objects", true)
-      .attr("width", scales.width())
-      .attr("height", scales.height())
+    let objects = svg.append('svg')
+      .classed('objects', true)
+      .attr('width', scales.width())
+      .attr('height', scales.height())
 
     // Dots
     let dots = new Dots(scales, objects, this.dot_radius,
@@ -120,7 +120,7 @@ class Scatter {
      * Register event handlers for dispatcher, to communicate with outside.
      */
     this.dispatch.on('toggle-background', () => {
-      rect.attr("fill", this.background)
+      rect.attr('fill', this.background)
     })
 
     this.dispatch.on('zoom-view', (factor) => {
@@ -151,7 +151,7 @@ class Scatter {
       scales.y = d3.event.transform.rescaleY(scales.initialY)
 
       // update dots
-      svg.selectAll(".dot")
+      svg.selectAll('.dot')
         .attr('cx', (d) => scales.x(d.x))
         .attr('cy', (d) => scales.y(d.y))
 

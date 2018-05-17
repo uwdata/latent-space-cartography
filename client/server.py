@@ -142,7 +142,7 @@ def _project_axis (X, axis):
     s = np.sum(s ** 2) / (n - 1)
     print 'Variance of x axis: {}, {}%'.format(s, s / total_var)
 
-    return X_transformed, U
+    return X_transformed, U, mean_
 
 # compute the centroid of a group
 def _compute_group_centroid (X, gid):
@@ -269,6 +269,7 @@ def apply_analogy ():
         print temp_store['U'].shape
         return jsonify({}), 400
     U = temp_store['U']
+    _mean = temp_store['_mean']
 
     # read latent space
     rawpath = abs_path('./data/{}/latent/latent{}.h5'.format(dset, latent_dim))
@@ -289,7 +290,7 @@ def apply_analogy ():
         img.save(abs_path('./build/' + img_fn))
 
     # project to visualize path
-    loc = np.dot(loc, U.T)
+    loc = np.dot(loc - _mean, U.T)
 
     reply = {
         'images': fns,
@@ -324,9 +325,10 @@ def focus_vector():
         img.save(abs_path('./build/' + img_fn))
 
     # project
-    X_transformed, U = _project_axis(X, vec)
-    loc = np.dot(loc, U.T)
+    X_transformed, U, _mean = _project_axis(np.copy(X), vec)
+    loc = np.dot(loc - _mean, U.T)
     temp_store['U'] = U #FIXME
+    temp_store['_mean'] = _mean
 
     reply = {
         'images': fns,

@@ -79,17 +79,21 @@
 
       <!--Vector Details-->
       <div class="d-flex m-3" v-if="analogy && original">
-        <div class="w-50 d-flex flex-column m-3">
+        <div class="w-50 d-flex flex-column mt-3">
           <p class="text-right"><b>Original</b></p>
-          <div v-for="d in original" class="div-48 text-right">
+          <div v-for="d in original" class="div-48 text-right"
+               @mouseover="mouseOverImage(d)" @mouseleave="mouseLeaveImage(d)">
             <span class="text-muted mr-2">{{d.neighbors}}</span>
+            <img :src="imageUrl(d.nearest)" class="img-48 mr-2" v-if="showNearest === d.image"/>
             <img :src="`/build/${d.image}`" class="img-48" />
           </div>
         </div>
-        <div class="w-50 d-flex flex-column m-3">
+        <div class="w-50 d-flex flex-column mt-3 ml-3">
           <p><b>Analogy</b></p>
-          <div v-for="d in analogy" class="div-48">
+          <div v-for="d in analogy" class="div-48"
+               @mouseover="mouseOverImage(d)" @mouseleave="mouseLeaveImage(d)">
             <img :src="`/build/${d.image}`" class="img-48" />
+            <img :src="imageUrl(d.nearest)" class="img-48 ml-2" v-if="showNearest === d.image"/>
             <span class="text-muted ml-2">{{d.neighbors}}</span>
           </div>
         </div>
@@ -123,7 +127,8 @@
       return {
         totalImage: 5,
         analogy: null,
-        original: null
+        original: null,
+        showNearest: ''
       }
     },
     computed: {
@@ -147,6 +152,14 @@
           }, (e) => {
             alert(e)
           })
+      },
+
+      mouseOverImage (d) {
+        this.showNearest = d.image
+      },
+
+      mouseLeaveImage (d) {
+        this.showNearest = d.image
       },
 
       viewGroup (list) {

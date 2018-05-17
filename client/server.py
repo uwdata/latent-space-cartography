@@ -68,8 +68,10 @@ def _generate (latent_dim, points):
     return images
 
 # number of points within L2 distance of a given point
+# also return the nearest neighbor
 def _num_neighbors (X, points, distance = 3.0):
-    res = []
+    count = []
+    nearest = []
     n, latent_dim = X.shape
     for idx, p in enumerate(points):
         P = np.repeat(p.reshape(1, -1), n, axis = 0)
@@ -77,8 +79,9 @@ def _num_neighbors (X, points, distance = 3.0):
         d = np.linalg.norm(X - P, axis = 1) # L2 distance
         qualify = np.less_equal(d, np.repeat(distance, n))
         indices = np.where(qualify)[0]
-        res.append(len(indices))
-    return res
+        count.append(len(indices))
+        nearest.append(np.argmin(d))
+    return count, nearest
 
 # sample points along a vector
 def _sample_vec (start, end, n_samples = 8, over = True):
@@ -98,9 +101,10 @@ def _sample_vec (start, end, n_samples = 8, over = True):
 def _interpolate (X, start, end):
     n, latent_dim = X.shape
     loc = _sample_vec(start, end)
+    count, nn = _num_neighbors(X, loc)
 
     # generate these images
-    return loc, _generate(latent_dim, loc), _num_neighbors(X, loc)
+    return loc, _generate(latent_dim, loc), count, nn
 
 # linear orthogonal transformation of all points to the given axis
 def _project_axis (X, axis):
@@ -282,7 +286,7 @@ def apply_analogy ():
     start = X[int(pid)]
     end = start + vec
 
-    loc, images, count = _interpolate(X, start, end)
+    loc, images, count, nearest = _interpolate(X, start, end)
     fns = []
     for idx, img in enumerate(images):
         img_fn = 'analogy_{}_{}.png'.format(pid, idx)
@@ -295,7 +299,8 @@ def apply_analogy ():
     reply = {
         'images': fns,
         'locations': loc.tolist(),
-        'neighbors': count
+        'neighbors': count,
+        'nearest': nearest
     }
 
     return jsonify(reply), 200
@@ -317,7 +322,7 @@ def focus_vector():
     vec = end - start
 
     # interpolate
-    loc, images, count = _interpolate(X, start, end)
+    loc, images, count, nearest = _interpolate(X, start, end)
     fns = []
     for idx, img in enumerate(images):
         img_fn = '{}_{}.png'.format('to'.join(gid), idx)
@@ -334,6 +339,7 @@ def focus_vector():
         'images': fns,
         'locations': loc.tolist(),
         'neighbors': count,
+        'nearest': nearest,
         'points': X_transformed.tolist()
     }
 

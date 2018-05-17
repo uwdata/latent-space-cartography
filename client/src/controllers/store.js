@@ -383,6 +383,25 @@ class Store {
     })
   }
 
+  deleteVector (vid) {
+    return new Promise((resolve, reject) => {
+      let payload = {'id': vid}
+
+      http.post('/api/delete_vector', payload)
+        .then((response) => {
+          let msg = response.data
+
+          if (msg && msg['status'] === 'success') {
+            resolve()
+          } else {
+            reject(`Could not delete from the database.`)
+          }
+        }, () => {
+          reject(`Could not connect to the server.`)
+        })
+    })
+  }
+
   /**
    * Bring a vector to focus.
    * @param latent_dim
@@ -399,7 +418,6 @@ class Store {
           let msg = response['data']
 
           if (msg) {
-            console.log(msg)
             let points = this._formatPcaPoints(msg['points'])
             let line = this._formatVectorLine(msg['locations'], msg['neighbors'], msg['images'])
             resolve([points, line])
@@ -422,14 +440,12 @@ class Store {
   applyAnalogy (latent_dim, pid, start, end) {
     return new Promise((resolve, reject) => {
       let payload = {pid: pid, latent_dim: latent_dim, groups: `${start},${end}`}
-      console.log(payload)
 
       http.post('/api/apply_analogy', payload)
         .then((response) => {
           let msg = response['data']
 
           if (msg) {
-            console.log(msg)
             let line = this._formatVectorLine(msg['locations'], msg['neighbors'], msg['images'])
             resolve(line)
           } else {

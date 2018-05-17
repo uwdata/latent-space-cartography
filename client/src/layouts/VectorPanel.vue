@@ -147,8 +147,11 @@
         this.focus = vector
         this.$emit('focus', vector)
       },
-      unfocus () {
+      unfocus (reload) {
         this.focus = null
+        if (reload) {
+          this.fetchVectors()
+        }
         this.$emit('reset')
       },
       formatTime (t) {

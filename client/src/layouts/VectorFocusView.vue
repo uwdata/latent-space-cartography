@@ -16,7 +16,7 @@
       <!--Right Buttons-->
       <div>
         <div title="Delete Vector" class="bd-btn-trans p-3"
-             v-b-tooltip.hover>
+             v-b-tooltip.hover @click="clickDelete">
           <i class="fa fa-fw fa-trash-o text-muted"></i>
         </div>
       </div>
@@ -119,6 +119,15 @@
       // go back to the list
       clickBack () {
         this.$emit('back')
+      },
+
+      clickDelete () {
+        store.deleteVector(this.focus.id)
+          .then(() => {
+            this.$emit('back', true)
+          }, (e) => {
+            alert(e)
+          })
       },
 
       viewGroup (list) {

@@ -28,21 +28,16 @@
     <div v-if="selected.length" class="m-3 bd-logo-list">
       <p>Selected logos:</p>
       <div v-for="p in selected_points" :key="p.i"
-           class="bd-point-item d-flex flex-row justify-content-between"
            @click="clickLogo(p)"
            @mouseover="hoverLogo(p)"
            @mouseout="unhoverLogo">
-        <div class="text-truncate">
-          <img :src="imageUrl(p)" class="m-1"/>
-          <span>{{p.name}}</span>
-        </div>
-        <div class="pl-2">
-          <button class="close"
+        <list-row :p="p">
+          <button class="close p-2"
                   @mouseover.stop=""
                   @click.stop="removeItem(p)">
             <span>&times;</span>
           </button>
-        </div>
+        </list-row>
       </div>
     </div>
 
@@ -90,6 +85,7 @@
   import GroupSaveModal from './GroupSaveModal.vue'
   import {store} from '../controllers/config'
   import _ from 'lodash'
+  import ListRow from './ListRow.vue'
 
   /**
    * Helper function, looking up the points array for a point with matching index.
@@ -113,6 +109,7 @@
       }
     },
     components: {
+      ListRow,
       AutoComplete,
       GroupSaveModal
     },
@@ -223,16 +220,6 @@
 </script>
 
 <style>
-  .bd-point-item {
-    cursor: pointer;
-    border-bottom: 1px solid rgba(0,0,0,.1);
-  }
-
-  .bd-point-item img {
-    width: 32px;
-    height: 32px;
-  }
-
   .bd-logo-list {
     overflow-y: auto;
     height: calc(100vh - 17.9rem);

@@ -5,17 +5,12 @@
       <div v-for="p in brushed" :key="p.i"
            @click="setDetail(p)"
            @mouseover="onHighlight(p)"
-           @mouseout="onHighlight()"
-           class="bd-point-item d-flex flex-row justify-content-between">
-        <div class="text-truncate">
-          <img :src="imageUrl(p)" class="m-1"/>
-          <span>{{p.name}}</span>
-        </div>
-        <div class="pl-2 d-flex align-items-center">
-          <button class="close" style="font-size:1em;" @click.stop="addOne(p)">
+           @mouseout="onHighlight()">
+        <list-row :p="p">
+          <button class="close p-2" style="font-size:1em;" @click.stop="addOne(p)">
             <i class="fa fa-plus"></i>
           </button>
-        </div>
+        </list-row>
       </div>
       <button class="btn-block btn btn-light mt-3 mb-2"
               @click="addAll()">Add All</button>
@@ -26,8 +21,10 @@
 <script>
   import {store} from '../controllers/config'
   import _ from 'lodash'
+  import ListRow from './ListRow.vue'
 
   export default {
+    components: {ListRow},
     name: 'BrushedList',
     props: {
       chart: {

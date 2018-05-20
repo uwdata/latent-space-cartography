@@ -43,6 +43,9 @@ class Store {
     this.tab = {
       index: 0 // 0 - group, 1 - vector
     }
+    this.state = {
+      detail: null
+    }
   }
 
   /**

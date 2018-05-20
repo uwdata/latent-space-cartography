@@ -20,32 +20,10 @@
           <div class="col-4 bd-left">
 
             <!--Details of a Logo-->
-            <detail-card :detail="detail_point"
-                         v-if="detail_point"></detail-card>
+            <detail-card></detail-card>
 
             <!--List of Brushed Points-->
-            <div class="card mb-3" v-if="brushed.length">
-              <div class="card-header">Brushed</div>
-              <div class="p-2">
-                <div v-for="p in brushed" :key="p.i"
-                     @click="setDetail(p)"
-                     @mouseover="onHighlight(p.i)"
-                     @mouseout="onHighlight()"
-                     class="bd-point-item d-flex flex-row justify-content-between">
-                  <div class="text-truncate">
-                    <img :src="imageUrl(p)" class="m-1"/>
-                    <span>{{p.name}}</span>
-                  </div>
-                  <div class="pl-2 d-flex align-items-center">
-                    <button class="close" style="font-size:1em;" @click.stop="addOne(p)">
-                      <i class="fa fa-plus"></i>
-                    </button>
-                  </div>
-                </div>
-                <button class="btn-block btn btn-light mt-3 mb-2"
-                        @click="addAll()">Add All</button>
-              </div>
-            </div>
+            <brushed-list :chart="scatter" :brushed="brushed"></brushed-list>
           </div>
 
           <!--Main Drawing-->
@@ -90,12 +68,10 @@
       <!--Right Panel-->
       <div class=" bd-right col-3">
         <search-panel :points="suggestions"
-                      v-on:detail="setDetail"
-                      v-on:highlight="onHighlight"
+                      :chart="scatter"
                       v-on:reproject="reproject"
-                      v-on:original="showOriginal"
-                      v-on:subset="onToggleSubset"></search-panel>
-        <vector-panel :latent_dim="dim" :detail="detail_point" :chart="scatter"
+                      v-on:original="showOriginal"></search-panel>
+        <vector-panel :latent_dim="dim" :chart="scatter"
                       v-on:focus="focusVector"
                       v-on:reset="showOriginal"></vector-panel>
       </div>
@@ -111,6 +87,7 @@
   import InterpolatePanel from '../layouts/InterpolatePanel.vue'
   import DetailCard from '../layouts/DetailCard.vue'
   import DetailTip from '../layouts/DetailTip.vue'
+  import BrushedList from '../layouts/BrushedList.vue'
 
   import Scatter from '../controllers/scatter_analogy'
   import {store, log_debug, TRAIN_SPLIT} from '../controllers/config'
@@ -126,7 +103,7 @@
 
     // reset data
     this.brushed = []
-    this.detail_point = null
+    store.state.detail = null
   }
 
   // Customize the style of scatter plot
@@ -173,17 +150,9 @@
       })
   }
 
-  /**
-   * Helper function, looking up the points array for a point with matching index.
-   * @param i
-   * @param points
-   */
-  function indexToPoint (i, points) {
-    return _.find(points, (p) => p.i === i)
-  }
-
   export default {
     components: {
+      BrushedList,
       SearchPanel,
       VectorPanel,
       ChartButtons,
@@ -199,7 +168,6 @@
         scatter: new Scatter(),
         suggestions: [],
         points: [],
-        detail_point: null,
         hovered_point: null,
         brushed: [],
         dim: 32,
@@ -220,7 +188,7 @@
         this.brushed = pts
       }
       this.scatter.emitter.onDotClicked = (pt) => {
-        this.detail_point = pt
+        store.state.detail = pt
       }
       this.scatter.emitter.onDotHovered = (pt, x, y) => {
         if (pt) {
@@ -300,35 +268,6 @@
             this.loading = false
             //handle error
           })
-      },
-
-      // change the content of details card
-      setDetail (p) {
-        this.detail_point = p
-      },
-
-      // Add brushed points to the selected list
-      addOne (p) {
-        if (!_.includes(store.selected, p.i)) {
-          store.selected.push(p.i)
-        }
-      },
-      addAll () {
-        _.each(this.brushed, (p) => this.addOne(p))
-      },
-
-      /**
-       * Ugly way to hook up outside DOM event with d3
-       * @param i
-       */
-      onHighlight (i) {
-        this.scatter.focusDot(indexToPoint(i, this.points))
-      },
-
-      // FIXME: new points won't appear
-      onToggleSubset (indices) {
-        let pts = indices ? _.map(indices, (i) => indexToPoint(i, this.points)) : null
-        this.scatter.focusSet(pts)
       },
 
       // draw original

@@ -113,9 +113,6 @@
         type: Number,
         required: true
       },
-      detail: {
-        required: true
-      },
       focus: {
         required: true
       },
@@ -125,6 +122,7 @@
     },
     data () {
       return {
+        shared: store.state,
         totalImage: 5,
         analogy: null,
         original: null,
@@ -137,6 +135,9 @@
       },
       endMore: function () {
         return Math.max(0, this.focus.list_end.length - this.totalImage)
+      },
+      detail () {
+        return this.shared.detail
       }
     },
     methods: {

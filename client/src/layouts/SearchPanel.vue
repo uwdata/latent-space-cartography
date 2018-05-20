@@ -91,12 +91,24 @@
   import {store} from '../controllers/config'
   import _ from 'lodash'
 
+  /**
+   * Helper function, looking up the points array for a point with matching index.
+   * @param i
+   * @param points
+   */
+  function indexToPoint (i, points) {
+    return _.find(points, (p) => p.i === i)
+  }
+
   export default {
     name: 'SearchPanel',
     props: {
       // Note that these points only contain index and meta information.
       points: {
         type: Array,
+        required: true
+      },
+      chart: {
         required: true
       }
     },
@@ -132,7 +144,10 @@
       toggleSubset () {
         if (this.view_mode === 3) return
         this.view_mode = 2
-        this.$emit('subset', store.selected)
+
+        // FIXME: new points won't appear
+        let pts = store.selected ? _.map(store.selected, (i) => indexToPoint(i, this.points)) : null
+        this.chart.focusSet(pts)
       },
 
       // button "re-project"
@@ -184,16 +199,16 @@
       },
       hoverItem(p) {
         if (p) {
-          this.$emit('detail', p)
+          store.state.detail = p
         }
       },
 
       // interactions of the logo list
       clickLogo (p) {
-        this.$emit('detail', p)
+        store.state.detail = p
       },
       hoverLogo (p) {
-        this.$emit('highlight', p.i)
+        this.chart.focusDot(p)
       },
       unhoverLogo () {
         this.$emit('highlight', null)

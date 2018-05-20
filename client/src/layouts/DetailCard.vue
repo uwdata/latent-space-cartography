@@ -1,6 +1,13 @@
 <template>
   <div class="card mb-3" v-if="detail">
-    <div class="card-header">Details</div>
+    <div class="card-header d-flex justify-content-between">
+      <div>Details</div>
+      <div class="pl-3 bd-pointer" @click="clickClose()">
+        <span>
+          <i class="fa fa-fw fa-times text-muted"></i>
+        </span>
+      </div>
+    </div>
     <div class="card-body">
       <div class="d-flex" style="font-size: 0.8em;">
         <div class="p1">
@@ -45,12 +52,21 @@
 
   export default {
     name: 'DetailCard',
-    props: {
-      detail: {
-        required: true
+    data () {
+      return {
+        shared: store.state
+      }
+    },
+    computed: {
+      detail () {
+        return this.shared.detail
       }
     },
     methods: {
+      clickClose () {
+        this.shared.detail = null
+      },
+      // helper
       badgeStyle (category) {
         let darkText = {
           'Smileys & People': true
@@ -76,7 +92,6 @@
 
         return styles
       },
-      // helper
       imageUrl (p) {
         return store.getImageUrl(p.i)
       }

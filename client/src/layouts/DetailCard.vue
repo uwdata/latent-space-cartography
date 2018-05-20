@@ -1,20 +1,38 @@
 <template>
-  <div class="card mb-3" v-if="detail_point">
+  <div class="card mb-3" v-if="detail">
     <div class="card-header">Details</div>
     <div class="card-body">
-      <p>{{detail_point.name}}</p>
       <div class="d-flex" style="font-size: 0.8em;">
         <div class="p1">
-          <img :src="imageUrl(detail_point)" />
+          <img :src="imageUrl(detail)" />
         </div>
         <div class="w-100 ml-2">
-          <div class="mb-2">
-            <b>Industry: </b>
-            {{detail_point.industry}}
+          <div class="mb-1 d-flex justify-content-between">
+            <div>
+              <b>{{detail.name}}</b>
+              <small class="ml-1 text-muted" v-if="detail.shortcode">
+                {{detail.shortcode}}
+              </small>
+            </div>
+            <div v-if="detail.category">
+              <span class="badge" :style="badgeStyle(detail.category)">
+                {{detail.category}}
+              </span>
+            </div>
           </div>
-          <div class="mb-2">
+          <div class="mb-1" v-if="detail.industry">
+            <b>Industry: </b>
+            {{detail.industry}}
+          </div>
+          <div class="mb-1" v-if="detail.source">
             <b>Data Source: </b>
-            {{detail_point.source}}
+            {{detail.source}}
+          </div>
+          <div class="mb-1" v-if="detail.platform">
+            {{detail.platform}} {{detail.version}}
+          </div>
+          <div class="mb-1 text-muted" v-if="detail.codepoints">
+            <small>Code Points: {{detail.codepoints}}</small>
           </div>
         </div>
       </div>
@@ -28,11 +46,36 @@
   export default {
     name: 'DetailCard',
     props: {
-      detail_point: {
+      detail: {
         required: true
       }
     },
     methods: {
+      badgeStyle (category) {
+        let darkText = {
+          'Smileys & People': true
+        }
+        let bg = {
+          'Symbols': '#4c78a8',
+          'Objects': '#72b7b2',
+          'Flags': '#e45756',
+          'Smileys & People': '#eeca3b',
+          'Travel & Places': '#b279a2',
+          'Animals & Nature': '#54a24b',
+          'Food & Drink': '#f58518',
+          'Activity': '#ff9da6'
+        }
+
+        let styles = {
+          backgroundColor: bg[category] || '#bab0ac'
+        }
+
+        if (!darkText[category]) {
+          styles['color'] = '#fff'
+        }
+
+        return styles
+      },
       // helper
       imageUrl (p) {
         return store.getImageUrl(p.i)

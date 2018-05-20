@@ -15,7 +15,7 @@ const config_emoji = {
 /**
  * Toggle dataset here!
  */
-let c = config_logo
+let c = config_emoji
 
 const DEBUG = process.env.NODE_ENV === 'development'
 const DATASET = c.dataset
@@ -31,7 +31,7 @@ SCHEMAS[config_logo.dataset] = {
   'meta': ['i', 'name', 'mean_color', 'source', 'industry']
 }
 SCHEMAS[config_emoji.dataset] = {
-  'meta': ['i', 'mean_color']
+  'meta': ['i','name', 'mean_color', 'category', 'platform', 'version', 'codepoints', 'shortcode']
 }
 
 /**

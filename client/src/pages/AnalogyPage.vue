@@ -20,7 +20,7 @@
           <div class="col-4 bd-left">
 
             <!--Details of a Logo-->
-            <detail-card :detail_point="detail_point"
+            <detail-card :detail="detail_point"
                          v-if="detail_point"></detail-card>
 
             <!--List of Brushed Points-->

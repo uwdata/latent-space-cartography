@@ -68,7 +68,8 @@
       <!--Right Panel-->
       <div class=" bd-right col-3">
         <search-panel :points="suggestions"
-                      :chart="scatter"
+                      v-on:highlight="onHighlight"
+                      v-on:subset="onToggleSubset"
                       v-on:reproject="reproject"
                       v-on:original="showOriginal"></search-panel>
         <vector-panel :latent_dim="dim" :chart="scatter"
@@ -117,6 +118,15 @@
       right: 0
     }
     s.dot_radius = 3
+  }
+
+  /**
+   * Helper function, looking up the points array for a point with matching index.
+   * @param i
+   * @param points
+   */
+  function indexToPoint (i, points) {
+    return _.find(points, (p) => p.i === i)
   }
 
   /**
@@ -268,6 +278,20 @@
             this.loading = false
             //handle error
           })
+      },
+
+      /**
+       * Ugly way to hook up outside DOM event with d3
+       * @param i
+       */
+      onHighlight (i) {
+        this.scatter.focusDot(indexToPoint(i, this.points))
+      },
+
+      // FIXME: new points won't appear
+      onToggleSubset (indices) {
+        let pts = indices ? _.map(indices, (i) => indexToPoint(i, this.points)) : null
+        this.scatter.focusSet(pts)
       },
 
       // draw original

@@ -87,24 +87,12 @@
   import _ from 'lodash'
   import ListRow from './ListRow.vue'
 
-  /**
-   * Helper function, looking up the points array for a point with matching index.
-   * @param i
-   * @param points
-   */
-  function indexToPoint (i, points) {
-    return _.find(points, (p) => p.i === i)
-  }
-
   export default {
     name: 'SearchPanel',
     props: {
       // Note that these points only contain index and meta information.
       points: {
         type: Array,
-        required: true
-      },
-      chart: {
         required: true
       }
     },
@@ -141,10 +129,7 @@
       toggleSubset () {
         if (this.view_mode === 3) return
         this.view_mode = 2
-
-        // FIXME: new points won't appear
-        let pts = store.selected ? _.map(store.selected, (i) => indexToPoint(i, this.points)) : null
-        this.chart.focusSet(pts)
+        this.$emit('subset', store.selected)
       },
 
       // button "re-project"
@@ -205,7 +190,7 @@
         store.state.detail = p
       },
       hoverLogo (p) {
-        this.chart.focusDot(p)
+        this.$emit('highlight', p.i)
       },
       unhoverLogo () {
         this.$emit('highlight', null)

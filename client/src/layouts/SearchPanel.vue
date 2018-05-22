@@ -29,7 +29,7 @@
       <p>Selected logos:</p>
       <div v-for="p in selected_points" :key="p.i"
            @click="clickLogo(p)"
-           @mouseover="hoverLogo(p, $event)"
+           @mouseover="hoverLogo(p)"
            @mouseout="unhoverLogo">
         <list-row :p="p">
           <button class="close p-2"
@@ -181,7 +181,7 @@
       },
       hoverItem(p) {
         if (p) {
-          store.state.detail = p
+          store.state.detail_card = p
         }
       },
 
@@ -189,15 +189,12 @@
       clickLogo (p) {
         // TODO: center view
       },
-      hoverLogo (p, event) {
-        p.clientX = event.clientX
-        p.clientY = event.clientY
-
-        store.state.detail = p
+      hoverLogo (p) {
+        store.state.detail_card = p
         this.$emit('highlight', p.i)
       },
       unhoverLogo () {
-        store.state.detail = null
+        store.state.detail_card = null
         this.$emit('highlight', null)
       },
 

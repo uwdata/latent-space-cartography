@@ -21,6 +21,9 @@
         <div class="row mr-0">
           <!--Left Panel-->
           <div class="col-4 bd-left">
+            <!--Detail Card-->
+            <detail-card></detail-card>
+
             <!--List of Brushed Points-->
             <brushed-list :chart="scatter" :brushed="brushed"></brushed-list>
           </div>

@@ -3,7 +3,6 @@
     <div class="card-header">Brushed</div>
     <div class="p-2">
       <div v-for="p in brushed" :key="p.i"
-           @click="addOne(p)"
            @mouseover="onHighlight(p, $event)"
            @mouseout="onHighlight()">
         <list-row :p="p">
@@ -22,6 +21,8 @@
   import {store} from '../controllers/config'
   import _ from 'lodash'
   import ListRow from './ListRow.vue'
+
+  let timer_handle = null
 
   export default {
     components: {ListRow},
@@ -51,11 +52,21 @@
         _.each(this.brushed, (p) => this.addOne(p))
       },
       onHighlight (p, event) {
-        if (p && event) {
-          p.clientX = event.clientX
-          p.clientY = event.clientY
+        if (timer_handle) {
+          clearTimeout(timer_handle)
         }
-        store.state.detail = p
+
+
+        if (p && event) {
+          timer_handle = setTimeout(() => {
+            p.clientX = event.clientX
+            p.clientY = event.clientY
+            store.state.detail = p
+          }, 1000)
+        } else {
+          store.state.detail = p
+        }
+
         this.chart.focusDot(p)
       },
       // helper

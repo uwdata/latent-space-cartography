@@ -44,7 +44,8 @@ class Store {
       index: 0 // 0 - group, 1 - vector
     }
     this.state = {
-      detail: null
+      detail: null,
+      detail_card: null,
     }
   }
 

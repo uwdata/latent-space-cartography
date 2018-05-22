@@ -59,7 +59,7 @@
     },
     computed: {
       detail () {
-        return this.shared.detail
+        return this.shared.detail_card
       }
     },
     methods: {

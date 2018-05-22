@@ -3,11 +3,11 @@
     <div class="card-header">Brushed</div>
     <div class="p-2">
       <div v-for="p in brushed" :key="p.i"
-           @click="setDetail(p)"
-           @mouseover="onHighlight(p)"
+           @click="addOne(p)"
+           @mouseover="onHighlight(p, $event)"
            @mouseout="onHighlight()">
         <list-row :p="p">
-          <button class="close p-2" style="font-size:1em;" @click.stop="addOne(p)">
+          <button class="close p-2" style="font-size:1em;" @mouseover.stop="" @click.stop="addOne(p)">
             <i class="fa fa-plus"></i>
           </button>
         </list-row>
@@ -50,10 +50,12 @@
       addAll () {
         _.each(this.brushed, (p) => this.addOne(p))
       },
-      setDetail (p) {
-        this.shared.detail = p
-      },
-      onHighlight (p) {
+      onHighlight (p, event) {
+        if (p && event) {
+          p.clientX = event.clientX
+          p.clientY = event.clientY
+        }
+        store.state.detail = p
         this.chart.focusDot(p)
       },
       // helper

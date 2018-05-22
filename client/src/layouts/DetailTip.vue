@@ -1,53 +1,105 @@
 <template>
-  <div class="d-flex bd-detail" v-bind:style="getStyles()">
-    <div class="pr-2">
-      <img :src="imageUrl(detail_point)" />
-    </div>
-    <div class="pt-2 pr-2" v-if="long">
-      {{detail_point.name}}
+  <div class="bd-detail p-2" v-if="detail" v-bind:style="styles">
+    <div class="d-flex" style="font-size: 0.8em;">
+      <div class="p1">
+        <img :src="imageUrl(detail)" />
+      </div>
+      <div class="w-100 ml-2">
+        <div class="mb-1 d-flex justify-content-between">
+          <div>
+            <b>{{detail.name}}</b>
+            <small class="ml-1 text-muted" v-if="detail.shortcode">
+              {{detail.shortcode}}
+            </small>
+          </div>
+          <div v-if="detail.category">
+            <span class="badge" :style="badgeStyle(detail.category)">
+              {{detail.category}}
+            </span>
+          </div>
+        </div>
+        <div class="mb-1" v-if="detail.industry">
+          <b>Industry: </b>
+          {{detail.industry}}
+        </div>
+        <div class="mb-1" v-if="detail.source">
+          <b>Data Source: </b>
+          {{detail.source}}
+        </div>
+        <div class="mb-1" v-if="detail.platform">
+          {{detail.platform}} {{detail.version}}
+        </div>
+        <div class="mb-1 text-muted" v-if="detail.codepoints">
+          <small>Code Points: {{detail.codepoints}}</small>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-  import {store, DATASET} from '../controllers/config'
+  import {store} from '../controllers/config'
+
   export default {
     name: 'DetailTip',
-    props: {
-      detail_point: {
-        required: true
-      }
-    },
     data () {
       return {
-        long: DATASET === 'logo'
+        shared: store.state
       }
     },
-    methods: {
-      // helper
-      getX () {
-        if (!this.detail_point) {
+    computed: {
+      detail () {
+        return this.shared.detail
+      },
+      x () {
+        if (!this.detail || !this.detail.clientX) {
           return 0
         }
 
-        let offset = this.long ? 90 : 32
-        let x = Math.max(0, this.detail_point.screenX - offset)
+        let x = Math.max(0, this.detail.clientX)
         return x + 'px'
       },
-      getY () {
-        if (!this.detail_point) {
+      y () {
+        if (!this.detail || !this.detail.clientY) {
           return 0
         }
 
-        let y = Math.max(0, this.detail_point.screenY - 74)
+        let y = Math.max(0, this.detail.clientY + 15)
         return y + 'px'
       },
-      getStyles () {
+      styles () {
+        console.log(this.x, this.y)
         return {
-          top: this.getY(),
-          left: this.getX(),
-          minWidth: (this.long ? 180 : 0) + 'px'
+          top: this.y,
+          left: this.x
         }
+      },
+    },
+    methods: {
+      badgeStyle (category) {
+        let darkText = {
+          'Smileys & People': true
+        }
+        let bg = {
+          'Symbols': '#4c78a8',
+          'Objects': '#72b7b2',
+          'Flags': '#e45756',
+          'Smileys & People': '#eeca3b',
+          'Travel & Places': '#b279a2',
+          'Animals & Nature': '#54a24b',
+          'Food & Drink': '#f58518',
+          'Activity': '#ff9da6'
+        }
+
+        let styles = {
+          backgroundColor: bg[category] || '#bab0ac'
+        }
+
+        if (!darkText[category]) {
+          styles['color'] = '#fff'
+        }
+
+        return styles
       },
       imageUrl (p) {
         return store.getImageUrl(p.i)
@@ -58,11 +110,11 @@
 
 <style>
   .bd-detail {
-    max-width: 240px;
-    max-height: 64px;
+    width: 240px;
     background-color: #fff;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
     position: absolute;
-    z-index: 5000;
+    z-index: 15000;
     line-height: 1.2em;
   }
 </style>

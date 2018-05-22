@@ -1,5 +1,5 @@
 <template>
-  <div class="bd-point-item d-flex flex-row justify-content-between">
+  <div class="bd-list-row d-flex flex-row justify-content-between">
     <!--Logo: Left-->
     <div class="text-truncate" v-if="dset==='logo'">
       <img :src="imageUrl(p)" class="m-1"/>
@@ -53,21 +53,25 @@
 </script>
 
 <style>
-  .bd-point-item {
-    cursor: pointer;
-    border-bottom: 1px solid rgba(0,0,0,.1);
-  }
-
-  .bd-point-item img {
-    width: 32px;
-    height: 32px;
-  }
-
   .bd-text-xs {
     font-size: 0.7em;
   }
 
   .bd-line-tight {
     line-height: 1em;
+  }
+
+  .bd-list-row {
+    cursor: pointer;
+    border-bottom: 1px solid rgba(0,0,0,.1);
+  }
+
+  .bd-list-row:hover {
+    background-color: #faf9ff;
+  }
+
+  .bd-list-row img {
+    width: 32px;
+    height: 32px;
   }
 </style>

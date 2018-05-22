@@ -80,7 +80,8 @@ class Dots {
 
     function dotMouseover(d) {
       that._focusDot(d, d3.select(this), true)
-      emitter.onDotHovered(d, scales.x(d.x), scales.y(d. y))
+      // emitter.onDotHovered(d, scales.x(d.x), scales.y(d. y))
+      emitter.onDotHovered(d, d3.event.clientX, d3.event.clientY)
     }
 
     function dotMouseout () {

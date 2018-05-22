@@ -14,14 +14,13 @@
       </div>
     </div>
     <div class="row">
+      <!--Detail Tooltip -->
+      <detail-tip></detail-tip>
+
       <div class="col-9 pr-0">
         <div class="row mr-0">
           <!--Left Panel-->
           <div class="col-4 bd-left">
-
-            <!--Details of a Logo-->
-            <detail-card></detail-card>
-
             <!--List of Brushed Points-->
             <brushed-list :chart="scatter" :brushed="brushed"></brushed-list>
           </div>
@@ -29,9 +28,8 @@
           <!--Main Drawing-->
           <div class="col-8 pr-0 pl-0">
             <div class="d-flex justify-content-center align-items-center">
-              <!--Detail -->
-              <detail-tip :detail_point="hovered_point"
-                          v-if="hovered_point"></detail-tip>
+              <!--Detail Tooltip -->
+              <!--<detail-tip></detail-tip>-->
 
               <!--SVG-->
               <div id="container" ref="chart"></div>
@@ -184,7 +182,6 @@
         scatter: new Scatter(),
         suggestions: [],
         points: [],
-        hovered_point: null,
         brushed: [],
         dim: 32,
         all_dims: [32, 64, 128, 256, 512, 1024],
@@ -209,10 +206,10 @@
       }
       this.scatter.emitter.onDotHovered = (pt, x, y) => {
         if (pt) {
-          pt.screenX = x
-          pt.screenY = y
+          pt.clientX = x
+          pt.clientY = y
         }
-        this.hovered_point = pt
+        store.state.detail = pt
       }
 
       // Get points from server

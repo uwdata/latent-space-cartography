@@ -46,6 +46,7 @@ class Store {
     this.state = {
       detail: null,
       detail_card: null,
+      clicked_point: null
     }
   }
 

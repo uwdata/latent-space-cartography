@@ -68,7 +68,6 @@
         return y + 'px'
       },
       styles () {
-        console.log(this.x, this.y)
         return {
           top: this.y,
           left: this.x

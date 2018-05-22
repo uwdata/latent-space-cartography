@@ -137,7 +137,7 @@
         return Math.max(0, this.focus.list_end.length - this.totalImage)
       },
       detail () {
-        return this.shared.detail
+        return this.shared.clicked_point
       }
     },
     methods: {

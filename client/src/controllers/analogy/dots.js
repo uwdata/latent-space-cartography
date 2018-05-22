@@ -48,7 +48,7 @@ class Dots {
     let mark_type = inside.length > 500 ? 1 : 2
 
     if (mark_type === 1) {
-      let dots = parent.selectAll('.dot')
+      parent.selectAll('.dot')
         .data(data)
         .enter()
         .append('circle')
@@ -58,8 +58,7 @@ class Dots {
         .attr('cy', (d) => scales.y(d.y))
         .style('fill', (d) => this._colorDot(d, scales.palette))
         .on('click', dotClick)
-
-      dots.on('mouseover', dotMouseover)
+        .on('mouseover', dotMouseover)
         .on('mouseout', dotMouseout)
     } else if (mark_type === 2) {
       let img_size = this._computeImageSize(inside)
@@ -76,6 +75,8 @@ class Dots {
         .attr('height', () => img_size)
         .attr('xlink:href', (d) => store.getImageUrl(d.i))
         .on('click', dotClick)
+        .on('mouseover', imgMouseOver)
+        .on('mouseout', imgMouseOut)
     }
 
     function dotMouseover(d) {
@@ -86,6 +87,14 @@ class Dots {
 
     function dotMouseout () {
       that._unfocusDot()
+      emitter.onDotHovered(null)
+    }
+
+    function imgMouseOver (d) {
+      emitter.onDotHovered(d, d3.event.clientX, d3.event.clientY)
+    }
+
+    function imgMouseOut () {
       emitter.onDotHovered(null)
     }
 

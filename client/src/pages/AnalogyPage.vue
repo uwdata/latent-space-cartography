@@ -205,7 +205,7 @@
         this.brushed = pts
       }
       this.scatter.emitter.onDotClicked = (pt) => {
-        store.state.detail = pt
+        store.state.clicked_point = pt
       }
       this.scatter.emitter.onDotHovered = (pt, x, y) => {
         if (pt) {

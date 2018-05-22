@@ -21,7 +21,7 @@ from flaskext.mysql import MySQL
 models = {}
 
 # dataset we're working with
-dset = 'emoji'
+from config_emoji import dset, img_rows, img_cols, img_chns, img_mode
 
 # FIXME: hack
 temp_store = {}
@@ -47,7 +47,7 @@ def create_model (latent_dim):
     base = './data/{}/models/{}/'.format(dset, latent_dim)
     mpath = abs_path(base + '{}_model_dim={}.json'.format(dset, latent_dim))
     wpath = abs_path(base + '{}_model_dim={}.h5'.format(dset, latent_dim))
-    m = model.Vae(latent_dim = latent_dim)
+    m = model.Vae(latent_dim = latent_dim, img_dim=(img_chns, img_rows, img_cols))
     models[latent_dim] = m.read(mpath, wpath) + (m,)
 
 # given a list of points in latent space, generate their corresponding images
@@ -61,7 +61,7 @@ def _generate (latent_dim, points):
     for idx, val in enumerate(points):
         val = val.reshape((1, latent_dim))
         recon = m.to_image(decoder.predict(val))
-        img = Image.fromarray(recon, 'RGB')
+        img = Image.fromarray(recon, img_mode)
         images.append(img)
     print('Done.')
 

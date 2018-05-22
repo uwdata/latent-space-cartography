@@ -58,6 +58,7 @@ class Scatter {
      * Private
      */
     this._scales = null
+    this._dots = null
     this._vectors = null
   }
 
@@ -86,6 +87,7 @@ class Scatter {
     let zoomBeh = d3.zoom()
       .scaleExtent([0.5, 3])
       .on('zoom', zoom)
+      .on('end', zoomEnd)
     let dot_brush = new DotBrush(data, scales, emitter)
 
     svg.append('g')
@@ -108,9 +110,9 @@ class Scatter {
       .attr('height', scales.height())
 
     // Dots
-    let dots = new Dots(scales, objects, this.dot_radius,
+    this._dots = new Dots(scales, objects, this.dot_radius,
       this.dot_color, this.mark_type)
-    dots.draw(data, emitter, this.dispatch)
+    this._dots.draw(data, emitter, this.dispatch)
 
     // Lines
     let vector_style = {background: this.background}
@@ -152,15 +154,18 @@ class Scatter {
       scales.y = d3.event.transform.rescaleY(scales.initialY)
 
       // update dots
-      svg.selectAll('.dot')
-        .attr('cx', (d) => scales.x(d.x))
-        .attr('cy', (d) => scales.y(d.y))
+      that._dots.zoom()
 
       // update vectors
       that._vectors.redraw()
 
       // clear brush
       dot_brush.clear()
+    }
+
+    function zoomEnd () {
+      // update dots
+      that._dots.zoomEnd()
     }
   }
 

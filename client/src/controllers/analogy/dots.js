@@ -29,6 +29,7 @@ class Dots {
      */
     this._parent = parent
     this._scales = scales
+    this._data = []
   }
 
   /**
@@ -38,11 +39,15 @@ class Dots {
    * @param dispatch
    */
   draw (data, emitter, dispatch) {
+    this._data = data
     let scales = this._scales
     let parent = this._parent
     let that = this
 
-    if (this.mark_type === 1) {
+    let inside = this._isInsideView(data)
+    let mark_type = inside.length > 500 ? 1 : 2
+
+    if (mark_type === 1) {
       let dots = parent.selectAll('.dot')
         .data(data)
         .enter()
@@ -56,8 +61,8 @@ class Dots {
 
       dots.on('mouseover', dotMouseover)
         .on('mouseout', dotMouseout)
-    } else if (this.mark_type === 2) {
-      let img_size = 20
+    } else if (mark_type === 2) {
+      let img_size = this._computeImageSize(inside)
 
       // draw logos directly
       parent.selectAll('.mark-img')
@@ -87,7 +92,52 @@ class Dots {
       emitter.onDotClicked(d)
     }
 
+
     this._registerCallbacks(dispatch)
+  }
+
+  /**
+   * Zooming callback.
+   */
+  zoom () {
+    let scales = this._scales
+    this._parent.selectAll('.dot')
+      .attr('cx', (d) => scales.x(d.x))
+      .attr('cy', (d) => scales.y(d.y))
+
+    let img = this._parent.select('.mark-img')
+
+    if (!img.empty()) {
+      let img_size = img.attr('width')
+      this._parent.selectAll('.mark-img')
+        .attr('x', (d) => scales.x(d.x) - img_size * 0.5)
+        .attr('y', (d) => scales.y(d.y) - img_size * 0.5)
+    }
+  }
+
+  /**
+   * Zoom end callback.
+   */
+  zoomEnd () {
+    let img = this._parent.select('.mark-img')
+    if (img.empty()) {
+      return
+    }
+
+    let inside = this._isInsideView(this._data)
+    let img_size = this._computeImageSize(inside)
+    let prev_size = img.attr('width')
+
+    // alleviate jitter
+    if (Math.abs(img_size - prev_size) > 2) {
+      let t = this._parent.transition().duration(200)
+
+      this._parent.selectAll('.mark-img').transition(t)
+        .attr('x', (d) => this._scales.x(d.x) - img_size * 0.5)
+        .attr('y', (d) => this._scales.y(d.y) - img_size * 0.5)
+        .attr('width', () => img_size)
+        .attr('height', () => img_size)
+    }
   }
 
   /**
@@ -111,6 +161,39 @@ class Dots {
         this._unfocusSet()
       }
     })
+  }
+
+  /**
+   * Compute optimal image size based on # of images in view and their bounding box.
+   * @param inside
+   * @returns {number} Size in pixels.
+   * @private
+   */
+  _computeImageSize (inside) {
+    let x = [d3.min(inside, (d) => d.x), d3.max(inside, (d) => d.x)]
+    let y = [d3.min(inside, (d) => d.y), d3.max(inside, (d) => d.y)]
+    x = _.map(x, (d) => this._scales.x(d))
+    y = _.map(y, (d) => this._scales.y(d))
+
+    let view_size = Math.min(Math.abs(x[0] - x[1]), Math.abs(y[0] - y[1]))
+    let img_size = Math.floor(view_size * 0.5 / Math.sqrt(inside.length))
+    img_size = _.clamp(img_size, 4, 26)
+
+    return img_size
+  }
+
+  /**
+   * Get the points inside view.
+   * @param data
+   * @private
+   */
+  _isInsideView (data) {
+    let scales = this._scales
+
+    let x = _.sortBy([scales.x.invert(0), scales.x.invert(scales.width())])
+    let y = _.sortBy([scales.y.invert(0), scales.y.invert(scales.height())])
+
+    return _.filter(data, (p) => p.x >= x[0] && p.x <= x[1] && p.y >=y[0] && p.y <= y[1])
   }
 
   /**

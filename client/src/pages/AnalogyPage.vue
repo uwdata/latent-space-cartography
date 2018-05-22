@@ -61,6 +61,8 @@
                 {{perp}}
               </b-dropdown-item>
             </b-dropdown>
+            <filter-dropdown :meta="suggestions"
+                             v-on:filter="onFilter"></filter-dropdown>
           </div>
         </div>
       </div>
@@ -94,6 +96,7 @@
   import {store, log_debug, TRAIN_SPLIT} from '../controllers/config'
   import _ from 'lodash'
   import VueLoading from 'vue-loading-template'
+  import FilterDropdown from '../layouts/FilterDropdown.vue'
 
   function clear () {
     // remove all nodes
@@ -135,7 +138,18 @@
    */
   function lets_draw (points) {
     clear.call(this)
-    this.scatter.setData(_.slice(points, 0, TRAIN_SPLIT))
+//    this.scatter.setData(_.slice(points, 0, TRAIN_SPLIT))
+//      let active = _.filter(points, (p) => {
+//        let pass = true
+//        _.each(this.filters, (filter) => {
+//          if (p[filter.name] !== filter.value) {
+//            pass = false
+//          }
+//        })
+//        return pass
+//      })
+    let active = this.filter_func(points)
+    this.scatter.setData(active)
     this.scatter.draw('#container')
   }
 
@@ -162,6 +176,7 @@
 
   export default {
     components: {
+      FilterDropdown,
       BrushedList,
       SearchPanel,
       VectorPanel,
@@ -186,6 +201,8 @@
         all_projections: ['PCA', 't-SNE'],
         perplexity: 30,
         all_perplexity: [5, 10, 30, 50, 100],
+//        filters: [],
+        filter_func: (d) => d,
         loading: true,
         night: false,
         err: ''
@@ -278,6 +295,11 @@
             this.loading = false
             //handle error
           })
+      },
+
+      onFilter (func) {
+        this.filter_func = func
+        lets_draw.call(this, this.points)
       },
 
       /**

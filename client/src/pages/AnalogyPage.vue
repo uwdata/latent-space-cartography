@@ -138,16 +138,7 @@
    */
   function lets_draw (points) {
     clear.call(this)
-//    this.scatter.setData(_.slice(points, 0, TRAIN_SPLIT))
-//      let active = _.filter(points, (p) => {
-//        let pass = true
-//        _.each(this.filters, (filter) => {
-//          if (p[filter.name] !== filter.value) {
-//            pass = false
-//          }
-//        })
-//        return pass
-//      })
+//    points = _.slice(points, 0, TRAIN_SPLIT)
     let active = this.filter_func(points)
     this.scatter.setData(active)
     this.scatter.draw('#container')
@@ -201,7 +192,6 @@
         all_projections: ['PCA', 't-SNE'],
         perplexity: 30,
         all_perplexity: [5, 10, 30, 50, 100],
-//        filters: [],
         filter_func: (d) => d,
         loading: true,
         night: false,

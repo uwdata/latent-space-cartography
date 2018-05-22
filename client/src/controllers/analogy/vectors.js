@@ -23,12 +23,21 @@ class Vectors {
     this._max_neighbors = MAX_NEIGHBORS
 
     /**
+     * Data
+     */
+    this.vectors = []
+
+    /**
      * Initialization
      */
     this._registerCallback()
   }
 
-  drawOne (vector, main = false) {
+  drawOne (vector) {
+    if (!vector) {
+      return
+    }
+
     let scales = this._scales
     let img_size = 20
     let img_padding = 10
@@ -59,25 +68,11 @@ class Vectors {
       this._styleTexture(path, j)
     })
 
-    // area chart
-    if (main) {
-      this._max_neighbors = Math.max(d3.max(vector, (d) => d.neighbors), MAX_NEIGHBORS)
-    }
+    // connector
     let yy = d3.scaleLinear()
       .range([0, chart_height])
       .domain([0, this._max_neighbors])
-    let area = d3.area()
-      .x((d) => scales.x(d.x))
-      .y0((d) => scales.y(d.y) + 1)
-      .y1((d) => scales.y(d.y) + yy(d.neighbors))
-    group.append('path')
-      .datum(vector)
-      .classed('nb-area', true)
-      .attr('d', area)
-      .style('fill', '#eee')
-      .style('opacity', 0.8)
 
-    // connector
     let link = d3.linkVertical()
       .source((d) => [scales.x(d.x), scales.y(d.y) + yy(d.neighbors)])
       .target((d) => [scales.x(d.x), scales.y(d.y) - img_padding])
@@ -138,18 +133,20 @@ class Vectors {
     }
   }
 
+  setData (vector, index = 1) {
+    this.vectors[index] = vector
+  }
+
+  clearData () {
+    this.vectors = []
+  }
+
   /**
    * Redraw everything (e.g. because scale is updated)
    */
   redraw () {
-    let vectors = []
-    d3.selectAll('.vector-group')
-      .each((vector) => {
-        vectors.push(vector)
-      })
-      .remove()
-
-    _.each(vectors, (vector) => this.drawOne(vector))
+    d3.selectAll('.vector-group').remove()
+    _.each(this.vectors, (vector) => this.drawOne(vector))
   }
 
   /**

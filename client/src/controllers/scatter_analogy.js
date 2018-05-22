@@ -116,7 +116,13 @@ class Scatter {
 
     // Lines
     let vector_style = {background: this.background}
-    this._vectors = new Vectors(scales, objects, this.dispatch, vector_style)
+    if (!this._vectors) {
+      this._vectors = new Vectors(scales, objects, this.dispatch, vector_style)
+    } else {
+      this._vectors._scales = scales
+      this._vectors._parent = objects
+      this._vectors.redraw()
+    }
 
     /**
      * =========================

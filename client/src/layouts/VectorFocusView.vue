@@ -143,13 +143,14 @@
     methods: {
       // go back to the list
       clickBack () {
+        this.chart._vectors.clearData()
         this.$emit('back')
       },
 
       clickDelete () {
         store.deleteVector(this.focus.id)
           .then(() => {
-            this.$emit('back', true)
+            this.clickBack()
           }, (e) => {
             alert(e)
           })
@@ -179,14 +180,12 @@
         // FIXME: hack
         this.original = this.focus.line
 
-        if (this.analogy) {
-          this.chart._vectors.removeOne(this.analogy)
-        }
         store.applyAnalogy(this.latent_dim, this.detail.i,
           this.focus.start, this.focus.end)
           .then((line) => {
             this.analogy = line
-            this.chart._vectors.drawOne(line)
+            this.chart._vectors.setData(line)
+            this.chart._vectors.redraw()
           }, (e) => {
             alert(e)
           })

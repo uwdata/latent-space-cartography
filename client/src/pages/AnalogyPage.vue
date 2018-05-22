@@ -280,7 +280,8 @@
             // 2. draw line
             vector.line = all[1]
             log_debug(vector.line)
-            this.scatter._vectors.drawOne(vector.line, true)
+            this.scatter._vectors.setData(vector.line, 0)
+            this.scatter._vectors.redraw()
           }, () => {
             this.loading = false
             //handle error

@@ -12,16 +12,16 @@
     <hr>
     <div v-if="loading">Loading ...</div>
     <div v-if="!loading" class="bd-group">
-      <div v-for="list in groups" class="d-flex justify-content-between bd-group-item">
+      <div v-for="list in groups"  @click="load(list)"
+           class="d-flex justify-content-between bd-group-item">
         <div>
           <group-thumb :list="list.list"></group-thumb>
-          <b @click="load(list)"
-             class="bd-link ml-2">{{list.alias || 'Untitled'}}</b>
+          <b class="bd-link ml-2">{{list.alias || 'Untitled'}}</b>
           <small class="ml-2 text-muted">{{formatTime(list.timestamp)}}</small>
         </div>
         <div class="btn-group btn-group-sm">
           <b-btn class="btn btn-outline-secondary"
-                 @click="clickDelete(list.id)"
+                 @click.stop="clickDelete(list.id)"
                  v-b-tooltip.hover title="Delete">
             <i class="fa fa-fw fa-trash-o"></i>
           </b-btn>
@@ -112,6 +112,7 @@
     border-right: #eee 1px solid;
     border-top: #eee 1px solid;
     padding: 10px;
+    cursor: pointer;
   }
 
   .bd-group-item:hover {

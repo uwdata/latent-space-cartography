@@ -1,5 +1,5 @@
 <template>
-  <div v-if="tab.index === 0">
+  <div v-if="shared.tab === 0">
     <!--Tabs-->
     <b-nav justified tabs class="ml-3 mr-3 mt-1">
       <b-nav-item active>Groups</b-nav-item>
@@ -26,7 +26,9 @@
 
     <!--Logo List-->
     <div v-if="selected.length" class="m-3 bd-logo-list">
-      <p>Selected logos:</p>
+      <p>
+        <small class="text-muted">{{selected.length}} total</small>
+      </p>
       <div v-for="p in selected_points" :key="p.i"
            @click="clickLogo(p)"
            @mouseover="hoverLogo(p)"
@@ -105,7 +107,7 @@
       return {
         selection: '',
         selected: store.selected,
-        tab: store.tab,
+        shared: store.state,
         view_mode: 1 // 1 - All, 2 - Subset, 3 - Reprojected
       }
     },
@@ -153,7 +155,7 @@
 
       // the tab at top
       clickTab () {
-        store.tab.index = 1
+        store.state.tab = 1
       },
 
       // you need more than 3 points for PCA
@@ -188,9 +190,9 @@
       // interactions of the logo list
       clickLogo (p) {
         // TODO: center view
+        store.state.detail_card = p
       },
       hoverLogo (p) {
-        store.state.detail_card = p
         this.$emit('highlight', p.i)
       },
       unhoverLogo () {

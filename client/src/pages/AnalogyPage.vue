@@ -422,4 +422,8 @@
     border-top: 1px solid rgba(0,0,0,.1);
     box-shadow: 0.5rem 0 2rem rgba(0,0,0,.03);
   }
+
+  .bd-pointer {
+    cursor: pointer;
+  }
 </style>

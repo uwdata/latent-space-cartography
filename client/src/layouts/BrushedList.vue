@@ -1,6 +1,13 @@
 <template>
   <div class="card mb-3" v-if="brushed.length">
-    <div class="card-header">Brushed</div>
+    <div class="card-header d-flex justify-content-between">
+      <div>Brushed</div>
+      <div class="pl-3">
+        <button class="btn btn-light btn-sm" @click="addAll()" v-if="shared.tab === 0">
+          Add All
+        </button>
+      </div>
+    </div>
     <div class="p-2">
       <div v-for="p in brushed" :key="p.i"
            @click="clickItem(p)"
@@ -12,8 +19,6 @@
           </button>
         </list-row>
       </div>
-      <button class="btn-block btn btn-light mt-3 mb-2"
-              @click="addAll()">Add All</button>
     </div>
   </div>
 </template>

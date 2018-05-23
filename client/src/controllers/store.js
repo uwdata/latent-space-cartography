@@ -40,10 +40,8 @@ class Store {
     /**
      * Coordination between UI components
      */
-    this.tab = {
-      index: 0 // 0 - group, 1 - vector
-    }
     this.state = {
+      tab: 0, // 0 - group, 1 - vector
       detail: null,
       detail_card: null,
       clicked_point: null

@@ -19,8 +19,14 @@
     </div>
 
     <!--Count-->
-    <div class="pt-1 pb-1 pl-3 bd-search-count" v-if="open && total">
-      <small>{{total}} results found.</small>
+    <div class="pt-1 pb-1 pl-3 bd-search-count d-flex justify-content-between"
+         v-if="open && total">
+      <div>
+        <small>{{total}} results found.</small>
+      </div>
+      <div v-if="shared.tab === 0">
+        <button class="btn btn-link btn-sm" @click="addAll">Add all to group</button>
+      </div>
     </div>
 
     <!--Toolbar-->
@@ -135,15 +141,32 @@
       }
     },
     methods: {
+      // when user clicks outside the search drawer to close it
       close (event) {
         if (!(event.target === this.button || this.button.contains(event.target))) {
           this.$emit('close')
         }
       },
 
+      // Add result to the selected list
+      addOne (p) {
+        if (!_.includes(store.selected, p.i)) {
+          store.selected.push(p.i)
+        }
+      },
+      addAll () {
+        _.each(this.matches, (p) => this.addOne(p))
+      },
+
+      // when a result row is clicked
       clickResult (p) {
-        store.state.detail_card = p
-        store.state.clicked_point = p
+        if (store.state.tab === 0) {
+          // group tab is active, add to group
+          this.addOne(p)
+        } else {
+          // vector tab is active, set selected point
+          store.state.clicked_point = p
+        }
       },
 
       // when a result row is hovered
@@ -199,7 +222,13 @@
         })
       },
 
+      // when user types
       updateValue (value) {
+        if (tooltip_handle) {
+          clearTimeout(tooltip_handle)
+          tooltip_handle = null
+        }
+
         this.value = value
         this.scheduleSearch()
       }

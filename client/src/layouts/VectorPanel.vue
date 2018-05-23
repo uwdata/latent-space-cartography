@@ -1,5 +1,5 @@
 <template>
-  <div v-if="tab.index === 1">
+  <div v-if="shared.tab === 1">
     <!--Tabs-->
     <b-nav justified tabs class="ml-3 mr-3 mt-1">
       <b-nav-item @click="clickTab">Groups</b-nav-item>
@@ -18,7 +18,7 @@
             <i class="fa fa-fw fa-circle-o"></i>
           </button>
           <group-thumb v-if="start" :list="start.list" :width="4"
-                       class="m-1"></group-thumb>
+                       class="m-1 bd-pointer"></group-thumb>
         </div>
 
         <!--Middle-->
@@ -33,7 +33,7 @@
              title="Choose an ending group"
              v-b-modal.modal-group v-b-tooltip.hover>
           <group-thumb v-if="end" :list="end.list" :width="4"
-                       class="m-1"></group-thumb>
+                       class="m-1 bd-pointer"></group-thumb>
           <button v-if="!end" class="btn btn-outline-secondary">
             <i class="fa fa-fw fa-circle-o"></i>
           </button>
@@ -102,7 +102,7 @@
         which: 'start',
         vectors: [],
         focus: null,
-        tab: store.tab
+        shared: store.state
       }
     },
     mounted: function () {
@@ -119,7 +119,7 @@
       },
       // the tab at top
       clickTab () {
-        store.tab.index = 0
+        store.state.tab = 0
       },
       // when a group is selected
       clickGroup (group) {

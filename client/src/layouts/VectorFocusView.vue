@@ -162,7 +162,7 @@
           store.selected.push(i)
         })
 
-        store.tab.index = 0
+        store.state.tab = 0
       },
 
       applyAnalogy () {
@@ -210,10 +210,6 @@
   .bd-img-box {
     width: 20%;
     height: 20%;
-  }
-
-  .bd-pointer {
-    cursor: pointer;
   }
 
   .bd-focus-panel-body {

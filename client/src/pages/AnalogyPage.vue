@@ -70,11 +70,11 @@
 
       <!--Right Panel-->
       <div class=" bd-right col-3">
-        <search-panel :points="suggestions"
+        <group-panel :points="suggestions"
                       v-on:highlight="onHighlight"
                       v-on:subset="onToggleSubset"
                       v-on:reproject="reproject"
-                      v-on:original="showOriginal"></search-panel>
+                      v-on:original="showOriginal"></group-panel>
         <vector-panel :latent_dim="dim" :chart="scatter"
                       v-on:focus="focusVector"
                       v-on:reset="showOriginal"></vector-panel>
@@ -84,7 +84,7 @@
 </template>
 
 <script>
-  import SearchPanel from '../layouts/SearchPanel.vue'
+  import GroupPanel from '../layouts/GroupPanel.vue'
   import VectorPanel from '../layouts/VectorPanel.vue'
   import ChartButtons from '../layouts/ChartButtons.vue'
   import HelpButton from '../layouts/HelpButton.vue'
@@ -170,7 +170,7 @@
     components: {
       FilterDropdown,
       BrushedList,
-      SearchPanel,
+      GroupPanel,
       VectorPanel,
       ChartButtons,
       HelpButton,

@@ -1,5 +1,6 @@
 <template>
-  <div class="bd-list-row d-flex flex-row justify-content-between">
+  <div class="bd-list-row d-flex flex-row justify-content-between"
+       :style="styles" @mouseover="hovered=true" @mouseout="hovered=false">
     <!--Logo: Left-->
     <div class="text-truncate" v-if="dset==='logo'">
       <img :src="imageUrl(p)" class="m-1"/>
@@ -36,10 +37,20 @@
       p: {
         type: Object,
         required: true
+      },
+      hoverColor: {
+        type: String,
+        default: '#fafafa'
+      }
+    },
+    computed: {
+      styles () {
+        return this.hovered ? {backgroundColor: this.hoverColor} : {}
       }
     },
     data () {
       return {
+        hovered: false,
         dset: DATASET
       }
     },
@@ -64,10 +75,6 @@
   .bd-list-row {
     cursor: pointer;
     border-bottom: 1px solid rgba(0,0,0,.1);
-  }
-
-  .bd-list-row:hover {
-    background-color: #faf9ff;
   }
 
   .bd-list-row img {

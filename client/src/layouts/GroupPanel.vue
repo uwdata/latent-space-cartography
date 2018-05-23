@@ -31,7 +31,7 @@
            @click="clickLogo(p)"
            @mouseover="hoverLogo(p)"
            @mouseout="unhoverLogo">
-        <list-row :p="p">
+        <list-row :p="p" hoverColor="#eee">
           <button class="close p-2"
                   @mouseover.stop=""
                   @click.stop="removeItem(p)">

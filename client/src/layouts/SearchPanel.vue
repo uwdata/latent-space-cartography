@@ -9,7 +9,8 @@
 
       <!--Results-->
       <div v-if="value && results.length" class="mt-2 ml-2 mr-2">
-        <list-row v-for="result in results" :p="result" style="border: 0"></list-row>
+        <list-row v-for="result in results" :p="result"
+                  style="border: 0" hoverColor="#ebdef3"></list-row>
       </div>
     </div>
 

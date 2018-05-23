@@ -64,7 +64,7 @@
     },
     methods: {
       clickClose () {
-        this.shared.detail = null
+        this.shared.detail_card = null
       },
       // helper
       badgeStyle (category) {

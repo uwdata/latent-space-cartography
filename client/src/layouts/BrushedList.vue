@@ -3,6 +3,7 @@
     <div class="card-header">Brushed</div>
     <div class="p-2">
       <div v-for="p in brushed" :key="p.i"
+           @click="clickItem(p)"
            @mouseover="onHighlight(p, $event)"
            @mouseout="onHighlight()">
         <list-row :p="p">
@@ -50,6 +51,10 @@
       },
       addAll () {
         _.each(this.brushed, (p) => this.addOne(p))
+      },
+      clickItem (p) {
+        store.state.detail_card = p
+        store.state.clicked_point = p
       },
       onHighlight (p, event) {
         if (timer_handle) {

@@ -194,7 +194,6 @@
         this.$emit('highlight', p.i)
       },
       unhoverLogo () {
-        store.state.detail_card = null
         this.$emit('highlight', null)
       },
 

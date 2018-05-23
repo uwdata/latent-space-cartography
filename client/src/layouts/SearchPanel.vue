@@ -9,8 +9,12 @@
 
       <!--Results-->
       <div v-if="value && results.length" class="mt-2 ml-2 mr-2">
-        <list-row v-for="result in results" :p="result"
-                  style="border: 0" hoverColor="#ebdef3"></list-row>
+        <div v-for="result in results"
+             @mouseover="onHighlight(result, $event)"
+             @mouseout="onHighlight()"
+             @click="clickResult(result)">
+          <list-row :p="result" style="border: 0" hoverColor="#ebdef3"></list-row>
+        </div>
       </div>
     </div>
 
@@ -60,6 +64,7 @@
   const col = 'platform'
 
   let timer_handle = null
+  let tooltip_handle = null
 
   export default {
     components: {ListRow},
@@ -82,16 +87,6 @@
           width: this.open ? '25%' : '0'
         }
       },
-//      matches () {
-//        if (!this.value) return []
-//        let re = new RegExp(this.value, 'i')
-//        return _.filter(this.meta, (p) => {
-//          if (this.filter !== ALL && p[col] !== this.filter) {
-//            return false
-//          }
-//          return re.test(p[this.by])
-//        })
-//      },
       results () {
         // only return the first N elements
         return this.matches.slice(0, MAX)
@@ -113,6 +108,12 @@
         u = _.filter(u, (uu) => uu) // discard null / empty value
         u.push(ALL)
         this.all_filter = u
+      },
+      by () {
+        this.matches = this.computeMatches()
+      },
+      filter () {
+        this.matches = this.computeMatches()
       }
     },
     data() {
@@ -139,6 +140,29 @@
           this.$emit('close')
         }
       },
+
+      clickResult (p) {
+        store.state.detail_card = p
+        store.state.clicked_point = p
+      },
+
+      // when a result row is hovered
+      onHighlight (p, event) {
+        if (tooltip_handle) {
+          clearTimeout(tooltip_handle)
+        }
+
+        if (p && event) {
+          tooltip_handle = setTimeout(() => {
+            p.clientX = event.clientX
+            p.clientY = event.clientY
+            store.state.detail = p
+          }, 1000)
+        } else {
+          store.state.detail = p
+        }
+      },
+
       // wait a bit until users finish typing a whole word
       scheduleSearch () {
         // cancel previous search request
@@ -160,10 +184,10 @@
 
         // schedule search
         timer_handle = setTimeout(() => {
-          console.log('searching', this.value)
           this.matches = this.computeMatches()
         }, 200)
       },
+
       // really perform the search
       computeMatches () {
         let re = new RegExp(this.value, 'i')
@@ -174,6 +198,7 @@
           return re.test(p[this.by])
         })
       },
+
       updateValue (value) {
         this.value = value
         this.scheduleSearch()

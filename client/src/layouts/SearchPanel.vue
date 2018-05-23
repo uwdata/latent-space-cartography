@@ -21,19 +21,24 @@
     <!--Toolbar-->
     <div class="p-3 bd-border-top" v-if="open">
       <div class="mb-2 d-flex">
+        <!--Search By -->
         <b-dropdown dropup size="sm" variant="light"
                     :text="`By ${by}`">
           <b-dropdown-item v-for="b in all_by" @click="by=b" :key="b">
             {{b}}
           </b-dropdown-item>
         </b-dropdown>
+
+        <!--Search In-->
         <b-dropdown dropup size="sm" variant="light"
-                    :text="`In all platforms`" class="ml-2">
-          <b-dropdown-item v-for="b in all_by" @click="by=b" :key="b">
-            {{b}}
+                    :text="filterText" class="ml-2">
+          <b-dropdown-item v-for="f in all_filter" @click="filter=f" :key="f">
+            {{f}}
           </b-dropdown-item>
         </b-dropdown>
       </div>
+
+      <!--Input-->
       <div>
         <input class="form-control" :value="value"
                placeholder="Search" v-focus
@@ -49,7 +54,11 @@
   import _ from 'lodash'
 
   const MAX = 50
+  const ALL = 'All'
   const all_by = ['name', 'codepoints', 'shortcode']
+  const col = 'platform'
+
+  let timer_handle = null
 
   export default {
     components: {ListRow},
@@ -72,23 +81,46 @@
           width: this.open ? '25%' : '0'
         }
       },
-      matches () {
-        if (!this.value) return []
-        let re = new RegExp(this.value, 'i')
-        return _.filter(this.meta, (p) => re.test(p[this.by]))
-      },
+//      matches () {
+//        if (!this.value) return []
+//        let re = new RegExp(this.value, 'i')
+//        return _.filter(this.meta, (p) => {
+//          if (this.filter !== ALL && p[col] !== this.filter) {
+//            return false
+//          }
+//          return re.test(p[this.by])
+//        })
+//      },
       results () {
         // only return the first N elements
         return this.matches.slice(0, MAX)
       },
       total () {
         return this.results.length < MAX ? this.results.length : `More than ${MAX}`
+      },
+      filterText () {
+        let which = this.filter === ALL ? `all ${col}s` : this.filter
+        return `In ${which}`
+      }
+    },
+    watch: {
+      meta () {
+        if (!this.meta.length) return
+
+        let u = _.uniqWith(this.meta, (a, b) => a[col] === b[col])
+        u = _.sortBy(_.map(u, (uu) => uu[col]))
+        u = _.filter(u, (uu) => uu) // discard null / empty value
+        u.push(ALL)
+        this.all_filter = u
       }
     },
     data() {
       return {
+        matches: [],
         by: all_by[0],
         all_by: all_by,
+        filter: ALL,
+        all_filter: [],
         value: '',
         shared: store.state
       }
@@ -106,8 +138,44 @@
           this.$emit('close')
         }
       },
+      // wait a bit until users finish typing a whole word
+      scheduleSearch () {
+        // cancel previous search request
+        if (timer_handle) {
+          clearTimeout(timer_handle)
+        }
+
+        // if search string is empty, update immediately
+        if (!this.value) {
+          this.matches = []
+          return
+        }
+
+        // hack so we don't have "no result" message in the middle
+        if (this.value.length === 1) {
+          this.matches = this.computeMatches()
+          return
+        }
+
+        // schedule search
+        timer_handle = setTimeout(() => {
+          console.log('searching', this.value)
+          this.matches = this.computeMatches()
+        }, 200)
+      },
+      // really perform the search
+      computeMatches () {
+        let re = new RegExp(this.value, 'i')
+        return  _.filter(this.meta, (p) => {
+          if (this.filter !== ALL && p[col] !== this.filter) {
+            return false
+          }
+          return re.test(p[this.by])
+        })
+      },
       updateValue (value) {
         this.value = value
+        this.scheduleSearch()
       }
     }
   }

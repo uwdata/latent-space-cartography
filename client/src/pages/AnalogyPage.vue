@@ -139,7 +139,7 @@
    */
   function lets_draw (points) {
     clear.call(this)
-//    points = _.slice(points, 0, TRAIN_SPLIT)
+//    points = _.slice(points, 0, 1000)
     let active = this.filter_func(points)
     this.scatter.setData(active)
     this.scatter.draw('#container')
@@ -380,21 +380,6 @@
     height: 32px;
   }
 
-  .vector-connector {
-    stroke-width: 0;
-    transition: all 0.5s;
-  }
-  .vector-connector.focused {
-    stroke-width: 2px;
-    stroke: #d62728;
-  }
-
-  .vector-dot {
-    transition: all 0.5s;
-  }
-  .vector-dot.focused {
-    stroke: #d62728 !important;
-  }
   /* ------- D3 STYLE END ------- */
 
   .loading-block {

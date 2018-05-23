@@ -64,7 +64,10 @@ class Dots {
       let img_size = this._computeImageSize(inside)
 
       // draw logos directly
-      parent.selectAll('.mark-img')
+      parent
+        .append('g')
+        .classed('mark-img-group', true)
+        .selectAll('.mark-img')
         .data(data)
         .enter()
         .append('image')

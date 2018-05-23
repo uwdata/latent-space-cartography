@@ -33,13 +33,18 @@ class Vectors {
     this._registerCallback()
   }
 
-  drawOne (vector) {
+  /**
+   * Draw a vector.
+   * @param vector
+   * @private
+   */
+  _drawOne (vector) {
     if (!vector) {
       return
     }
 
     let scales = this._scales
-    let img_size = 20
+    let img_size = _computeImageSize()
     let img_padding = 10
     let chart_height = img_size + img_padding + 5
 
@@ -53,13 +58,13 @@ class Vectors {
       .classed('vector-group', true)
       .on('mouseover', () => {moveToFront(group)})
 
-    // background
+    // line background
     this._drawLine(line, vector, group)
       .classed('vector-background', true)
       .style('stroke', this.background)
-      .style('stroke-opacity', 0.8)
+      .style('stroke-opacity', 1)
       .style('stroke-linecap', 'round')
-      .style('stroke-width', chart_height * 2)
+      .style('stroke-width', 10)
 
     // draw lines with different textures
     _.each(NEIGHBOR_BIN, (num, j) => {
@@ -83,8 +88,9 @@ class Vectors {
       .append('path')
       .classed('vector-connector', true)
       .attr('d', link)
-      .on('mouseover', _focusLoc)
-      .on('mouseout', _unfocusLoc)
+      .attr('stroke-width', 2)
+      .attr('stroke', '#eee')
+      .style('stroke-opacity', 0.9)
 
     // dot at each sampled location
     group.selectAll('.vector-dot')
@@ -98,8 +104,18 @@ class Vectors {
       .style('fill', '#fff')
       .style('stroke', (d) => d.neighbors > NEIGHBOR_BIN[3] ? '#222' : '#888')
       .style('stroke-width', 2)
-      .on('mouseover', _focusLoc)
-      .on('mouseout', _unfocusLoc)
+
+    // image background
+    let img_box = group.selectAll('.vector-img-box')
+      .data(vector)
+      .enter()
+      .append('rect')
+      .classed('vector-img-box', true)
+      .attr('fill', '#eee')
+      .attr('opacity', 0.9)
+      .attr('rx', 4)
+      .attr('ry', 4)
+    _styleImage(img_box, img_size + 4, img_padding - 2)
 
     // images
     let images = group.selectAll('.vector-img')
@@ -108,21 +124,7 @@ class Vectors {
       .append('image')
       .classed('vector-img', true)
       .attr('xlink:href', (d) => `/build/${d.image}`)
-      .on('mouseover', _focusLoc)
-      .on('mouseout', _unfocusLoc)
     _styleImage(images, img_size, img_padding)
-
-    function _focusLoc (which) {
-      match('.vector-dot', which).classed('focused', true)
-      match('.vector-connector', which).classed('focused', true)
-      // _styleImage(match('.vector-img', which), 64, img_padding)
-    }
-
-    function _unfocusLoc (which) {
-      match('.vector-dot', which).classed('focused', false)
-      match('.vector-connector', which).classed('focused', false)
-      // _styleImage(match('.vector-img', which), img_size, img_padding)
-    }
 
     function _styleImage(img, size, padding) {
       return img
@@ -130,6 +132,17 @@ class Vectors {
         .attr('y', (d) => scales.y(d.y) - size - padding)
         .attr('width', () => size)
         .attr('height', () => size)
+    }
+
+    function _computeImageSize () {
+      const size_min = 20
+      const size_max = 48
+
+      let x = scales.x(vector[0].x) - scales.x(vector[1].x)
+      let y = scales.y(vector[0].y) - scales.y(vector[1].y)
+      let gap = Math.sqrt(x * x + y * y)
+
+      return _.clamp(Math.floor(gap * 0.7), size_min, size_max)
     }
   }
 
@@ -146,7 +159,13 @@ class Vectors {
    */
   redraw () {
     d3.selectAll('.vector-group').remove()
-    _.each(this.vectors, (vector) => this.drawOne(vector))
+    _.each(this.vectors, (vector) => this._drawOne(vector))
+
+    if(this.vectors.length) {
+      // dim other marks
+      this._parent.selectAll('.mark-img-group')
+        .attr('opacity', 0.5)
+    }
   }
 
   /**

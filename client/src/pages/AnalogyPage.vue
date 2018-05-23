@@ -1,9 +1,16 @@
 <template>
   <div class="bd-outer">
+    <!--Search Panel-->
+    <search-panel :open="open_search" :button="$refs.btnSearch"
+                  v-on:close="open_search=false"></search-panel>
+
+    <!--Header-->
     <header class="navbar bd-navbar">
       <span class="ml-3" style="font-weight: 500;">Latent Space Explorer</span>
       <help-button class="ml-3"></help-button>
     </header>
+
+    <!--Loading Spinner-->
     <div v-if="loading"
          class="loading-block d-flex align-items-center justify-content-center">
       <div class="card w-25 h-25">
@@ -13,6 +20,8 @@
         </div>
       </div>
     </div>
+
+    <!--Main View-->
     <div class="row">
       <!--Detail Tooltip -->
       <detail-tip></detail-tip>
@@ -46,7 +55,10 @@
         <!--Footer-->
         <div class="bd-app-footer">
           <div class="m-3 text-left">
-            <b-dropdown :text="`Latent Dimensions: ${dim}`" variant="light">
+            <button class="btn btn-light" @click="open_search=true" ref="btnSearch">
+              <i class="fa fa-fw fa-search"></i>
+            </button>
+            <b-dropdown :text="`Latent Dimensions: ${dim}`" variant="light" class="ml-2">
               <b-dropdown-item v-for="d in all_dims" @click="changeDim(d)" :key="d">
                 {{d}}
               </b-dropdown-item>
@@ -98,6 +110,7 @@
   import _ from 'lodash'
   import VueLoading from 'vue-loading-template'
   import FilterDropdown from '../layouts/FilterDropdown.vue'
+  import SearchPanel from '../layouts/SearchPanel.vue'
 
   function clear () {
     // remove all nodes
@@ -168,6 +181,7 @@
 
   export default {
     components: {
+      SearchPanel,
       FilterDropdown,
       BrushedList,
       GroupPanel,
@@ -193,6 +207,7 @@
         perplexity: 30,
         all_perplexity: [5, 10, 30, 50, 100],
         filter_func: (d) => d,
+        open_search: false,
         loading: true,
         night: false,
         err: ''

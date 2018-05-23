@@ -1,9 +1,24 @@
 <template>
   <div class="bd-search-panel d-flex flex-column" :style="styles"
        v-click-outside="close">
-    <div class="h-100">
-      {{value}}
+    <div class="bd-search-panel-top">
+      <!--No results-->
+      <div v-if="value && !results.length" class="text-muted m-3">
+        No results found.
+      </div>
+
+      <!--Results-->
+      <div v-if="value && results.length" class="mt-2 ml-2 mr-2">
+        <list-row v-for="result in results" :p="result" style="border: 0"></list-row>
+      </div>
     </div>
+
+    <!--Count-->
+    <div class="pt-1 pb-1 pl-3 bd-search-count" v-if="open && total">
+      <small>{{total}} results found.</small>
+    </div>
+
+    <!--Toolbar-->
     <div class="p-3 bd-border-top" v-if="open">
       <div class="mb-2 d-flex">
         <b-dropdown dropup size="sm" variant="light"
@@ -30,10 +45,14 @@
 
 <script>
   import {store} from '../controllers/config'
+  import ListRow from './ListRow.vue'
+  import _ from 'lodash'
 
+  const MAX = 50
   const all_by = ['name', 'codepoints', 'shortcode']
 
   export default {
+    components: {ListRow},
     name: 'SearchPanel',
     props: {
       open: {
@@ -42,6 +61,9 @@
       },
       button: {
         required: true
+      },
+      meta: {
+        required: true
       }
     },
     computed: {
@@ -49,6 +71,18 @@
         return {
           width: this.open ? '25%' : '0'
         }
+      },
+      matches () {
+        if (!this.value) return []
+        let re = new RegExp(this.value, 'i')
+        return _.filter(this.meta, (p) => re.test(p[this.by]))
+      },
+      results () {
+        // only return the first N elements
+        return this.matches.slice(0, MAX)
+      },
+      total () {
+        return this.results.length < MAX ? this.results.length : `More than ${MAX}`
       }
     },
     data() {
@@ -90,6 +124,15 @@
     box-shadow: 2px 0 6px rgba(0, 0, 0, .1);
     transition: width .4s;
     z-index: 2000;
+  }
+
+  .bd-search-count {
+    background-color: #eee;
+  }
+
+  .bd-search-panel-top {
+    overflow-y: auto;
+    height: calc(100vh - 6rem);
   }
 
   .bd-border-top {

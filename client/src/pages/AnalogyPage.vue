@@ -1,7 +1,7 @@
 <template>
   <div class="bd-outer">
     <!--Search Panel-->
-    <search-panel :open="open_search" :button="$refs.btnSearch"
+    <search-panel :open="open_search" :button="$refs.btnSearch" :meta="suggestions"
                   v-on:close="open_search=false"></search-panel>
 
     <!--Header-->

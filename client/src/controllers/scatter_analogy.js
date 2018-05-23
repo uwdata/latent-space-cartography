@@ -83,6 +83,11 @@ class Scatter {
       .attr('width', outerWidth)
       .attr('height', outerHeight)
 
+    // Define filters for later use
+    let defs = svg.append('defs')
+
+    this._defineFilters(defs)
+
     // Zoom, brush and drag
     let zoomBeh = d3.zoom()
       .scaleExtent([0.5, 3])
@@ -173,6 +178,35 @@ class Scatter {
       // update dots
       that._dots.zoomEnd()
     }
+  }
+  
+  _defineFilters (defs) {
+    // Drop shadow
+    let filter = defs.append('filter')
+      .attr('id', 'shadow')
+      .attr('height', '200%')
+
+    filter.append('feGaussianBlur')
+      .attr('in', 'SourceAlpha')
+      .attr('stdDeviation', 1.7)
+      .attr('result', 'blur')
+
+    filter.append('feOffset')
+      .attr('in', 'blur')
+      .attr('dx', 0)
+      .attr('dy', 0)
+      .attr('result', 'offsetBlur')
+
+    filter.append('feFlood')
+      .attr('flood-color', '#3D4574')
+      .attr('flood-opacity', '0.5')
+      .attr('result', 'offsetColor')
+
+    filter.append('feComposite')
+      .attr('in', 'offsetColor')
+      .attr('in2', 'offsetBlur')
+      .attr('operator', 'in')
+      .attr('result', 'offsetBlur')
   }
 
   /**

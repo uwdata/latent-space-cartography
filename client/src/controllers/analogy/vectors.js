@@ -62,7 +62,7 @@ class Vectors {
     this._drawLine(line, vector, group)
       .classed('vector-background', true)
       .style('stroke', this.background)
-      .style('stroke-opacity', 1)
+      .style('stroke-opacity', 0.9)
       .style('stroke-linecap', 'round')
       .style('stroke-width', 10)
 
@@ -88,9 +88,7 @@ class Vectors {
       .append('path')
       .classed('vector-connector', true)
       .attr('d', link)
-      .attr('stroke-width', 2)
-      .attr('stroke', '#eee')
-      .style('stroke-opacity', 0.9)
+      .attr('stroke-width', 0)
 
     // dot at each sampled location
     group.selectAll('.vector-dot')
@@ -105,17 +103,15 @@ class Vectors {
       .style('stroke', (d) => d.neighbors > NEIGHBOR_BIN[3] ? '#222' : '#888')
       .style('stroke-width', 2)
 
-    // image background
-    let img_box = group.selectAll('.vector-img-box')
+    // image shadow
+    let shadow = group.selectAll('.vector-img-shadow')
       .data(vector)
       .enter()
-      .append('rect')
-      .classed('vector-img-box', true)
-      .attr('fill', '#eee')
-      .attr('opacity', 0.9)
-      .attr('rx', 4)
-      .attr('ry', 4)
-    _styleImage(img_box, img_size + 4, img_padding - 2)
+      .append('image')
+      .classed('vector-img-shadow', true)
+      .attr('xlink:href', (d) => `/build/${d.image}`)
+      .style('filter', 'url(#shadow)')
+    _styleImage(shadow, img_size, img_padding)
 
     // images
     let images = group.selectAll('.vector-img')

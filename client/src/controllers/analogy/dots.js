@@ -117,6 +117,10 @@ class Dots {
     this._parent.selectAll('.dot')
       .attr('cx', (d) => scales.x(d.x))
       .attr('cy', (d) => scales.y(d.y))
+    this._parent.selectAll('.halo')
+      .attr('cx', (d) => scales.x(d.x))
+      .attr('cy', (d) => scales.y(d.y))
+    this._positionText(this._parent.selectAll('text'))
 
     let img = this._parent.select('.mark-img')
 
@@ -248,24 +252,20 @@ class Dots {
     }
 
     if (!minimal) {
-      let t = null
-      d3.selectAll('text')
-        .each(function () {
-          // really ugly hack because text has no binding data
-          if (d3.select(this).text() === d.name) {
-            t = d3.select(this)
-          }
-        })
-      if (!t) {
-        this._parent.append('text')
-          .attr('x', () => Math.max(this._scales.x(d.x) - 30, 15))
-          .attr('y', () => Math.max(this._scales.y(d.y) - 15, 15))
-          .classed('focus-label', true)
-          .text(() => d.name)
-      } else {
-        t.classed('focus-label', true)
-      }
+      let t = this._parent.selectAll('.focus-label')
+        .data([d])
+        .enter()
+        .append('text')
+        .classed('focus-label', true)
+        .text((dd) => dd.name)
+      this._positionText(t)
     }
+  }
+
+  _positionText (text) {
+    text
+      .attr('x', (d) => Math.max(this._scales.x(d.x) - 30, 15))
+      .attr('y', (d) => Math.max(this._scales.y(d.y) - 15, 15))
   }
 
   /**

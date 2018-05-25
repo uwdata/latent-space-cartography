@@ -58,8 +58,8 @@ class Scales {
 
     this.x = x
     this.y = y
-    this.initialX = x
-    this.initialY = y
+    this.initialX = x.copy()
+    this.initialY = y.copy()
   }
 
   /**

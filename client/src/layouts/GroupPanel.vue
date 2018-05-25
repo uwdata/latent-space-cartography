@@ -201,6 +201,7 @@
       // interactions of the logo list
       clickLogo (p) {
         // TODO: center view
+        this.$emit('center', p.i)
         store.state.detail_card = p
       },
       hoverLogo (p) {

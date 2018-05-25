@@ -35,6 +35,7 @@ class Scatter {
     this.dispatch = d3.dispatch(
       'dot-focus-one',
       'dot-focus-set',
+      'dot-center',
       'toggle-background',
       'toggle-brushing',
       'zoom-view')
@@ -146,6 +147,12 @@ class Scatter {
       toggleBrushing()
     })
 
+    this.dispatch.on('dot-center', (d) => {
+      if (d) {
+        centerPoint(d)
+      }
+    })
+
     /**
      * =========================
      * Event handlers
@@ -158,6 +165,23 @@ class Scatter {
         // remove brush
         dot_brush.remove()
       }
+    }
+
+    function centerPoint (d) {
+      let xc = scales.width() / 2 - scales.x(d.x)
+      let yc = scales.height() / 2 - scales.y(d.y)
+
+      let rangeX = scales.x.range().map((n) => n - xc)
+      let rangeY = scales.y.range().map((n) => n - yc)
+
+      scales.x = scales.x.copy().domain(rangeX.map(scales.x.invert))
+      scales.y = scales.y.copy().domain(rangeY.map(scales.y.invert))
+
+      // update dots
+      that._dots.zoom()
+
+      // clear brush
+      dot_brush.clear()
     }
 
     function zoom () {
@@ -220,6 +244,14 @@ class Scatter {
 
   focusSet (points) {
     this.dispatch.call('dot-focus-set', this, points)
+  }
+
+  /**
+   * Center around the point.
+   * @param point
+   */
+  centerDot (point) {
+    this.dispatch.call('dot-center', this, point)
   }
 
   /**

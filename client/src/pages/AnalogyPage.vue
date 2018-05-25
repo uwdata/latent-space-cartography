@@ -84,10 +84,11 @@
       <!--Right Panel-->
       <div class=" bd-right col-3">
         <group-panel :points="suggestions" :view_state="view_state"
-                      v-on:highlight="onHighlight"
-                      v-on:subset="onToggleSubset"
-                      v-on:reproject="reproject"
-                      v-on:original="showOriginal"></group-panel>
+                     v-on:center="onCenter"
+                     v-on:highlight="onHighlight"
+                     v-on:subset="onToggleSubset"
+                     v-on:reproject="reproject"
+                     v-on:original="showOriginal"></group-panel>
         <vector-panel :latent_dim="dim" :chart="scatter" :view_state="view_state"
                       v-on:focus="focusVector"
                       v-on:reset="showOriginal"></vector-panel>
@@ -319,6 +320,9 @@
        */
       onHighlight (i) {
         this.scatter.focusDot(indexToPoint(i, this.points))
+      },
+      onCenter (i) {
+        this.scatter.centerDot(indexToPoint(i, this.points))
       },
 
       // FIXME: new points won't appear

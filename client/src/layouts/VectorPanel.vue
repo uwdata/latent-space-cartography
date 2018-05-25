@@ -88,6 +88,10 @@
       },
       chart: {
         required: true
+      },
+      view_state: {
+        type: Number,
+        required: true
       }
     },
     components: {
@@ -103,6 +107,18 @@
         vectors: [],
         focus: null,
         shared: store.state
+      }
+    },
+    watch: {
+      // when projection changes, get out of the vector view
+      view_state () {
+        if (this.view_state !== 2) {
+          if (this.chart._vectors) {
+            this.chart._vectors.clearData()
+            this.chart._vectors.redraw()
+          }
+          this.focus = null
+        }
       }
     },
     mounted: function () {

@@ -63,13 +63,14 @@
                 {{d}}
               </b-dropdown-item>
             </b-dropdown>
-            <b-dropdown :text="`Projection: ${projection}`" variant="light" class="ml-2">
+            <b-dropdown :text="`Projection: ${projection}`" variant="light" class="ml-2"
+                        v-if="view_state===0">
               <b-dropdown-item v-for="pr in all_projections" :key="pr" @click="changeProjection(pr)">
                 {{pr}}
               </b-dropdown-item>
             </b-dropdown>
             <b-dropdown :text="`Perplexity: ${perplexity}`" variant="light" class="ml-2"
-                        v-if="projection === 't-SNE'">
+                        v-if="projection === 't-SNE' && view_state === 0">
               <b-dropdown-item v-for="perp in all_perplexity" @click="changePerp(perp)" :key="perp">
                 {{perp}}
               </b-dropdown-item>
@@ -82,12 +83,12 @@
 
       <!--Right Panel-->
       <div class=" bd-right col-3">
-        <group-panel :points="suggestions"
+        <group-panel :points="suggestions" :view_state="view_state"
                       v-on:highlight="onHighlight"
                       v-on:subset="onToggleSubset"
                       v-on:reproject="reproject"
                       v-on:original="showOriginal"></group-panel>
-        <vector-panel :latent_dim="dim" :chart="scatter"
+        <vector-panel :latent_dim="dim" :chart="scatter" :view_state="view_state"
                       v-on:focus="focusVector"
                       v-on:reset="showOriginal"></vector-panel>
       </div>
@@ -159,6 +160,7 @@
   }
 
   function lets_load (callback) {
+    this.view_state = 0
     clear.call(this)
     this.loading = true
     let func = this.projection === 't-SNE' ? store.getTsnePoints : store.getPcaPoints
@@ -200,6 +202,7 @@
         suggestions: [],
         points: [],
         brushed: [],
+        view_state: 0, // 0 - main, 1 - subset PCA, 2 - vector PCA
         dim: 32,
         all_dims: [32, 64, 128, 256, 512, 1024],
         projection: 't-SNE',
@@ -209,7 +212,6 @@
         filter_func: (d) => d,
         open_search: false,
         loading: true,
-        night: false,
         err: ''
       }
     },
@@ -268,6 +270,7 @@
       // redo PCA using only selected points
       reproject (indices) {
         this.loading = true
+        this.view_state = 1
         store.customPca(this.dim, indices)
           .then((points) => {
             this.loading = false
@@ -283,6 +286,7 @@
 
       focusVector (vector) {
         this.loading = true
+        this.view_state = 2
         store.focusVector(this.dim, vector.start, vector.end)
           .then((all) => {
             // 1. draw points

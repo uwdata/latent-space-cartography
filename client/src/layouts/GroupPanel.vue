@@ -95,6 +95,10 @@
       points: {
         type: Array,
         required: true
+      },
+      view_state: {
+        type: Number,
+        required: true
       }
     },
     components: {
@@ -109,6 +113,13 @@
         shared: store.state,
         show_search: CONFIG.search.simple,
         view_mode: 1 // 1 - All, 2 - Subset, 3 - Reprojected
+      }
+    },
+    watch: {
+      view_state () {
+        if (this.view_state !== 1) {
+          this.view_mode = 1
+        }
       }
     },
     computed: {

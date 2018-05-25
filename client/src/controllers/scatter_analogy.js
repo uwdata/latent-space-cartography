@@ -95,9 +95,6 @@ class Scatter {
       .on('end', zoomEnd)
     let dot_brush = new DotBrush(data, scales, emitter)
 
-    svg.append('g')
-      .attr('transform', `translate(${margin.left},${margin.top})`)
-
     // Blank
     let rect = svg.append('rect')
       .attr('width', scales.width())
@@ -105,7 +102,7 @@ class Scatter {
       .attr('fill', this.background)
 
     // Brush & Zoom
-    rect.call(zoomBeh)
+    svg.call(zoomBeh)
     toggleBrushing()
 
     // Object Container
@@ -138,7 +135,7 @@ class Scatter {
     })
 
     this.dispatch.on('zoom-view', (factor) => {
-      rect.call(zoomBeh.scaleBy, factor)
+      svg.call(zoomBeh.scaleBy, factor)
     })
 
     this.dispatch.on('toggle-brushing', () => {

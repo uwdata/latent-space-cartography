@@ -472,6 +472,19 @@ class Store {
   }
 
   /**
+   * Add one or more point indices to the selected array.
+   * @param is Array An array of indices to be added.
+   */
+  addToSelected (is) {
+    let dict = _.zipObject(this.selected, _.map(this.selected, () => true))
+    _.each(_.uniq(is), (i) => {
+      if (!dict[i]) {
+        this.selected.push(i)
+      }
+    })
+  }
+
+  /**
    * Perform a join between given points array and meta, with key 'i'
    * @param points
    * @private

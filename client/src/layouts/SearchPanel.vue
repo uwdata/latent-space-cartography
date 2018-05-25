@@ -150,12 +150,10 @@
 
       // Add result to the selected list
       addOne (p) {
-        if (!_.includes(store.selected, p.i)) {
-          store.selected.push(p.i)
-        }
+        store.addToSelected([p.i])
       },
       addAll () {
-        _.each(this.matches, (p) => this.addOne(p))
+        store.addToSelected(_.map(this.matches, (p) => p.i))
       },
 
       // when a result row is clicked

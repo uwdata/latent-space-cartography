@@ -13,7 +13,7 @@
            @click="clickItem(p)"
            @mouseover="onHighlight(p, $event)"
            @mouseout="onHighlight()">
-        <list-row :p="p">
+        <list-row :p="p" style="border: 0;">
           <button class="close p-2" style="font-size:1em;" @mouseover.stop="" @click.stop="addOne(p)">
             <i class="fa fa-plus"></i>
           </button>
@@ -50,12 +50,10 @@
     methods: {
       // Add brushed points to the selected list
       addOne (p) {
-        if (!_.includes(store.selected, p.i)) {
-          store.selected.push(p.i)
-        }
+        store.addToSelected([p.i])
       },
       addAll () {
-        _.each(this.brushed, (p) => this.addOne(p))
+        store.addToSelected(_.map(this.brushed, (p) => p.i))
       },
       clickItem (p) {
         store.state.detail_card = p

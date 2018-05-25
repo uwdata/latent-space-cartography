@@ -333,6 +333,11 @@
 </script>
 
 <style>
+  html, body {
+    height: 100%;
+    overflow: hidden;
+  }
+
   .bd-outer {
     overflow-y:hidden;
     overflow-x:hidden;

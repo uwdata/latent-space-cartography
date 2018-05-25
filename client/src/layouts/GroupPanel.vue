@@ -1,18 +1,17 @@
 <template>
-  <div v-if="shared.tab === 0">
+  <div v-if="shared.tab === 0" class="d-flex flex-column bd-panel-right">
     <!--Tabs-->
-    <b-nav justified tabs class="ml-3 mr-3 mt-1">
+    <b-nav justified tabs class="ml-3 mr-3 mt-1 bd-panel-tab">
       <b-nav-item active>Groups</b-nav-item>
       <b-nav-item @click="clickTab">Vectors</b-nav-item>
     </b-nav>
 
     <!--Top Division-->
-    <div class="m-3">
+    <div class="p-3 bd-border-bottom" v-if="show_search">
       <auto-complete v-model="selection" :points="points" hint="Search a brand ..."
                      v-on:chosen="addItem"
                      v-on:tentative="hoverItem"></auto-complete>
     </div>
-    <hr>
 
     <!--Hint-->
     <div v-if="!selected.length" class="m-5 d-flex align-items-center bd-logo-list">
@@ -25,7 +24,7 @@
     </div>
 
     <!--Logo List-->
-    <div v-if="selected.length" class="m-3 bd-logo-list">
+    <div v-if="selected.length" class="bd-logo-list">
       <p>
         <small class="text-muted">{{selected.length}} total</small>
       </p>
@@ -34,7 +33,7 @@
            @mouseover="hoverLogo(p)"
            @mouseout="unhoverLogo">
         <list-row :p="p" hoverColor="#eee">
-          <button class="close p-2"
+          <button class="close p-2 mr-2"
                   @mouseover.stop=""
                   @click.stop="removeItem(p)">
             <span>&times;</span>
@@ -45,7 +44,7 @@
 
     <!--Footer-->
     <div v-if="selected.length" class="bd-panel-footer p-3">
-      <div class="d-flex justify-content-between">
+      <div class="d-flex justify-content-between bd-panel-footer-margin">
         <!--View Buttons-->
         <div class="btn-group btn-group-sm d-flex w-100">
           <b-btn class="btn btn-outline-secondary w-100"
@@ -85,7 +84,7 @@
 <script>
   import AutoComplete from './AutoComplete.vue'
   import GroupSaveModal from './GroupSaveModal.vue'
-  import {store} from '../controllers/config'
+  import {store, CONFIG} from '../controllers/config'
   import _ from 'lodash'
   import ListRow from './ListRow.vue'
 
@@ -108,6 +107,7 @@
         selection: '',
         selected: store.selected,
         shared: store.state,
+        show_search: CONFIG.search.simple,
         view_mode: 1 // 1 - All, 2 - Subset, 3 - Reprojected
       }
     },
@@ -208,13 +208,31 @@
 </script>
 
 <style>
+  .bd-panel-right {
+    height: calc(100vh - 4rem);
+    overflow-y: hidden;
+  }
+
   .bd-logo-list {
     overflow-y: auto;
-    height: calc(100vh - 17.9rem);
+    height: calc(100vh - 4rem);
+    margin: 1rem 0.5rem 0;
   }
 
   .bd-panel-footer {
     box-shadow: 0.5rem 0 2rem rgba(0,0,0,.03);
     border-top: 1px solid rgba(0,0,0,.1);
+  }
+
+  .bd-panel-footer-margin {
+    margin-bottom: 9px;
+  }
+
+  .bd-border-bottom {
+    border-bottom: 1px solid rgba(0,0,0,.1);
+  }
+
+  .bd-panel-tab {
+    min-height: 42px;
   }
 </style>

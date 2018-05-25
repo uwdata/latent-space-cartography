@@ -3,36 +3,37 @@ import Store from '../controllers/store'
 const config_logo = {
   dataset: 'logo',
   train_split: 15000,
-  ext: 'jpg'
+  ext: 'jpg',
+  schema: {
+    'meta': ['i', 'name', 'mean_color', 'source', 'industry']
+  },
+  search: {
+    simple: true
+  }
 }
 
 const config_emoji = {
   dataset: 'emoji',
   train_split: 13500,
-  ext: 'png'
+  ext: 'png',
+  schema: {
+    'meta': ['i','name', 'mean_color', 'category', 'platform', 'version', 'codepoints', 'shortcode']
+  },
+  search: {
+    simple: false,
+    by: ['name', 'codepoints', 'shortcode'],
+    filter: 'platform'
+  }
 }
 
 /**
  * Toggle dataset here!
  */
-let c = config_emoji
+let CONFIG = config_emoji
 
 const DEBUG = process.env.NODE_ENV === 'development'
-const DATASET = c.dataset
-const TRAIN_SPLIT = c.train_split
-const IMG_EXT = c.ext
-
-/**
- * Database schemas, keyed by dataset name first, then table name.
- */
-let SCHEMAS = {}
-
-SCHEMAS[config_logo.dataset] = {
-  'meta': ['i', 'name', 'mean_color', 'source', 'industry']
-}
-SCHEMAS[config_emoji.dataset] = {
-  'meta': ['i','name', 'mean_color', 'category', 'platform', 'version', 'codepoints', 'shortcode']
-}
+const DATASET = CONFIG.dataset
+const TRAIN_SPLIT = CONFIG.train_split
 
 /**
  * Only outputs if we are in dev build.
@@ -50,10 +51,9 @@ let store = new Store()
 
 export {
   DEBUG,
-  TRAIN_SPLIT,
-  IMG_EXT,
+  CONFIG,
   DATASET,
-  SCHEMAS,
+  TRAIN_SPLIT,
   store,
   log_debug
 }

@@ -60,14 +60,14 @@
 </template>
 
 <script>
-  import {store} from '../controllers/config'
+  import {store, CONFIG} from '../controllers/config'
   import ListRow from './ListRow.vue'
   import _ from 'lodash'
 
   const MAX = 50
   const ALL = 'All'
-  const all_by = ['name', 'codepoints', 'shortcode']
-  const col = 'platform'
+  const all_by = CONFIG.search.by
+  const col = CONFIG.search.filter
 
   let timer_handle = null
   let tooltip_handle = null

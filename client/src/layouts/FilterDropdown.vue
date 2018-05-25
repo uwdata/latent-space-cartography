@@ -1,6 +1,6 @@
 <template>
   <div v-if="ready" class="d-inline-block float-right">
-    <b-dropdown v-for="col in cols" :text="getText(col)"
+    <b-dropdown v-for="col in cols" :text="getText(col)" :key="col"
                 variant="light" class="ml-2">
       <div class="d-none">{{redraw}}</div>
       <b-dropdown-item v-for="d in all[col]" @click="clickOption(col, d)" :key="d">
@@ -54,7 +54,8 @@
     },
     methods: {
       getText (col) {
-        return `${_.startCase(col)}: ${this.active[col]}`
+        let prefix = this.active[col] === ALL ? `${_.startCase(col)}: ` : ''
+        return `${prefix}${this.active[col]}`
       },
       clickOption (col, d) {
         this.redraw++

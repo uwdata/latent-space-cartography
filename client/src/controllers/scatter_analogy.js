@@ -111,6 +111,10 @@ class Scatter {
       .attr('width', scales.width())
       .attr('height', scales.height())
 
+    // Halo Layer
+    objects.append('g')
+      .classed('halo_layer', true)
+
     // Dots
     this._dots = new Dots(scales, objects, this.dot_radius,
       this.dot_color, this.mark_type)

@@ -210,18 +210,44 @@ class Dots {
   }
 
   /**
+   * Draw a halo in the background layer around a dot.
+   * @param d Object The data point.
+   * @private
+   */
+  _drawHalo (d) {
+    let layer = this._parent.select('.halo_layer')
+    if (!d) {
+      layer.selectAll('.halo').remove()
+    } else {
+      layer.selectAll('.halo')
+        .data([d])
+        .enter()
+        .append('circle')
+        .classed('halo', true)
+        .attr('r', () => 20)
+        .attr('cx', (d) => this._scales.x(d.x))
+        .attr('cy', (d) => this._scales.y(d.y))
+        .style('fill', () => '#ebdef3')
+    }
+  }
+
+  /**
    * Focus one dot.
    * @param d
    * @param dot
-   * @param hideText
+   * @param minimal Boolean Whether we'll use elaborate strategy to draw attention.
    * @private
    */
-  _focusDot (d, dot, hideText) {
+  _focusDot (d, dot, minimal) {
     dot.attr('r', () => this.radius * 2)
       .classed('focused', true)
     moveToFront(dot)
 
-    if (!hideText) {
+    if (!minimal) {
+      this._drawHalo(d)
+    }
+
+    if (!minimal) {
       let t = null
       d3.selectAll('text')
         .each(function () {
@@ -247,6 +273,7 @@ class Dots {
    * @private
    */
   _unfocusDot () {
+    this._drawHalo()
     d3.selectAll('.dot.focused').attr('r', this.radius)
     d3.selectAll('.focus-label:not(.focused-set)').remove()
     d3.selectAll('.focus-label').classed('focus-label', false)

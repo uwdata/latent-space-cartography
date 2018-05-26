@@ -91,6 +91,11 @@
     z-index: 1000;
   }
 
+  .chart-btn-group .btn-group-sm {
+    background-color: #fff;
+    border-radius: 3px;
+  }
+
   .chart-btn {
     color: #8c858d;
     border-color: #8c858d;

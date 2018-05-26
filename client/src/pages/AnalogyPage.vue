@@ -27,9 +27,9 @@
       <detail-tip></detail-tip>
 
       <div class="col-9 pr-0">
-        <div class="row mr-0">
+        <div class="mr-0">
           <!--Left Panel-->
-          <div class="col-4 bd-left">
+          <div class="bd-left ml-2">
             <!--Detail Card-->
             <detail-card></detail-card>
 
@@ -38,11 +38,8 @@
           </div>
 
           <!--Main Drawing-->
-          <div class="col-8 pr-0 pl-0">
+          <div class="pr-0 pl-0">
             <div class="d-flex justify-content-center align-items-center">
-              <!--Detail Tooltip -->
-              <!--<detail-tip></detail-tip>-->
-
               <!--SVG-->
               <div id="container" ref="chart"></div>
 
@@ -365,8 +362,12 @@
   }
 
   .bd-left {
-    /*border-right: 1px solid rgba(0,0,0,.1);*/
-    height: calc(100vh - 8.56rem) !important;
+    position: absolute;
+    z-index: 1000;
+    top: 0;
+    left: 0;
+    width: calc(25vw);
+    max-height: calc(100vh - 8.56rem) !important;
     overflow-y: auto;
   }
 

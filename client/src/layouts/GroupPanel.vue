@@ -247,4 +247,12 @@
   .bd-panel-tab {
     min-height: 42px;
   }
+
+  /*override*/
+  .nav-item a {
+    color: #6733cb;
+  }
+  .nav-item a:hover{
+    color: #4b2e83;
+  }
 </style>

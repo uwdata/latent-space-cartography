@@ -41,7 +41,7 @@
       </div>
 
       <!--Vector List-->
-      <div class="bd-vector-list m-3 mt-4">
+      <div class="bd-vector-list p-3 pt-4">
         <div v-for="v in vectors" @click="focusVector(v)"
              class="d-flex bd-vector">
           <div class="mr-2 d-flex flex-column">

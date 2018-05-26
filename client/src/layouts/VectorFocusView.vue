@@ -1,7 +1,7 @@
 <template>
   <div>
     <!--Top Division-->
-    <div class="d-flex">
+    <div class="d-flex bd-border-bottom">
       <!--Back Button-->
       <div @click="clickBack" title="Back to Vector List"
            class="bd-btn-trans p-3" v-b-tooltip.hover>
@@ -21,13 +21,13 @@
         </div>
       </div>
     </div>
-    <hr class="mt-0">
 
     <!--Main View-->
     <div class="bd-focus-panel-body">
-      <div class="d-flex m-3">
+      <div class="d-flex m-3 bd-vector-groups">
         <!--Start Group-->
-        <div class="bd-panel-card bd-pointer" @click="viewGroup(focus.list_start)">
+        <div class="bd-panel-card bd-pointer w-50"
+             @click="viewGroup(focus.list_start)">
           <div>
             <b>Start:</b>
             <div class="text-truncate">{{focus.alias_start}}</div>
@@ -44,7 +44,8 @@
         </div>
 
         <!--End Group-->
-        <div class="bd-panel-card bd-pointer ml-3" @click="viewGroup(focus.list_end)">
+        <div class="bd-panel-card bd-pointer ml-3 w-50"
+             @click="viewGroup(focus.list_end)">
           <div>
             <b>End:</b>
             <div class="text-truncate">{{focus.alias_end}}</div>
@@ -58,22 +59,6 @@
               </small>
             </div>
           </div>
-        </div>
-      </div>
-
-      <!--Apply Analogy-->
-      <div class="bd-panel-card m-3" v-if="detail">
-        <div class="d-flex">
-          <div class="mr-2">
-            <img :src="imageUrl(detail.i)" style="width: 3rem; height: 3rem;" />
-          </div>
-          <div>
-            <b>Selected:</b>
-            <div class="text-truncate">{{detail.name}}</div>
-          </div>
-        </div>
-        <div class="mt-3">
-          <button class="btn btn-light btn-block" @click="applyAnalogy">Apply Analogy</button>
         </div>
       </div>
 
@@ -95,6 +80,16 @@
             <span class="text-muted ml-2">{{d.neighbors}}</span>
           </div>
         </div>
+      </div>
+    </div>
+
+    <!--Footer-->
+    <div class="bd-panel-footer d-flex justify-content-center" v-if="detail">
+      <div class="mt-3">
+        <button class="btn btn-light" @click="applyAnalogy">Apply Analogy Vector to</button>
+      </div>
+      <div class="ml-1 mt-3 bd-pointer" @click="applyAnalogy">
+        <img :src="imageUrl(detail.i)" class="bd-footer-img" />
       </div>
     </div>
   </div>
@@ -197,6 +192,10 @@
     background-color: #eee;
   }
 
+  .bd-vector-groups {
+    width: calc(25vw - 3rem);
+  }
+
   .bd-panel-card {
     border: #ddd 1px solid;
     padding: 15px 15px 20px;
@@ -213,8 +212,13 @@
   }
 
   .bd-focus-panel-body {
-    height: calc(100vh - 12rem);
+    height: calc(100vh - 15rem);
     overflow-y: auto;
+  }
+
+  .bd-footer-img {
+    width: 2.5rem;
+    height: 2.5rem;
   }
 
   .img-24 {

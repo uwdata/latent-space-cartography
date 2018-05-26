@@ -42,8 +42,16 @@
 
       <!--Vector List-->
       <div class="bd-vector-list p-3 pt-4">
-        <div v-for="v in vectors" @click="focusVector(v)"
-             class="d-flex bd-vector">
+        <div class="h-100 d-flex flex-column justify-content-center"
+             v-if="loading_vectors">
+          <div>
+            <vue-loading type="spiningDubbles" color="#6c757d"
+                         :size="{ width: '3rem', height: '3rem' }"></vue-loading>
+            <div class="mt-4 text-center text-muted">Loading Vectors</div>
+          </div>
+        </div>
+        <div v-if="!loading_vectors" v-for="v in vectors"
+             class="d-flex bd-vector"  @click="focusVector(v)">
           <div class="mr-2 d-flex flex-column">
             <i class="fa fa-fw fa-circle-o bd-arrow-end mt-1"></i>
             <div class="bd-arrow-vertical h-100"></div>
@@ -78,6 +86,7 @@
   import GroupModal from './GroupModal.vue'
   import GroupThumb from './GroupThumbnail.vue'
   import VectorFocus from './VectorFocusView.vue'
+  import VueLoading from 'vue-loading-template'
 
   export default {
     name: 'VectorPanel',
@@ -95,6 +104,7 @@
       }
     },
     components: {
+      VueLoading,
       GroupModal,
       GroupThumb,
       VectorFocus
@@ -106,7 +116,8 @@
         which: 'start',
         vectors: [],
         focus: null,
-        shared: store.state
+        shared: store.state,
+        loading_vectors: false
       }
     },
     watch: {
@@ -126,10 +137,13 @@
     },
     methods: {
       fetchVectors () {
+        this.loading_vectors = true
         store.getVectors()
           .then((vectors) => {
+            this.loading_vectors = false
             this.vectors = vectors
           }, (e) => {
+            this.loading_vectors = false
             alert(e)
           })
       },

@@ -84,12 +84,22 @@
     </div>
 
     <!--Footer-->
-    <div class="bd-panel-footer d-flex justify-content-center" v-if="detail">
-      <div class="mt-3">
-        <button class="btn btn-light" @click="applyAnalogy">Apply Analogy Vector to</button>
+    <div class="bd-panel-footer" v-if="detail">
+      <!--Apply Analogy-->
+      <div class="d-flex justify-content-center" v-if="!loading_analogy">
+        <div class="mt-3">
+          <button class="btn btn-light" @click="applyAnalogy">Apply Analogy Vector to</button>
+        </div>
+        <div class="ml-1 mt-3 bd-pointer" @click="applyAnalogy">
+          <img :src="imageUrl(detail.i)" class="bd-footer-img" />
+        </div>
       </div>
-      <div class="ml-1 mt-3 bd-pointer" @click="applyAnalogy">
-        <img :src="imageUrl(detail.i)" class="bd-footer-img" />
+
+      <!--Loading-->
+      <div v-if="loading_analogy"
+           class="d-flex justify-content-center mt-3">
+        <vue-loading type="bars" color="#4b2e83"
+                     :size="{ width: '2rem', height: '1rem' }"></vue-loading>
       </div>
     </div>
   </div>
@@ -98,9 +108,11 @@
 <script>
   import {store} from '../controllers/config'
   import _ from 'lodash'
+  import VueLoading from 'vue-loading-template'
 
   export default {
     name: 'VectorFocusView',
+    components: {VueLoading},
     props: {
       latent_dim: {
         type: Number,
@@ -118,7 +130,8 @@
         shared: store.state,
         totalImage: 5,
         analogy: null,
-        original: null
+        original: null,
+        loading_analogy: false
       }
     },
     computed: {
@@ -163,14 +176,17 @@
       applyAnalogy () {
         // FIXME: hack
         this.original = this.focus.line
+        this.loading_analogy = true
 
         store.applyAnalogy(this.latent_dim, this.detail.i,
           this.focus.start, this.focus.end)
           .then((line) => {
+            this.loading_analogy = false
             this.analogy = line
             this.chart._vectors.setData(line)
             this.chart._vectors.redraw()
           }, (e) => {
+            this.loading_analogy = false
             alert(e)
           })
       },

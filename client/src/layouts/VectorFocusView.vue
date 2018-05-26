@@ -24,7 +24,7 @@
 
     <!--Main View-->
     <div class="bd-focus-panel-body">
-      <div class="d-flex m-3 bd-vector-groups">
+      <div class="m-3 d-flex bd-vector-groups">
         <!--Start Group-->
         <div class="bd-panel-card bd-pointer w-50"
              @click="viewGroup(focus.list_start)">
@@ -64,18 +64,25 @@
 
       <!--Vector Details-->
       <div class="d-flex m-3" v-if="analogy && original">
-        <div class="w-50 d-flex flex-column mt-3">
-          <p class="text-right"><b>Original</b></p>
+        <!--Original-->
+        <div class="w-50 d-flex mt-3"
+             :class="{'flex-column-reverse': flipped, 'flex-column': !flipped}">
+          <p class="text-right" v-if="!flipped"><b>Original</b></p>
           <div v-for="d in original" class="div-48 text-right">
             <span class="text-muted mr-2">{{d.neighbors}}</span>
             <img :src="imageUrl(d.nearest)" class="img-24 mr-2"/>
             <img :src="`/build/${d.image}`" class="img-48" />
           </div>
+
+          <!--when flipped, everything is in reverse-->
+          <div class="div-48" v-if="flipped"><div class="img-48"></div></div>
+          <p class="text-right" v-if="flipped"><b>Original</b></p>
         </div>
+        <!--Analogy-->
         <div class="w-50 d-flex flex-column mt-3 ml-3">
           <p><b>Analogy</b></p>
           <div v-for="d in analogy" class="div-48">
-            <img :src="`/build/${d.image}`" class="img-48" />
+            <img :src="`/build/${d.image}?${flipped}`" class="img-48" />
             <img :src="imageUrl(d.nearest)" class="img-24 ml-2"/>
             <span class="text-muted ml-2">{{d.neighbors}}</span>
           </div>
@@ -88,10 +95,9 @@
       <!--Apply Analogy-->
       <div class="d-flex justify-content-center" v-if="!loading_analogy">
         <div class="mt-3">
-          <button class="btn btn-light" @click="applyAnalogy">Apply Analogy Vector to</button>
-        </div>
-        <div class="ml-1 mt-3 bd-pointer" @click="applyAnalogy">
+          <button class="btn btn-light" @click="applyAnalogy()">Apply Analogy</button>
           <img :src="imageUrl(detail.i)" class="bd-footer-img" />
+          <button class="btn btn-light" @click="applyAnalogy(true)">Reverse Analogy</button>
         </div>
       </div>
 
@@ -131,6 +137,7 @@
         totalImage: 5,
         analogy: null,
         original: null,
+        flipped: false,
         loading_analogy: false
       }
     },
@@ -152,6 +159,8 @@
         this.$emit('back')
       },
 
+      // delete this vector
+      // TODO: ask user to confirm
       clickDelete () {
         store.deleteVector(this.focus.id)
           .then(() => {
@@ -173,15 +182,18 @@
         store.state.tab = 0
       },
 
-      applyAnalogy () {
+      applyAnalogy (flipped = false) {
         // FIXME: hack
         this.original = this.focus.line
         this.loading_analogy = true
 
-        store.applyAnalogy(this.latent_dim, this.detail.i,
-          this.focus.start, this.focus.end)
+        let start = flipped ? this.focus.end : this.focus.start
+        let end = flipped ? this.focus.start : this.focus.end
+
+        store.applyAnalogy(this.latent_dim, this.detail.i, start, end)
           .then((line) => {
             this.loading_analogy = false
+            this.flipped = flipped
             this.analogy = line
             this.chart._vectors.setData(line)
             this.chart._vectors.redraw()
@@ -250,5 +262,16 @@
   .div-48 {
     line-height: 48px;
     font-size: 0.7em;
+  }
+
+  .btn-outline-theme {
+    color: #4b2e83;
+    background-color: transparent;
+    border-color: #4b2e83;
+  }
+
+  .btn-outline-theme.active {
+    color: #fff;
+    background-color: #4b2e83;
   }
 </style>

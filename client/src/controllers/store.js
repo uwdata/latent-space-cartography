@@ -38,6 +38,13 @@ class Store {
     this.latent_dim = 32
 
     /**
+     * Display help information in prominent places.
+     */
+    this.tutorial = {
+      vector: true
+    }
+
+    /**
      * Coordination between UI components
      */
     this.state = {

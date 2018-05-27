@@ -14,12 +14,15 @@
     </div>
 
     <!--Hint-->
-    <div v-if="!selected.length" class="m-5 d-flex align-items-center bd-logo-list">
-      <div>
-        <div class="text-muted text-center">
-          Start by brushing the dots, or searching for a brand name!
+    <div v-if="!selected.length" class="m-3 d-flex align-items-center bd-logo-list">
+      <div class="text-center w-100 mb-5">
+        <button class="mb-4 btn btn-outline-warning" v-b-modal.modal-save>
+          Load
+        </button>
+        <div class="text-muted">
+          Start by brushing or searching!
         </div>
-        <button class="w-100 mt-3 btn btn-warning" v-b-modal.modal-save>Load</button>
+
       </div>
     </div>
 

@@ -62,6 +62,35 @@
         </div>
       </div>
 
+      <!--Tutorial-->
+      <div class="m-3" v-if="need_help && tutorial.vector">
+        <div class="bd-panel-card">
+          <div class="mb-2 text-center"><b>Pro Tips</b></div>
+          <div style="font-size: 0.85rem">
+            <div>
+              The vector lives in the multi-dimensional latent space.
+              It travels between the centroid of the start and end group,
+              walking in constant steps to generate those images.
+            </div>
+            <div class="mt-3">
+              To project to 2D, the X axis follows the vector direction,
+              and the Y axis is the orthogonal 1st Principal Component.
+            </div>
+          </div>
+          <div class="mt-3 text-right">
+            <button class="btn btn-link btn-sm"
+                    @click="tutorial.vector=false">Don't show again</button>
+            <button class="btn btn-info btn-sm ml-2"
+                    @click="need_help=false">Gotcha</button>
+          </div>
+        </div>
+      </div>
+
+      <!--Hint-->
+      <div v-if="!detail" class="m-5 text-muted text-center">
+        Select a point (click, or search) to apply this attribute vector.
+      </div>
+
       <!--Vector Details-->
       <div class="d-flex m-3" v-if="analogy && original">
         <!--Original-->
@@ -71,7 +100,7 @@
           <div v-for="d in original" class="div-48 text-right">
             <span class="text-muted mr-2">{{d.neighbors}}</span>
             <img :src="imageUrl(d.nearest)" class="img-24 mr-2"/>
-            <img :src="`/build/${d.image}`" class="img-48" />
+            <img :src="`/build/${d.image}`" class="img-48"/>
           </div>
 
           <!--when flipped, everything is in reverse-->
@@ -82,7 +111,7 @@
         <div class="w-50 d-flex flex-column mt-3 ml-3">
           <p><b>Analogy</b></p>
           <div v-for="d in analogy" class="div-48">
-            <img :src="`/build/${d.image}?${flipped}`" class="img-48" />
+            <img :src="`/build/${d.image}?${flipped}`" class="img-48"/>
             <img :src="imageUrl(d.nearest)" class="img-24 ml-2"/>
             <span class="text-muted ml-2">{{d.neighbors}}</span>
           </div>
@@ -134,12 +163,17 @@
     data () {
       return {
         shared: store.state,
+        tutorial: store.tutorial,
+        need_help: true,
         totalImage: 5,
         analogy: null,
         original: null,
         flipped: false,
         loading_analogy: false
       }
+    },
+    mounted () {
+      this.need_help = true
     },
     computed: {
       startMore: function () {

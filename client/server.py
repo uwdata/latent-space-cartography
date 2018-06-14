@@ -19,6 +19,7 @@ from flaskext.mysql import MySQL
 
 # re-use keras models
 models = {}
+score_dist = {} # re-use pointwise distance
 
 # dataset we're working with
 from config_emoji import dset, img_rows, img_cols, img_chns, img_mode
@@ -49,6 +50,13 @@ def create_model (latent_dim):
     wpath = abs_path(base + '{}_model_dim={}.h5'.format(dset, latent_dim))
     m = model.Vae(latent_dim = latent_dim, img_dim=(img_chns, img_rows, img_cols))
     models[latent_dim] = m.read(mpath, wpath) + (m,)
+
+# read latent space
+def read_ls (latent_dim):
+    rawpath = abs_path('./data/{}/latent/latent{}.h5'.format(dset, latent_dim))
+    with h5py.File(rawpath, 'r') as f:
+        X = np.asarray(f['latent'])
+    return X
 
 # given a list of points in latent space, generate their corresponding images
 def _generate (latent_dim, points):
@@ -160,6 +168,19 @@ def _compute_group_centroid (X, gid):
     centroid = np.sum(X[indices], axis=0) / indices.shape[0]
 
     return centroid
+
+# compute the average inter-point distance (L2) between each point pair
+def _pointwise_dist (X):
+    n, latent_dim = X.shape
+
+    s = 0
+    for i in range(n):
+        # left hand matrix: repeat an element N times
+        L = np.repeat([X[i]], n, axis=0)
+        D = np.linalg.norm(L - X, axis=1)
+        s += np.sum(D) / float(n - 1)
+    
+    return s / float(n)
 
 # global app and DB cursor
 app = Flask(__name__, static_url_path='')
@@ -313,9 +334,7 @@ def focus_vector():
     gid = request.json['groups'].split(',')
 
     # read latent space
-    rawpath = abs_path('./data/{}/latent/latent{}.h5'.format(dset, latent_dim))
-    with h5py.File(rawpath, 'r') as f:
-        X = np.asarray(f['latent'])
+    X = read_ls(latent_dim)
     
     # compute centroid
     start = _compute_group_centroid(X, gid[0])
@@ -345,6 +364,23 @@ def focus_vector():
     }
 
     return jsonify(reply), 200
+
+@app.route('/api/cluster_score', methods=['POST'])
+def cluster_score ():
+    latent_dim = request.json['latent_dim']
+    ids = request.json['ids']
+
+    X = read_ls(latent_dim)
+    if not latent_dim in score_dist:
+        score_dist[latent_dim] = _pointwise_dist(X[0:1000])
+    a = _pointwise_dist(X[ids])
+    b = score_dist[latent_dim]
+    print 'Intra-cluster distance: {}, Average distance: {}'.format(a, b)
+    # this score resembles silhouette score, but it replaces inter-cluster
+    # distance with an average point-wise distance of all points
+    score = (b - a) / max(a, b)
+
+    return jsonify({'score': score}), 200
 
 # save a group
 @app.route('/api/save_group', methods=['POST'])

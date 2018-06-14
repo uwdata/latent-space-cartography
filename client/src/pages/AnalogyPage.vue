@@ -80,7 +80,7 @@
 
       <!--Right Panel-->
       <div class=" bd-right col-3">
-        <group-panel :points="suggestions" :view_state="view_state"
+        <group-panel :points="suggestions" :view_state="view_state" :latent_dim="dim"
                      v-on:center="onCenter"
                      v-on:highlight="onHighlight"
                      v-on:subset="onToggleSubset"

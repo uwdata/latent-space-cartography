@@ -28,9 +28,10 @@
 
     <!--Logo List-->
     <div v-if="selected.length" class="bd-logo-list">
-      <p>
-        <small class="text-muted">{{selected.length}} total</small>
-      </p>
+      <div class="d-flex justify-content-between text-muted mb-2">
+        <div><small>{{selected.length}} total</small></div>
+        <div v-if="cluster_score"><small>Cluster Score: {{cluster_score}}</small></div>
+      </div>
       <div v-for="p in selected_points" :key="p.i"
            @click="clickLogo(p)"
            @mouseover="hoverLogo(p)"
@@ -99,6 +100,10 @@
         type: Array,
         required: true
       },
+      latent_dim: {
+        type: Number,
+        required: true
+      },
       view_state: {
         type: Number,
         required: true
@@ -115,6 +120,7 @@
         selected: store.selected,
         shared: store.state,
         show_search: CONFIG.search.simple,
+        cluster_score: null,
         view_mode: 1 // 1 - All, 2 - Subset, 3 - Reprojected
       }
     },
@@ -123,6 +129,12 @@
         if (this.view_state !== 1) {
           this.view_mode = 1
         }
+      },
+      selected () {
+        this.clusterScore()
+      },
+      latent_dim () {
+        this.clusterScore()
       }
     },
     computed: {
@@ -165,6 +177,19 @@
         _.each(group.list, (i) => {
           store.selected.push(i)
         })
+      },
+
+      // compute cluster score
+      clusterScore () {
+        this.cluster_score = null
+        if (this.selected.length) {
+          store.clusterScore(this.latent_dim, this.selected)
+            .then((s) => {
+              this.cluster_score = Math.round(s * 100) + '%'
+            }, (e) => {
+              alert(e) //TODO: handle error
+            })
+        }
       },
 
       // the tab at top

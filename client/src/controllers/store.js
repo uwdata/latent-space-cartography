@@ -469,6 +469,25 @@ class Store {
     })
   }
 
+  clusterScore (latent_dim, ids) {
+    return new Promise((resolve, reject) => {
+      let payload = {'latent_dim': latent_dim, ids: ids}
+
+      http.post('/api/cluster_score', payload)
+        .then((response) => {
+          let msg = response.data
+
+          if (msg) {
+            resolve(msg['score'])
+          } else {
+            reject(`Internal server error.`)
+          }
+        }, () => {
+          reject(`Could not connect to the server.`)
+        })
+    })
+  }
+
   /**
    * Given the index, return a relative URL to the image.
    * @param i

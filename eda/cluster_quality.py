@@ -18,6 +18,30 @@ def read_ls (latent_dim):
         X = np.asarray(f['latent'])
     return X
 
+def read_meta ():
+    res = []
+    with open(base + 'database.csv', 'rb') as csvfile:
+        reader = csv.reader(csvfile, delimiter=',')
+        for row in reader:
+            if row[0] == 'index':
+                continue # skip header
+            # i, category, name, platform, version, codepoints, shortcode
+            res.append(row[0:5] + row[7:9])
+    return res
+
+def group_by (meta, col):
+    res = {}
+
+    for row in meta:
+        c = row[col]
+        i = int(row[0])
+        if c in res:
+            res[c].append(i)
+        else:
+            res[c] = [i]
+    
+    return res
+
 # deprecated
 # turns out creating a giant matrix is a bad idea ...
 def pointwise_dist_dep (X):
@@ -53,7 +77,8 @@ def pointwise_dist (X):
     
     return s / float(n)
 
-if __name__ == '__main__':
+# print the global average pointwise distance for each latent dim
+def report_baseline ():
     dims = [32, 64, 128, 256, 512, 1024]
     for dim in dims:
         X = read_ls(dim)
@@ -63,3 +88,27 @@ if __name__ == '__main__':
         dist = pointwise_dist(X[0:1000])
         print 'Latent Dimension: {}'.format(dim)
         print 'Average point-wise distance: {}'.format(dist)
+
+# produce a csv of intra-cluster distances of clusters defined in groups
+def report_cluster (X, groups, out):
+    res = []
+    for k in groups.keys():
+        if k == '':
+            continue # skip empty key
+        dist = pointwise_dist(X[groups[k]])
+        res.append([k, dist])
+
+    # sort by intra-cluster distance
+    res.sort(key = lambda x : x[1])
+
+    with open('./{}'.format(out), 'wb') as csvfile:
+        writer = csv.writer(csvfile, delimiter=',')
+        for row in res:
+            writer.writerow(row)
+
+if __name__ == '__main__':
+    meta = read_meta()
+    codes = group_by(meta, 6) # 6 is the column for shortcode
+    dim = 1024
+    X = read_ls(dim)
+    report_cluster(X, codes, 'shortcode_{}.csv'.format(dim))

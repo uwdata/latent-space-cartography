@@ -5,6 +5,10 @@ import h5py
 import csv
 import numpy as np
 
+import matplotlib as mpl
+mpl.use('TkAgg')
+import matplotlib.pyplot as plt
+
 base = '/Users/yliu0/data/emoji/'
 
 # for absolute path
@@ -77,9 +81,24 @@ def pointwise_dist (X):
     
     return s / float(n)
 
+def pointwise_hist (X):
+    n, latent_dim = X.shape
+
+    bins = np.arange(0, 20, 0.5)
+    hist = np.zeros(bins.shape[0] - 1, dtype=int)
+    for i in range(n):
+        # left hand matrix: repeat an element N times
+        L = np.repeat([X[i]], n, axis=0)
+        D = np.linalg.norm(L - X, axis=1)
+        h, _ = np.histogram(D, bins = bins)
+        h[0] -= 1 # exclude self edge
+        hist += h
+    
+    return hist, bins
+
 # print the global average pointwise distance for each latent dim
 def report_baseline ():
-    dims = [32, 64, 128, 256, 512, 1024]
+    dims = [4, 8, 16, 32, 64, 128, 256, 512, 1024]
     for dim in dims:
         X = read_ls(dim)
         # running over all points will take too long, so we just go for a sample
@@ -106,9 +125,31 @@ def report_cluster (X, groups, out):
         for row in res:
             writer.writerow(row)
 
-if __name__ == '__main__':
+# cluster quality by shortcode
+def report_shortcode ():
     meta = read_meta()
     codes = group_by(meta, 6) # 6 is the column for shortcode
     dim = 1024
     X = read_ls(dim)
     report_cluster(X, codes, 'shortcode_{}.csv'.format(dim))
+
+# draw a histogram
+def draw_hist (hist, bins, fn):
+    fig, ax = plt.subplots()
+    bar_width = 0.3
+
+    rect = ax.bar(bins[1:], hist, bar_width)
+    ax.set_xlabel('Point-wise Distance')
+    ax.set_ylabel('Count')
+    fig.savefig('./result/dist_{}.png'.format(fn))
+
+# draw a histogram for point-wise ditance for each latent dim
+def report_distance_hist ():
+    dims = [4, 8, 16, 32, 64, 128, 256, 512, 1024]
+    for dim in dims:
+        X = read_ls(dim)
+        hist, bins = pointwise_hist(X[0:1000])
+        draw_hist(hist, bins, dim)
+
+if __name__ == '__main__':
+    report_distance_hist()

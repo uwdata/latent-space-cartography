@@ -1,4 +1,4 @@
 output/
 *.pyc
 temp/
-eda/*.csv
+eda/result

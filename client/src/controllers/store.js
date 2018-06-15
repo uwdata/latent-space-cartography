@@ -471,6 +471,10 @@ class Store {
 
   clusterScore (latent_dim, ids) {
     return new Promise((resolve, reject) => {
+      if (ids.length < 2) {
+        return resolve(0)
+      }
+
       let payload = {'latent_dim': latent_dim, ids: ids}
 
       http.post('/api/cluster_score', payload)

@@ -19,7 +19,6 @@ from flaskext.mysql import MySQL
 
 # re-use keras models
 models = {}
-score_dist = {} # re-use pointwise distance
 
 # dataset we're working with
 from config_emoji import dset, img_rows, img_cols, img_chns, img_mode
@@ -170,17 +169,21 @@ def _compute_group_centroid (X, gid):
     return centroid
 
 # compute the average inter-point distance (L2) between each point pair
-def _pointwise_dist (X):
-    n, latent_dim = X.shape
+def _pointwise_dist (X, Y=None):
+    R = X if Y is None else Y
+    m, _ = X.shape
+    n, _ = R.shape
 
     s = 0
-    for i in range(n):
+    for i in range(m):
         # left hand matrix: repeat an element N times
         L = np.repeat([X[i]], n, axis=0)
-        D = np.linalg.norm(L - X, axis=1)
-        s += np.sum(D) / float(n - 1)
+        D = np.linalg.norm(L - R, axis=1)
+        # for intra-cluster distance, exclude self
+        denom = n - 1 if Y is None else n
+        s += np.sum(D) / float(denom)
     
-    return s / float(n)
+    return s / float(m)
 
 # global app and DB cursor
 app = Flask(__name__, static_url_path='')
@@ -371,11 +374,9 @@ def cluster_score ():
     ids = request.json['ids']
 
     X = read_ls(latent_dim)
-    if not latent_dim in score_dist:
-        score_dist[latent_dim] = _pointwise_dist(X[0:1000])
     a = _pointwise_dist(X[ids])
-    b = score_dist[latent_dim]
-    print 'Intra-cluster distance: {}, Average distance: {}'.format(a, b)
+    b = _pointwise_dist(X[ids], np.delete(X, ids, axis=0))
+    print 'Intra-cluster distance: {}, Inter-cluster distance: {}'.format(a, b)
     # this score resembles silhouette score, but it replaces inter-cluster
     # distance with an average point-wise distance of all points
     score = (b - a) / max(a, b)

@@ -235,6 +235,26 @@ class Dots {
     }
   }
 
+  _drawHull (pts) {
+    let layer = this._parent.select('.halo_layer')
+
+    layer.selectAll('.hull').remove()
+
+    if (pts && pts.length) {
+      let vertices = _.map(pts, (p) => [this._scales.x(p.x), this._scales.y(p.y)])
+      layer.append('path')
+        .attr('class', 'hull')
+        .datum(d3.polygonHull(vertices))
+        .attr('d', (d) => 'M' + d.join('L') + 'Z')
+        .attr('stroke-linejoin', 'round')
+        .attr('stroke-width', '20px')
+        .attr('stroke', '#ebdef3')
+        .style('fill', () => '#ebdef3')
+    }
+
+    //TODO: make hull work with zoom
+  }
+
   /**
    * Focus one dot.
    * @param d
@@ -296,6 +316,8 @@ class Dots {
     d3.selectAll('.dot')
       .filter((d) => !indices[d.i])
       .style('fill', (d) => '#ccc')
+
+    this._drawHull(pts)
   }
 
   /**
@@ -303,6 +325,7 @@ class Dots {
    * @private
    */
   _unfocusSet () {
+    this._drawHull()
     d3.selectAll('.dot')
       .style('fill', (d) => this._colorDot(d, this._scales.palette))
     d3.selectAll('.dot.focused-set').attr('r', this.radius)

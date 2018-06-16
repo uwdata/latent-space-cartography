@@ -170,5 +170,17 @@ def report_axis ():
         plt.ylabel('Latent Space Axis')
         plt.savefig('./result/axis_{}.png'.format(dim))
 
+# print # of axis that has some range of values
+def report_valid_axis ():
+    print 'The number of valid axes:'
+    for dim in dims:
+        X = read_ls(dim)
+        q25 = np.percentile(X, 25, axis=0)
+        q75 = np.percentile(X, 75, axis=0)
+        d = q75 - q25
+        num = (d > 0.4).sum()
+
+        print '{} of {}'.format(num, dim)
+
 if __name__ == '__main__':
-    report_axis()
+    report_valid_axis()

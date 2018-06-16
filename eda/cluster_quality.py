@@ -10,6 +10,7 @@ mpl.use('TkAgg')
 import matplotlib.pyplot as plt
 
 base = '/Users/yliu0/data/emoji/'
+dims = [4, 8, 16, 32, 64, 128, 256, 512, 1024]
 
 # for absolute path
 def abs_path (rel_path):
@@ -98,7 +99,6 @@ def pointwise_hist (X):
 
 # print the global average pointwise distance for each latent dim
 def report_baseline ():
-    dims = [4, 8, 16, 32, 64, 128, 256, 512, 1024]
     for dim in dims:
         X = read_ls(dim)
         # running over all points will take too long, so we just go for a sample
@@ -145,11 +145,30 @@ def draw_hist (hist, bins, fn):
 
 # draw a histogram for point-wise ditance for each latent dim
 def report_distance_hist ():
-    dims = [4, 8, 16, 32, 64, 128, 256, 512, 1024]
     for dim in dims:
         X = read_ls(dim)
         hist, bins = pointwise_hist(X[0:1000])
         draw_hist(hist, bins, dim)
 
+# plot summary stats per axis
+def report_axis ():
+    for dim in dims:
+        X = read_ls(dim)
+        q25 = np.percentile(X, 25, axis=0)
+        q75 = np.percentile(X, 75, axis=0)
+        q0 = X.min(axis=0)
+        q100 = X.max(axis=0)
+
+        plt.figure(figsize=(10, dim * 0.1 + 3))
+
+        for i in range(dim):
+            plt.plot([q25[i], q75[i]], [i, i], 'C0', linewidth=3)
+            plt.plot([q0[i], q100[i]], [i, i], 'C0', linestyle='dashed')
+
+        plt.title('Thick Line: 25th to 75th percentile. Dashed Line: min to max.')
+        plt.xlabel('Percentile Value')
+        plt.ylabel('Latent Space Axis')
+        plt.savefig('./result/axis_{}.png'.format(dim))
+
 if __name__ == '__main__':
-    report_distance_hist()
+    report_axis()

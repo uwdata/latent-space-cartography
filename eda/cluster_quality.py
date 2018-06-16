@@ -1,20 +1,31 @@
 # -*- coding: utf-8 -*-
 
+import sys
 import os
 import h5py
 import csv
 import numpy as np
+from PIL import Image
 
 import matplotlib as mpl
 mpl.use('TkAgg')
 import matplotlib.pyplot as plt
 
+# ugly way to import a file from another directory ...
+sys.path.append(os.path.join(os.path.dirname(__file__), '../model'))
+import model
+from config_emoji import dset, img_rows, img_cols, img_chns, img_mode
+
 base = '/Users/yliu0/data/emoji/'
 dims = [4, 8, 16, 32, 64, 128, 256, 512, 1024]
+models = {} # re-use keras models
 
-# for absolute path
-def abs_path (rel_path):
-    return os.path.join(os.path.dirname(__file__), rel_path)
+def create_model (latent_dim):
+    ba = '{}emoji_result/{}/'.format(base, latent_dim)
+    mpath = ba + '{}_model_dim={}.json'.format(dset, latent_dim)
+    wpath = ba + '{}_model_dim={}.h5'.format(dset, latent_dim)
+    m = model.Vae(latent_dim = latent_dim, img_dim=(img_chns, img_rows, img_cols))
+    models[latent_dim] = m.read(mpath, wpath) + (m,)
 
 # read latent space
 def read_ls (latent_dim):
@@ -182,5 +193,31 @@ def report_valid_axis ():
 
         print '{} of {}'.format(num, dim)
 
+# probe along each axis, and generate representative images
+def interpolate_axis ():
+    dim = 4
+    X = read_ls(dim)
+    create_model(dim)
+    vae, encoder, decoder, md = models[dim]
+    print 'Model created.'
+    num_stops = 5
+
+    q50 = np.percentile(X, 50, axis=0)
+    res = np.zeros((img_rows * dim, img_cols * num_stops, img_chns), 'uint8')
+    for i in range(dim):
+        col = X[:, i]
+        # compute key stats
+        stops = [col.min(), np.percentile(col, 25), q50[i], np.percentile(col, 75), col.max()]
+        for j in range(num_stops):
+            val = np.copy(q50)
+            val[i] = stops[j]
+            val = val.reshape((1, dim))
+            recon = md.to_image(decoder.predict(val))
+            img = Image.fromarray(recon, img_mode)
+            res[i*img_rows:(i+1)*img_rows, j*img_cols:(j+1)*img_cols, :] = recon
+
+    img = Image.fromarray(res, img_mode)
+    img.save('./result/representative_{}.png'.format(dim))
+
 if __name__ == '__main__':
-    report_valid_axis()
+    interpolate_axis()

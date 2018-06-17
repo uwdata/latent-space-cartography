@@ -195,7 +195,8 @@ def report_valid_axis ():
 
 # probe along each axis, and generate representative images
 def interpolate_axis ():
-    dim = 4
+    exclude = True # whether to skip unused axis
+    dim = 1024
     X = read_ls(dim)
     create_model(dim)
     vae, encoder, decoder, md = models[dim]
@@ -204,19 +205,24 @@ def interpolate_axis ():
 
     q50 = np.percentile(X, 50, axis=0)
     res = np.zeros((img_rows * dim, img_cols * num_stops, img_chns), 'uint8')
+    ii = 0
     for i in range(dim):
         col = X[:, i]
         # compute key stats
         stops = [col.min(), np.percentile(col, 25), q50[i], np.percentile(col, 75), col.max()]
+        # optionally skip unused axis
+        if exclude and stops[3] - stops[1] < 0.4:
+            continue
         for j in range(num_stops):
             val = np.copy(q50)
             val[i] = stops[j]
             val = val.reshape((1, dim))
             recon = md.to_image(decoder.predict(val))
             img = Image.fromarray(recon, img_mode)
-            res[i*img_rows:(i+1)*img_rows, j*img_cols:(j+1)*img_cols, :] = recon
+            res[ii*img_rows:(ii+1)*img_rows, j*img_cols:(j+1)*img_cols, :] = recon
+        ii += 1 # because we skip some axis
 
-    img = Image.fromarray(res, img_mode)
+    img = Image.fromarray(res[:img_rows*ii, :, :], img_mode)
     img.save('./result/representative_{}.png'.format(dim))
 
 if __name__ == '__main__':

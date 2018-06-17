@@ -202,7 +202,7 @@
         brushed: [],
         view_state: 0, // 0 - main, 1 - subset PCA, 2 - vector PCA
         dim: 32,
-        all_dims: [32, 64, 128, 256, 512, 1024],
+        all_dims: [4, 8, 16, 32, 64, 128, 256, 512, 1024],
         projection: 't-SNE',
         all_projections: ['PCA', 't-SNE'],
         perplexity: 30,

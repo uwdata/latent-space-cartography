@@ -81,17 +81,21 @@ def pointwise_dist_dep (X):
     return d
 
 # compute the average inter-point distance (L2) between each point pair
-def pointwise_dist (X):
-    n, latent_dim = X.shape
+def pointwise_dist (X, Y=None):
+    R = X if Y is None else Y
+    m, _ = X.shape
+    n, _ = R.shape
 
     s = 0
-    for i in range(n):
+    for i in range(m):
         # left hand matrix: repeat an element N times
         L = np.repeat([X[i]], n, axis=0)
-        D = np.linalg.norm(L - X, axis=1)
-        s += np.sum(D) / float(n - 1)
+        D = np.linalg.norm(L - R, axis=1)
+        # for intra-cluster distance, exclude self
+        denom = n - 1 if Y is None else n
+        s += np.sum(D) / float(denom)
     
-    return s / float(n)
+    return s / float(m)
 
 def pointwise_hist (X):
     n, latent_dim = X.shape
@@ -125,11 +129,13 @@ def report_cluster (X, groups, out):
     for k in groups.keys():
         if k == '':
             continue # skip empty key
-        dist = pointwise_dist(X[groups[k]])
-        res.append([k, dist])
+        a = pointwise_dist(X[groups[k]])
+        b = pointwise_dist(X[groups[k]], np.delete(X, groups[k], axis=0))
+        score = (b - a) / max(a, b)
+        res.append([k, int(score * 100)])
 
     # sort by intra-cluster distance
-    res.sort(key = lambda x : x[1])
+    res.sort(key = lambda x : x[1], reverse = True)
 
     with open('./{}'.format(out), 'wb') as csvfile:
         writer = csv.writer(csvfile, delimiter=',')
@@ -140,9 +146,9 @@ def report_cluster (X, groups, out):
 def report_shortcode ():
     meta = read_meta()
     codes = group_by(meta, 6) # 6 is the column for shortcode
-    dim = 1024
+    dim = 4
     X = read_ls(dim)
-    report_cluster(X, codes, 'shortcode_{}.csv'.format(dim))
+    report_cluster(X, codes, './result/shortcode_{}.csv'.format(dim))
 
 # draw a histogram
 def draw_hist (hist, bins, fn):
@@ -226,4 +232,4 @@ def interpolate_axis ():
     img.save('./result/representative_{}.png'.format(dim))
 
 if __name__ == '__main__':
-    interpolate_axis()
+    report_shortcode()

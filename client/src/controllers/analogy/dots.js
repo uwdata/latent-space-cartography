@@ -30,6 +30,11 @@ class Dots {
     this._parent = parent
     this._scales = scales
     this._data = []
+
+    /**
+     * State data
+     */
+    this.hull = []
   }
 
   /**
@@ -40,6 +45,7 @@ class Dots {
    */
   draw (data, emitter, dispatch) {
     this._data = data
+    this.hull = []
     let scales = this._scales
     let parent = this._parent
     let that = this
@@ -130,6 +136,8 @@ class Dots {
         .attr('x', (d) => scales.x(d.x) - img_size * 0.5)
         .attr('y', (d) => scales.y(d.y) - img_size * 0.5)
     }
+
+    this._drawHull()
   }
 
   /**
@@ -235,8 +243,9 @@ class Dots {
     }
   }
 
-  _drawHull (pts) {
+  _drawHull () {
     let layer = this._parent.select('.halo_layer')
+    let pts = this.hull
 
     layer.selectAll('.hull').remove()
 
@@ -251,8 +260,6 @@ class Dots {
         .attr('stroke', '#ebdef3')
         .style('fill', () => '#ebdef3')
     }
-
-    //TODO: make hull work with zoom
   }
 
   /**
@@ -317,7 +324,8 @@ class Dots {
       .filter((d) => !indices[d.i])
       .style('fill', (d) => '#ccc')
 
-    this._drawHull(pts)
+    this.hull = pts
+    this._drawHull()
   }
 
   /**
@@ -325,6 +333,7 @@ class Dots {
    * @private
    */
   _unfocusSet () {
+    this.hull = []
     this._drawHull()
     d3.selectAll('.dot')
       .style('fill', (d) => this._colorDot(d, this._scales.palette))

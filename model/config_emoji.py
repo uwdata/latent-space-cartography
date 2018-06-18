@@ -9,4 +9,4 @@ train_split = 19500
 fn_raw = 'emoji.h5'
 key_raw = 'emoji' # the dataset key in hdf5 file
 
-dims = [32, 64, 128, 256, 512, 1024] # all latent dims
+dims = [4, 8, 16, 32, 64, 128, 256, 512, 1024] # all latent dims

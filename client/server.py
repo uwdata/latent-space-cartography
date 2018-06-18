@@ -1,6 +1,7 @@
 #!flask/bin/python
 import json
 from sklearn.decomposition import PCA
+from sklearn.metrics.pairwise import cosine_similarity
 from sklearn import preprocessing
 import numpy as np
 import h5py
@@ -21,7 +22,7 @@ from flaskext.mysql import MySQL
 models = {}
 
 # dataset we're working with
-from config_emoji import dset, img_rows, img_cols, img_chns, img_mode
+from config_emoji import dset, img_rows, img_cols, img_chns, img_mode, dims
 
 # FIXME: hack
 temp_store = {}
@@ -368,6 +369,42 @@ def focus_vector():
 
     return jsonify(reply), 200
 
+@app.route('/api/all_vector_diff', methods=['POST'])
+def all_vector_diff ():
+    # get all attribute vectors from database
+    query = 'SELECT a.start, a.end FROM {}_vector a'.format(dset)
+    cursor.execute(query)
+    data = [list(i) for i in cursor.fetchall()]
+
+    # compute vector coordinates in each latent space
+    vecs = {}
+    for dim in dims:
+        X = read_ls(dim)
+        arr = []
+        for v in data:
+            arr.append(_compute_group_centroid(X, v[1]) - _compute_group_centroid(X, v[0]))
+        vecs[dim] = np.asarray(arr)
+
+    # compute cosine similarity between each possible vector pair
+    cos = {}
+    for dim in dims:
+        vs = vecs[dim]
+        arr = []
+        for i in range(len(vs)):
+            for j in range(i + 1, len(vs)):
+                arr.append(cosine_similarity(vs[i].reshape(1, -1), vs[j].reshape(1, -1))[0][0])
+        cos[dim] = np.asarray(arr)
+
+    # compare each adjacent latent dim
+    for i in range(len(dims) - 1):
+        L = cos[dims[i]]
+        R = cos[dims[i + 1]]
+        diff = np.sum(np.abs(R - L)) / float(L.shape[0])
+        print '{} and {}: {}'.format(dims[i], dims[i + 1], diff)
+
+    return jsonify({'status': 'success'}), 200
+
+# compute a number to represent how tight a cluster is
 @app.route('/api/cluster_score', methods=['POST'])
 def cluster_score ():
     latent_dim = request.json['latent_dim']
@@ -378,7 +415,7 @@ def cluster_score ():
     b = _pointwise_dist(X[ids], np.delete(X, ids, axis=0))
     print 'Intra-cluster distance: {}, Inter-cluster distance: {}'.format(a, b)
     # this score resembles silhouette score, but it replaces inter-cluster
-    # distance with an average point-wise distance of all points
+    # distance with the average length of all edges with one node inside and one outside.
     score = (b - a) / max(a, b)
 
     return jsonify({'score': score}), 200

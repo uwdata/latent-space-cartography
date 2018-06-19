@@ -25,7 +25,8 @@ class Vectors {
     /**
      * Data
      */
-    this.vectors = []
+    this.primary = null
+    this.analogy = null
 
     /**
      * Initialization
@@ -142,12 +143,32 @@ class Vectors {
     }
   }
 
-  setData (vector, index = 1) {
-    this.vectors[index] = vector
+  _drawHull (pts, color) {
+    let layer = this._parent.select('.halo_layer')
+
+    if (pts && pts.length) {
+      let vertices = _.map(pts, (p) => [this._scales.x(p.x), this._scales.y(p.y)])
+      layer.append('path')
+        .attr('class', 'hull')
+        .datum(d3.polygonHull(vertices))
+        .attr('d', (d) => 'M' + d.join('L') + 'Z')
+        .style('fill', () => color)
+        .style('fill-opacity', 0.2)
+    }
+  }
+
+  _drawCone () {
+    let start = this.primary.points_start
+    let end = this.primary.points_end
+
+    this._drawHull(start.concat(end), '#ccc')
+    this._drawHull(start, '#8358d5')
+    this._drawHull(end, '#f4c44c')
   }
 
   clearData () {
-    this.vectors = []
+    this.primary = null
+    this.analogy = null
   }
 
   /**
@@ -155,9 +176,19 @@ class Vectors {
    */
   redraw () {
     d3.selectAll('.vector-group').remove()
-    _.each(this.vectors, (vector) => this._drawOne(vector))
 
-    if(this.vectors.length) {
+    // remove cone
+    let layer = this._parent.select('.halo_layer')
+    layer.selectAll('.hull').remove()
+
+    if(this.primary) {
+      // draw vectors
+      this._drawOne(this.primary.line)
+      this._drawOne(this.analogy)
+
+      // draw confidence cone
+      this._drawCone()
+
       // dim other marks
       this._parent.selectAll('.mark-img-group')
         .attr('opacity', 0.5)

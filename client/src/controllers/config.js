@@ -1,4 +1,5 @@
 import Store from '../controllers/store'
+import Vue from 'vue'
 
 const config_logo = {
   dataset: 'logo',
@@ -49,12 +50,18 @@ function log_debug (...args) {
  */
 let store = new Store()
 
+/**
+ * Global event bus.
+ */
+let bus = new Vue()
+
 export {
   DEBUG,
   CONFIG,
   DATASET,
   TRAIN_SPLIT,
   store,
+  bus,
   log_debug
 }
 

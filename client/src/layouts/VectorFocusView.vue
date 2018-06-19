@@ -141,7 +141,7 @@
 </template>
 
 <script>
-  import {store} from '../controllers/config'
+  import {store, bus} from '../controllers/config'
   import _ from 'lodash'
   import VueLoading from 'vue-loading-template'
 
@@ -174,6 +174,9 @@
     },
     mounted () {
       this.need_help = true
+
+      // register event
+      bus.$on('draw-focus-vec', this.drawPrimaryVector)
     },
     computed: {
       startMore: function () {
@@ -216,9 +219,14 @@
         store.state.tab = 0
       },
 
+      drawPrimaryVector (vector) {
+        this.original = vector.line
+
+        this.chart._vectors.primary = vector
+        this.chart._vectors.redraw()
+      },
+
       applyAnalogy (flipped = false) {
-        // FIXME: hack
-        this.original = this.focus.line
         this.loading_analogy = true
 
         let start = flipped ? this.focus.end : this.focus.start
@@ -229,7 +237,7 @@
             this.loading_analogy = false
             this.flipped = flipped
             this.analogy = line
-            this.chart._vectors.setData(line)
+            this.chart._vectors.analogy = line
             this.chart._vectors.redraw()
           }, (e) => {
             this.loading_analogy = false

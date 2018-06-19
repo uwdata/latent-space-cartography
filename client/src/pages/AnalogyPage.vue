@@ -105,7 +105,7 @@
   import BrushedList from '../layouts/BrushedList.vue'
 
   import Scatter from '../controllers/scatter_analogy'
-  import {store, log_debug, TRAIN_SPLIT} from '../controllers/config'
+  import {store, bus, log_debug, TRAIN_SPLIT} from '../controllers/config'
   import _ from 'lodash'
   import VueLoading from 'vue-loading-template'
   import FilterDropdown from '../layouts/FilterDropdown.vue'
@@ -143,6 +143,14 @@
    */
   function indexToPoint (i, points) {
     return _.find(points, (p) => p.i === i)
+  }
+
+  function indicesToPoint (is, points) {
+    let map = {}
+    _.each(points, (p) => {
+      map[p.i] = p
+    })
+    return _.map(is, (i) => map[i])
   }
 
   /**
@@ -297,9 +305,10 @@
 
             // 2. draw line
             vector.line = all[1]
+            vector.points_start = indicesToPoint(vector.list_start, points)
+            vector.points_end = indicesToPoint(vector.list_end, points)
             log_debug(vector.line)
-            this.scatter._vectors.setData(vector.line, 0)
-            this.scatter._vectors.redraw()
+            bus.$emit('draw-focus-vec', vector)
           }, () => {
             this.loading = false
             //handle error
@@ -324,7 +333,7 @@
 
       // FIXME: new points won't appear
       onToggleSubset (indices) {
-        let pts = indices ? _.map(indices, (i) => indexToPoint(i, this.points)) : null
+        let pts = indices ? indicesToPoint(indices, this.points) : null
         this.scatter.focusSet(pts)
       },
 

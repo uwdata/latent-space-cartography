@@ -24,7 +24,15 @@
 
     <!--Main View-->
     <div class="bd-focus-panel-body">
-      <div class="m-3 d-flex bd-vector-groups">
+      <!--Score-->
+      <div>
+        <div v-if="score" class="text-muted text-center m-3">
+          <small v-b-tooltip.hover :title="score_hint">Angle Consistency: {{score}}</small>
+        </div>
+        <div v-if="!score" class="mb-3"></div>
+      </div>
+
+      <div class="ml-3 mr-3 mb-3 d-flex bd-vector-groups">
         <!--Start Group-->
         <div class="bd-panel-card bd-pointer w-50"
              @click="viewGroup(focus.list_start)">
@@ -92,7 +100,7 @@
       </div>
 
       <!--Vector Details-->
-      <div class="d-flex m-3" v-if="analogy && original">
+      <div class="d-flex m-3" v-if="original && analogy">
         <!--Original-->
         <div class="w-50 d-flex mt-3"
              :class="{'flex-column-reverse': flipped, 'flex-column': !flipped}">
@@ -166,6 +174,8 @@
         tutorial: store.tutorial,
         need_help: true,
         totalImage: 5,
+        score: null,
+        score_hint: 'The average cosine similarity between all possible start and end pairs',
         analogy: null,
         original: null,
         flipped: false,
@@ -177,6 +187,14 @@
 
       // register event
       bus.$on('draw-focus-vec', this.drawPrimaryVector)
+
+      // vector score
+      store.vectorScore(this.latent_dim, this.focus.start, this.focus.end)
+        .then((s) => {
+          this.score = Math.round(s * 100) + '%'
+        }, (e) => {
+          alert(e)
+        })
     },
     computed: {
       startMore: function () {

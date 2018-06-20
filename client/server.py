@@ -156,8 +156,8 @@ def _project_axis (X, axis):
 
     return X_transformed, U, mean_
 
-# compute the centroid of a group
-def _compute_group_centroid (X, gid):
+# given a group ID, query the DB for image indices, as an int array
+def _get_group_indices (gid):
     # find image indices in each group
     cursor.execute('SELECT list FROM {}_group WHERE id={}'.format(dset, gid))
     d = cursor.fetchone()[0]
@@ -165,6 +165,11 @@ def _compute_group_centroid (X, gid):
 
     # compute centroid
     indices = np.asarray(id_list, dtype=np.int16)
+    return indices
+
+# compute the centroid of a group
+def _compute_group_centroid (X, gid):
+    indices = _get_group_indices(gid)
     centroid = np.sum(X[indices], axis=0) / indices.shape[0]
 
     return centroid
@@ -403,6 +408,34 @@ def all_vector_diff ():
         print '{} and {}: {}'.format(dims[i], dims[i + 1], diff)
 
     return jsonify({'status': 'success'}), 200
+
+# compute a number to represent how focused an attribute vector is
+@app.route('/api/vector_score', methods=['POST'])
+def vector_score ():
+    latent_dim = request.json['latent_dim']
+    gid = request.json['groups'].split(',')
+
+    # read latent space
+    X = read_ls(latent_dim)
+    
+    # data points in start and end group
+    start = X[_get_group_indices(gid[0])]
+    end = X[_get_group_indices(gid[1])]
+    n, _ = start.shape
+    m, _ = end.shape
+
+    # all possible vector pairs between start and end
+    L = np.repeat(start, m, axis=0)
+    R = np.tile(end, (n, 1))
+    V = L - R
+
+    # cosine similarity
+    cs = cosine_similarity(V)
+    score = np.mean(cs)
+    print 'Vector score (GID {} & {}): average {}, min {}'.format(gid[0], \
+        gid[1], round(score, 2), round(np.amin(cs), 2))
+
+    return jsonify({'score': score}), 200
 
 # compute a number to represent how tight a cluster is
 @app.route('/api/cluster_score', methods=['POST'])

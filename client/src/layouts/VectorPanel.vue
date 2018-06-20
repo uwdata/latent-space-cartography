@@ -1,5 +1,5 @@
 <template>
-  <div v-if="shared.tab === 1">
+  <div :class="{'d-none': shared.tab !== 1}">
     <!--Tabs-->
     <b-nav justified tabs class="ml-3 mr-3 mt-1">
       <b-nav-item @click="clickTab">Groups</b-nav-item>

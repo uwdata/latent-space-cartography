@@ -5,9 +5,11 @@ import os
 import h5py
 import numpy as np
 from PIL import Image
+from sklearn.metrics.pairwise import cosine_similarity
 
 import matplotlib as mpl
 mpl.use('TkAgg')
+# mpl.use('Agg') # run on ubuntu
 import matplotlib.pyplot as plt
 
 # ugly way to import a file from another directory ...
@@ -107,7 +109,7 @@ def translate_self_batch ():
                 a = predict(trans[j], dim)
                 d = np.linalg.norm(a - LS[i])
                 res[j].append(d)
-        
+
         titles = ['Up', 'Down', 'Left', 'Right']
         f, axarr = plt.subplots(2, 2, sharex='col', sharey='row')
         ax = [axarr[0, 0], axarr[0, 1], axarr[1, 0], axarr[1, 1]]
@@ -121,5 +123,63 @@ def translate_self_batch ():
         f.suptitle('Latent Dimension {}: Translate {} Pixels'.format(dim, shift))
         plt.savefig('./result/invariant/translate_dim{}_shift{}'.format(dim, shift))
 
+# Apply the same image operation (translate) on two input images
+# See how much the vector angle changes
+def translate_vec ():
+    dim = 32
+    il = 0
+    ir = 250
+    X = read_raw()
+    LS = read_ls(dim)
+
+    transl = translate(X[il])
+    transr = translate(X[ir])
+    res = []
+    for j in range(4):
+        v = predict(transr[j], dim) - predict(transl[j], dim)
+        v0 = LS[ir] - LS[il]
+        res.append(cosine_similarity(v.reshape(1, -1), v0.reshape(1, -1))[0][0])
+
+    print np.around(res, decimals=3)
+
+# apply translate_vec to a random sample, and plot histogram.
+def translate_vec_batch ():
+    dim = 8
+    X = read_raw()
+
+    n = 100
+    ils = np.random.choice(train_split, n)
+    irs = np.random.choice(train_split, n)
+
+    for dim in dims:
+        print 'Processing Dim {} ...'.format(dim)
+        res = [[], [], [], []]
+        LS = read_ls(dim)
+
+        for i in range(n):
+            il = ils[i]
+            ir = irs[i]
+            transl = translate(X[il])
+            transr = translate(X[ir])
+            shift = 4
+
+            for j in range(4):
+                v = predict(transr[j], dim) - predict(transl[j], dim)
+                v0 = LS[ir] - LS[il]
+                res[j].append(cosine_similarity(v.reshape(1, -1), v0.reshape(1, -1))[0][0])
+
+        titles = ['Up', 'Down', 'Left', 'Right']
+        f, axarr = plt.subplots(2, 2, sharex='col', sharey='row')
+        ax = [axarr[0, 0], axarr[0, 1], axarr[1, 0], axarr[1, 1]]
+        for j in range(4):
+            ax[j].hist(res[j], 5, facecolor='pink', alpha=0.75)
+            if j == 0 or j == 2:
+                ax[j].set_ylabel('Count')
+            if j == 2 or j == 3:
+                ax[j].set_xlabel('Cosine Simlarity')
+            ax[j].set_title(titles[j])
+        f.suptitle('Latent Dimension {}: Translate {} Pixels'.format(dim, shift))
+        plt.savefig('./result/invariant/transvec_dim{}_shift{}'.format(dim, shift))
+
 if __name__ == '__main__':
-    translate_self_batch()
+    translate_vec_batch()

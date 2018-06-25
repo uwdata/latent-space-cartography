@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
-""" Replicate some of the sanity checks in tybalt_vae.ipynb
+""" 
+1. Replicate some of the sanity checks in tybalt_vae.ipynb
+2. Extracting decoder weights as in extract_tybalt_weights.ipynb
+
 Note that Tybalt uses python version 3.5
 The associated environment can be activated via:
     conda activate tybalt
@@ -8,6 +11,7 @@ The associated environment can be activated via:
 import os
 import csv
 import numpy as np
+from keras.models import load_model
 
 import matplotlib as mpl
 mpl.use('TkAgg')
@@ -60,6 +64,16 @@ def sum_dim_hist (X):
     plt.ylabel('Count')
     plt.savefig('./result/node_activity.png')
 
+# read the weight matrix of the single-layer decoder
+def read_decoder ():
+    decoder = load_model(p_decoder_model)
+    weights = []
+    for layer in decoder.layers:
+        weights.append(layer.get_weights())
+    weight_layer = weights[1][0]
+
+    # shape (100, 5000)
+    return weight_layer
+
 if __name__ == '__main__':
-    LS = read_ls()
-    sum_dim_hist(LS)
+    read_decoder()

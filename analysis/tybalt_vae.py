@@ -9,6 +9,10 @@ import os
 import csv
 import numpy as np
 
+import matplotlib as mpl
+mpl.use('TkAgg')
+import matplotlib.pyplot as plt
+
 base = '/Users/yliu0/code/tybalt/'
 # input data before training
 p_raw = os.path.join(base, 'data', 'pancan_scaled_zeroone_rnaseq.tsv.gz')
@@ -33,9 +37,9 @@ def read_ls ():
     return res
 
 # sum along each latent dimension, and print the largest / smallest
-# obviously, neither the sum nor the dim # agree with the notebook
-# did they save the output file from a seperate run??
 def sum_dim (X):
+    # obviously, neither the sum nor the dim # agree with the notebook
+    # did they save the output file from a seperate run??
     agg = np.sum(X, axis = 0)
     ids = np.argsort(agg)
     print('Top 10 most active nodes:')
@@ -45,6 +49,17 @@ def sum_dim (X):
     for i in range(10):
         print(ids[i], agg[ids[i]])
 
+# histogram of node activity for all 100 latent features
+def sum_dim_hist (X):
+    # the histogram looks sufficiently different, too
+    # the LS file is definitely from another run
+    agg = np.sum(X, axis = 0)
+    plt.figure()
+    plt.hist(agg)
+    plt.xlabel('Activation Sum')
+    plt.ylabel('Count')
+    plt.savefig('./result/node_activity.png')
+
 if __name__ == '__main__':
     LS = read_ls()
-    sum_dim(LS)
+    sum_dim_hist(LS)

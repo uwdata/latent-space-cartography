@@ -10,8 +10,8 @@ The associated environment can be activated via:
 
 import os
 import csv
+import h5py
 import numpy as np
-from keras.models import load_model
 
 import matplotlib as mpl
 mpl.use('TkAgg')
@@ -19,7 +19,9 @@ import matplotlib.pyplot as plt
 
 base = '/Users/yliu0/code/tybalt/'
 # input data before training
-p_raw = os.path.join(base, 'data', 'pancan_scaled_zeroone_rnaseq.tsv.gz')
+p_raw = os.path.join(base, 'data', 'pancan_scaled_zeroone_rnaseq.tsv')
+out_raw = os.path.join(base, 'data', 'pancan_scaled_zeroone_rnaseq.h5')
+out_header = os.path.join(base, 'data', 'pancan_scaled_zeroone_rnaseq_header.csv')
 # latent coordinates
 p_latent = os.path.join(base, 'data', 'encoded_rnaseq_onehidden_warmup_batchnorm.tsv')
 # Keras model
@@ -39,6 +41,39 @@ def read_ls ():
 
     # shape: (10459, 100)
     return res
+
+# reading TSV is so freaking slow
+# convert to hdf5
+def convert_raw ():
+    res = []
+    with open(p_raw, newline='') as csvfile:
+        reader = csv.reader(csvfile, delimiter='\t')
+        for row in reader:
+            res.append(row[1:]) # discard the first column, which is some ID
+    header = res[0]
+    res = np.asarray(res[1:], dtype=np.float32)
+    print('Done reading.')
+
+    # save header seperately because it's difficult to get h5py work with strings
+    with open(out_header, 'w', newline='') as csvfile:
+        writer = csv.writer(csvfile, delimiter=',')
+        writer.writerow(header)
+
+    # save numbers to hdf5
+    f = h5py.File(out_raw, 'w')
+    dset = f.create_dataset('data', data=res)
+    f.close()
+
+    return res
+
+# read the raw input data as a numpy array
+def read_raw ():
+    f = h5py.File(out_raw, 'r')
+    X = f['data'][:]
+    f.close()
+
+    # shape: (10459, 5000)
+    return X
 
 # sum along each latent dimension, and print the largest / smallest
 def sum_dim (X):
@@ -66,6 +101,8 @@ def sum_dim_hist (X):
 
 # read the weight matrix of the single-layer decoder
 def read_decoder ():
+    # move import statement here because it's slow
+    from keras.models import load_model
     decoder = load_model(p_decoder_model)
     weights = []
     for layer in decoder.layers:
@@ -76,4 +113,4 @@ def read_decoder ():
     return weight_layer
 
 if __name__ == '__main__':
-    read_decoder()
+    X = read_raw()

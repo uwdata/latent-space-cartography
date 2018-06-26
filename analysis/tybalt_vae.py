@@ -112,5 +112,20 @@ def read_decoder ():
     # shape (100, 5000)
     return weight_layer
 
+# check if reconstructing z to output is simply multiplying decoder weight
+# the recon. error magnitude is way off, so it seems the above statement is false
+def reconstruct (z, W, X):
+    re = np.dot(z, W)
+    diff = np.mean(re - X, axis=0)
+    diff_abs = np.sum(np.abs(re - X), axis=0)
+    ids = np.argsort(diff_abs)
+    print('index', 'gene mean', 'gene abs(sum)')
+    for i in range(1, 6):
+        index = ids[-i]
+        print(index, diff[index], diff_abs[index])
+
 if __name__ == '__main__':
     X = read_raw()
+    z = read_ls()
+    W = read_decoder()
+    reconstruct(z, W, X)

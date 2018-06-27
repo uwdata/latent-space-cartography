@@ -100,7 +100,7 @@ def sum_dim_hist (X):
     plt.savefig('./result/node_activity.png')
 
 # read the weight matrix of the single-layer decoder
-def read_decoder ():
+def read_decoder_weights ():
     # move import statement here because it's slow
     from keras.models import load_model
     decoder = load_model(p_decoder_model)
@@ -115,17 +115,44 @@ def read_decoder ():
 # check if reconstructing z to output is simply multiplying decoder weight
 # the recon. error magnitude is way off, so it seems the above statement is false
 def reconstruct (z, W, X):
-    re = np.dot(z, W)
-    diff = np.mean(re - X, axis=0)
-    diff_abs = np.sum(np.abs(re - X), axis=0)
+    recon = np.dot(z, W)
+    compare_reconstructed(X, recon)
+
+def compare_reconstructed (X, recon):
+    n, _ = X.shape
+    diff = np.mean(recon - X, axis=0)
+    diff_abs = np.sum(np.abs(recon - X), axis=0) / n
     ids = np.argsort(diff_abs)
-    print('index', 'gene mean', 'gene abs(sum)')
+
+    # gene name
+    header = []
+    with open(out_header, newline='') as csvfile:
+        reader = csv.reader(csvfile, delimiter=',')
+        for row in reader:
+            header = row
+
+    print('name', 'gene mean', 'gene abs(sum)')
     for i in range(1, 6):
         index = ids[-i]
-        print(index, diff[index], diff_abs[index])
+        print(header[index], diff[index], diff_abs[index])
+
+# read the decoder model
+def read_decoder ():
+    from keras.models import load_model
+    decoder = load_model(p_decoder_model)
+    # decoder.summary()
+    return decoder
+
+# reconstruct output from z, and compare with input
+# the gene names match perfectly, and errors match up to 3 decimal points
+def reconstruct_2 (z, decoder, X):
+    recon = decoder.predict(z)
+    compare_reconstructed(X, recon)
 
 if __name__ == '__main__':
     X = read_raw()
     z = read_ls()
-    W = read_decoder()
-    reconstruct(z, W, X)
+    # W = read_decoder_weights()
+    # reconstruct(z, W, X)
+    decoder = read_decoder()
+    reconstruct_2(z, decoder, X)

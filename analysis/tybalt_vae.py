@@ -82,11 +82,12 @@ def sum_dim (X):
     agg = np.sum(X, axis = 0)
     ids = np.argsort(agg)
     print('Top 10 most active nodes:')
+    # note that their latent feature index starts from 1!
     for i in range(1, 11):
-        print(ids[-i], agg[ids[-i]])
+        print(ids[-i] + 1, agg[ids[-i]])
     print('Top 10 least active nodes:')
     for i in range(10):
-        print(ids[i], agg[ids[i]])
+        print(ids[i] + 1, agg[ids[i]])
 
 # histogram of node activity for all 100 latent features
 def sum_dim_hist (X):
@@ -150,9 +151,5 @@ def reconstruct_2 (z, decoder, X):
     compare_reconstructed(X, recon)
 
 if __name__ == '__main__':
-    X = read_raw()
     z = read_ls()
-    # W = read_decoder_weights()
-    # reconstruct(z, W, X)
-    decoder = read_decoder()
-    reconstruct_2(z, decoder, X)
+    sum_dim(z)

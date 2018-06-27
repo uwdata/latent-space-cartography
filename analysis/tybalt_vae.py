@@ -27,6 +27,8 @@ p_latent = os.path.join(base, 'data', 'encoded_rnaseq_onehidden_warmup_batchnorm
 # Keras model
 p_encoder_model = os.path.join(base, 'models', 'encoder_onehidden_vae.hdf5')
 p_decoder_model = os.path.join(base, 'models', 'decoder_onehidden_vae.hdf5')
+# decoder weights
+p_decoder_weights = os.path.join(base, 'results', 'tybalt_gene_weights.tsv')
 
 # read latent space coordinates as a numpy array
 def read_ls ():
@@ -113,6 +115,17 @@ def read_decoder_weights ():
     # shape (100, 5000)
     return weight_layer
 
+# read the decoder weights from a tsv file
+def read_decoder_weights_tsv ():
+    res = []
+    with open(p_decoder_weights, newline='') as csvfile:
+        reader = csv.reader(csvfile, delimiter='\t')
+        for row in reader:
+            res.append(row[1:])
+    res = np.asarray(res[1:], dtype=float)
+    # print(res[1][:10])
+    return res
+
 # check if reconstructing z to output is simply multiplying decoder weight
 # the recon. error magnitude is way off, so it seems the above statement is false
 def reconstruct (z, W, X):
@@ -150,6 +163,14 @@ def reconstruct_2 (z, decoder, X):
     recon = decoder.predict(z)
     compare_reconstructed(X, recon)
 
+# compare the decoder weights:
+# (1) recover from decoder model
+# (2) read directly from TSV
+def compare_weights ():
+    W = read_decoder_weights()
+    W_ = read_decoder_weights_tsv()
+    diff_abs = np.sum(np.abs(W - W_), axis=1)
+    print(np.max(diff_abs))
+
 if __name__ == '__main__':
-    z = read_ls()
-    sum_dim(z)
+    compare_weights()

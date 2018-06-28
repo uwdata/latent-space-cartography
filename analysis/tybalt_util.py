@@ -17,6 +17,7 @@ class Util(object):
         self.p_header = os.path.join(base, 'data', 'pancan_scaled_zeroone_rnaseq_header.csv')
         self.p_id = os.path.join(base, 'data', 'patient_id.csv')
         self.p_meta = os.path.join(base, 'data', 'ov_subtype_info.tsv')
+        self.p_clinical = os.path.join(base, 'data', 'tybalt_features_with_clinical.tsv')
         # schema index in the meta table
         self.i_subtype = 2
 
@@ -63,6 +64,11 @@ class Util(object):
     # read the meta data (see hgsc_subtypes_tybalt.ipynb for schema)
     def read_meta (self):
         return self.read_tsv(self.p_meta, str, 0)
+
+    def read_clinical (self):
+        res = self.read_tsv(self.p_clinical, str, 0)
+        n = res.shape[0]
+        return np.concatenate((res[:, 0].reshape(n, 1), res[:, 101:]), axis=1)
 
     def right_outer_join (self, left, right):
         # convert left to a dictionary

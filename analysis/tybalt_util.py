@@ -13,6 +13,8 @@ class Util(object):
         self.p_raw = os.path.join(base, 'data', 'pancan_scaled_zeroone_rnaseq.h5')
         # latent coordinates
         self.p_latent = os.path.join(base, 'data', 'encoded_rnaseq_onehidden_warmup_batchnorm.tsv')
+        # saved model
+        self.p_decoder_model = os.path.join(base, 'models', 'decoder_onehidden_vae.hdf5')
         # meta data
         self.p_header = os.path.join(base, 'data', 'pancan_scaled_zeroone_rnaseq_header.csv')
         self.p_id = os.path.join(base, 'data', 'patient_id.csv')
@@ -65,10 +67,18 @@ class Util(object):
     def read_meta (self):
         return self.read_tsv(self.p_meta, str, 0)
 
+    # read more meta data
     def read_clinical (self):
         res = self.read_tsv(self.p_clinical, str, 0)
         n = res.shape[0]
         return np.concatenate((res[:, 0].reshape(n, 1), res[:, 101:]), axis=1)
+
+    # read the decoder model
+    def read_decoder (self):
+        from keras.models import load_model
+        decoder = load_model(self.p_decoder_model)
+        # decoder.summary()
+        return decoder
 
     def right_outer_join (self, left, right):
         # convert left to a dictionary

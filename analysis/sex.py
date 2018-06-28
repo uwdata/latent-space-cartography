@@ -7,6 +7,7 @@ The associated environment can be activated via:
     conda activate tybalt
 """
 import numpy as np
+from sklearn.svm import LinearSVC
 from tybalt_util import Util
 
 import matplotlib as mpl
@@ -55,5 +56,35 @@ def plot_dim_sex ():
     plt.ylabel('Count')
     plt.savefig('./result/sex_dim82.png')
 
+# linear svm separating female and male
+def svm_sex ():
+    z = util.read_ls()
+    decoder = util.read_decoder()
+    ids = get_sex_groups()
+
+    # prepare data and class labels
+    X = np.concatenate((z[ids[0], :], z[ids[1], :]), axis=0)
+    y = np.zeros(X.shape[0], dtype=int)
+    y[ids[0].shape[0]:] = 1 # 0 - female, 1 - male
+
+    # svm
+    clf = LinearSVC()
+    clf.fit(X, y)
+    w = clf.coef_[0] # weights
+    w0 = clf.intercept_
+
+    # the hyperplane is: w0 + w * x = 0
+    # thus w is a normal vector for the plane
+    # but how do we find the genes that vary most along this vector?
+    probe = np.asarray([w, -w])
+    genes = decoder.predict(probe)
+    diff = np.abs(genes[0] - genes[1])
+    top = np.argsort(diff)
+    header = util.read_header()
+    print('Top 20 genes differentiating sex:')
+    for i in range(1, 21):
+        idx = top[-i]
+        print('{}\t{}'.format(header[idx], diff[idx]))
+
 if __name__ == '__main__':
-    plot_dim_sex()
+    svm_sex()

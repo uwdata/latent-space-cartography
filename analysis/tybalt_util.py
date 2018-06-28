@@ -87,3 +87,11 @@ class Util(object):
 
         # shape: (295, 2)
         return ids
+
+    # get the indices in input array that has a certain subtype
+    def subtype_group (self, meta, ids, subtype):
+        res = []
+        for tup in ids:
+            if meta[tup[1]][self.i_subtype] == subtype:
+                res.append(tup[0])
+        return np.asarray(res, dtype=int)

@@ -32,5 +32,27 @@ def save_id ():
         writer = csv.writer(csvfile, delimiter=',')
         writer.writerow(res)
 
+# replicate the result in hgsc_subtypes_tybalt.ipynb, Out[9]
+def subtype_mean ():
+    # get the indices of the four subtypes
+    meta = util.read_meta()
+    ids = util.join_meta()
+    names = ['Differentiated', 'Immunoreactive', 'Mesenchymal', 'Proliferative']
+    groups = [util.subtype_group(meta, ids, name) for name in names]
+
+    # aggregate LS based on types
+    z = util.read_ls()
+    z_agg = []
+    for g in groups:
+        z_agg.append(np.mean(z[g], axis=0))
+    z_agg = np.asarray(z_agg, dtype=float)
+
+    # pretty print
+    for i in range(4):
+        print('{} {}'.format(names[i], np.around(z_agg[i, :10], decimals=3)))
+    
+    return z_agg
+
 if __name__ == '__main__':
-    pass
+    agg = subtype_mean()
+    print(agg[:, 86])

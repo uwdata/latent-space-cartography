@@ -6,6 +6,7 @@ Note that Tybalt uses python version 3.5
 The associated environment can be activated via:
     conda activate tybalt
 """
+import os
 import numpy as np
 from sklearn.svm import LinearSVC
 from tybalt_util import Util
@@ -19,6 +20,10 @@ util = Util()
 
 # index
 i_gender = 14
+node = 82 - 1 # Tybalt's index starts from 1
+
+# file paths
+p_decoder_weights = os.path.join(util.base, 'results', 'tybalt_gene_weights.tsv')
 
 def get_sex_groups ():
     meta = util.read_clinical()
@@ -39,10 +44,9 @@ def sex_group (meta, ids, which):
 
 # verify if encoding 82 separates sex
 def plot_dim_sex ():
-    col = 82 - 1 # Tybalt's index starts from 1
     z = util.read_ls()
     indices = get_sex_groups()
-    data =[z[i, col] for i in indices]
+    data =[z[i, node] for i in indices]
 
     plt.figure()
     for i in range(len(data)):
@@ -55,6 +59,17 @@ def plot_dim_sex ():
     plt.legend()
     plt.ylabel('Count')
     plt.savefig('./result/sex_dim82.png')
+
+# get the top sex differentiating genes using their approach
+def naive_sex ():
+    w = util.read_tsv(p_decoder_weights)[node, :]
+    top = np.argsort(np.abs(w))
+    header = util.read_header()
+    print('Top 20 genes differentiating sex:')
+    w = np.around(w, decimals=4)
+    for i in range(1, 21):
+        idx = top[-i]
+        print('{}\t{}'.format(header[idx], w[idx]))
 
 # linear svm separating female and male
 def svm_sex ():
@@ -78,8 +93,8 @@ def svm_sex ():
     # but how do we find the genes that vary most along this vector?
     probe = np.asarray([w, -w])
     genes = decoder.predict(probe)
-    diff = np.abs(genes[0] - genes[1])
-    top = np.argsort(diff)
+    diff = genes[0] - genes[1]
+    top = np.argsort(np.abs(diff))
     header = util.read_header()
     print('Top 20 genes differentiating sex:')
     for i in range(1, 21):

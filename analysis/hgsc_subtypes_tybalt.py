@@ -76,6 +76,51 @@ def im_genes ():
 
     return arr_to_dict(mesen), arr_to_dict(immun)
 
-if __name__ == '__main__':
+# helper function used by im_vector()
+def compare_results (ids, arr, header, lookup):
+    count = 0
+    for i in ids:
+        gene = header[i]
+        if (gene in lookup):
+            # print('{}\t{}'.format(gene, arr[i]))
+            count += 1
+    print('Total: {}/{}'.format(count, ids.shape[0]))
+
+# decode the centroid of mesen or immuno group, and find the max diff genes
+# compare our gene list with their list
+def im_vector ():
+    # get the indices of the two subtypes
+    header = util.read_header()
+    meta = util.read_meta()
+    ids = util.join_meta()
+    names = ['Mesenchymal', 'Immunoreactive']
+    groups = [util.subtype_group(meta, ids, name) for name in names]
+
+    # compute centroid
+    z = util.read_ls()
+    means = np.asarray([np.mean(z[g], axis=0) for g in groups], dtype=float)
+
+    # decode centroid
+    decoder = util.read_decoder()
+    genes = decoder.predict(means)
+    diff = genes[0] - genes[1] # mesenchymal - immunoreactive
+    srt = np.argsort(diff)
+
+    # what if I directly compute the mean of input genes?
+    raw = util.read_raw()
+    raw_genes = np.asarray([np.mean(raw[g], axis=0) for g in groups], dtype=float)
+    raw_diff = raw_genes[0] - raw_genes[1] # mesenchymal - immunoreactive
+    raw_srt = np.argsort(raw_diff)
+    print('Comparing with raw')
+    compare_results(srt[:300], diff, header, arr_to_dict(header[raw_srt[:300]]))
+    compare_results(srt[-300:], diff, header, arr_to_dict(header[raw_srt[-300:]]))
+
+    # compare
     mesen, immun = im_genes()
-    print('CA4' in mesen, 'CA4' in immun)
+    print('Immunoreactive')
+    compare_results(srt[:300], diff, header, immun)
+    print('Mesenchymal')
+    compare_results(srt[-300:], diff, header, mesen)
+
+if __name__ == '__main__':
+    im_vector()

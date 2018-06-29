@@ -88,6 +88,17 @@ def svm_sex ():
     w = clf.coef_[0] # weights
     w0 = clf.intercept_
 
+    # see if the classes are perfectly separated
+    y_ = clf.predict(X)
+    acc = 1 - np.count_nonzero(y - y_) / float(X.shape[0])
+    print('SVM accuracy: {}'.format(acc))
+
+    # see if the normal vector is similar to their sex seperating feature
+    ve = np.zeros(100, dtype=float)
+    ve[node] = 1.0
+    dist = np.dot(w, ve) / np.linalg.norm(w)
+    print('Cosine distance between w and axis 82: {}'.format(dist))
+
     # the hyperplane is: w0 + w * x = 0
     # thus w is a normal vector for the plane
     # but how do we find the genes that vary most along this vector?

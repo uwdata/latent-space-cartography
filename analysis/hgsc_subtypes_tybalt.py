@@ -38,6 +38,23 @@ def save_id ():
         writer = csv.writer(csvfile, delimiter=',')
         writer.writerow(res)
 
+# wrangle result file to be in WebGestalt required format
+def save_gene_list ():
+    ps = [p_mesen, p_immun, p_mesen2, p_immun2]
+    out = [
+        'hgsc_node87genes_pos.txt',
+        'hgsc_node87genes_neg.txt',
+        'hgsc_node56genes_neg.txt',
+        'hgsc_node56genes_pos.txt'
+    ]
+    for i in range(4):
+        data = util.read_tsv(ps[i], str, 0)[:, 0]
+        fn = os.path.join(util.base, 'results', out[i])
+        with open(fn, 'w', newline='') as f:
+            writer = csv.writer(f)
+            for d in data:
+                writer.writerow([d])
+
 # replicate the result in hgsc_subtypes_tybalt.ipynb, Out[9]
 def subtype_mean ():
     # get the indices of the four subtypes
@@ -122,6 +139,7 @@ def im_vector ():
     print('Mesenchymal')
     compare_results(srt[-300:], diff, header, mesen)
 
+# cluster quality of mesen or immuno type
 def im_vector_quality ():
     # get the indices of the two subtypes
     meta = util.read_meta()
@@ -137,4 +155,4 @@ def im_vector_quality ():
         print('{}: {}%'.format(names[i], int(score * 100)))
 
 if __name__ == '__main__':
-    im_vector_quality()
+    save_gene_list()

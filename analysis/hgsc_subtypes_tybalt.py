@@ -122,5 +122,19 @@ def im_vector ():
     print('Mesenchymal')
     compare_results(srt[-300:], diff, header, mesen)
 
+def im_vector_quality ():
+    # get the indices of the two subtypes
+    meta = util.read_meta()
+    ids = util.join_meta()
+    names = ['Mesenchymal', 'Immunoreactive']
+    groups = [util.subtype_group(meta, ids, name) for name in names]
+
+    z = util.read_ls()
+    # X = util.read_raw()
+    for i in range(2):
+        score = util.cluster_score(groups[i], z)
+        # score = util.cluster_score(groups[i], X)
+        print('{}: {}%'.format(names[i], int(score * 100)))
+
 if __name__ == '__main__':
-    im_vector()
+    im_vector_quality()

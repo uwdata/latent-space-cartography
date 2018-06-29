@@ -111,3 +111,28 @@ class Util(object):
             if meta[tup[1]][self.i_subtype] == subtype:
                 res.append(tup[0])
         return np.asarray(res, dtype=int)
+
+    # compute the average inter-point distance (L2) between each point pair
+    def _pointwise_dist (self, X, Y=None):
+        R = X if Y is None else Y
+        m, _ = X.shape
+        n, _ = R.shape
+
+        s = 0
+        for i in range(m):
+            # left hand matrix: repeat an element N times
+            L = np.repeat([X[i]], n, axis=0)
+            D = np.linalg.norm(L - R, axis=1)
+            # for intra-cluster distance, exclude self
+            denom = n - 1 if Y is None else n
+            s += np.sum(D) / float(denom)
+        
+        return s / float(m)
+
+    # a score representing how tight a cluster is
+    def cluster_score (self, ids, X):
+        a = self._pointwise_dist(X[ids])
+        b = self._pointwise_dist(X[ids], np.delete(X, ids, axis=0))
+        print('Intra-cluster distance: {}, Inter-cluster distance: {}'.format(a, b))
+        score = (b - a) / max(a, b)
+        return score

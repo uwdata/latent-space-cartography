@@ -1,0 +1,138 @@
+userid	genesymbol	genename	entrezgene
+CHST4	CHST4	carbohydrate sulfotransferase 4	10164
+CSAG2	CSAG2	CSAG family member 2	102723547
+CCNO	CCNO	cyclin O	10309
+CLGN	CLGN	calmegin	1047
+UBD	UBD	ubiquitin D	10537
+GNLY	GNLY	granulysin	10578
+SCGB1D2	SCGB1D2	secretoglobin family 1D member 2	10647
+CXCR6	CXCR6	C-X-C motif chemokine receptor 6	10663
+PRSS21	PRSS21	protease, serine 21	10942
+IFI44L	IFI44L	interferon induced protein 44 like	10964
+KLHDC7B	KLHDC7B	kelch domain containing 7B	113730
+ZNF257	ZNF257	zinc finger protein 257	113835
+GBP5	GBP5	guanylate binding protein 5	115362
+C12orf56	C12orf56	chromosome 12 open reading frame 56	115749
+GTSF1	GTSF1	gametocyte specific factor 1	121355
+PCP2	PCP2	Purkinje cell protein 2	126006
+C1orf194	C1orf194	chromosome 1 open reading frame 194	127003
+MDH1B	MDH1B	malate dehydrogenase 1B	130752
+CP	CP	ceruloplasmin	1356
+RNF183	RNF183	ring finger protein 183	138065
+TCAM1P	TCAM1P	testicular cell adhesion molecule 1, pseudogene	146771
+SLFN13	SLFN13	schlafen family member 13	146857
+ZNF560	ZNF560	zinc finger protein 560	147741
+C1orf210	C1orf210	chromosome 1 open reading frame 210	149466
+PYHIN1	PYHIN1	pyrin and HIN domain family member 1	149628
+WDR49	WDR49	WD repeat domain 49	151790
+NUDT16P1	NUDT16P1	nudix hydrolase 16 pseudogene 1	152195
+FAM81B	FAM81B	family with sequence similarity 81 member B	153643
+CYP4B1	CYP4B1	cytochrome P450 family 4 subfamily B member 1	1580
+FAAH2	FAAH2	fatty acid amide hydrolase 2	158584
+TDRD5	TDRD5	tudor domain containing 5	163589
+KBTBD12	KBTBD12	kelch repeat and BTB domain containing 12	166348
+CYP4Z1	CYP4Z1	cytochrome P450 family 4 subfamily Z member 1	199974
+VWA3B	VWA3B	von Willebrand factor A domain containing 3B	200403
+RDM1	RDM1	RAD52 motif containing 1	201299
+TIGIT	TIGIT	T-cell immunoreceptor with Ig and ITIM domains	201633
+ARMC3	ARMC3	armadillo repeat containing 3	219681
+KLRK1	KLRK1	killer cell lectin like receptor K1	22914
+FOXJ1	FOXJ1	forkhead box J1	2302
+CES3	CES3	carboxylesterase 3	23491
+LPAR3	LPAR3	lysophosphatidic acid receptor 3	23566
+ALOX12P2	ALOX12P2	arachidonate 12-lipoxygenase pseudogene 2	245
+IFI6	IFI6	interferon alpha inducible protein 6	2537
+MCOLN2	MCOLN2	mucolipin 2	255231
+GABRP	GABRP	gamma-aminobutyric acid type A receptor pi subunit	2568
+ZNF683	ZNF683	zinc finger protein 683	257101
+RIBC2	RIBC2	RIB43A domain with coiled-coils 2	26150
+PLA2G2D	PLA2G2D	phospholipase A2 group IID	26279
+SMC1B	SMC1B	structural maintenance of chromosomes 1B	27127
+TEKT2	TEKT2	tektin 2	27285
+ADAMDEC1	ADAMDEC1	ADAM like decysin 1	27299
+AMY1A	AMY1A	amylase, alpha 1A (salivary)	276
+GPR19	GPR19	G protein-coupled receptor 19	2842
+CXCL17	CXCL17	C-X-C motif chemokine ligand 17	284340
+RUFY4	RUFY4	RUN and FYVE domain containing 4	285180
+LOC285629	LOC285629	long intergenic non-protein coding RNA 2159	285629
+ICOS	ICOS	inducible T-cell costimulator	29851
+GZMH	GZMH	granzyme H	2999
+GZMA	GZMA	granzyme A	3001
+GZMB	GZMB	granzyme B	3002
+HLA-DOB	HLA-DOB	major histocompatibility complex, class II, DO beta	3112
+HLA-DRB5	HLA-DRB5	major histocompatibility complex, class II, DR beta 5	3127
+HLA-DRB6	HLA-DRB6	major histocompatibility complex, class II, DR beta 6 (pseudogene)	3128
+HTR3A	HTR3A	5-hydroxytryptamine receptor 3A	3359
+IFNG	IFNG	interferon gamma	3458
+CCDC160	CCDC160	coiled-coil domain containing 160	347475
+KAAG1	KAAG1	kidney associated antigen 1	353219
+FASLG	FASLG	Fas ligand	356
+CXCR2P1	CXCR2P1	C-X-C motif chemokine receptor 2 pseudogene 1	3580
+IDO1	IDO1	indoleamine 2,3-dioxygenase 1	3620
+CXCL10	CXCL10	C-X-C motif chemokine ligand 10	3627
+DNAJB13	DNAJB13	DnaJ heat shock protein family (Hsp40) member B13	374407
+ENHO	ENHO	energy homeostasis associated	375704
+CD164L2	CD164L2	CD164 molecule like 2	388611
+LDLRAD1	LDLRAD1	low density lipoprotein receptor class A domain containing 1	388633
+CSAG3	CSAG3	CSAG family member 3	389903
+LAG3	LAG3	lymphocyte activating 3	3902
+GLOD5	GLOD5	glyoxalase domain containing 5	392465
+LDHC	LDHC	lactate dehydrogenase C	3948
+CRIP3	CRIP3	cysteine rich protein 3	401262
+RAB19	RAB19	RAB19, member RAS oncogene family	401409
+ACBD7	ACBD7	acyl-CoA binding domain containing 7	414149
+MAT1A	MAT1A	methionine adenosyltransferase 1A	4143
+SCGB2A1	SCGB2A1	secretoglobin family 2A member 1	4246
+CXCL9	CXCL9	C-X-C motif chemokine ligand 9	4283
+PLEKHG7	PLEKHG7	pleckstrin homology and RhoGEF domain containing G7	440107
+ZYG11A	ZYG11A	zyg-11 family member A, cell cycle regulator	440590
+FAM26F	FAM26F	family with sequence similarity 26 member F	441168
+MT1H	MT1H	metallothionein 1H	4496
+MYB	MYB	MYB proto-oncogene, transcription factor	4602
+NKG7	NKG7	natural killer cell granule protein 7	4818
+TIFAB	TIFAB	TIFA inhibitor	497189
+PLA2G3	PLA2G3	phospholipase A2 group III	50487
+TRAT1	TRAT1	T-cell receptor associated transmembrane adaptor 1	50852
+ETV7	ETV7	ETS variant 7	51513
+PIGR	PIGR	polymeric immunoglobulin receptor	5284
+UBASH3A	UBASH3A	ubiquitin associated and SH3 domain containing A	53347
+NUP62CL	NUP62CL	nucleoporin 62 C-terminal like	54830
+BSPRY	BSPRY	B-box and SPRY domain containing	54836
+HRASLS2	HRASLS2	HRAS like suppressor 2	54979
+VNN3	VNN3	vanin 3	55350
+SIRPG	SIRPG	signal regulatory protein gamma	55423
+CRTAM	CRTAM	cytotoxic and regulatory T-cell molecule	56253
+PTH2R	PTH2R	parathyroid hormone 2 receptor	5746
+KIAA1324	KIAA1324	KIAA1324	57535
+RLN2	RLN2	relaxin 2	6019
+CCL5	CCL5	C-C motif chemokine ligand 5	6352
+CCL8	CCL8	C-C motif chemokine ligand 8	6355
+CXCL11	CXCL11	C-X-C motif chemokine ligand 11	6373
+XCL1	XCL1	X-C motif chemokine ligand 1	6375
+BST2	BST2	bone marrow stromal cell antigen 2	684
+BTC	BTC	betacellulin	685
+UGT8	UGT8	UDP glycosyltransferase 8	7368
+BCL2L14	BCL2L14	BCL2 like 14	79370
+ZBBX	ZBBX	zinc finger B-box domain containing	79740
+ASRGL1	ASRGL1	asparaginase like 1	80150
+EFHC2	EFHC2	EF-hand domain containing 2	80258
+ZBP1	ZBP1	Z-DNA binding protein 1	81030
+ACTL8	ACTL8	actin like 8	81569
+MND1	MND1	meiotic nuclear divisions 1	84057
+SLA2	SLA2	Src like adaptor 2	84174
+DYDC2	DYDC2	DPY30 domain containing 2	84332
+C9orf24	C9orf24	chromosome 9 open reading frame 24	84688
+HSH2D	HSH2D	hematopoietic SH2 domain containing	84941
+DDO	DDO	D-aspartate oxidase	8528
+SKAP1	SKAP1	src kinase associated phosphoprotein 1	8631
+OASL	OASL	2'-5'-oligoadenylate synthetase like	8638
+HRK	HRK	harakiri, BCL2 interacting protein	8739
+WISP3	WISP3	WNT1 inducible signaling pathway protein 3	8838
+FAM181A	FAM181A	family with sequence similarity 181 member A	90050
+L3MBTL4	L3MBTL4	l(3)mbt-like 4 (Drosophila)	91133
+CD2	CD2	CD2 molecule	914
+CD3G	CD3G	CD3g molecule	917
+DAPL1	DAPL1	death associated protein like 1	92196
+AIM2	AIM2	absent in melanoma 2	9447
+SPAG6	SPAG6	sperm associated antigen 6	9576
+MAGEC1	MAGEC1	MAGE family member C1	9947

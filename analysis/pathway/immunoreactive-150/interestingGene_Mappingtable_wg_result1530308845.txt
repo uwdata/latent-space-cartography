@@ -1,0 +1,139 @@
+userid	genesymbol	genename	entrezgene
+FLJ16779	FLJ16779	uncharacterized LOC100192386	100192386
+GPC6	GPC6	glypican 6	10082
+EDIL3	EDIL3	EGF like repeats and discoidin domains 3	10085
+CDH11	CDH11	cadherin 11	1009
+CDR1	CDR1	cerebellar degeneration related protein 1	1038
+POSTN	POSTN	periostin	10631
+CORIN	CORIN	corin, serine peptidase	10699
+EMILIN1	EMILIN1	elastin microfibril interfacer 1	11117
+CSMD2	CSMD2	CUB and Sushi multiple domains 2	114784
+ELFN2	ELFN2	extracellular leucine rich repeat and fibronectin type III domain containing 2	114794
+C1QTNF7	C1QTNF7	C1q and tumor necrosis factor related protein 7	114905
+ALPK2	ALPK2	alpha kinase 2	115701
+TWIST2	TWIST2	twist family bHLH transcription factor 2	117581
+FAT3	FAT3	FAT atypical cadherin 3	120114
+CNTN1	CNTN1	contactin 1	1272
+NKAIN4	NKAIN4	Sodium/potassium transporting ATPase interacting 4	128414
+COL5A1	COL5A1	collagen type V alpha 1 chain	1289
+COL5A2	COL5A2	collagen type V alpha 2 chain	1290
+COL8A1	COL8A1	collagen type VIII alpha 1 chain	1295
+COL10A1	COL10A1	collagen type X alpha 1 chain	1300
+COL11A1	COL11A1	collagen type XI alpha 1 chain	1301
+COMP	COMP	cartilage oligomeric matrix protein	1311
+LRRC15	LRRC15	leucine rich repeat containing 15	131578
+ISM1	ISM1	isthmin 1	140862
+LRFN5	LRFN5	leucine rich repeat and fibronectin type III domain containing 5	145581
+VCAN	VCAN	versican	1462
+DACT3	DACT3	dishevelled binding antagonist of beta catenin 3	147906
+IGFL2	IGFL2	IGF like family member 2	147920
+SAMD11	SAMD11	sterile alpha motif domain containing 11	148398
+GLIS1	GLIS1	GLIS family zinc finger 1	148979
+CNTN4	CNTN4	contactin 4	152330
+KANK4	KANK4	KN motif and ankyrin repeat domains 4	163782
+APCDD1L	APCDD1L	APC down-regulated 1 like	164284
+AEBP1	AEBP1	AE binding protein 1	165
+LIX1	LIX1	limb and CNS expressed 1	167410
+ADAMTS16	ADAMTS16	ADAM metallopeptidase with thrombospondin type 1 motif 16	170690
+EPYC	EPYC	epiphycan	1833
+CYS1	CYS1	cystin 1	192668
+EFNA2	EFNA2	ephrin A2	1943
+NRK	NRK	Nik related kinase	203447
+EYA4	EYA4	EYA transcriptional coactivator and phosphatase 4	2070
+FAP	FAP	fibroblast activation protein alpha	2191
+FBN1	FBN1	fibrillin 1	2200
+DOK6	DOK6	docking protein 6	220164
+ITGA11	ITGA11	integrin subunit alpha 11	22801
+HECW1	HECW1	HECT, C2 and WW domain containing E3 ubiquitin protein ligase 1	23072
+FLNC	FLNC	filamin C	2318
+FAM189A1	FAM189A1	family with sequence similarity 189 member A1	23359
+FLRT2	FLRT2	fibronectin leucine rich transmembrane protein 2	23768
+TMEM59L	TMEM59L	transmembrane protein 59 like	25789
+FAM19A5	FAM19A5	family with sequence similarity 19 member A5, C-C motif chemokine like	25817
+NALCN	NALCN	sodium leak channel, non-selective	259232
+ZNF521	ZNF521	zinc finger protein 521	25925
+GREM1	GREM1	gremlin 1, DAN family BMP antagonist	26585
+CSDC2	CSDC2	cold shock domain containing C2	27254
+GPR1	GPR1	G protein-coupled receptor 1	2825
+P4HA3	P4HA3	prolyl 4-hydroxylase subunit alpha 3	283208
+SSC5D	SSC5D	scavenger receptor cysteine rich family member with 5 domains	284297
+GRP	GRP	gastrin releasing peptide	2922
+PURG	PURG	purine rich element binding protein G	29942
+PDZRN4	PDZRN4	PDZ domain containing ring finger 4	29951
+CYP27C1	CYP27C1	cytochrome P450 family 27 subfamily C member 1	339761
+ARSI	ARSI	arylsulfatase family member I	340075
+IL11	IL11	interleukin 11	3589
+INHBA	INHBA	inhibin beta A subunit	3624
+KCNA1	KCNA1	potassium voltage-gated channel subfamily A member 1	3736
+FIBIN	FIBIN	fin bud initiation factor homolog (zebrafish)	387758
+SHISA2	SHISA2	shisa family member 2	387914
+FAM180A	FAM180A	family with sequence similarity 180 member A	389558
+GDF6	GDF6	growth differentiation factor 6	392255
+IGLON5	IGLON5	IgLON family member 5	402665
+LSAMP	LSAMP	limbic system-associated membrane protein	4045
+MATN3	MATN3	matrilin 3	4148
+MFAP4	MFAP4	microfibrillar associated protein 4	4239
+MMP13	MMP13	matrix metallopeptidase 13	4322
+MMP16	MMP16	matrix metallopeptidase 16	4325
+MN1	MN1	MN1 proto-oncogene, transcriptional regulator	4330
+OMD	OMD	osteomodulin	4958
+OGN	OGN	osteoglycin	4969
+NTM	NTM	neurotrimin	50863
+SHANK1	SHANK1	SH3 and multiple ankyrin repeat domains 1	50944
+MAGEL2	MAGEL2	MAGE family member L2	54551
+MXRA8	MXRA8	matrix remodeling associated 8	54587
+PPEF1	PPEF1	protein phosphatase with EF-hand domain 1	5475
+ASPN	ASPN	asporin	54829
+ENOX1	ENOX1	ecto-NOX disulfide-thiol exchanger 1	55068
+KIF26B	KIF26B	kinesin family member 26B	55083
+PRKG1	PRKG1	protein kinase, cGMP-dependent, type I	5592
+MEIS3	MEIS3	Meis homeobox 3	56917
+SALL4	SALL4	spalt like transcription factor 4	57167
+JPH3	JPH3	junctophilin 3	57338
+SORCS2	SORCS2	sortilin related VPS10 domain containing receptor 2	57537
+LRRC4C	LRRC4C	leucine rich repeat containing 4C	57689
+IGDCC4	IGDCC4	immunoglobulin superfamily DCC subclass member 4	57722
+PTPRD	PTPRD	protein tyrosine phosphatase, receptor type D	5789
+NKX3-2	NKX3-2	NK3 homeobox 2	579
+PTPRN	PTPRN	protein tyrosine phosphatase, receptor type N	5798
+SCN2B	SCN2B	sodium voltage-gated channel beta subunit 2	6327
+SFRP2	SFRP2	secreted frizzled related protein 2	6423
+SFRP4	SFRP4	secreted frizzled related protein 4	6424
+GREM2	GREM2	gremlin 2, DAN family BMP antagonist	64388
+SGCD	SGCD	sarcoglycan delta	6444
+SOX11	SOX11	SRY-box 11	6664
+SPOCK1	SPOCK1	SPARC/osteonectin, cwcv and kazal like domains proteoglycan 1	6695
+THBS2	THBS2	thrombospondin 2	7058
+TLL1	TLL1	tolloid like 1	7092
+INS-IGF2	INS-IGF2	INS-IGF2 readthrough	723961
+FAM155A	FAM155A	family with sequence similarity 155 member A	728215
+TWIST1	TWIST1	twist family bHLH transcription factor 1	7291
+WNT2	WNT2	Wnt family member 2	7472
+CACNA1C	CACNA1C	calcium voltage-gated channel subunit alpha1 C	775
+CALB2	CALB2	calbindin 2	794
+ZFHX4	ZFHX4	zinc finger homeobox 4	79776
+PODNL1	PODNL1	podocan like 1	79883
+BICC1	BICC1	BicC family RNA binding protein 1	80114
+ADAM12	ADAM12	ADAM metallopeptidase domain 12	8038
+MFAP5	MFAP5	microfibrillar associated protein 5	8076
+ST8SIA2	ST8SIA2	ST8 alpha-N-acetyl-neuraminide alpha-2,8-sialyltransferase 2	8128
+ADAMTS12	ADAMTS12	ADAM metallopeptidase with thrombospondin type 1 motif 12	81792
+NETO1	NETO1	neuropilin and tolloid like 1	81832
+GLT8D2	GLT8D2	glycosyltransferase 8 domain containing 2	83468
+HMCN1	HMCN1	hemicentin 1	83872
+ST6GAL2	ST6GAL2	ST6 beta-galactoside alpha-2,6-sialyltransferase 2	84620
+FNDC1	FNDC1	fibronectin type III domain containing 1	84624
+ZNF469	ZNF469	zinc finger protein 469	84627
+KIAA1644	KIAA1644	KIAA1644	85352
+NKD2	NKD2	naked cuticle homolog 2	85409
+RUNX1T1	RUNX1T1	RUNX1 translocation partner 1	862
+WISP1	WISP1	WNT1 inducible signaling pathway protein 1	8840
+CACNA1G	CACNA1G	calcium voltage-gated channel subunit alpha1 G	8913
+NAV3	NAV3	neuron navigator 3	89795
+TBX18	TBX18	T-box 18	9096
+PLXNA4	PLXNA4	plexin A4	91584
+SPSB4	SPSB4	splA/ryanodine receptor domain and SOCS box containing 4	92369
+NOG	NOG	noggin	9241
+SLIT2	SLIT2	slit guidance ligand 2	9353
+ITGBL1	ITGBL1	integrin subunit beta like 1	9358
+ADAMTS2	ADAMTS2	ADAM metallopeptidase with thrombospondin type 1 motif 2	9509

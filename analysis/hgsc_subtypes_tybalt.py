@@ -39,7 +39,7 @@ def save_id ():
         writer.writerow(res)
 
 # wrangle result file to be in WebGestalt required format
-def save_gene_list ():
+def wrangle_gene_list ():
     ps = [p_mesen, p_immun, p_mesen2, p_immun2]
     out = [
         'hgsc_node87genes_pos.txt',
@@ -54,6 +54,14 @@ def save_gene_list ():
             writer = csv.writer(f)
             for d in data:
                 writer.writerow([d])
+
+# save gene list to txt file, with one gene per row
+def save_gene_list (data, fn):
+    fn = os.path.join(util.base, 'results', fn)
+    with open(fn, 'w', newline='') as f:
+        writer = csv.writer(f)
+        for d in data:
+            writer.writerow([d])
 
 # replicate the result in hgsc_subtypes_tybalt.ipynb, Out[9]
 def subtype_mean ():
@@ -123,21 +131,65 @@ def im_vector ():
     diff = genes[0] - genes[1] # mesenchymal - immunoreactive
     srt = np.argsort(diff)
 
-    # what if I directly compute the mean of input genes?
-    raw = util.read_raw()
-    raw_genes = np.asarray([np.mean(raw[g], axis=0) for g in groups], dtype=float)
-    raw_diff = raw_genes[0] - raw_genes[1] # mesenchymal - immunoreactive
-    raw_srt = np.argsort(raw_diff)
-    print('Comparing with raw')
-    compare_results(srt[:300], diff, header, arr_to_dict(header[raw_srt[:300]]))
-    compare_results(srt[-300:], diff, header, arr_to_dict(header[raw_srt[-300:]]))
+    # # what if I directly compute the mean of input genes?
+    # raw = util.read_raw()
+    # raw_genes = np.asarray([np.mean(raw[g], axis=0) for g in groups], dtype=float)
+    # raw_diff = raw_genes[0] - raw_genes[1] # mesenchymal - immunoreactive
+    # raw_srt = np.argsort(raw_diff)
+    # print('Comparing with raw')
+    # compare_results(srt[:300], diff, header, arr_to_dict(header[raw_srt[:300]]))
+    # compare_results(srt[-300:], diff, header, arr_to_dict(header[raw_srt[-300:]]))
 
-    # compare
-    mesen, immun = im_genes()
-    print('Immunoreactive')
-    compare_results(srt[:300], diff, header, immun)
-    print('Mesenchymal')
-    compare_results(srt[-300:], diff, header, mesen)
+    # # compare
+    # mesen, immun = im_genes()
+    # print('Immunoreactive')
+    # compare_results(srt[:300], diff, header, immun)
+    # print('Mesenchymal')
+    # compare_results(srt[-300:], diff, header, mesen)
+
+    # output our "high weight genes"
+    pos, neg = high_weight_genes(diff, header, 2.5)
+    save_gene_list(pos, 'mesenchymal_genes_sd.txt')
+    save_gene_list(neg, 'immunoreactive_genes_sd.txt')
+    print('Totol genes 2.5 standard deviation away:')
+    print('{} mesenchymal, {} immunoreactive'.format(len(neg), len(pos)))
+
+    # output the top / bottom N genes
+    cutoff = 150
+    save_gene_list(header[srt[:cutoff]], 'immunoreactive_genes_{}.txt'.format(cutoff))
+    save_gene_list(header[srt[-cutoff:]], 'mesenchymal_genes_{}.txt'.format(cutoff))
+
+def high_weight_genes (w, header, highsd=2):
+    sd = np.std(w)
+    mean = np.mean(w)
+    print('Mean: {}, SD: {}'.format(mean, sd))
+    pos = []
+    neg = []
+    for i in range(header.shape[0]):
+        if w[i] > mean + highsd * sd:
+            pos.append(header[i])
+        if w[i] < mean - highsd * sd:
+            neg.append(header[i])
+    return pos, neg
+
+# like im_vector, but don't do the diff
+def im_mean ():
+    # get the indices of the two subtypes
+    header = util.read_header()
+    meta = util.read_meta()
+    ids = util.join_meta()
+    names = ['Mesenchymal', 'Immunoreactive']
+    groups = [util.subtype_group(meta, ids, name) for name in names]
+
+    # compute centroid
+    z = util.read_ls()
+    means = np.asarray([np.mean(z[g], axis=0) for g in groups], dtype=float)
+
+    # decode centroid
+    decoder = util.read_decoder()
+    genes = decoder.predict(means)
+    save_gene_list(high_weight_genes(genes[0], header)[0], 'mesenchymal_genes.txt')
+    save_gene_list(high_weight_genes(genes[1], header)[0], 'immunoreactive_genes.txt')
 
 # cluster quality of mesen or immuno type
 def im_vector_quality ():
@@ -155,4 +207,4 @@ def im_vector_quality ():
         print('{}: {}%'.format(names[i], int(score * 100)))
 
 if __name__ == '__main__':
-    save_gene_list()
+    im_vector()

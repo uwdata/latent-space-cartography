@@ -1,0 +1,2522 @@
+<html>
+<head>
+<title>WebGestalt (WEB-based GEne SeT AnaLysis Toolkit)</title>
+<script type="text/javascript" src="http://www.webgestalt.org/js/jquery.js"></script>
+<script type="text/javascript" src="http://www.webgestalt.org/js/jquery-ui.js"></script>
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-42098540-1', 'auto');
+  ga('send', 'pageview');
+</script>
+<script type="text/javascript" src="http://www.webgestalt.org/js/changeColor.js"></script>
+<script type="text/javascript" src="http://www.webgestalt.org/js/tableExport.js"></script>
+<script type="text/javascript" src="http://www.webgestalt.org/js/jquery.base64.js"></script>
+<script type="text/javascript" src="http://www.webgestalt.org/js/html2canvas.js"></script>
+<script type="text/javascript" src="http://www.webgestalt.org/js/jspdf/libs/sprintf.js"></script>
+<script type="text/javascript" src="http://www.webgestalt.org/js/jspdf.js"></script>
+<script type="text/javascript" src="http://www.webgestalt.org/js/jspdf/libs/base64.js"></script>
+<script type="text/javascript" src="http://www.webgestalt.org/js/search.js"></script>
+<script type="text/javascript" src="http://www.webgestalt.org/js/d3/d3.v3.min.js"></script>
+<script type="text/javascript" src="http://www.webgestalt.org/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="http://www.webgestalt.org/js/jquery.tipsy.js"></script>
+<script type="text/javascript" src="http://www.webgestalt.org/js/jquery.contextMenu.js"></script>
+<script type="text/javascript" src="http://www.webgestalt.org/js/jquery.floatThead.min.js"></script>
+<script type="text/javascript" src="http://www.webgestalt.org/js/dagre/dagre.js"></script>
+<script type="text/javascript" src="http://www.webgestalt.org/js/Minimap.js"></script>
+<script type="text/javascript" src="http://www.webgestalt.org/js/MinimapZoom.js"></script>
+<script type="text/javascript" src="http://www.webgestalt.org/js/DirectedAcyclicGraph.js"></script>
+<script type="text/javascript" src="http://www.webgestalt.org/js/List.js"></script>
+<script type="text/javascript" src="http://www.webgestalt.org/js/Selectable_svv.js"></script>
+<script type="text/javascript" src="http://www.webgestalt.org/js/Graph.js"></script>
+<script type="text/javascript" src="http://www.webgestalt.org/js/History.js"></script>
+<script type="text/javascript" src="http://www.webgestalt.org/js/Tooltip.js"></script>
+<script type="text/javascript" src="http://www.webgestalt.org/js/FileSaver.js"></script>
+<script type="text/javascript" src="http://www.webgestalt.org/js/download.js"></script>
+<script type="text/javascript" src="http://www.webgestalt.org/js/ContextMenu.js"></script>
+<script type="text/javascript" src="http://www.webgestalt.org/js/searchView.js"></script>
+<script type="text/javascript" src="http://www.webgestalt.org/js/canvg/rgbcolor.js"></script>
+<script type="text/javascript" src="http://www.webgestalt.org/js/canvg/StackBlur.js"></script>
+<script type="text/javascript" src="http://www.webgestalt.org/js/canvg/canvg.js"></script>
+<script type="text/javascript" src="js/xtrace_utils.js"></script>
+<script type="text/javascript" src="js/xtrace_graph.js"></script>
+<script type="text/javascript" src="js/plotDAG.js"></script>
+<script type="text/javascript" src="http://www.webgestalt.org/js/tooltipster.bundle.min.js"></script>
+<script>$(document).ready(function(){$('.tooltip-container').tooltipster({functionInit: function (instance, helper) {var content = $(helper.origin).find('.tooltip_content').detach();instance.content(content);}});});</script>
+<link href="http://www.webgestalt.org/css/jquery-ui.css" rel="stylesheet" type="text/css">
+<link href="http://www.webgestalt.org/css/xtrace.css" rel="stylesheet" type="text/css">
+<link href="http://www.webgestalt.org/css/tipsy.css" rel="stylesheet" type="text/css">
+<link href="http://www.webgestalt.org/css/jquery.contextMenu.css" rel="stylesheet" type="text/css">
+<link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css">
+<link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+<link href="http://www.webgestalt.org/css/graph.css" rel="stylesheet" type="text/css">
+<link href="http://www.webgestalt.org/css/report.css" rel="stylesheet" type="text/css">
+<link href="http://www.webgestalt.org/css/zebra.css" rel="stylesheet" type="text/css">
+<link href="http://www.webgestalt.org/css/search.css" rel="stylesheet" type="text/css">
+<link href="http://www.webgestalt.org/css/tooltipster.bundle.min.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<p align="center">
+<iframe src="http://www.webgestalt.org/html/head.html" style="border:0px;height:180px;width:100%"></iframe>
+<div id ="tabs"> <ul>
+<li><a href="#summary">Summary</a></li>
+<li><a href="#interestGene">User ID Mapping Table</a></li>
+<li><a href="#referenceGene">GOSlim Summary</a></li>
+<li><a href="#result">Enrichment Results</a></li>
+</ul>
+<div id="summary">
+<h3>Summary&nbsp&nbsp&nbsp(<a href="Project_wg_result1530307769.tar.gz" target="_blank" style="color:red"><u>Result Download</u></a>)</h3>
+<b>Enrich method:</b> ORA<br/>
+<b>Organism:</b>hsapiens<br/>
+<b>Enrichment Categories: </b>geneontology_Biological_Process<br/>
+<b>Interesting gene list: </b>mesenchymal_genes_150_1530307769.txt. <b>ID type: </b>genesymbol<br/>
+The interesting gene list contains <b>150</b> user IDs in which <b>137</b> user IDs are unambiguously mapped to the unique Entrez Gene IDs and <b>13</b> user IDs are mapped to multiple Entrez Gene IDs or could not be mapped to any Entrez Gene ID. The GO Slim summary are based upon the <b>137</b> unique Entrez Gene IDs.<br/>
+Among the <b>137</b> unique Entrez Gene IDs, <b>103</b> IDs are annotated to the selected functional categories and also in the reference gene list, which are used for the enrichment analysis.<br/>
+<b>Reference gene list: </b>uploads/background_genes_1530307769.txt <b>ID type: </b>genesymbol<br/>
+The reference gene list contains <b>5000</b> IDs in which <b>4627</b> IDs are unambiguously mapped to the unique Entrez Gene IDs and <b>373</b> IDs are mapped to multiple Entrez Gene IDs or could not be mapped to any Entrez Gene ID.<br/>
+Among the <b>4627</b> unique Entrez Gene IDs, <b>4020</b> IDs are annotated to the selected functional categories, which are used as the reference for the enrichment analysis.<br/>
+<b>Parameters for the enrichment analysis:</b>
+<ul><li><b>Minimum number of Entrez Gene IDs in the category:</b>5</li>
+<li><b>Maximum number of Entrez Gene IDs in the category:</b>2000</li>
+<li><b>FDR Method:</b>BH</li>
+<li><b>Significance Level:</b> Top10</li>
+</ul>
+Based on the above parameters, <b>10</b> categories are identified as enriched categories and all are shown in this report.<br/>
+</div>
+<div id="interestGene">
+<div id="mappedGene">
+<h4>Mapped User IDs</h4>
+<table class="zebra"><thead><tr>
+<th>userid</th>
+<th>Gene Symbol</th>
+<th>Gene Name</th>
+<th>Entrez Gene</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>CHST4</td>
+<td>CHST4</td>
+<td>carbohydrate sulfotransferase 4</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=10164">10164</a></td>
+</tr>
+<tr>
+<td>CSAG2</td>
+<td>CSAG2</td>
+<td>CSAG family member 2</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=102723547">102723547</a></td>
+</tr>
+<tr>
+<td>CCNO</td>
+<td>CCNO</td>
+<td>cyclin O</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=10309">10309</a></td>
+</tr>
+<tr>
+<td>CLGN</td>
+<td>CLGN</td>
+<td>calmegin</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=1047">1047</a></td>
+</tr>
+<tr>
+<td>UBD</td>
+<td>UBD</td>
+<td>ubiquitin D</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=10537">10537</a></td>
+</tr>
+<tr>
+<td>GNLY</td>
+<td>GNLY</td>
+<td>granulysin</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=10578">10578</a></td>
+</tr>
+<tr>
+<td>SCGB1D2</td>
+<td>SCGB1D2</td>
+<td>secretoglobin family 1D member 2</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=10647">10647</a></td>
+</tr>
+<tr>
+<td>CXCR6</td>
+<td>CXCR6</td>
+<td>C-X-C motif chemokine receptor 6</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=10663">10663</a></td>
+</tr>
+<tr>
+<td>PRSS21</td>
+<td>PRSS21</td>
+<td>protease, serine 21</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=10942">10942</a></td>
+</tr>
+<tr>
+<td>IFI44L</td>
+<td>IFI44L</td>
+<td>interferon induced protein 44 like</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=10964">10964</a></td>
+</tr>
+<tr>
+<td>KLHDC7B</td>
+<td>KLHDC7B</td>
+<td>kelch domain containing 7B</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=113730">113730</a></td>
+</tr>
+<tr>
+<td>ZNF257</td>
+<td>ZNF257</td>
+<td>zinc finger protein 257</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=113835">113835</a></td>
+</tr>
+<tr>
+<td>GBP5</td>
+<td>GBP5</td>
+<td>guanylate binding protein 5</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=115362">115362</a></td>
+</tr>
+<tr>
+<td>C12orf56</td>
+<td>C12orf56</td>
+<td>chromosome 12 open reading frame 56</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=115749">115749</a></td>
+</tr>
+<tr>
+<td>GTSF1</td>
+<td>GTSF1</td>
+<td>gametocyte specific factor 1</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=121355">121355</a></td>
+</tr>
+<tr>
+<td>PCP2</td>
+<td>PCP2</td>
+<td>Purkinje cell protein 2</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=126006">126006</a></td>
+</tr>
+<tr>
+<td>C1orf194</td>
+<td>C1orf194</td>
+<td>chromosome 1 open reading frame 194</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=127003">127003</a></td>
+</tr>
+<tr>
+<td>MDH1B</td>
+<td>MDH1B</td>
+<td>malate dehydrogenase 1B</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=130752">130752</a></td>
+</tr>
+<tr>
+<td>CP</td>
+<td>CP</td>
+<td>ceruloplasmin</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=1356">1356</a></td>
+</tr>
+<tr>
+<td>RNF183</td>
+<td>RNF183</td>
+<td>ring finger protein 183</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=138065">138065</a></td>
+</tr>
+<tr>
+<td>TCAM1P</td>
+<td>TCAM1P</td>
+<td>testicular cell adhesion molecule 1, pseudogene</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=146771">146771</a></td>
+</tr>
+<tr>
+<td>SLFN13</td>
+<td>SLFN13</td>
+<td>schlafen family member 13</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=146857">146857</a></td>
+</tr>
+<tr>
+<td>ZNF560</td>
+<td>ZNF560</td>
+<td>zinc finger protein 560</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=147741">147741</a></td>
+</tr>
+<tr>
+<td>C1orf210</td>
+<td>C1orf210</td>
+<td>chromosome 1 open reading frame 210</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=149466">149466</a></td>
+</tr>
+<tr>
+<td>PYHIN1</td>
+<td>PYHIN1</td>
+<td>pyrin and HIN domain family member 1</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=149628">149628</a></td>
+</tr>
+<tr>
+<td>WDR49</td>
+<td>WDR49</td>
+<td>WD repeat domain 49</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=151790">151790</a></td>
+</tr>
+<tr>
+<td>NUDT16P1</td>
+<td>NUDT16P1</td>
+<td>nudix hydrolase 16 pseudogene 1</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=152195">152195</a></td>
+</tr>
+<tr>
+<td>FAM81B</td>
+<td>FAM81B</td>
+<td>family with sequence similarity 81 member B</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=153643">153643</a></td>
+</tr>
+<tr>
+<td>CYP4B1</td>
+<td>CYP4B1</td>
+<td>cytochrome P450 family 4 subfamily B member 1</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=1580">1580</a></td>
+</tr>
+<tr>
+<td>FAAH2</td>
+<td>FAAH2</td>
+<td>fatty acid amide hydrolase 2</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=158584">158584</a></td>
+</tr>
+<tr>
+<td>TDRD5</td>
+<td>TDRD5</td>
+<td>tudor domain containing 5</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=163589">163589</a></td>
+</tr>
+<tr>
+<td>KBTBD12</td>
+<td>KBTBD12</td>
+<td>kelch repeat and BTB domain containing 12</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=166348">166348</a></td>
+</tr>
+<tr>
+<td>CYP4Z1</td>
+<td>CYP4Z1</td>
+<td>cytochrome P450 family 4 subfamily Z member 1</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=199974">199974</a></td>
+</tr>
+<tr>
+<td>VWA3B</td>
+<td>VWA3B</td>
+<td>von Willebrand factor A domain containing 3B</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=200403">200403</a></td>
+</tr>
+<tr>
+<td>RDM1</td>
+<td>RDM1</td>
+<td>RAD52 motif containing 1</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=201299">201299</a></td>
+</tr>
+<tr>
+<td>TIGIT</td>
+<td>TIGIT</td>
+<td>T-cell immunoreceptor with Ig and ITIM domains</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=201633">201633</a></td>
+</tr>
+<tr>
+<td>ARMC3</td>
+<td>ARMC3</td>
+<td>armadillo repeat containing 3</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=219681">219681</a></td>
+</tr>
+<tr>
+<td>KLRK1</td>
+<td>KLRK1</td>
+<td>killer cell lectin like receptor K1</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=22914">22914</a></td>
+</tr>
+<tr>
+<td>FOXJ1</td>
+<td>FOXJ1</td>
+<td>forkhead box J1</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=2302">2302</a></td>
+</tr>
+<tr>
+<td>CES3</td>
+<td>CES3</td>
+<td>carboxylesterase 3</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=23491">23491</a></td>
+</tr>
+<tr>
+<td>LPAR3</td>
+<td>LPAR3</td>
+<td>lysophosphatidic acid receptor 3</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=23566">23566</a></td>
+</tr>
+<tr>
+<td>ALOX12P2</td>
+<td>ALOX12P2</td>
+<td>arachidonate 12-lipoxygenase pseudogene 2</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=245">245</a></td>
+</tr>
+<tr>
+<td>IFI6</td>
+<td>IFI6</td>
+<td>interferon alpha inducible protein 6</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=2537">2537</a></td>
+</tr>
+<tr>
+<td>MCOLN2</td>
+<td>MCOLN2</td>
+<td>mucolipin 2</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=255231">255231</a></td>
+</tr>
+<tr>
+<td>GABRP</td>
+<td>GABRP</td>
+<td>gamma-aminobutyric acid type A receptor pi subunit</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=2568">2568</a></td>
+</tr>
+<tr>
+<td>ZNF683</td>
+<td>ZNF683</td>
+<td>zinc finger protein 683</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=257101">257101</a></td>
+</tr>
+<tr>
+<td>RIBC2</td>
+<td>RIBC2</td>
+<td>RIB43A domain with coiled-coils 2</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=26150">26150</a></td>
+</tr>
+<tr>
+<td>PLA2G2D</td>
+<td>PLA2G2D</td>
+<td>phospholipase A2 group IID</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=26279">26279</a></td>
+</tr>
+<tr>
+<td>SMC1B</td>
+<td>SMC1B</td>
+<td>structural maintenance of chromosomes 1B</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=27127">27127</a></td>
+</tr>
+<tr>
+<td>TEKT2</td>
+<td>TEKT2</td>
+<td>tektin 2</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=27285">27285</a></td>
+</tr>
+<tr>
+<td>ADAMDEC1</td>
+<td>ADAMDEC1</td>
+<td>ADAM like decysin 1</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=27299">27299</a></td>
+</tr>
+<tr>
+<td>AMY1A</td>
+<td>AMY1A</td>
+<td>amylase, alpha 1A (salivary)</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=276">276</a></td>
+</tr>
+<tr>
+<td>GPR19</td>
+<td>GPR19</td>
+<td>G protein-coupled receptor 19</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=2842">2842</a></td>
+</tr>
+<tr>
+<td>CXCL17</td>
+<td>CXCL17</td>
+<td>C-X-C motif chemokine ligand 17</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=284340">284340</a></td>
+</tr>
+<tr>
+<td>RUFY4</td>
+<td>RUFY4</td>
+<td>RUN and FYVE domain containing 4</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=285180">285180</a></td>
+</tr>
+<tr>
+<td>LOC285629</td>
+<td>LOC285629</td>
+<td>long intergenic non-protein coding RNA 2159</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=285629">285629</a></td>
+</tr>
+<tr>
+<td>ICOS</td>
+<td>ICOS</td>
+<td>inducible T-cell costimulator</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=29851">29851</a></td>
+</tr>
+<tr>
+<td>GZMH</td>
+<td>GZMH</td>
+<td>granzyme H</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=2999">2999</a></td>
+</tr>
+<tr>
+<td>GZMA</td>
+<td>GZMA</td>
+<td>granzyme A</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=3001">3001</a></td>
+</tr>
+<tr>
+<td>GZMB</td>
+<td>GZMB</td>
+<td>granzyme B</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=3002">3002</a></td>
+</tr>
+<tr>
+<td>HLA-DOB</td>
+<td>HLA-DOB</td>
+<td>major histocompatibility complex, class II, DO beta</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=3112">3112</a></td>
+</tr>
+<tr>
+<td>HLA-DRB5</td>
+<td>HLA-DRB5</td>
+<td>major histocompatibility complex, class II, DR beta 5</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=3127">3127</a></td>
+</tr>
+<tr>
+<td>HLA-DRB6</td>
+<td>HLA-DRB6</td>
+<td>major histocompatibility complex, class II, DR beta 6 (pseudogene)</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=3128">3128</a></td>
+</tr>
+<tr>
+<td>HTR3A</td>
+<td>HTR3A</td>
+<td>5-hydroxytryptamine receptor 3A</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=3359">3359</a></td>
+</tr>
+<tr>
+<td>IFNG</td>
+<td>IFNG</td>
+<td>interferon gamma</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=3458">3458</a></td>
+</tr>
+<tr>
+<td>CCDC160</td>
+<td>CCDC160</td>
+<td>coiled-coil domain containing 160</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=347475">347475</a></td>
+</tr>
+<tr>
+<td>KAAG1</td>
+<td>KAAG1</td>
+<td>kidney associated antigen 1</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=353219">353219</a></td>
+</tr>
+<tr>
+<td>FASLG</td>
+<td>FASLG</td>
+<td>Fas ligand</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=356">356</a></td>
+</tr>
+<tr>
+<td>CXCR2P1</td>
+<td>CXCR2P1</td>
+<td>C-X-C motif chemokine receptor 2 pseudogene 1</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=3580">3580</a></td>
+</tr>
+<tr>
+<td>IDO1</td>
+<td>IDO1</td>
+<td>indoleamine 2,3-dioxygenase 1</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=3620">3620</a></td>
+</tr>
+<tr>
+<td>CXCL10</td>
+<td>CXCL10</td>
+<td>C-X-C motif chemokine ligand 10</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=3627">3627</a></td>
+</tr>
+<tr>
+<td>DNAJB13</td>
+<td>DNAJB13</td>
+<td>DnaJ heat shock protein family (Hsp40) member B13</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=374407">374407</a></td>
+</tr>
+<tr>
+<td>ENHO</td>
+<td>ENHO</td>
+<td>energy homeostasis associated</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=375704">375704</a></td>
+</tr>
+<tr>
+<td>CD164L2</td>
+<td>CD164L2</td>
+<td>CD164 molecule like 2</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=388611">388611</a></td>
+</tr>
+<tr>
+<td>LDLRAD1</td>
+<td>LDLRAD1</td>
+<td>low density lipoprotein receptor class A domain containing 1</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=388633">388633</a></td>
+</tr>
+<tr>
+<td>CSAG3</td>
+<td>CSAG3</td>
+<td>CSAG family member 3</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=389903">389903</a></td>
+</tr>
+<tr>
+<td>LAG3</td>
+<td>LAG3</td>
+<td>lymphocyte activating 3</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=3902">3902</a></td>
+</tr>
+<tr>
+<td>GLOD5</td>
+<td>GLOD5</td>
+<td>glyoxalase domain containing 5</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=392465">392465</a></td>
+</tr>
+<tr>
+<td>LDHC</td>
+<td>LDHC</td>
+<td>lactate dehydrogenase C</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=3948">3948</a></td>
+</tr>
+<tr>
+<td>CRIP3</td>
+<td>CRIP3</td>
+<td>cysteine rich protein 3</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=401262">401262</a></td>
+</tr>
+<tr>
+<td>RAB19</td>
+<td>RAB19</td>
+<td>RAB19, member RAS oncogene family</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=401409">401409</a></td>
+</tr>
+<tr>
+<td>ACBD7</td>
+<td>ACBD7</td>
+<td>acyl-CoA binding domain containing 7</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=414149">414149</a></td>
+</tr>
+<tr>
+<td>MAT1A</td>
+<td>MAT1A</td>
+<td>methionine adenosyltransferase 1A</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=4143">4143</a></td>
+</tr>
+<tr>
+<td>SCGB2A1</td>
+<td>SCGB2A1</td>
+<td>secretoglobin family 2A member 1</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=4246">4246</a></td>
+</tr>
+<tr>
+<td>CXCL9</td>
+<td>CXCL9</td>
+<td>C-X-C motif chemokine ligand 9</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=4283">4283</a></td>
+</tr>
+<tr>
+<td>PLEKHG7</td>
+<td>PLEKHG7</td>
+<td>pleckstrin homology and RhoGEF domain containing G7</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=440107">440107</a></td>
+</tr>
+<tr>
+<td>ZYG11A</td>
+<td>ZYG11A</td>
+<td>zyg-11 family member A, cell cycle regulator</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=440590">440590</a></td>
+</tr>
+<tr>
+<td>FAM26F</td>
+<td>FAM26F</td>
+<td>family with sequence similarity 26 member F</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=441168">441168</a></td>
+</tr>
+<tr>
+<td>MT1H</td>
+<td>MT1H</td>
+<td>metallothionein 1H</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=4496">4496</a></td>
+</tr>
+<tr>
+<td>MYB</td>
+<td>MYB</td>
+<td>MYB proto-oncogene, transcription factor</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=4602">4602</a></td>
+</tr>
+<tr>
+<td>NKG7</td>
+<td>NKG7</td>
+<td>natural killer cell granule protein 7</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=4818">4818</a></td>
+</tr>
+<tr>
+<td>TIFAB</td>
+<td>TIFAB</td>
+<td>TIFA inhibitor</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=497189">497189</a></td>
+</tr>
+<tr>
+<td>PLA2G3</td>
+<td>PLA2G3</td>
+<td>phospholipase A2 group III</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=50487">50487</a></td>
+</tr>
+<tr>
+<td>TRAT1</td>
+<td>TRAT1</td>
+<td>T-cell receptor associated transmembrane adaptor 1</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=50852">50852</a></td>
+</tr>
+<tr>
+<td>ETV7</td>
+<td>ETV7</td>
+<td>ETS variant 7</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=51513">51513</a></td>
+</tr>
+<tr>
+<td>PIGR</td>
+<td>PIGR</td>
+<td>polymeric immunoglobulin receptor</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=5284">5284</a></td>
+</tr>
+<tr>
+<td>UBASH3A</td>
+<td>UBASH3A</td>
+<td>ubiquitin associated and SH3 domain containing A</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=53347">53347</a></td>
+</tr>
+<tr>
+<td>NUP62CL</td>
+<td>NUP62CL</td>
+<td>nucleoporin 62 C-terminal like</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=54830">54830</a></td>
+</tr>
+<tr>
+<td>BSPRY</td>
+<td>BSPRY</td>
+<td>B-box and SPRY domain containing</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=54836">54836</a></td>
+</tr>
+<tr>
+<td>HRASLS2</td>
+<td>HRASLS2</td>
+<td>HRAS like suppressor 2</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=54979">54979</a></td>
+</tr>
+<tr>
+<td>VNN3</td>
+<td>VNN3</td>
+<td>vanin 3</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=55350">55350</a></td>
+</tr>
+<tr>
+<td>SIRPG</td>
+<td>SIRPG</td>
+<td>signal regulatory protein gamma</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=55423">55423</a></td>
+</tr>
+<tr>
+<td>CRTAM</td>
+<td>CRTAM</td>
+<td>cytotoxic and regulatory T-cell molecule</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=56253">56253</a></td>
+</tr>
+<tr>
+<td>PTH2R</td>
+<td>PTH2R</td>
+<td>parathyroid hormone 2 receptor</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=5746">5746</a></td>
+</tr>
+<tr>
+<td>KIAA1324</td>
+<td>KIAA1324</td>
+<td>KIAA1324</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=57535">57535</a></td>
+</tr>
+<tr>
+<td>RLN2</td>
+<td>RLN2</td>
+<td>relaxin 2</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=6019">6019</a></td>
+</tr>
+<tr>
+<td>CCL5</td>
+<td>CCL5</td>
+<td>C-C motif chemokine ligand 5</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=6352">6352</a></td>
+</tr>
+<tr>
+<td>CCL8</td>
+<td>CCL8</td>
+<td>C-C motif chemokine ligand 8</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=6355">6355</a></td>
+</tr>
+<tr>
+<td>CXCL11</td>
+<td>CXCL11</td>
+<td>C-X-C motif chemokine ligand 11</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=6373">6373</a></td>
+</tr>
+<tr>
+<td>XCL1</td>
+<td>XCL1</td>
+<td>X-C motif chemokine ligand 1</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=6375">6375</a></td>
+</tr>
+<tr>
+<td>BST2</td>
+<td>BST2</td>
+<td>bone marrow stromal cell antigen 2</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=684">684</a></td>
+</tr>
+<tr>
+<td>BTC</td>
+<td>BTC</td>
+<td>betacellulin</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=685">685</a></td>
+</tr>
+<tr>
+<td>UGT8</td>
+<td>UGT8</td>
+<td>UDP glycosyltransferase 8</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=7368">7368</a></td>
+</tr>
+<tr>
+<td>BCL2L14</td>
+<td>BCL2L14</td>
+<td>BCL2 like 14</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=79370">79370</a></td>
+</tr>
+<tr>
+<td>ZBBX</td>
+<td>ZBBX</td>
+<td>zinc finger B-box domain containing</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=79740">79740</a></td>
+</tr>
+<tr>
+<td>ASRGL1</td>
+<td>ASRGL1</td>
+<td>asparaginase like 1</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=80150">80150</a></td>
+</tr>
+<tr>
+<td>EFHC2</td>
+<td>EFHC2</td>
+<td>EF-hand domain containing 2</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=80258">80258</a></td>
+</tr>
+<tr>
+<td>ZBP1</td>
+<td>ZBP1</td>
+<td>Z-DNA binding protein 1</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=81030">81030</a></td>
+</tr>
+<tr>
+<td>ACTL8</td>
+<td>ACTL8</td>
+<td>actin like 8</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=81569">81569</a></td>
+</tr>
+<tr>
+<td>MND1</td>
+<td>MND1</td>
+<td>meiotic nuclear divisions 1</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=84057">84057</a></td>
+</tr>
+<tr>
+<td>SLA2</td>
+<td>SLA2</td>
+<td>Src like adaptor 2</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=84174">84174</a></td>
+</tr>
+<tr>
+<td>DYDC2</td>
+<td>DYDC2</td>
+<td>DPY30 domain containing 2</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=84332">84332</a></td>
+</tr>
+<tr>
+<td>C9orf24</td>
+<td>C9orf24</td>
+<td>chromosome 9 open reading frame 24</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=84688">84688</a></td>
+</tr>
+<tr>
+<td>HSH2D</td>
+<td>HSH2D</td>
+<td>hematopoietic SH2 domain containing</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=84941">84941</a></td>
+</tr>
+<tr>
+<td>DDO</td>
+<td>DDO</td>
+<td>D-aspartate oxidase</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=8528">8528</a></td>
+</tr>
+<tr>
+<td>SKAP1</td>
+<td>SKAP1</td>
+<td>src kinase associated phosphoprotein 1</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=8631">8631</a></td>
+</tr>
+<tr>
+<td>OASL</td>
+<td>OASL</td>
+<td>2'-5'-oligoadenylate synthetase like</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=8638">8638</a></td>
+</tr>
+<tr>
+<td>HRK</td>
+<td>HRK</td>
+<td>harakiri, BCL2 interacting protein</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=8739">8739</a></td>
+</tr>
+<tr>
+<td>WISP3</td>
+<td>WISP3</td>
+<td>WNT1 inducible signaling pathway protein 3</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=8838">8838</a></td>
+</tr>
+<tr>
+<td>FAM181A</td>
+<td>FAM181A</td>
+<td>family with sequence similarity 181 member A</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=90050">90050</a></td>
+</tr>
+<tr>
+<td>L3MBTL4</td>
+<td>L3MBTL4</td>
+<td>l(3)mbt-like 4 (Drosophila)</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=91133">91133</a></td>
+</tr>
+<tr>
+<td>CD2</td>
+<td>CD2</td>
+<td>CD2 molecule</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=914">914</a></td>
+</tr>
+<tr>
+<td>CD3G</td>
+<td>CD3G</td>
+<td>CD3g molecule</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=917">917</a></td>
+</tr>
+<tr>
+<td>DAPL1</td>
+<td>DAPL1</td>
+<td>death associated protein like 1</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=92196">92196</a></td>
+</tr>
+<tr>
+<td>AIM2</td>
+<td>AIM2</td>
+<td>absent in melanoma 2</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=9447">9447</a></td>
+</tr>
+<tr>
+<td>SPAG6</td>
+<td>SPAG6</td>
+<td>sperm associated antigen 6</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=9576">9576</a></td>
+</tr>
+<tr>
+<td>MAGEC1</td>
+<td>MAGEC1</td>
+<td>MAGE family member C1</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=9947">9947</a></td>
+</tr>
+</tbody></table>
+</div>
+<div id="empty">&nbsp&nbsp&nbsp&nbsp</div>
+<div id="unmappedGene">
+<h4>User IDs mapped to multiple Entrtez IDs or not mapped</h4>
+<table class="zebra"><thead><tr>
+<th>userid</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>LOC400696</td>
+</tr>
+<tr>
+<td>LOC647309</td>
+</tr>
+<tr>
+<td>LOC400759</td>
+</tr>
+<tr>
+<td>LOC647946</td>
+</tr>
+<tr>
+<td>C2orf65</td>
+</tr>
+<tr>
+<td>LOC389493</td>
+</tr>
+<tr>
+<td>C3orf15</td>
+</tr>
+<tr>
+<td>C10orf81</td>
+</tr>
+<tr>
+<td>LOC84740</td>
+</tr>
+<tr>
+<td>NCRNA00173</td>
+</tr>
+<tr>
+<td>C8orf47</td>
+</tr>
+<tr>
+<td>LOC254559</td>
+</tr>
+<tr>
+<td>C19orf46</td>
+</tr>
+</tbody></table>
+</div>
+</div>
+<div id="referenceGene">
+<h4>GOSlim summary for the user list genes</h4>
+Each Biological Process, Cellular Component and Molecular Function category is represented by a red, blue and green bar, repectively.<br/>
+The height of the bar represents the number of user list genes observed in the category.
+<img src="goslim_summary_wg_result1530307769.png" width="100%" height="100%"/></div>
+<div id="result">
+<div id="dag">
+<div id = "graphDAG" style="height:100%;width:100%"></div>
+</div>
+<div id="empty1">&nbsp&nbsp&nbsp&nbsp</div>
+<div id="genelist_wrap">
+<div id="genelist_des">
+<h4>Detailed information of the enriched categories</h4>
+<div class="tooltip_templates">The statistics
+<a class="tooltip-container"><img src="http://www.webgestalt.org/images/info.png" width="13" height="13"/>
+<span class="tooltip_content"><strong><ul><li>C: the number of reference genes in the category</li><li>O: the number of genes in the user gene list and also in the category</li><li>E: The expected number in the category</li><li>R: ratio of enrichment</li><li>PValue: p value from hyergeometric test</li><li>FDR: FDR from BH</li></ul></strong></span></a>
+ for the enriched categories and the genes in the user gene list and also in the category are listed in the table. <br/></div>
+<div class="search"><input id="tags" type="text" name="q" placeholder="ID Search"><ul id="searchData"><li><a id="aid0" href="#GO:0006955">GO:0006955 immune response</a></li><li><a id="aid1" href="#GO:0002376">GO:0002376 immune system process</a></li><li><a id="aid2" href="#GO:0042110">GO:0042110 T cell activation</a></li><li><a id="aid3" href="#GO:0070489">GO:0070489 T cell aggregation</a></li><li><a id="aid4" href="#GO:0071593">GO:0071593 lymphocyte aggregation</a></li><li><a id="aid5" href="#GO:0070486">GO:0070486 leukocyte aggregation</a></li><li><a id="aid6" href="#GO:0002682">GO:0002682 regulation of immune system process</a></li><li><a id="aid7" href="#GO:0050863">GO:0050863 regulation of T cell activation</a></li><li><a id="aid8" href="#GO:0007159">GO:0007159 leukocyte cell-cell adhesion</a></li><li><a id="aid9" href="#GO:0051249">GO:0051249 regulation of lymphocyte activation</a></li></ul></div>
+</div>
+<br/>
+<div id="genelist">
+<div><nav class="cl-effect-1"><a style="cursor:pointer;color:red;" onclick="$('#Table1').tableExport({type:'csv',escape:'false'});">Download Table</a></nav></div><table id="Table1" class="zebra"><thead><tr>
+<th colspan="4">
+<a name="GO:0006955"><font color="black"><a href ="http://amigo.geneontology.org/amigo/term/GO:0006955" target="_blank"><b>ID:GO:0006955&nbsp&nbsp&nbsp&nbsp&nbsp&nbspName:immune response</b></a></font></a>
+</th></tr>
+<tr><th colspan="4">
+C=441; O=37; E=11.3; R=3.27; PValue=1.02e-11; FDR=5.37e-08</th></tr>
+<tr>
+<th>userid</th>
+<th>Gene Symbol</th>
+<th>Gene Name</th>
+<th>Entrez Gene</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>CHST4</td>
+<td>CHST4</td>
+<td>carbohydrate sulfotransferase 4</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=10164">10164</a></td>
+</tr>
+<tr>
+<td>UBD</td>
+<td>UBD</td>
+<td>ubiquitin D</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=10537">10537</a></td>
+</tr>
+<tr>
+<td>GBP5</td>
+<td>GBP5</td>
+<td>guanylate binding protein 5</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=115362">115362</a></td>
+</tr>
+<tr>
+<td>FOXJ1</td>
+<td>FOXJ1</td>
+<td>forkhead box J1</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=2302">2302</a></td>
+</tr>
+<tr>
+<td>IFI6</td>
+<td>IFI6</td>
+<td>interferon alpha inducible protein 6</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=2537">2537</a></td>
+</tr>
+<tr>
+<td>ZNF683</td>
+<td>ZNF683</td>
+<td>zinc finger protein 683</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=257101">257101</a></td>
+</tr>
+<tr>
+<td>ADAMDEC1</td>
+<td>ADAMDEC1</td>
+<td>ADAM like decysin 1</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=27299">27299</a></td>
+</tr>
+<tr>
+<td>ICOS</td>
+<td>ICOS</td>
+<td>inducible T-cell costimulator</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=29851">29851</a></td>
+</tr>
+<tr>
+<td>GZMH</td>
+<td>GZMH</td>
+<td>granzyme H</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=2999">2999</a></td>
+</tr>
+<tr>
+<td>GZMA</td>
+<td>GZMA</td>
+<td>granzyme A</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=3001">3001</a></td>
+</tr>
+<tr>
+<td>GZMB</td>
+<td>GZMB</td>
+<td>granzyme B</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=3002">3002</a></td>
+</tr>
+<tr>
+<td>HLA-DOB</td>
+<td>HLA-DOB</td>
+<td>major histocompatibility complex, class II, DO beta</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=3112">3112</a></td>
+</tr>
+<tr>
+<td>HLA-DRB5</td>
+<td>HLA-DRB5</td>
+<td>major histocompatibility complex, class II, DR beta 5</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=3127">3127</a></td>
+</tr>
+<tr>
+<td>IFNG</td>
+<td>IFNG</td>
+<td>interferon gamma</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=3458">3458</a></td>
+</tr>
+<tr>
+<td>KAAG1</td>
+<td>KAAG1</td>
+<td>kidney associated antigen 1</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=353219">353219</a></td>
+</tr>
+<tr>
+<td>FASLG</td>
+<td>FASLG</td>
+<td>Fas ligand</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=356">356</a></td>
+</tr>
+<tr>
+<td>IDO1</td>
+<td>IDO1</td>
+<td>indoleamine 2,3-dioxygenase 1</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=3620">3620</a></td>
+</tr>
+<tr>
+<td>CXCL10</td>
+<td>CXCL10</td>
+<td>C-X-C motif chemokine ligand 10</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=3627">3627</a></td>
+</tr>
+<tr>
+<td>LAG3</td>
+<td>LAG3</td>
+<td>lymphocyte activating 3</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=3902">3902</a></td>
+</tr>
+<tr>
+<td>CXCL9</td>
+<td>CXCL9</td>
+<td>C-X-C motif chemokine ligand 9</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=4283">4283</a></td>
+</tr>
+<tr>
+<td>MYB</td>
+<td>MYB</td>
+<td>MYB proto-oncogene, transcription factor</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=4602">4602</a></td>
+</tr>
+<tr>
+<td>PLA2G3</td>
+<td>PLA2G3</td>
+<td>phospholipase A2 group III</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=50487">50487</a></td>
+</tr>
+<tr>
+<td>TRAT1</td>
+<td>TRAT1</td>
+<td>T-cell receptor associated transmembrane adaptor 1</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=50852">50852</a></td>
+</tr>
+<tr>
+<td>PIGR</td>
+<td>PIGR</td>
+<td>polymeric immunoglobulin receptor</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=5284">5284</a></td>
+</tr>
+<tr>
+<td>UBASH3A</td>
+<td>UBASH3A</td>
+<td>ubiquitin associated and SH3 domain containing A</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=53347">53347</a></td>
+</tr>
+<tr>
+<td>CRTAM</td>
+<td>CRTAM</td>
+<td>cytotoxic and regulatory T-cell molecule</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=56253">56253</a></td>
+</tr>
+<tr>
+<td>CCL5</td>
+<td>CCL5</td>
+<td>C-C motif chemokine ligand 5</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=6352">6352</a></td>
+</tr>
+<tr>
+<td>CCL8</td>
+<td>CCL8</td>
+<td>C-C motif chemokine ligand 8</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=6355">6355</a></td>
+</tr>
+<tr>
+<td>CXCL11</td>
+<td>CXCL11</td>
+<td>C-X-C motif chemokine ligand 11</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=6373">6373</a></td>
+</tr>
+<tr>
+<td>XCL1</td>
+<td>XCL1</td>
+<td>X-C motif chemokine ligand 1</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=6375">6375</a></td>
+</tr>
+<tr>
+<td>BST2</td>
+<td>BST2</td>
+<td>bone marrow stromal cell antigen 2</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=684">684</a></td>
+</tr>
+<tr>
+<td>ZBP1</td>
+<td>ZBP1</td>
+<td>Z-DNA binding protein 1</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=81030">81030</a></td>
+</tr>
+<tr>
+<td>SLA2</td>
+<td>SLA2</td>
+<td>Src like adaptor 2</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=84174">84174</a></td>
+</tr>
+<tr>
+<td>SKAP1</td>
+<td>SKAP1</td>
+<td>src kinase associated phosphoprotein 1</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=8631">8631</a></td>
+</tr>
+<tr>
+<td>OASL</td>
+<td>OASL</td>
+<td>2'-5'-oligoadenylate synthetase like</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=8638">8638</a></td>
+</tr>
+<tr>
+<td>CD3G</td>
+<td>CD3G</td>
+<td>CD3g molecule</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=917">917</a></td>
+</tr>
+<tr>
+<td>AIM2</td>
+<td>AIM2</td>
+<td>absent in melanoma 2</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=9447">9447</a></td>
+</tr>
+</tbody></table><br/><br/>
+<div><nav class="cl-effect-1"><a style="cursor:pointer;color:red;" onclick="$('#Table2').tableExport({type:'csv',escape:'false'});">Download Table</a></nav></div><table id="Table2" class="zebra"><thead><tr>
+<th colspan="4">
+<a name="GO:0002376"><font color="black"><a href ="http://amigo.geneontology.org/amigo/term/GO:0002376" target="_blank"><b>ID:GO:0002376&nbsp&nbsp&nbsp&nbsp&nbsp&nbspName:immune system process</b></a></font></a>
+</th></tr>
+<tr><th colspan="4">
+C=684; O=44; E=17.53; R=2.51; PValue=4.65e-10; FDR=1.22e-06</th></tr>
+<tr>
+<th>userid</th>
+<th>Gene Symbol</th>
+<th>Gene Name</th>
+<th>Entrez Gene</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>CHST4</td>
+<td>CHST4</td>
+<td>carbohydrate sulfotransferase 4</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=10164">10164</a></td>
+</tr>
+<tr>
+<td>UBD</td>
+<td>UBD</td>
+<td>ubiquitin D</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=10537">10537</a></td>
+</tr>
+<tr>
+<td>IFI44L</td>
+<td>IFI44L</td>
+<td>interferon induced protein 44 like</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=10964">10964</a></td>
+</tr>
+<tr>
+<td>GBP5</td>
+<td>GBP5</td>
+<td>guanylate binding protein 5</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=115362">115362</a></td>
+</tr>
+<tr>
+<td>TIGIT</td>
+<td>TIGIT</td>
+<td>T-cell immunoreceptor with Ig and ITIM domains</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=201633">201633</a></td>
+</tr>
+<tr>
+<td>FOXJ1</td>
+<td>FOXJ1</td>
+<td>forkhead box J1</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=2302">2302</a></td>
+</tr>
+<tr>
+<td>IFI6</td>
+<td>IFI6</td>
+<td>interferon alpha inducible protein 6</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=2537">2537</a></td>
+</tr>
+<tr>
+<td>ZNF683</td>
+<td>ZNF683</td>
+<td>zinc finger protein 683</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=257101">257101</a></td>
+</tr>
+<tr>
+<td>PLA2G2D</td>
+<td>PLA2G2D</td>
+<td>phospholipase A2 group IID</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=26279">26279</a></td>
+</tr>
+<tr>
+<td>ADAMDEC1</td>
+<td>ADAMDEC1</td>
+<td>ADAM like decysin 1</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=27299">27299</a></td>
+</tr>
+<tr>
+<td>CXCL17</td>
+<td>CXCL17</td>
+<td>C-X-C motif chemokine ligand 17</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=284340">284340</a></td>
+</tr>
+<tr>
+<td>ICOS</td>
+<td>ICOS</td>
+<td>inducible T-cell costimulator</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=29851">29851</a></td>
+</tr>
+<tr>
+<td>GZMH</td>
+<td>GZMH</td>
+<td>granzyme H</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=2999">2999</a></td>
+</tr>
+<tr>
+<td>GZMA</td>
+<td>GZMA</td>
+<td>granzyme A</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=3001">3001</a></td>
+</tr>
+<tr>
+<td>GZMB</td>
+<td>GZMB</td>
+<td>granzyme B</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=3002">3002</a></td>
+</tr>
+<tr>
+<td>HLA-DOB</td>
+<td>HLA-DOB</td>
+<td>major histocompatibility complex, class II, DO beta</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=3112">3112</a></td>
+</tr>
+<tr>
+<td>HLA-DRB5</td>
+<td>HLA-DRB5</td>
+<td>major histocompatibility complex, class II, DR beta 5</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=3127">3127</a></td>
+</tr>
+<tr>
+<td>IFNG</td>
+<td>IFNG</td>
+<td>interferon gamma</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=3458">3458</a></td>
+</tr>
+<tr>
+<td>KAAG1</td>
+<td>KAAG1</td>
+<td>kidney associated antigen 1</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=353219">353219</a></td>
+</tr>
+<tr>
+<td>FASLG</td>
+<td>FASLG</td>
+<td>Fas ligand</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=356">356</a></td>
+</tr>
+<tr>
+<td>IDO1</td>
+<td>IDO1</td>
+<td>indoleamine 2,3-dioxygenase 1</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=3620">3620</a></td>
+</tr>
+<tr>
+<td>CXCL10</td>
+<td>CXCL10</td>
+<td>C-X-C motif chemokine ligand 10</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=3627">3627</a></td>
+</tr>
+<tr>
+<td>LAG3</td>
+<td>LAG3</td>
+<td>lymphocyte activating 3</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=3902">3902</a></td>
+</tr>
+<tr>
+<td>CXCL9</td>
+<td>CXCL9</td>
+<td>C-X-C motif chemokine ligand 9</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=4283">4283</a></td>
+</tr>
+<tr>
+<td>MYB</td>
+<td>MYB</td>
+<td>MYB proto-oncogene, transcription factor</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=4602">4602</a></td>
+</tr>
+<tr>
+<td>PLA2G3</td>
+<td>PLA2G3</td>
+<td>phospholipase A2 group III</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=50487">50487</a></td>
+</tr>
+<tr>
+<td>TRAT1</td>
+<td>TRAT1</td>
+<td>T-cell receptor associated transmembrane adaptor 1</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=50852">50852</a></td>
+</tr>
+<tr>
+<td>PIGR</td>
+<td>PIGR</td>
+<td>polymeric immunoglobulin receptor</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=5284">5284</a></td>
+</tr>
+<tr>
+<td>UBASH3A</td>
+<td>UBASH3A</td>
+<td>ubiquitin associated and SH3 domain containing A</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=53347">53347</a></td>
+</tr>
+<tr>
+<td>SIRPG</td>
+<td>SIRPG</td>
+<td>signal regulatory protein gamma</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=55423">55423</a></td>
+</tr>
+<tr>
+<td>CRTAM</td>
+<td>CRTAM</td>
+<td>cytotoxic and regulatory T-cell molecule</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=56253">56253</a></td>
+</tr>
+<tr>
+<td>CCL5</td>
+<td>CCL5</td>
+<td>C-C motif chemokine ligand 5</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=6352">6352</a></td>
+</tr>
+<tr>
+<td>CCL8</td>
+<td>CCL8</td>
+<td>C-C motif chemokine ligand 8</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=6355">6355</a></td>
+</tr>
+<tr>
+<td>CXCL11</td>
+<td>CXCL11</td>
+<td>C-X-C motif chemokine ligand 11</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=6373">6373</a></td>
+</tr>
+<tr>
+<td>XCL1</td>
+<td>XCL1</td>
+<td>X-C motif chemokine ligand 1</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=6375">6375</a></td>
+</tr>
+<tr>
+<td>BST2</td>
+<td>BST2</td>
+<td>bone marrow stromal cell antigen 2</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=684">684</a></td>
+</tr>
+<tr>
+<td>ZBP1</td>
+<td>ZBP1</td>
+<td>Z-DNA binding protein 1</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=81030">81030</a></td>
+</tr>
+<tr>
+<td>SLA2</td>
+<td>SLA2</td>
+<td>Src like adaptor 2</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=84174">84174</a></td>
+</tr>
+<tr>
+<td>HSH2D</td>
+<td>HSH2D</td>
+<td>hematopoietic SH2 domain containing</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=84941">84941</a></td>
+</tr>
+<tr>
+<td>SKAP1</td>
+<td>SKAP1</td>
+<td>src kinase associated phosphoprotein 1</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=8631">8631</a></td>
+</tr>
+<tr>
+<td>OASL</td>
+<td>OASL</td>
+<td>2'-5'-oligoadenylate synthetase like</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=8638">8638</a></td>
+</tr>
+<tr>
+<td>CD2</td>
+<td>CD2</td>
+<td>CD2 molecule</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=914">914</a></td>
+</tr>
+<tr>
+<td>CD3G</td>
+<td>CD3G</td>
+<td>CD3g molecule</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=917">917</a></td>
+</tr>
+<tr>
+<td>AIM2</td>
+<td>AIM2</td>
+<td>absent in melanoma 2</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=9447">9447</a></td>
+</tr>
+</tbody></table><br/><br/>
+<div><nav class="cl-effect-1"><a style="cursor:pointer;color:red;" onclick="$('#Table3').tableExport({type:'csv',escape:'false'});">Download Table</a></nav></div><table id="Table3" class="zebra"><thead><tr>
+<th colspan="4">
+<a name="GO:0042110"><font color="black"><a href ="http://amigo.geneontology.org/amigo/term/GO:0042110" target="_blank"><b>ID:GO:0042110&nbsp&nbsp&nbsp&nbsp&nbsp&nbspName:T cell activation</b></a></font></a>
+</th></tr>
+<tr><th colspan="4">
+C=137; O=18; E=3.51; R=5.13; PValue=5.92e-09; FDR=6.22e-06</th></tr>
+<tr>
+<th>userid</th>
+<th>Gene Symbol</th>
+<th>Gene Name</th>
+<th>Entrez Gene</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>TIGIT</td>
+<td>TIGIT</td>
+<td>T-cell immunoreceptor with Ig and ITIM domains</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=201633">201633</a></td>
+</tr>
+<tr>
+<td>FOXJ1</td>
+<td>FOXJ1</td>
+<td>forkhead box J1</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=2302">2302</a></td>
+</tr>
+<tr>
+<td>ZNF683</td>
+<td>ZNF683</td>
+<td>zinc finger protein 683</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=257101">257101</a></td>
+</tr>
+<tr>
+<td>PLA2G2D</td>
+<td>PLA2G2D</td>
+<td>phospholipase A2 group IID</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=26279">26279</a></td>
+</tr>
+<tr>
+<td>ICOS</td>
+<td>ICOS</td>
+<td>inducible T-cell costimulator</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=29851">29851</a></td>
+</tr>
+<tr>
+<td>HLA-DRB5</td>
+<td>HLA-DRB5</td>
+<td>major histocompatibility complex, class II, DR beta 5</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=3127">3127</a></td>
+</tr>
+<tr>
+<td>IFNG</td>
+<td>IFNG</td>
+<td>interferon gamma</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=3458">3458</a></td>
+</tr>
+<tr>
+<td>IDO1</td>
+<td>IDO1</td>
+<td>indoleamine 2,3-dioxygenase 1</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=3620">3620</a></td>
+</tr>
+<tr>
+<td>LAG3</td>
+<td>LAG3</td>
+<td>lymphocyte activating 3</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=3902">3902</a></td>
+</tr>
+<tr>
+<td>MYB</td>
+<td>MYB</td>
+<td>MYB proto-oncogene, transcription factor</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=4602">4602</a></td>
+</tr>
+<tr>
+<td>SIRPG</td>
+<td>SIRPG</td>
+<td>signal regulatory protein gamma</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=55423">55423</a></td>
+</tr>
+<tr>
+<td>CRTAM</td>
+<td>CRTAM</td>
+<td>cytotoxic and regulatory T-cell molecule</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=56253">56253</a></td>
+</tr>
+<tr>
+<td>CCL5</td>
+<td>CCL5</td>
+<td>C-C motif chemokine ligand 5</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=6352">6352</a></td>
+</tr>
+<tr>
+<td>XCL1</td>
+<td>XCL1</td>
+<td>X-C motif chemokine ligand 1</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=6375">6375</a></td>
+</tr>
+<tr>
+<td>SLA2</td>
+<td>SLA2</td>
+<td>Src like adaptor 2</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=84174">84174</a></td>
+</tr>
+<tr>
+<td>HSH2D</td>
+<td>HSH2D</td>
+<td>hematopoietic SH2 domain containing</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=84941">84941</a></td>
+</tr>
+<tr>
+<td>CD2</td>
+<td>CD2</td>
+<td>CD2 molecule</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=914">914</a></td>
+</tr>
+<tr>
+<td>CD3G</td>
+<td>CD3G</td>
+<td>CD3g molecule</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=917">917</a></td>
+</tr>
+</tbody></table><br/><br/>
+<div><nav class="cl-effect-1"><a style="cursor:pointer;color:red;" onclick="$('#Table4').tableExport({type:'csv',escape:'false'});">Download Table</a></nav></div><table id="Table4" class="zebra"><thead><tr>
+<th colspan="4">
+<a name="GO:0070489"><font color="black"><a href ="http://amigo.geneontology.org/amigo/term/GO:0070489" target="_blank"><b>ID:GO:0070489&nbsp&nbsp&nbsp&nbsp&nbsp&nbspName:T cell aggregation</b></a></font></a>
+</th></tr>
+<tr><th colspan="4">
+C=137; O=18; E=3.51; R=5.13; PValue=5.92e-09; FDR=6.22e-06</th></tr>
+<tr>
+<th>userid</th>
+<th>Gene Symbol</th>
+<th>Gene Name</th>
+<th>Entrez Gene</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>TIGIT</td>
+<td>TIGIT</td>
+<td>T-cell immunoreceptor with Ig and ITIM domains</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=201633">201633</a></td>
+</tr>
+<tr>
+<td>FOXJ1</td>
+<td>FOXJ1</td>
+<td>forkhead box J1</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=2302">2302</a></td>
+</tr>
+<tr>
+<td>ZNF683</td>
+<td>ZNF683</td>
+<td>zinc finger protein 683</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=257101">257101</a></td>
+</tr>
+<tr>
+<td>PLA2G2D</td>
+<td>PLA2G2D</td>
+<td>phospholipase A2 group IID</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=26279">26279</a></td>
+</tr>
+<tr>
+<td>ICOS</td>
+<td>ICOS</td>
+<td>inducible T-cell costimulator</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=29851">29851</a></td>
+</tr>
+<tr>
+<td>HLA-DRB5</td>
+<td>HLA-DRB5</td>
+<td>major histocompatibility complex, class II, DR beta 5</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=3127">3127</a></td>
+</tr>
+<tr>
+<td>IFNG</td>
+<td>IFNG</td>
+<td>interferon gamma</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=3458">3458</a></td>
+</tr>
+<tr>
+<td>IDO1</td>
+<td>IDO1</td>
+<td>indoleamine 2,3-dioxygenase 1</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=3620">3620</a></td>
+</tr>
+<tr>
+<td>LAG3</td>
+<td>LAG3</td>
+<td>lymphocyte activating 3</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=3902">3902</a></td>
+</tr>
+<tr>
+<td>MYB</td>
+<td>MYB</td>
+<td>MYB proto-oncogene, transcription factor</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=4602">4602</a></td>
+</tr>
+<tr>
+<td>SIRPG</td>
+<td>SIRPG</td>
+<td>signal regulatory protein gamma</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=55423">55423</a></td>
+</tr>
+<tr>
+<td>CRTAM</td>
+<td>CRTAM</td>
+<td>cytotoxic and regulatory T-cell molecule</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=56253">56253</a></td>
+</tr>
+<tr>
+<td>CCL5</td>
+<td>CCL5</td>
+<td>C-C motif chemokine ligand 5</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=6352">6352</a></td>
+</tr>
+<tr>
+<td>XCL1</td>
+<td>XCL1</td>
+<td>X-C motif chemokine ligand 1</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=6375">6375</a></td>
+</tr>
+<tr>
+<td>SLA2</td>
+<td>SLA2</td>
+<td>Src like adaptor 2</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=84174">84174</a></td>
+</tr>
+<tr>
+<td>HSH2D</td>
+<td>HSH2D</td>
+<td>hematopoietic SH2 domain containing</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=84941">84941</a></td>
+</tr>
+<tr>
+<td>CD2</td>
+<td>CD2</td>
+<td>CD2 molecule</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=914">914</a></td>
+</tr>
+<tr>
+<td>CD3G</td>
+<td>CD3G</td>
+<td>CD3g molecule</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=917">917</a></td>
+</tr>
+</tbody></table><br/><br/>
+<div><nav class="cl-effect-1"><a style="cursor:pointer;color:red;" onclick="$('#Table5').tableExport({type:'csv',escape:'false'});">Download Table</a></nav></div><table id="Table5" class="zebra"><thead><tr>
+<th colspan="4">
+<a name="GO:0071593"><font color="black"><a href ="http://amigo.geneontology.org/amigo/term/GO:0071593" target="_blank"><b>ID:GO:0071593&nbsp&nbsp&nbsp&nbsp&nbsp&nbspName:lymphocyte aggregation</b></a></font></a>
+</th></tr>
+<tr><th colspan="4">
+C=137; O=18; E=3.51; R=5.13; PValue=5.92e-09; FDR=6.22e-06</th></tr>
+<tr>
+<th>userid</th>
+<th>Gene Symbol</th>
+<th>Gene Name</th>
+<th>Entrez Gene</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>TIGIT</td>
+<td>TIGIT</td>
+<td>T-cell immunoreceptor with Ig and ITIM domains</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=201633">201633</a></td>
+</tr>
+<tr>
+<td>FOXJ1</td>
+<td>FOXJ1</td>
+<td>forkhead box J1</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=2302">2302</a></td>
+</tr>
+<tr>
+<td>ZNF683</td>
+<td>ZNF683</td>
+<td>zinc finger protein 683</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=257101">257101</a></td>
+</tr>
+<tr>
+<td>PLA2G2D</td>
+<td>PLA2G2D</td>
+<td>phospholipase A2 group IID</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=26279">26279</a></td>
+</tr>
+<tr>
+<td>ICOS</td>
+<td>ICOS</td>
+<td>inducible T-cell costimulator</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=29851">29851</a></td>
+</tr>
+<tr>
+<td>HLA-DRB5</td>
+<td>HLA-DRB5</td>
+<td>major histocompatibility complex, class II, DR beta 5</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=3127">3127</a></td>
+</tr>
+<tr>
+<td>IFNG</td>
+<td>IFNG</td>
+<td>interferon gamma</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=3458">3458</a></td>
+</tr>
+<tr>
+<td>IDO1</td>
+<td>IDO1</td>
+<td>indoleamine 2,3-dioxygenase 1</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=3620">3620</a></td>
+</tr>
+<tr>
+<td>LAG3</td>
+<td>LAG3</td>
+<td>lymphocyte activating 3</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=3902">3902</a></td>
+</tr>
+<tr>
+<td>MYB</td>
+<td>MYB</td>
+<td>MYB proto-oncogene, transcription factor</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=4602">4602</a></td>
+</tr>
+<tr>
+<td>SIRPG</td>
+<td>SIRPG</td>
+<td>signal regulatory protein gamma</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=55423">55423</a></td>
+</tr>
+<tr>
+<td>CRTAM</td>
+<td>CRTAM</td>
+<td>cytotoxic and regulatory T-cell molecule</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=56253">56253</a></td>
+</tr>
+<tr>
+<td>CCL5</td>
+<td>CCL5</td>
+<td>C-C motif chemokine ligand 5</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=6352">6352</a></td>
+</tr>
+<tr>
+<td>XCL1</td>
+<td>XCL1</td>
+<td>X-C motif chemokine ligand 1</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=6375">6375</a></td>
+</tr>
+<tr>
+<td>SLA2</td>
+<td>SLA2</td>
+<td>Src like adaptor 2</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=84174">84174</a></td>
+</tr>
+<tr>
+<td>HSH2D</td>
+<td>HSH2D</td>
+<td>hematopoietic SH2 domain containing</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=84941">84941</a></td>
+</tr>
+<tr>
+<td>CD2</td>
+<td>CD2</td>
+<td>CD2 molecule</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=914">914</a></td>
+</tr>
+<tr>
+<td>CD3G</td>
+<td>CD3G</td>
+<td>CD3g molecule</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=917">917</a></td>
+</tr>
+</tbody></table><br/><br/>
+<div><nav class="cl-effect-1"><a style="cursor:pointer;color:red;" onclick="$('#Table6').tableExport({type:'csv',escape:'false'});">Download Table</a></nav></div><table id="Table6" class="zebra"><thead><tr>
+<th colspan="4">
+<a name="GO:0070486"><font color="black"><a href ="http://amigo.geneontology.org/amigo/term/GO:0070486" target="_blank"><b>ID:GO:0070486&nbsp&nbsp&nbsp&nbsp&nbsp&nbspName:leukocyte aggregation</b></a></font></a>
+</th></tr>
+<tr><th colspan="4">
+C=142; O=18; E=3.64; R=4.95; PValue=1.06e-08; FDR=9.3e-06</th></tr>
+<tr>
+<th>userid</th>
+<th>Gene Symbol</th>
+<th>Gene Name</th>
+<th>Entrez Gene</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>TIGIT</td>
+<td>TIGIT</td>
+<td>T-cell immunoreceptor with Ig and ITIM domains</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=201633">201633</a></td>
+</tr>
+<tr>
+<td>FOXJ1</td>
+<td>FOXJ1</td>
+<td>forkhead box J1</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=2302">2302</a></td>
+</tr>
+<tr>
+<td>ZNF683</td>
+<td>ZNF683</td>
+<td>zinc finger protein 683</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=257101">257101</a></td>
+</tr>
+<tr>
+<td>PLA2G2D</td>
+<td>PLA2G2D</td>
+<td>phospholipase A2 group IID</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=26279">26279</a></td>
+</tr>
+<tr>
+<td>ICOS</td>
+<td>ICOS</td>
+<td>inducible T-cell costimulator</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=29851">29851</a></td>
+</tr>
+<tr>
+<td>HLA-DRB5</td>
+<td>HLA-DRB5</td>
+<td>major histocompatibility complex, class II, DR beta 5</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=3127">3127</a></td>
+</tr>
+<tr>
+<td>IFNG</td>
+<td>IFNG</td>
+<td>interferon gamma</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=3458">3458</a></td>
+</tr>
+<tr>
+<td>IDO1</td>
+<td>IDO1</td>
+<td>indoleamine 2,3-dioxygenase 1</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=3620">3620</a></td>
+</tr>
+<tr>
+<td>LAG3</td>
+<td>LAG3</td>
+<td>lymphocyte activating 3</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=3902">3902</a></td>
+</tr>
+<tr>
+<td>MYB</td>
+<td>MYB</td>
+<td>MYB proto-oncogene, transcription factor</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=4602">4602</a></td>
+</tr>
+<tr>
+<td>SIRPG</td>
+<td>SIRPG</td>
+<td>signal regulatory protein gamma</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=55423">55423</a></td>
+</tr>
+<tr>
+<td>CRTAM</td>
+<td>CRTAM</td>
+<td>cytotoxic and regulatory T-cell molecule</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=56253">56253</a></td>
+</tr>
+<tr>
+<td>CCL5</td>
+<td>CCL5</td>
+<td>C-C motif chemokine ligand 5</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=6352">6352</a></td>
+</tr>
+<tr>
+<td>XCL1</td>
+<td>XCL1</td>
+<td>X-C motif chemokine ligand 1</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=6375">6375</a></td>
+</tr>
+<tr>
+<td>SLA2</td>
+<td>SLA2</td>
+<td>Src like adaptor 2</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=84174">84174</a></td>
+</tr>
+<tr>
+<td>HSH2D</td>
+<td>HSH2D</td>
+<td>hematopoietic SH2 domain containing</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=84941">84941</a></td>
+</tr>
+<tr>
+<td>CD2</td>
+<td>CD2</td>
+<td>CD2 molecule</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=914">914</a></td>
+</tr>
+<tr>
+<td>CD3G</td>
+<td>CD3G</td>
+<td>CD3g molecule</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=917">917</a></td>
+</tr>
+</tbody></table><br/><br/>
+<div><nav class="cl-effect-1"><a style="cursor:pointer;color:red;" onclick="$('#Table7').tableExport({type:'csv',escape:'false'});">Download Table</a></nav></div><table id="Table7" class="zebra"><thead><tr>
+<th colspan="4">
+<a name="GO:0002682"><font color="black"><a href ="http://amigo.geneontology.org/amigo/term/GO:0002682" target="_blank"><b>ID:GO:0002682&nbsp&nbsp&nbsp&nbsp&nbsp&nbspName:regulation of immune system process</b></a></font></a>
+</th></tr>
+<tr><th colspan="4">
+C=373; O=29; E=9.56; R=3.03; PValue=2.17e-08; FDR=1.63e-05</th></tr>
+<tr>
+<th>userid</th>
+<th>Gene Symbol</th>
+<th>Gene Name</th>
+<th>Entrez Gene</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>GBP5</td>
+<td>GBP5</td>
+<td>guanylate binding protein 5</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=115362">115362</a></td>
+</tr>
+<tr>
+<td>TIGIT</td>
+<td>TIGIT</td>
+<td>T-cell immunoreceptor with Ig and ITIM domains</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=201633">201633</a></td>
+</tr>
+<tr>
+<td>FOXJ1</td>
+<td>FOXJ1</td>
+<td>forkhead box J1</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=2302">2302</a></td>
+</tr>
+<tr>
+<td>ZNF683</td>
+<td>ZNF683</td>
+<td>zinc finger protein 683</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=257101">257101</a></td>
+</tr>
+<tr>
+<td>PLA2G2D</td>
+<td>PLA2G2D</td>
+<td>phospholipase A2 group IID</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=26279">26279</a></td>
+</tr>
+<tr>
+<td>CXCL17</td>
+<td>CXCL17</td>
+<td>C-X-C motif chemokine ligand 17</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=284340">284340</a></td>
+</tr>
+<tr>
+<td>ICOS</td>
+<td>ICOS</td>
+<td>inducible T-cell costimulator</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=29851">29851</a></td>
+</tr>
+<tr>
+<td>HLA-DOB</td>
+<td>HLA-DOB</td>
+<td>major histocompatibility complex, class II, DO beta</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=3112">3112</a></td>
+</tr>
+<tr>
+<td>HLA-DRB5</td>
+<td>HLA-DRB5</td>
+<td>major histocompatibility complex, class II, DR beta 5</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=3127">3127</a></td>
+</tr>
+<tr>
+<td>IFNG</td>
+<td>IFNG</td>
+<td>interferon gamma</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=3458">3458</a></td>
+</tr>
+<tr>
+<td>IDO1</td>
+<td>IDO1</td>
+<td>indoleamine 2,3-dioxygenase 1</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=3620">3620</a></td>
+</tr>
+<tr>
+<td>CXCL10</td>
+<td>CXCL10</td>
+<td>C-X-C motif chemokine ligand 10</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=3627">3627</a></td>
+</tr>
+<tr>
+<td>LAG3</td>
+<td>LAG3</td>
+<td>lymphocyte activating 3</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=3902">3902</a></td>
+</tr>
+<tr>
+<td>CXCL9</td>
+<td>CXCL9</td>
+<td>C-X-C motif chemokine ligand 9</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=4283">4283</a></td>
+</tr>
+<tr>
+<td>MYB</td>
+<td>MYB</td>
+<td>MYB proto-oncogene, transcription factor</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=4602">4602</a></td>
+</tr>
+<tr>
+<td>TRAT1</td>
+<td>TRAT1</td>
+<td>T-cell receptor associated transmembrane adaptor 1</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=50852">50852</a></td>
+</tr>
+<tr>
+<td>PIGR</td>
+<td>PIGR</td>
+<td>polymeric immunoglobulin receptor</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=5284">5284</a></td>
+</tr>
+<tr>
+<td>UBASH3A</td>
+<td>UBASH3A</td>
+<td>ubiquitin associated and SH3 domain containing A</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=53347">53347</a></td>
+</tr>
+<tr>
+<td>SIRPG</td>
+<td>SIRPG</td>
+<td>signal regulatory protein gamma</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=55423">55423</a></td>
+</tr>
+<tr>
+<td>CRTAM</td>
+<td>CRTAM</td>
+<td>cytotoxic and regulatory T-cell molecule</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=56253">56253</a></td>
+</tr>
+<tr>
+<td>CCL5</td>
+<td>CCL5</td>
+<td>C-C motif chemokine ligand 5</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=6352">6352</a></td>
+</tr>
+<tr>
+<td>CXCL11</td>
+<td>CXCL11</td>
+<td>C-X-C motif chemokine ligand 11</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=6373">6373</a></td>
+</tr>
+<tr>
+<td>XCL1</td>
+<td>XCL1</td>
+<td>X-C motif chemokine ligand 1</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=6375">6375</a></td>
+</tr>
+<tr>
+<td>BST2</td>
+<td>BST2</td>
+<td>bone marrow stromal cell antigen 2</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=684">684</a></td>
+</tr>
+<tr>
+<td>SLA2</td>
+<td>SLA2</td>
+<td>Src like adaptor 2</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=84174">84174</a></td>
+</tr>
+<tr>
+<td>SKAP1</td>
+<td>SKAP1</td>
+<td>src kinase associated phosphoprotein 1</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=8631">8631</a></td>
+</tr>
+<tr>
+<td>CD2</td>
+<td>CD2</td>
+<td>CD2 molecule</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=914">914</a></td>
+</tr>
+<tr>
+<td>CD3G</td>
+<td>CD3G</td>
+<td>CD3g molecule</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=917">917</a></td>
+</tr>
+<tr>
+<td>AIM2</td>
+<td>AIM2</td>
+<td>absent in melanoma 2</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=9447">9447</a></td>
+</tr>
+</tbody></table><br/><br/>
+<div><nav class="cl-effect-1"><a style="cursor:pointer;color:red;" onclick="$('#Table8').tableExport({type:'csv',escape:'false'});">Download Table</a></nav></div><table id="Table8" class="zebra"><thead><tr>
+<th colspan="4">
+<a name="GO:0050863"><font color="black"><a href ="http://amigo.geneontology.org/amigo/term/GO:0050863" target="_blank"><b>ID:GO:0050863&nbsp&nbsp&nbsp&nbsp&nbsp&nbspName:regulation of T cell activation</b></a></font></a>
+</th></tr>
+<tr><th colspan="4">
+C=104; O=15; E=2.66; R=5.63; PValue=3.5e-08; FDR=2.05e-05</th></tr>
+<tr>
+<th>userid</th>
+<th>Gene Symbol</th>
+<th>Gene Name</th>
+<th>Entrez Gene</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>TIGIT</td>
+<td>TIGIT</td>
+<td>T-cell immunoreceptor with Ig and ITIM domains</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=201633">201633</a></td>
+</tr>
+<tr>
+<td>FOXJ1</td>
+<td>FOXJ1</td>
+<td>forkhead box J1</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=2302">2302</a></td>
+</tr>
+<tr>
+<td>ZNF683</td>
+<td>ZNF683</td>
+<td>zinc finger protein 683</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=257101">257101</a></td>
+</tr>
+<tr>
+<td>PLA2G2D</td>
+<td>PLA2G2D</td>
+<td>phospholipase A2 group IID</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=26279">26279</a></td>
+</tr>
+<tr>
+<td>ICOS</td>
+<td>ICOS</td>
+<td>inducible T-cell costimulator</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=29851">29851</a></td>
+</tr>
+<tr>
+<td>HLA-DRB5</td>
+<td>HLA-DRB5</td>
+<td>major histocompatibility complex, class II, DR beta 5</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=3127">3127</a></td>
+</tr>
+<tr>
+<td>IFNG</td>
+<td>IFNG</td>
+<td>interferon gamma</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=3458">3458</a></td>
+</tr>
+<tr>
+<td>IDO1</td>
+<td>IDO1</td>
+<td>indoleamine 2,3-dioxygenase 1</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=3620">3620</a></td>
+</tr>
+<tr>
+<td>LAG3</td>
+<td>LAG3</td>
+<td>lymphocyte activating 3</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=3902">3902</a></td>
+</tr>
+<tr>
+<td>MYB</td>
+<td>MYB</td>
+<td>MYB proto-oncogene, transcription factor</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=4602">4602</a></td>
+</tr>
+<tr>
+<td>SIRPG</td>
+<td>SIRPG</td>
+<td>signal regulatory protein gamma</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=55423">55423</a></td>
+</tr>
+<tr>
+<td>CCL5</td>
+<td>CCL5</td>
+<td>C-C motif chemokine ligand 5</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=6352">6352</a></td>
+</tr>
+<tr>
+<td>XCL1</td>
+<td>XCL1</td>
+<td>X-C motif chemokine ligand 1</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=6375">6375</a></td>
+</tr>
+<tr>
+<td>CD2</td>
+<td>CD2</td>
+<td>CD2 molecule</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=914">914</a></td>
+</tr>
+<tr>
+<td>CD3G</td>
+<td>CD3G</td>
+<td>CD3g molecule</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=917">917</a></td>
+</tr>
+</tbody></table><br/><br/>
+<div><nav class="cl-effect-1"><a style="cursor:pointer;color:red;" onclick="$('#Table9').tableExport({type:'csv',escape:'false'});">Download Table</a></nav></div><table id="Table9" class="zebra"><thead><tr>
+<th colspan="4">
+<a name="GO:0007159"><font color="black"><a href ="http://amigo.geneontology.org/amigo/term/GO:0007159" target="_blank"><b>ID:GO:0007159&nbsp&nbsp&nbsp&nbsp&nbsp&nbspName:leukocyte cell-cell adhesion</b></a></font></a>
+</th></tr>
+<tr><th colspan="4">
+C=153; O=18; E=3.92; R=4.59; PValue=3.52e-08; FDR=2.05e-05</th></tr>
+<tr>
+<th>userid</th>
+<th>Gene Symbol</th>
+<th>Gene Name</th>
+<th>Entrez Gene</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>TIGIT</td>
+<td>TIGIT</td>
+<td>T-cell immunoreceptor with Ig and ITIM domains</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=201633">201633</a></td>
+</tr>
+<tr>
+<td>FOXJ1</td>
+<td>FOXJ1</td>
+<td>forkhead box J1</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=2302">2302</a></td>
+</tr>
+<tr>
+<td>ZNF683</td>
+<td>ZNF683</td>
+<td>zinc finger protein 683</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=257101">257101</a></td>
+</tr>
+<tr>
+<td>PLA2G2D</td>
+<td>PLA2G2D</td>
+<td>phospholipase A2 group IID</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=26279">26279</a></td>
+</tr>
+<tr>
+<td>ICOS</td>
+<td>ICOS</td>
+<td>inducible T-cell costimulator</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=29851">29851</a></td>
+</tr>
+<tr>
+<td>HLA-DRB5</td>
+<td>HLA-DRB5</td>
+<td>major histocompatibility complex, class II, DR beta 5</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=3127">3127</a></td>
+</tr>
+<tr>
+<td>IFNG</td>
+<td>IFNG</td>
+<td>interferon gamma</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=3458">3458</a></td>
+</tr>
+<tr>
+<td>IDO1</td>
+<td>IDO1</td>
+<td>indoleamine 2,3-dioxygenase 1</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=3620">3620</a></td>
+</tr>
+<tr>
+<td>LAG3</td>
+<td>LAG3</td>
+<td>lymphocyte activating 3</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=3902">3902</a></td>
+</tr>
+<tr>
+<td>MYB</td>
+<td>MYB</td>
+<td>MYB proto-oncogene, transcription factor</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=4602">4602</a></td>
+</tr>
+<tr>
+<td>SIRPG</td>
+<td>SIRPG</td>
+<td>signal regulatory protein gamma</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=55423">55423</a></td>
+</tr>
+<tr>
+<td>CRTAM</td>
+<td>CRTAM</td>
+<td>cytotoxic and regulatory T-cell molecule</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=56253">56253</a></td>
+</tr>
+<tr>
+<td>CCL5</td>
+<td>CCL5</td>
+<td>C-C motif chemokine ligand 5</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=6352">6352</a></td>
+</tr>
+<tr>
+<td>XCL1</td>
+<td>XCL1</td>
+<td>X-C motif chemokine ligand 1</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=6375">6375</a></td>
+</tr>
+<tr>
+<td>SLA2</td>
+<td>SLA2</td>
+<td>Src like adaptor 2</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=84174">84174</a></td>
+</tr>
+<tr>
+<td>HSH2D</td>
+<td>HSH2D</td>
+<td>hematopoietic SH2 domain containing</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=84941">84941</a></td>
+</tr>
+<tr>
+<td>CD2</td>
+<td>CD2</td>
+<td>CD2 molecule</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=914">914</a></td>
+</tr>
+<tr>
+<td>CD3G</td>
+<td>CD3G</td>
+<td>CD3g molecule</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=917">917</a></td>
+</tr>
+</tbody></table><br/><br/>
+<div><nav class="cl-effect-1"><a style="cursor:pointer;color:red;" onclick="$('#Table10').tableExport({type:'csv',escape:'false'});">Download Table</a></nav></div><table id="Table10" class="zebra"><thead><tr>
+<th colspan="4">
+<a name="GO:0051249"><font color="black"><a href ="http://amigo.geneontology.org/amigo/term/GO:0051249" target="_blank"><b>ID:GO:0051249&nbsp&nbsp&nbsp&nbsp&nbsp&nbspName:regulation of lymphocyte activation</b></a></font></a>
+</th></tr>
+<tr><th colspan="4">
+C=124; O=16; E=3.18; R=5.04; PValue=5.96e-08; FDR=3.13e-05</th></tr>
+<tr>
+<th>userid</th>
+<th>Gene Symbol</th>
+<th>Gene Name</th>
+<th>Entrez Gene</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>TIGIT</td>
+<td>TIGIT</td>
+<td>T-cell immunoreceptor with Ig and ITIM domains</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=201633">201633</a></td>
+</tr>
+<tr>
+<td>FOXJ1</td>
+<td>FOXJ1</td>
+<td>forkhead box J1</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=2302">2302</a></td>
+</tr>
+<tr>
+<td>ZNF683</td>
+<td>ZNF683</td>
+<td>zinc finger protein 683</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=257101">257101</a></td>
+</tr>
+<tr>
+<td>PLA2G2D</td>
+<td>PLA2G2D</td>
+<td>phospholipase A2 group IID</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=26279">26279</a></td>
+</tr>
+<tr>
+<td>ICOS</td>
+<td>ICOS</td>
+<td>inducible T-cell costimulator</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=29851">29851</a></td>
+</tr>
+<tr>
+<td>HLA-DRB5</td>
+<td>HLA-DRB5</td>
+<td>major histocompatibility complex, class II, DR beta 5</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=3127">3127</a></td>
+</tr>
+<tr>
+<td>IFNG</td>
+<td>IFNG</td>
+<td>interferon gamma</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=3458">3458</a></td>
+</tr>
+<tr>
+<td>IDO1</td>
+<td>IDO1</td>
+<td>indoleamine 2,3-dioxygenase 1</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=3620">3620</a></td>
+</tr>
+<tr>
+<td>LAG3</td>
+<td>LAG3</td>
+<td>lymphocyte activating 3</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=3902">3902</a></td>
+</tr>
+<tr>
+<td>MYB</td>
+<td>MYB</td>
+<td>MYB proto-oncogene, transcription factor</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=4602">4602</a></td>
+</tr>
+<tr>
+<td>SIRPG</td>
+<td>SIRPG</td>
+<td>signal regulatory protein gamma</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=55423">55423</a></td>
+</tr>
+<tr>
+<td>CCL5</td>
+<td>CCL5</td>
+<td>C-C motif chemokine ligand 5</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=6352">6352</a></td>
+</tr>
+<tr>
+<td>XCL1</td>
+<td>XCL1</td>
+<td>X-C motif chemokine ligand 1</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=6375">6375</a></td>
+</tr>
+<tr>
+<td>SLA2</td>
+<td>SLA2</td>
+<td>Src like adaptor 2</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=84174">84174</a></td>
+</tr>
+<tr>
+<td>CD2</td>
+<td>CD2</td>
+<td>CD2 molecule</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=914">914</a></td>
+</tr>
+<tr>
+<td>CD3G</td>
+<td>CD3G</td>
+<td>CD3g molecule</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=917">917</a></td>
+</tr>
+</tbody></table><br/><br/>
+</div>
+</div>
+</div>
+</div>
+<script>plotDAG('Project_wg_result1530307769_.json','[{"id":"Project_wg_result1530307769_.json","reports":[{"gID":["GO:0006955"],"Edge":["GO:0002376","GO:0050896"],"Name":["immune response"],"Sig":["#FF0000"],"Link":["results//Project_wg_result1530307769/Report_wg_result1530307769.html#GO:0006955"],"gNum":["37"],"FDR":["5.37e-08"]},{"gID":["GO:0002376"],"Edge":["GO:0008150"],"Name":["immune system process"],"Sig":["#FF3030"],"Link":["results//Project_wg_result1530307769/Report_wg_result1530307769.html#GO:0002376"],"gNum":["44"],"FDR":["1.22e-06"]},{"gID":["GO:0042110"],"Edge":["GO:0046649","GO:0070489"],"Name":["T cell activation"],"Sig":["#FF4848"],"Link":["results//Project_wg_result1530307769/Report_wg_result1530307769.html#GO:0042110"],"gNum":["18"],"FDR":["6.22e-06"]},{"gID":["GO:0070489"],"Edge":["GO:0045321","GO:0071593"],"Name":["T cell aggregation"],"Sig":["#FF4848"],"Link":["results//Project_wg_result1530307769/Report_wg_result1530307769.html#GO:0070489"],"gNum":["18"],"FDR":["6.22e-06"]},{"gID":["GO:0071593"],"Edge":["GO:0070486"],"Name":["lymphocyte aggregation"],"Sig":["#FF4848"],"Link":["results//Project_wg_result1530307769/Report_wg_result1530307769.html#GO:0071593"],"gNum":["18"],"FDR":["6.22e-06"]},{"gID":["GO:0070486"],"Edge":["GO:0007159"],"Name":["leukocyte aggregation"],"Sig":["#FF4E4E"],"Link":["results//Project_wg_result1530307769/Report_wg_result1530307769.html#GO:0070486"],"gNum":["18"],"FDR":["9.3e-06"]},{"gID":["GO:0002682"],"Edge":["GO:0002376","GO:0050789"],"Name":["regulation of immune system process"],"Sig":["#FF5656"],"Link":["results//Project_wg_result1530307769/Report_wg_result1530307769.html#GO:0002682"],"gNum":["29"],"FDR":["1.63e-05"]},{"gID":["GO:0050863"],"Edge":["GO:0042110","GO:0051249","GO:1903037"],"Name":["regulation of T cell activation"],"Sig":["#FF5A5A"],"Link":["results//Project_wg_result1530307769/Report_wg_result1530307769.html#GO:0050863"],"gNum":["15"],"FDR":["2.05e-05"]},{"gID":["GO:0007159"],"Edge":["GO:0016337"],"Name":["leukocyte cell-cell adhesion"],"Sig":["#FF5A5A"],"Link":["results//Project_wg_result1530307769/Report_wg_result1530307769.html#GO:0007159"],"gNum":["18"],"FDR":["2.05e-05"]},{"gID":["GO:0051249"],"Edge":["GO:0002694","GO:0046649"],"Name":["regulation of lymphocyte activation"],"Sig":["#FF6060"],"Link":["results//Project_wg_result1530307769/Report_wg_result1530307769.html#GO:0051249"],"gNum":["16"],"FDR":["3.13e-05"]},{"gID":["GO:0050896"],"Edge":["GO:0008150"],"Name":["response to stimulus"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0008150"],"Edge":["NA",""],"Name":["biological_process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0046649"],"Edge":["GO:0045321"],"Name":["lymphocyte activation"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0045321"],"Edge":["GO:0001775","GO:0002376"],"Name":["leukocyte activation"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0002376"],"Edge":["GO:0008150"],"Name":["immune system process"],"Sig":["#FF3030"],"Link":["results//Project_wg_result1530307769/Report_wg_result1530307769.html#GO:0002376"],"gNum":["44"],"FDR":["1.22e-06"]},{"gID":["GO:0050789"],"Edge":["GO:0008150","GO:0065007"],"Name":["regulation of biological process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0042110"],"Edge":["GO:0046649","GO:0070489"],"Name":["T cell activation"],"Sig":["#FF4848"],"Link":["results//Project_wg_result1530307769/Report_wg_result1530307769.html#GO:0042110"],"gNum":["18"],"FDR":["6.22e-06"]},{"gID":["GO:1903037"],"Edge":["GO:0007159","GO:0022407"],"Name":["regulation of leukocyte cell-cell adhesion"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0016337"],"Edge":["GO:0098602","GO:0098609"],"Name":["single organismal cell-cell adhesion"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0002694"],"Edge":["GO:0002682","GO:0045321","GO:0050865"],"Name":["regulation of leukocyte activation"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0001775"],"Edge":["GO:0044763"],"Name":["cell activation"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0008150"],"Edge":["NA",""],"Name":["biological_process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0065007"],"Edge":["GO:0008150"],"Name":["biological regulation"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0046649"],"Edge":["GO:0045321"],"Name":["lymphocyte activation"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0070489"],"Edge":["GO:0045321","GO:0071593"],"Name":["T cell aggregation"],"Sig":["#FF4848"],"Link":["results//Project_wg_result1530307769/Report_wg_result1530307769.html#GO:0070489"],"gNum":["18"],"FDR":["6.22e-06"]},{"gID":["GO:0007159"],"Edge":["GO:0016337"],"Name":["leukocyte cell-cell adhesion"],"Sig":["#FF5A5A"],"Link":["results//Project_wg_result1530307769/Report_wg_result1530307769.html#GO:0007159"],"gNum":["18"],"FDR":["2.05e-05"]},{"gID":["GO:0022407"],"Edge":["GO:0016337","GO:0030155"],"Name":["regulation of cell-cell adhesion"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0098602"],"Edge":["GO:0007155","GO:0044699"],"Name":["single organism cell adhesion"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0098609"],"Edge":["GO:0007155"],"Name":["cell-cell adhesion"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0002682"],"Edge":["GO:0002376","GO:0050789"],"Name":["regulation of immune system process"],"Sig":["#FF5656"],"Link":["results//Project_wg_result1530307769/Report_wg_result1530307769.html#GO:0002682"],"gNum":["29"],"FDR":["1.63e-05"]},{"gID":["GO:0045321"],"Edge":["GO:0001775","GO:0002376"],"Name":["leukocyte activation"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0050865"],"Edge":["GO:0001775","GO:0050794"],"Name":["regulation of cell activation"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0044763"],"Edge":["GO:0009987","GO:0044699"],"Name":["single-organism cellular process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0008150"],"Edge":["NA",""],"Name":["biological_process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0071593"],"Edge":["GO:0070486"],"Name":["lymphocyte aggregation"],"Sig":["#FF4848"],"Link":["results//Project_wg_result1530307769/Report_wg_result1530307769.html#GO:0071593"],"gNum":["18"],"FDR":["6.22e-06"]},{"gID":["GO:0016337"],"Edge":["GO:0098602","GO:0098609"],"Name":["single organismal cell-cell adhesion"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0030155"],"Edge":["GO:0007155","GO:0050789"],"Name":["regulation of cell adhesion"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0007155"],"Edge":["GO:0022610"],"Name":["cell adhesion"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0044699"],"Edge":["GO:0008150"],"Name":["single-organism process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0002376"],"Edge":["GO:0008150"],"Name":["immune system process"],"Sig":["#FF3030"],"Link":["results//Project_wg_result1530307769/Report_wg_result1530307769.html#GO:0002376"],"gNum":["44"],"FDR":["1.22e-06"]},{"gID":["GO:0050789"],"Edge":["GO:0008150","GO:0065007"],"Name":["regulation of biological process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0001775"],"Edge":["GO:0044763"],"Name":["cell activation"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0050794"],"Edge":["GO:0009987","GO:0050789"],"Name":["regulation of cellular process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0009987"],"Edge":["GO:0008150"],"Name":["cellular process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0070486"],"Edge":["GO:0007159"],"Name":["leukocyte aggregation"],"Sig":["#FF4E4E"],"Link":["results//Project_wg_result1530307769/Report_wg_result1530307769.html#GO:0070486"],"gNum":["18"],"FDR":["9.3e-06"]},{"gID":["GO:0098602"],"Edge":["GO:0007155","GO:0044699"],"Name":["single organism cell adhesion"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0098609"],"Edge":["GO:0007155"],"Name":["cell-cell adhesion"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0022610"],"Edge":["GO:0008150"],"Name":["biological adhesion"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0008150"],"Edge":["NA",""],"Name":["biological_process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0065007"],"Edge":["GO:0008150"],"Name":["biological regulation"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0044763"],"Edge":["GO:0009987","GO:0044699"],"Name":["single-organism cellular process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0050789"],"Edge":["GO:0008150","GO:0065007"],"Name":["regulation of biological process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0007159"],"Edge":["GO:0016337"],"Name":["leukocyte cell-cell adhesion"],"Sig":["#FF5A5A"],"Link":["results//Project_wg_result1530307769/Report_wg_result1530307769.html#GO:0007159"],"gNum":["18"],"FDR":["2.05e-05"]},{"gID":["GO:0007155"],"Edge":["GO:0022610"],"Name":["cell adhesion"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0044699"],"Edge":["GO:0008150"],"Name":["single-organism process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0008150"],"Edge":["NA",""],"Name":["biological_process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0009987"],"Edge":["GO:0008150"],"Name":["cellular process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0065007"],"Edge":["GO:0008150"],"Name":["biological regulation"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0016337"],"Edge":["GO:0098602","GO:0098609"],"Name":["single organismal cell-cell adhesion"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0022610"],"Edge":["GO:0008150"],"Name":["biological adhesion"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0008150"],"Edge":["NA",""],"Name":["biological_process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0098602"],"Edge":["GO:0007155","GO:0044699"],"Name":["single organism cell adhesion"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0098609"],"Edge":["GO:0007155"],"Name":["cell-cell adhesion"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0007155"],"Edge":["GO:0022610"],"Name":["cell adhesion"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0044699"],"Edge":["GO:0008150"],"Name":["single-organism process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0022610"],"Edge":["GO:0008150"],"Name":["biological adhesion"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0008150"],"Edge":["NA",""],"Name":["biological_process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]}]}]','WJ.graph, .list { cursor: default; }WJ.graph.animate .node { opacity: 0; transition: fill 0.5s, stroke 0.5s, opacity 1s; }WJ.graph.animate .node.visible { opacity: 1; transition: fill 0.5s, stroke 0.5s, opacity 0.5s; }WJ.graph.animate .node.visible.entering { transition: fill 0.5s, stroke 0.5s, opacity 1.5s; }WJ.hovering .graph .node.visible { opacity: 0.2; }WJ.hovering .graph.animate .node.visible { transition: fill 0.5s, stroke 0.5s, opacity 0.4s; }WJ.hovering .graph .node.visible.hovered, .hovering .graph .node.visible.selected { opacity: 1; }WJ.hovering .graph .node.hovered.immediate rect { stroke: rgb(164, 1, 27); fill: rgb(255, 224, 229); }WJ.graph .node rect { fill: rgb(255, 242, 204); stroke-width: 2px; stroke: rgb(161, 109, 0); }WJ.graph.animate .node rect { transition: fill 0.5s, stroke 0.5s, stroke-width 0.5s; }WJ.graph .node text { font-family: Verdana; }WJ.graph .node.selected rect, .hovering .graph .node.selected rect, .hovering .graph .node.selected.hovered.immediate rect { stroke: rgb(15, 75, 255); fill: rgb(179, 236, 255); }WJ.graph .node.preview rect, .hovering .graph .node.preview rect { fill: rgb(234, 218, 236); stroke: rgb(154, 56, 162); }WJ.graph .edge { fill: none; stroke-width: 2.5px; stroke: rgb(209, 157, 0); opacity: 0; }WJ.graph.animate .edge { transition: fill 0.1s, stroke 0.1s, stroke-width 0.1s, opacity 0.3s; }WJ.graph .edge.visible.preview { stroke-width: 4px; stroke: rgb(154, 56, 162); }WJ.graph .edge.visible.selected, .hovering .graph .edge.hovered.immediate.selected { stroke-width: 6px; stroke: rgb(56, 106, 255); }WJ.graph .edge.visible.preview, .hovering .graph .edge.hovered.immediate.preview { stroke: rgb(154, 56, 162); }WJ.graph .edge.visible { opacity: 1; }WJ.graph.animate .edge.visible { transition: fill 0.5s, stroke 0.5s, stroke-width 0.5s, opacity 0.5s; }WJ.graph.animate .edge.visible.entering { transition: fill 0.5s, stroke 0.5s, stroke-width 0.5s, opacity 1.5s; }WJ.hovering .graph .edge.visible { opacity: 0.1; }WJ.hovering .graph.animate .edge.visible { transition: fill 0.5s, stroke 0.5s, stroke-width 0.5s, opacity 0.4s; }WJ.hovering .graph .edge.visible.hovered, .hovering .graph .edge.selected { opacity: 1; }WJ.hovering .graph .edge.hovered.immediate { stroke: rgb(164, 1, 27); stroke-width: 4px; }WJ.minimap .edge { stroke-width: 2px; stroke: black; fill-opacity: 0; }WJ.minimap .node rect { fill: rgb(221, 221, 221); stroke-width: 2px; stroke: black; }WJ.list .item rect { stroke: rgb(15, 75, 255); fill: rgb(179, 236, 255); fill-opacity: 0.5; stroke-width: 1; transition: fill 0.5s, stroke 0.5s; }WJ.list .item:hover rect { fill: rgb(255, 242, 204); stroke: rgb(161, 109, 0); }WJ.list .item text { x: 50%; text-anchor: middle; dominant-baseline: central; }WJ.xtrace-tooltip { text-align: left; }WJ.xtrace-tooltip .key { display: inline-block; float: left; width: 90px; font-weight: bold; }WJ.xtrace-tooltip .value { display: inline-block; float: left; word-wrap: break-word; max-width: 410px; }WJ.xtrace-tooltip .clear { clear: both; }WJ.context-menu .highlight { color: rgb(127, 35, 137); }WJ.context-menu a:hover .highlight { color: rgb(202, 120, 210); }WJtext, tspan, .tipsy { user-select: none; }WJ');</script><script>$( "#tabs" ).tabs();</script><iframe src="http://www.webgestalt.org/html/foot.html" style="border:0px;height:130px;width:100%"></iframe>
+</body></html>

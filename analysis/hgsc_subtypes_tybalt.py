@@ -18,6 +18,12 @@ import matplotlib.pyplot as plt
 # our helper class
 util = Util()
 
+# file paths
+p_mesen = os.path.join(util.base, 'results', 'hgsc_node87genes_pos.tsv')
+p_immun = os.path.join(util.base, 'results', 'hgsc_node87genes_neg.tsv')
+p_mesen2 = os.path.join(util.base, 'results', 'hgsc_node56genes_neg.tsv')
+p_immun2 = os.path.join(util.base, 'results', 'hgsc_node56genes_pos.tsv')
+
 # wrangling the patient ID data - save to a CSV file
 def save_id ():
     res = []
@@ -53,6 +59,23 @@ def subtype_mean ():
     
     return z_agg
 
+# turn array into a dictionary
+def arr_to_dict (arr):
+    res = {}
+    for i in arr:
+        res[i] = 1
+    return res
+
+# read their genes about mesen and immuno subtypes
+def im_genes ():
+    ps = [p_mesen, p_mesen2, p_immun, p_immun2]
+    genes = [util.read_tsv(p, str, 0)[:, 0] for p in ps]
+
+    mesen = np.concatenate((genes[0], genes[1]))
+    immun = np.concatenate((genes[2], genes[3]))
+
+    return arr_to_dict(mesen), arr_to_dict(immun)
+
 if __name__ == '__main__':
-    agg = subtype_mean()
-    print(agg[:, 86])
+    mesen, immun = im_genes()
+    print('CA4' in mesen, 'CA4' in immun)

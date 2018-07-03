@@ -134,6 +134,7 @@
       right: 0
     }
     s.dot_radius = 3
+    // s.dot_color = 'platform'
   }
 
   /**

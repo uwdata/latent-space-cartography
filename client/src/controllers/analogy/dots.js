@@ -62,7 +62,7 @@ class Dots {
         .attr('r', () => this.radius)
         .attr('cx', (d) => scales.x(d.x))
         .attr('cy', (d) => scales.y(d.y))
-        .style('fill', (d) => this._colorDot(d, scales.palette))
+        .style('fill', (d) => this._colorDot(d))
         .on('click', dotClick)
         .on('mouseover', dotMouseover)
         .on('mouseout', dotMouseout)
@@ -336,24 +336,23 @@ class Dots {
     this.hull = []
     this._drawHull()
     d3.selectAll('.dot')
-      .style('fill', (d) => this._colorDot(d, this._scales.palette))
+      .style('fill', (d) => this._colorDot(d))
     d3.selectAll('.dot.focused-set').attr('r', this.radius)
   }
 
   /**
    * Given a D3 datum, color it according to the current color attribute.
    * @param d
-   * @param palette
    * @returns {*}
    * @private
    */
-  _colorDot (d, palette) {
+  _colorDot (d) {
     let c = this.color
 
     if (c === 'mean_color') {
       return d['mean_color']
-    } else if (c === 'industry' || c === 'source') {
-      return palette(d[c])
+    } else if (c === 'industry' || c === 'source' || c === 'platform') {
+      return this._scales.palette(d[c])
     }
 
     return '#9467bd'

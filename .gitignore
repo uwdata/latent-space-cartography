@@ -2,3 +2,4 @@ output/
 *.pyc
 temp/
 eda/result
+log

@@ -517,7 +517,7 @@ class Store {
    * @returns {string}
    */
   getImageUrl (i) {
-    return `/data/${DATASET}/images/${i}.${CONFIG.ext}`
+    return `/data/${DATASET}/images/${i}.${CONFIG.rendering.ext}`
   }
 
   /**

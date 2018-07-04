@@ -1,21 +1,15 @@
 <template>
   <div class="bd-list-row d-flex flex-row justify-content-between"
        :style="styles" @mouseover="hovered=true" @mouseout="hovered=false">
-    <!--Logo: Left-->
-    <div class="text-truncate" v-if="dset==='logo'">
-      <img :src="imageUrl(p)" class="m-1"/>
-      <span>{{p.name}}</span>
-    </div>
 
-    <!--Emoji: Left-->
-    <div class="d-flex p-1" v-if="dset==='emoji'"
+    <div class="d-flex p-1"
          style="max-width: calc(100% - 40px);">
-      <div class="mr-1">
+      <div class="mr-1" v-if="show_image">
         <img :src="imageUrl(p)" class="m-1"/>
       </div>
       <div class="text-truncate">
         <div class="text-truncate bd-line-tight"><small>{{p.name}}</small></div>
-        <div class="mt-1 text-muted text-truncate bd-text-xs">
+        <div class="mt-1 text-muted text-truncate bd-text-xs" v-if="show_platform">
           {{p.platform}} {{p.version}}
         </div>
       </div>
@@ -29,7 +23,8 @@
 </template>
 
 <script>
-  import {store, DATASET} from '../controllers/config'
+  import {store, DATASET, CONFIG} from '../controllers/config'
+  import _ from 'lodash'
 
   export default {
     name: 'ListRow',
@@ -46,6 +41,13 @@
     computed: {
       styles () {
         return this.hovered ? {backgroundColor: this.hoverColor} : {}
+      },
+      show_platform () {
+        let meta = CONFIG.schema.meta
+        return _.find('platform', meta) && _.find('version', meta)
+      },
+      show_image () {
+        return CONFIG.rendering.image
       }
     },
     data () {

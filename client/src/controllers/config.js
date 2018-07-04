@@ -4,9 +4,13 @@ import Vue from 'vue'
 const config_logo = {
   dataset: 'logo',
   train_split: 15000,
-  ext: 'jpg',
+  dims: [32, 64, 128, 256, 512, 1024],
   schema: {
     'meta': ['i', 'name', 'mean_color', 'source', 'industry']
+  },
+  rendering: {
+    image: true,
+    ext: 'jpg',
   },
   search: {
     simple: true
@@ -16,9 +20,13 @@ const config_logo = {
 const config_emoji = {
   dataset: 'emoji',
   train_split: 13500,
-  ext: 'png',
+  dims: [4, 8, 16, 32, 64, 128, 256, 512, 1024],
   schema: {
     'meta': ['i','name', 'mean_color', 'category', 'platform', 'version', 'codepoints', 'shortcode']
+  },
+  rendering: {
+    image: true,
+    ext: 'png',
   },
   search: {
     simple: false,
@@ -27,10 +35,25 @@ const config_emoji = {
   }
 }
 
+const config_glove = {
+  dataset: 'glove_6b',
+  train_split: 10000,
+  dims: [50, 100, 200, 300],
+  schema: {
+    'meta': ['i', 'name']
+  },
+  rendering: {
+    image: false
+  },
+  search: {
+    simple: true
+  }
+}
+
 /**
  * Toggle dataset here!
  */
-let CONFIG = config_emoji
+let CONFIG = config_glove
 
 const DEBUG = process.env.NODE_ENV === 'development'
 const DATASET = CONFIG.dataset

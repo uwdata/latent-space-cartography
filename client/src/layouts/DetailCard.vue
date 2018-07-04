@@ -1,5 +1,5 @@
 <template>
-  <div class="card mb-3" v-if="detail">
+  <div class="card mb-3" v-if="detail && necessary">
     <div class="card-header d-flex justify-content-between">
       <div>Details</div>
       <div class="pl-3 bd-pointer" @click="clickClose()">
@@ -48,7 +48,7 @@
 </template>
 
 <script>
-  import {store} from '../controllers/config'
+  import {store, CONFIG} from '../controllers/config'
 
   export default {
     name: 'DetailCard',
@@ -58,6 +58,9 @@
       }
     },
     computed: {
+      necessary () {
+        return CONFIG.schema.meta.length > 2
+      },
       detail () {
         return this.shared.detail_card
       }

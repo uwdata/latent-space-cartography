@@ -10,3 +10,6 @@ fn_raw = 'emoji.h5'
 key_raw = 'emoji' # the dataset key in hdf5 file
 
 dims = [4, 8, 16, 32, 64, 128, 256, 512, 1024] # all latent dims
+
+# MySQL table schema
+schema_meta = 'i, name, mean_color, category, platform, version, codepoints, shortcode'

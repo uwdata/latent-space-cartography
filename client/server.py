@@ -22,7 +22,8 @@ from flaskext.mysql import MySQL
 models = {}
 
 # dataset we're working with
-from config_emoji import dset, img_rows, img_cols, img_chns, img_mode, dims
+# from config_emoji import dset, img_rows, img_cols, img_chns, img_mode, dims, schema_meta
+from config_glove_6b import dset, dims, schema_meta
 
 # FIXME: hack
 temp_store = {}
@@ -282,11 +283,7 @@ def get_tsne ():
 # get meta data
 @app.route('/api/get_meta', methods=['POST'])
 def get_meta ():
-    if dset == 'logo':
-        query = 'SELECT i,name,mean_color,data_source,industry FROM logo_meta'
-    elif dset == 'emoji':
-        query = """SELECT i, name, mean_color, category, platform, version,
-        codepoints, shortcode FROM emoji_meta"""
+    query = 'SELECT {} FROM {}_meta'.format(schema_meta, dset)
     cursor.execute(query)
     data = [list(i) for i in cursor.fetchall()]
     return jsonify({'data': data}), 200

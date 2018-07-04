@@ -2,7 +2,7 @@
   <div class="bd-outer">
     <!--Search Panel-->
     <search-panel :open="open_search" :button="$refs.btnSearch" :meta="suggestions"
-                  v-on:close="open_search=false"></search-panel>
+                  v-on:close="open_search=false" v-if="show_search"></search-panel>
 
     <!--Header-->
     <header class="navbar bd-navbar">
@@ -52,7 +52,7 @@
         <!--Footer-->
         <div class="bd-app-footer">
           <div class="m-3 text-left">
-            <button class="btn btn-light" @click="open_search=true" ref="btnSearch">
+            <button class="btn btn-light" @click="open_search=true" ref="btnSearch" v-if="show_search">
               <i class="fa fa-fw fa-search"></i>
             </button>
             <b-dropdown :text="`Latent Dimensions: ${dim}`" variant="light" class="ml-2">
@@ -105,7 +105,7 @@
   import BrushedList from '../layouts/BrushedList.vue'
 
   import Scatter from '../controllers/scatter_analogy'
-  import {store, bus, log_debug, TRAIN_SPLIT} from '../controllers/config'
+  import {store, bus, log_debug, CONFIG} from '../controllers/config'
   import _ from 'lodash'
   import VueLoading from 'vue-loading-template'
   import FilterDropdown from '../layouts/FilterDropdown.vue'
@@ -134,6 +134,7 @@
       right: 0
     }
     s.dot_radius = 3
+    s.dot_color = _.find('mean_color', CONFIG.schema.meta) ? 'mean_color' : null
     // s.dot_color = 'platform'
   }
 
@@ -161,6 +162,7 @@
   function lets_draw (points) {
     clear.call(this)
 //    points = _.slice(points, 0, 1000)
+    points = _.slice(points, 0, CONFIG.train_split)
     let active = this.filter_func(points)
     this.scatter.setData(active)
     this.scatter.draw('#container')
@@ -210,13 +212,14 @@
         points: [],
         brushed: [],
         view_state: 0, // 0 - main, 1 - subset PCA, 2 - vector PCA
-        dim: 32,
-        all_dims: [4, 8, 16, 32, 64, 128, 256, 512, 1024],
+        all_dims: CONFIG.dims,
+        dim: CONFIG.dims[0],
         projection: 't-SNE',
         all_projections: ['PCA', 't-SNE'],
         perplexity: 30,
         all_perplexity: [5, 10, 30, 50, 100],
         filter_func: (d) => d,
+        show_search: !CONFIG.search.simple,
         open_search: false,
         loading: true,
         err: ''

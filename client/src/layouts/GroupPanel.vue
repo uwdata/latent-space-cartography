@@ -8,7 +8,7 @@
 
     <!--Top Division-->
     <div class="p-3 bd-border-bottom" v-if="show_search">
-      <auto-complete v-model="selection" :points="points" hint="Search a brand ..."
+      <auto-complete v-model="selection" :points="points" hint="Search ..."
                      v-on:chosen="addItem"
                      v-on:tentative="hoverItem"></auto-complete>
     </div>

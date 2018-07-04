@@ -1,7 +1,7 @@
 <template>
   <div class="bd-detail p-2" v-if="detail" v-bind:style="styles">
     <div class="d-flex" style="font-size: 0.8em;">
-      <div class="p1">
+      <div class="p1" v-if="show_image">
         <img :src="imageUrl(detail)" />
       </div>
       <div class="w-100 ml-2">
@@ -38,7 +38,7 @@
 </template>
 
 <script>
-  import {store} from '../controllers/config'
+  import {store, CONFIG} from '../controllers/config'
 
   export default {
     name: 'DetailTip',
@@ -48,6 +48,9 @@
       }
     },
     computed: {
+      show_image () {
+        return CONFIG.rendering.image
+      },
       detail () {
         return this.shared.detail
       },

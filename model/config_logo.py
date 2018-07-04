@@ -10,3 +10,6 @@ fn_raw = 'logos.hdf5'
 key_raw = 'logos' # the dataset key in hdf5 file
 
 dims = [32, 64, 128, 256, 512, 1024] # all latent dims
+
+# MySQL table schema
+schema_meta = 'i,name,mean_color,data_source,industry'

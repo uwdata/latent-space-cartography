@@ -1,0 +1,5 @@
+#!/usr/bin/env python
+# configurations of GloVe word embedding on Wikipedia data (6B)
+
+dset = 'glove_6b'
+dims = [50, 100, 200, 300]

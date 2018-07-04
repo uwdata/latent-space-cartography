@@ -232,6 +232,16 @@ class Scatter {
       .attr('in2', 'offsetBlur')
       .attr('operator', 'in')
       .attr('result', 'offsetBlur')
+
+    // Background behind text
+    filter = defs.append('filter')
+      .attr('id', 'text-bg')
+
+    filter.append('feFlood')
+      .attr('flood-color', '#fff')
+
+    filter.append('feComposite')
+      .attr('in', 'SourceGraphic')
   }
 
   /**

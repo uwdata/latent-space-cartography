@@ -89,15 +89,6 @@ class Dots {
     } else if (mark_type === 3) {
       let font_size = 12
 
-      // draw a background behind text
-      let b = parent
-        .selectAll('.text-background')
-        .data(data)
-        .enter()
-        .append('rect')
-        .classed('text-background', true)
-        .style('fill', () => '#fff')
-
       // draw text
       let t = parent
         .selectAll('.dot-text')
@@ -107,8 +98,9 @@ class Dots {
         .classed('dot-text', true)
         .text((d) => d.name)
         .style('font-size', () => `${font_size}px`)
+        .style('filter', 'url(#text-bg)')
 
-      this._positionText(t, b, font_size)
+      this._positionText(t, font_size)
     }
 
     function dotMouseover(d) {
@@ -150,8 +142,7 @@ class Dots {
       .attr('cx', (d) => scales.x(d.x))
       .attr('cy', (d) => scales.y(d.y))
     this._positionTextLabel(this._parent.selectAll('.focus-label'))
-    this._positionText(this._parent.selectAll('.dot-text'),
-      this._parent.selectAll('.text-background'))
+    this._positionText(this._parent.selectAll('.dot-text'))
 
     let img = this._parent.select('.mark-img')
 
@@ -314,18 +305,12 @@ class Dots {
     }
   }
 
-  _positionText (text, rect, font_size = 12) {
+  _positionText (text, font_size = 12) {
     let font_width = font_size * 0.45
 
     text
       .attr('x', (d) => this._scales.x(d.x) - font_width * d.name.length * 0.5)
       .attr('y', (d) => this._scales.y(d.y))
-
-    rect
-      .attr('x', (d) => this._scales.x(d.x) - font_width * d.name.length * 0.5 - 2)
-      .attr('y', (d) => this._scales.y(d.y) - font_size * 0.5 - 4)
-      .attr('width', (d) => font_width * d.name.length + 4)
-      .attr('height', () => font_size + 4)
   }
 
   _positionTextLabel (text) {

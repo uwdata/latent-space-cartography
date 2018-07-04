@@ -1,12 +1,12 @@
 <template>
-  <div class="bd-image-container" :style="containerStyle">
+  <div class="bd-image-container" :style="containerStyle" v-if="show_image">
     <img v-for="pi in list.slice(0, totalImages)" :src="imageUrl(pi)"
          class="bd-image-inline"/>
   </div>
 </template>
 
 <script>
-  import {store} from '../controllers/config'
+  import {store, CONFIG} from '../controllers/config'
 
   export default {
     name: 'GroupThumbnail',
@@ -22,6 +22,11 @@
       list: {
         type: Array,
         required: true
+      }
+    },
+    data () {
+      return {
+        show_image: CONFIG.rendering.image
       }
     },
     computed: {

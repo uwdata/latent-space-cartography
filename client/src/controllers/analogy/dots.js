@@ -51,7 +51,7 @@ class Dots {
     let that = this
 
     let inside = this._isInsideView(data)
-    let mark_type = inside.length > 500 ? 1 : 2
+    let mark_type = inside.length > 500 ? 1 : this.mark_type
 
     if (mark_type === 1) {
       parent.selectAll('.dot')
@@ -86,6 +86,20 @@ class Dots {
         .on('click', dotClick)
         .on('mouseover', imgMouseOver)
         .on('mouseout', imgMouseOut)
+    } else if (mark_type === 3) {
+      let font_size = 12
+
+      // draw text
+      let t = parent
+        .selectAll('.dot-text')
+        .data(data)
+        .enter()
+        .append('text')
+        .classed('dot-text', true)
+        .text((d) => d.name)
+        .style('font-size', () => `${font_size}px`)
+
+      this._positionText(t, font_size)
     }
 
     function dotMouseover(d) {
@@ -126,7 +140,8 @@ class Dots {
     this._parent.selectAll('.halo')
       .attr('cx', (d) => scales.x(d.x))
       .attr('cy', (d) => scales.y(d.y))
-    this._positionText(this._parent.selectAll('text'))
+    this._positionTextLabel(this._parent.selectAll('.focus-label'))
+    this._positionText(this._parent.selectAll('.dot-text'))
 
     let img = this._parent.select('.mark-img')
 
@@ -285,11 +300,19 @@ class Dots {
         .append('text')
         .classed('focus-label', true)
         .text((dd) => dd.name)
-      this._positionText(t)
+      this._positionTextLabel(t)
     }
   }
 
-  _positionText (text) {
+  _positionText (text, font_size = 12) {
+    let font_width = font_size * 0.4
+
+    text
+      .attr('x', (d) => this._scales.x(d.x) - font_width * d.name.length * 0.5)
+      .attr('y', (d) => this._scales.y(d.y))
+  }
+
+  _positionTextLabel (text) {
     text
       .attr('x', (d) => Math.max(this._scales.x(d.x) - 30, 15))
       .attr('y', (d) => Math.max(this._scales.y(d.y) - 15, 15))

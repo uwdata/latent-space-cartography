@@ -134,7 +134,8 @@
       right: 0
     }
     s.dot_radius = 3
-    s.dot_color = _.find('mean_color', CONFIG.schema.meta) ? 'mean_color' : null
+    s.dot_color = CONFIG.rendering.image ? 'mean_color' : null
+    s.mark_type = CONFIG.rendering.image ? 2 : 3
     // s.dot_color = 'platform'
   }
 
@@ -258,17 +259,13 @@
       // change latent dimensions
       changeDim (dim) {
         this.dim = dim
-        lets_load.call(this, () => {
-          this.scatter.mark_type = 1
-        })
+        lets_load.call(this, () => {})
       },
 
       // change projection method
       changeProjection (proj) {
         this.projection = proj
-        lets_load.call(this, () => {
-          this.scatter.mark_type = 1
-        })
+        lets_load.call(this, () => {})
       },
 
       // change perplexity of t-SNE
@@ -285,7 +282,6 @@
           .then((points) => {
             this.loading = false
             this.points = points
-            this.scatter.mark_type = 2
             log_debug(points)
             lets_draw.call(this, points)
           }, (e) => {
@@ -304,7 +300,6 @@
             this.loading = false
             log_debug(points[0])
             this.points = points
-            this.scatter.mark_type = 1
             lets_draw.call(this, points)
 
             // 2. draw line
@@ -421,6 +416,10 @@
   .brushed-img {
     width: 32px;
     height: 32px;
+  }
+
+  .dot-text {
+    font-weight: 300;
   }
 
   /* ------- D3 STYLE END ------- */

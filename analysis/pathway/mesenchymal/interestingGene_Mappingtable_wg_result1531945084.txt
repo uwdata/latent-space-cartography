@@ -1,0 +1,47 @@
+userid	genesymbol	genename	entrezgene
+CORIN	CORIN	corin, serine peptidase	10699
+CSMD2	CSMD2	CUB and Sushi multiple domains 2	114784
+ELFN2	ELFN2	extracellular leucine rich repeat and fibronectin type III domain containing 2	114794
+FAT3	FAT3	FAT atypical cadherin 3	120114
+CNTN1	CNTN1	contactin 1	1272
+NKAIN4	NKAIN4	Sodium/potassium transporting ATPase interacting 4	128414
+COL8A1	COL8A1	collagen type VIII alpha 1 chain	1295
+COL10A1	COL10A1	collagen type X alpha 1 chain	1300
+COL11A1	COL11A1	collagen type XI alpha 1 chain	1301
+COMP	COMP	cartilage oligomeric matrix protein	1311
+LRRC15	LRRC15	leucine rich repeat containing 15	131578
+IGFL2	IGFL2	IGF like family member 2	147920
+KANK4	KANK4	KN motif and ankyrin repeat domains 4	163782
+ADAMTS16	ADAMTS16	ADAM metallopeptidase with thrombospondin type 1 motif 16	170690
+EPYC	EPYC	epiphycan	1833
+FAP	FAP	fibroblast activation protein alpha	2191
+FAM189A1	FAM189A1	family with sequence similarity 189 member A1	23359
+FAM19A5	FAM19A5	family with sequence similarity 19 member A5, C-C motif chemokine like	25817
+NALCN	NALCN	sodium leak channel, non-selective	259232
+GPR1	GPR1	G protein-coupled receptor 1	2825
+PURG	PURG	purine rich element binding protein G	29942
+INHBA	INHBA	inhibin beta A subunit	3624
+IGLON5	IGLON5	IgLON family member 5	402665
+OMD	OMD	osteomodulin	4958
+OGN	OGN	osteoglycin	4969
+NTM	NTM	neurotrimin	50863
+SHANK1	SHANK1	SH3 and multiple ankyrin repeat domains 1	50944
+MAGEL2	MAGEL2	MAGE family member L2	54551
+KIF26B	KIF26B	kinesin family member 26B	55083
+PRKG1	PRKG1	protein kinase, cGMP-dependent, type I	5592
+SORCS2	SORCS2	sortilin related VPS10 domain containing receptor 2	57537
+PTPRD	PTPRD	protein tyrosine phosphatase, receptor type D	5789
+NKX3-2	NKX3-2	NK3 homeobox 2	579
+PTPRN	PTPRN	protein tyrosine phosphatase, receptor type N	5798
+SFRP2	SFRP2	secreted frizzled related protein 2	6423
+SOX11	SOX11	SRY-box 11	6664
+BICC1	BICC1	BicC family RNA binding protein 1	80114
+ST8SIA2	ST8SIA2	ST8 alpha-N-acetyl-neuraminide alpha-2,8-sialyltransferase 2	8128
+ADAMTS12	ADAMTS12	ADAM metallopeptidase with thrombospondin type 1 motif 12	81792
+NETO1	NETO1	neuropilin and tolloid like 1	81832
+ST6GAL2	ST6GAL2	ST6 beta-galactoside alpha-2,6-sialyltransferase 2	84620
+FNDC1	FNDC1	fibronectin type III domain containing 1	84624
+KIAA1644	KIAA1644	KIAA1644	85352
+NOG	NOG	noggin	9241
+ITGBL1	ITGBL1	integrin subunit beta like 1	9358
+ADAMTS2	ADAMTS2	ADAM metallopeptidase with thrombospondin type 1 motif 2	9509

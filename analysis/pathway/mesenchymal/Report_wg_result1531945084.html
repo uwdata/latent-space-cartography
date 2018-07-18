@@ -1,0 +1,1196 @@
+<html>
+<head>
+<title>WebGestalt (WEB-based GEne SeT AnaLysis Toolkit)</title>
+<script type="text/javascript" src="http://www.webgestalt.org/js/jquery.js"></script>
+<script type="text/javascript" src="http://www.webgestalt.org/js/jquery-ui.js"></script>
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-42098540-1', 'auto');
+  ga('send', 'pageview');
+</script>
+<script type="text/javascript" src="http://www.webgestalt.org/js/changeColor.js"></script>
+<script type="text/javascript" src="http://www.webgestalt.org/js/tableExport.js"></script>
+<script type="text/javascript" src="http://www.webgestalt.org/js/jquery.base64.js"></script>
+<script type="text/javascript" src="http://www.webgestalt.org/js/html2canvas.js"></script>
+<script type="text/javascript" src="http://www.webgestalt.org/js/jspdf/libs/sprintf.js"></script>
+<script type="text/javascript" src="http://www.webgestalt.org/js/jspdf.js"></script>
+<script type="text/javascript" src="http://www.webgestalt.org/js/jspdf/libs/base64.js"></script>
+<script type="text/javascript" src="http://www.webgestalt.org/js/search.js"></script>
+<script type="text/javascript" src="http://www.webgestalt.org/js/d3/d3.v3.min.js"></script>
+<script type="text/javascript" src="http://www.webgestalt.org/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="http://www.webgestalt.org/js/jquery.tipsy.js"></script>
+<script type="text/javascript" src="http://www.webgestalt.org/js/jquery.contextMenu.js"></script>
+<script type="text/javascript" src="http://www.webgestalt.org/js/jquery.floatThead.min.js"></script>
+<script type="text/javascript" src="http://www.webgestalt.org/js/dagre/dagre.js"></script>
+<script type="text/javascript" src="http://www.webgestalt.org/js/Minimap.js"></script>
+<script type="text/javascript" src="http://www.webgestalt.org/js/MinimapZoom.js"></script>
+<script type="text/javascript" src="http://www.webgestalt.org/js/DirectedAcyclicGraph.js"></script>
+<script type="text/javascript" src="http://www.webgestalt.org/js/List.js"></script>
+<script type="text/javascript" src="http://www.webgestalt.org/js/Selectable_svv.js"></script>
+<script type="text/javascript" src="http://www.webgestalt.org/js/Graph.js"></script>
+<script type="text/javascript" src="http://www.webgestalt.org/js/History.js"></script>
+<script type="text/javascript" src="http://www.webgestalt.org/js/Tooltip.js"></script>
+<script type="text/javascript" src="http://www.webgestalt.org/js/FileSaver.js"></script>
+<script type="text/javascript" src="http://www.webgestalt.org/js/download.js"></script>
+<script type="text/javascript" src="http://www.webgestalt.org/js/ContextMenu.js"></script>
+<script type="text/javascript" src="http://www.webgestalt.org/js/searchView.js"></script>
+<script type="text/javascript" src="http://www.webgestalt.org/js/canvg/rgbcolor.js"></script>
+<script type="text/javascript" src="http://www.webgestalt.org/js/canvg/StackBlur.js"></script>
+<script type="text/javascript" src="http://www.webgestalt.org/js/canvg/canvg.js"></script>
+<script type="text/javascript" src="js/xtrace_utils.js"></script>
+<script type="text/javascript" src="js/xtrace_graph.js"></script>
+<script type="text/javascript" src="js/plotDAG.js"></script>
+<script type="text/javascript" src="http://www.webgestalt.org/js/tooltipster.bundle.min.js"></script>
+<script>$(document).ready(function(){$('.tooltip-container').tooltipster({functionInit: function (instance, helper) {var content = $(helper.origin).find('.tooltip_content').detach();instance.content(content);}});});</script>
+<link href="http://www.webgestalt.org/css/jquery-ui.css" rel="stylesheet" type="text/css">
+<link href="http://www.webgestalt.org/css/xtrace.css" rel="stylesheet" type="text/css">
+<link href="http://www.webgestalt.org/css/tipsy.css" rel="stylesheet" type="text/css">
+<link href="http://www.webgestalt.org/css/jquery.contextMenu.css" rel="stylesheet" type="text/css">
+<link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css">
+<link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+<link href="http://www.webgestalt.org/css/graph.css" rel="stylesheet" type="text/css">
+<link href="http://www.webgestalt.org/css/report.css" rel="stylesheet" type="text/css">
+<link href="http://www.webgestalt.org/css/zebra.css" rel="stylesheet" type="text/css">
+<link href="http://www.webgestalt.org/css/search.css" rel="stylesheet" type="text/css">
+<link href="http://www.webgestalt.org/css/tooltipster.bundle.min.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<p align="center">
+<iframe src="http://www.webgestalt.org/html/head.html" style="border:0px;height:180px;width:100%"></iframe>
+<div id ="tabs"> <ul>
+<li><a href="#summary">Summary</a></li>
+<li><a href="#interestGene">User ID Mapping Table</a></li>
+<li><a href="#referenceGene">GOSlim Summary</a></li>
+<li><a href="#result">Enrichment Results</a></li>
+</ul>
+<div id="summary">
+<h3>Summary&nbsp&nbsp&nbsp(<a href="Project_wg_result1531945084.tar.gz" target="_blank" style="color:red"><u>Result Download</u></a>)</h3>
+<b>Enrich method:</b> ORA<br/>
+<b>Organism:</b>hsapiens<br/>
+<b>Enrichment Categories: </b>geneontology_Biological_Process<br/>
+<b>Interesting gene list: </b>mesenchymal_genes_sd_1531945084.txt. <b>ID type: </b>genesymbol<br/>
+The interesting gene list contains <b>51</b> user IDs in which <b>46</b> user IDs are unambiguously mapped to the unique Entrez Gene IDs and <b>5</b> user IDs are mapped to multiple Entrez Gene IDs or could not be mapped to any Entrez Gene ID. The GO Slim summary are based upon the <b>46</b> unique Entrez Gene IDs.<br/>
+Among the <b>46</b> unique Entrez Gene IDs, <b>37</b> IDs are annotated to the selected functional categories and also in the reference gene list, which are used for the enrichment analysis.<br/>
+<b>Reference gene list: </b>uploads/background_genes_1531945084.txt <b>ID type: </b>genesymbol<br/>
+The reference gene list contains <b>5000</b> IDs in which <b>4627</b> IDs are unambiguously mapped to the unique Entrez Gene IDs and <b>373</b> IDs are mapped to multiple Entrez Gene IDs or could not be mapped to any Entrez Gene ID.<br/>
+Among the <b>4627</b> unique Entrez Gene IDs, <b>4020</b> IDs are annotated to the selected functional categories, which are used as the reference for the enrichment analysis.<br/>
+<b>Parameters for the enrichment analysis:</b>
+<ul><li><b>Minimum number of Entrez Gene IDs in the category:</b>5</li>
+<li><b>Maximum number of Entrez Gene IDs in the category:</b>2000</li>
+<li><b>FDR Method:</b>BH</li>
+<li><b>Significance Level:</b> Top10</li>
+</ul>
+Based on the above parameters, <b>10</b> categories are identified as enriched categories and all are shown in this report.<br/>
+</div>
+<div id="interestGene">
+<div id="mappedGene">
+<h4>Mapped User IDs</h4>
+<table class="zebra"><thead><tr>
+<th>userid</th>
+<th>Gene Symbol</th>
+<th>Gene Name</th>
+<th>Entrez Gene</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>CORIN</td>
+<td>CORIN</td>
+<td>corin, serine peptidase</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=10699">10699</a></td>
+</tr>
+<tr>
+<td>CSMD2</td>
+<td>CSMD2</td>
+<td>CUB and Sushi multiple domains 2</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=114784">114784</a></td>
+</tr>
+<tr>
+<td>ELFN2</td>
+<td>ELFN2</td>
+<td>extracellular leucine rich repeat and fibronectin type III domain containing 2</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=114794">114794</a></td>
+</tr>
+<tr>
+<td>FAT3</td>
+<td>FAT3</td>
+<td>FAT atypical cadherin 3</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=120114">120114</a></td>
+</tr>
+<tr>
+<td>CNTN1</td>
+<td>CNTN1</td>
+<td>contactin 1</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=1272">1272</a></td>
+</tr>
+<tr>
+<td>NKAIN4</td>
+<td>NKAIN4</td>
+<td>Sodium/potassium transporting ATPase interacting 4</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=128414">128414</a></td>
+</tr>
+<tr>
+<td>COL8A1</td>
+<td>COL8A1</td>
+<td>collagen type VIII alpha 1 chain</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=1295">1295</a></td>
+</tr>
+<tr>
+<td>COL10A1</td>
+<td>COL10A1</td>
+<td>collagen type X alpha 1 chain</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=1300">1300</a></td>
+</tr>
+<tr>
+<td>COL11A1</td>
+<td>COL11A1</td>
+<td>collagen type XI alpha 1 chain</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=1301">1301</a></td>
+</tr>
+<tr>
+<td>COMP</td>
+<td>COMP</td>
+<td>cartilage oligomeric matrix protein</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=1311">1311</a></td>
+</tr>
+<tr>
+<td>LRRC15</td>
+<td>LRRC15</td>
+<td>leucine rich repeat containing 15</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=131578">131578</a></td>
+</tr>
+<tr>
+<td>IGFL2</td>
+<td>IGFL2</td>
+<td>IGF like family member 2</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=147920">147920</a></td>
+</tr>
+<tr>
+<td>KANK4</td>
+<td>KANK4</td>
+<td>KN motif and ankyrin repeat domains 4</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=163782">163782</a></td>
+</tr>
+<tr>
+<td>ADAMTS16</td>
+<td>ADAMTS16</td>
+<td>ADAM metallopeptidase with thrombospondin type 1 motif 16</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=170690">170690</a></td>
+</tr>
+<tr>
+<td>EPYC</td>
+<td>EPYC</td>
+<td>epiphycan</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=1833">1833</a></td>
+</tr>
+<tr>
+<td>FAP</td>
+<td>FAP</td>
+<td>fibroblast activation protein alpha</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=2191">2191</a></td>
+</tr>
+<tr>
+<td>FAM189A1</td>
+<td>FAM189A1</td>
+<td>family with sequence similarity 189 member A1</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=23359">23359</a></td>
+</tr>
+<tr>
+<td>FAM19A5</td>
+<td>FAM19A5</td>
+<td>family with sequence similarity 19 member A5, C-C motif chemokine like</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=25817">25817</a></td>
+</tr>
+<tr>
+<td>NALCN</td>
+<td>NALCN</td>
+<td>sodium leak channel, non-selective</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=259232">259232</a></td>
+</tr>
+<tr>
+<td>GPR1</td>
+<td>GPR1</td>
+<td>G protein-coupled receptor 1</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=2825">2825</a></td>
+</tr>
+<tr>
+<td>PURG</td>
+<td>PURG</td>
+<td>purine rich element binding protein G</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=29942">29942</a></td>
+</tr>
+<tr>
+<td>INHBA</td>
+<td>INHBA</td>
+<td>inhibin beta A subunit</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=3624">3624</a></td>
+</tr>
+<tr>
+<td>IGLON5</td>
+<td>IGLON5</td>
+<td>IgLON family member 5</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=402665">402665</a></td>
+</tr>
+<tr>
+<td>OMD</td>
+<td>OMD</td>
+<td>osteomodulin</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=4958">4958</a></td>
+</tr>
+<tr>
+<td>OGN</td>
+<td>OGN</td>
+<td>osteoglycin</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=4969">4969</a></td>
+</tr>
+<tr>
+<td>NTM</td>
+<td>NTM</td>
+<td>neurotrimin</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=50863">50863</a></td>
+</tr>
+<tr>
+<td>SHANK1</td>
+<td>SHANK1</td>
+<td>SH3 and multiple ankyrin repeat domains 1</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=50944">50944</a></td>
+</tr>
+<tr>
+<td>MAGEL2</td>
+<td>MAGEL2</td>
+<td>MAGE family member L2</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=54551">54551</a></td>
+</tr>
+<tr>
+<td>KIF26B</td>
+<td>KIF26B</td>
+<td>kinesin family member 26B</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=55083">55083</a></td>
+</tr>
+<tr>
+<td>PRKG1</td>
+<td>PRKG1</td>
+<td>protein kinase, cGMP-dependent, type I</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=5592">5592</a></td>
+</tr>
+<tr>
+<td>SORCS2</td>
+<td>SORCS2</td>
+<td>sortilin related VPS10 domain containing receptor 2</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=57537">57537</a></td>
+</tr>
+<tr>
+<td>PTPRD</td>
+<td>PTPRD</td>
+<td>protein tyrosine phosphatase, receptor type D</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=5789">5789</a></td>
+</tr>
+<tr>
+<td>NKX3-2</td>
+<td>NKX3-2</td>
+<td>NK3 homeobox 2</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=579">579</a></td>
+</tr>
+<tr>
+<td>PTPRN</td>
+<td>PTPRN</td>
+<td>protein tyrosine phosphatase, receptor type N</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=5798">5798</a></td>
+</tr>
+<tr>
+<td>SFRP2</td>
+<td>SFRP2</td>
+<td>secreted frizzled related protein 2</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=6423">6423</a></td>
+</tr>
+<tr>
+<td>SOX11</td>
+<td>SOX11</td>
+<td>SRY-box 11</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=6664">6664</a></td>
+</tr>
+<tr>
+<td>BICC1</td>
+<td>BICC1</td>
+<td>BicC family RNA binding protein 1</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=80114">80114</a></td>
+</tr>
+<tr>
+<td>ST8SIA2</td>
+<td>ST8SIA2</td>
+<td>ST8 alpha-N-acetyl-neuraminide alpha-2,8-sialyltransferase 2</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=8128">8128</a></td>
+</tr>
+<tr>
+<td>ADAMTS12</td>
+<td>ADAMTS12</td>
+<td>ADAM metallopeptidase with thrombospondin type 1 motif 12</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=81792">81792</a></td>
+</tr>
+<tr>
+<td>NETO1</td>
+<td>NETO1</td>
+<td>neuropilin and tolloid like 1</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=81832">81832</a></td>
+</tr>
+<tr>
+<td>ST6GAL2</td>
+<td>ST6GAL2</td>
+<td>ST6 beta-galactoside alpha-2,6-sialyltransferase 2</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=84620">84620</a></td>
+</tr>
+<tr>
+<td>FNDC1</td>
+<td>FNDC1</td>
+<td>fibronectin type III domain containing 1</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=84624">84624</a></td>
+</tr>
+<tr>
+<td>KIAA1644</td>
+<td>KIAA1644</td>
+<td>KIAA1644</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=85352">85352</a></td>
+</tr>
+<tr>
+<td>NOG</td>
+<td>NOG</td>
+<td>noggin</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=9241">9241</a></td>
+</tr>
+<tr>
+<td>ITGBL1</td>
+<td>ITGBL1</td>
+<td>integrin subunit beta like 1</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=9358">9358</a></td>
+</tr>
+<tr>
+<td>ADAMTS2</td>
+<td>ADAMTS2</td>
+<td>ADAM metallopeptidase with thrombospondin type 1 motif 2</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=9509">9509</a></td>
+</tr>
+</tbody></table>
+</div>
+<div id="empty">&nbsp&nbsp&nbsp&nbsp</div>
+<div id="unmappedGene">
+<h4>User IDs mapped to multiple Entrtez IDs or not mapped</h4>
+<table class="zebra"><thead><tr>
+<th>userid</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>PPAPDC1A</td>
+</tr>
+<tr>
+<td>ODZ3</td>
+</tr>
+<tr>
+<td>ASAM</td>
+</tr>
+<tr>
+<td>MGC45800</td>
+</tr>
+<tr>
+<td>IGF2AS</td>
+</tr>
+</tbody></table>
+</div>
+</div>
+<div id="referenceGene">
+<h4>GOSlim summary for the user list genes</h4>
+Each Biological Process, Cellular Component and Molecular Function category is represented by a red, blue and green bar, repectively.<br/>
+The height of the bar represents the number of user list genes observed in the category.
+<img src="goslim_summary_wg_result1531945084.png" width="100%" height="100%"/></div>
+<div id="result">
+<div id="dag">
+<div id = "graphDAG" style="height:100%;width:100%"></div>
+</div>
+<div id="empty1">&nbsp&nbsp&nbsp&nbsp</div>
+<div id="genelist_wrap">
+<div id="genelist_des">
+<h4>Detailed information of the enriched categories</h4>
+<div class="tooltip_templates">The statistics
+<a class="tooltip-container"><img src="http://www.webgestalt.org/images/info.png" width="13" height="13"/>
+<span class="tooltip_content"><strong><ul><li>C: the number of reference genes in the category</li><li>O: the number of genes in the user gene list and also in the category</li><li>E: The expected number in the category</li><li>R: ratio of enrichment</li><li>PValue: p value from hyergeometric test</li><li>FDR: FDR from BH</li></ul></strong></span></a>
+ for the enriched categories and the genes in the user gene list and also in the category are listed in the table. <br/></div>
+<div class="search"><input id="tags" type="text" name="q" placeholder="ID Search"><ul id="searchData"><li><a id="aid0" href="#GO:0051216">GO:0051216 cartilage development</a></li><li><a id="aid1" href="#GO:0048705">GO:0048705 skeletal system morphogenesis</a></li><li><a id="aid2" href="#GO:0030574">GO:0030574 collagen catabolic process</a></li><li><a id="aid3" href="#GO:0044243">GO:0044243 multicellular organismal catabolic process</a></li><li><a id="aid4" href="#GO:0061448">GO:0061448 connective tissue development</a></li><li><a id="aid5" href="#GO:0007275">GO:0007275 multicellular organism development</a></li><li><a id="aid6" href="#GO:0001706">GO:0001706 endoderm formation</a></li><li><a id="aid7" href="#GO:0001704">GO:0001704 formation of primary germ layer</a></li><li><a id="aid8" href="#GO:0030182">GO:0030182 neuron differentiation</a></li><li><a id="aid9" href="#GO:0048731">GO:0048731 system development</a></li></ul></div>
+</div>
+<br/>
+<div id="genelist">
+<div><nav class="cl-effect-1"><a style="cursor:pointer;color:red;" onclick="$('#Table1').tableExport({type:'csv',escape:'false'});">Download Table</a></nav></div><table id="Table1" class="zebra"><thead><tr>
+<th colspan="4">
+<a name="GO:0051216"><font color="black"><a href ="http://amigo.geneontology.org/amigo/term/GO:0051216" target="_blank"><b>ID:GO:0051216&nbsp&nbsp&nbsp&nbsp&nbsp&nbspName:cartilage development</b></a></font></a>
+</th></tr>
+<tr><th colspan="4">
+C=92; O=7; E=0.85; R=8.27; PValue=1.54e-05; FDR=5.21e-02</th></tr>
+<tr>
+<th>userid</th>
+<th>Gene Symbol</th>
+<th>Gene Name</th>
+<th>Entrez Gene</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>COL10A1</td>
+<td>COL10A1</td>
+<td>collagen type X alpha 1 chain</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=1300">1300</a></td>
+</tr>
+<tr>
+<td>COL11A1</td>
+<td>COL11A1</td>
+<td>collagen type XI alpha 1 chain</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=1301">1301</a></td>
+</tr>
+<tr>
+<td>COMP</td>
+<td>COMP</td>
+<td>cartilage oligomeric matrix protein</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=1311">1311</a></td>
+</tr>
+<tr>
+<td>NKX3-2</td>
+<td>NKX3-2</td>
+<td>NK3 homeobox 2</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=579">579</a></td>
+</tr>
+<tr>
+<td>SFRP2</td>
+<td>SFRP2</td>
+<td>secreted frizzled related protein 2</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=6423">6423</a></td>
+</tr>
+<tr>
+<td>ADAMTS12</td>
+<td>ADAMTS12</td>
+<td>ADAM metallopeptidase with thrombospondin type 1 motif 12</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=81792">81792</a></td>
+</tr>
+<tr>
+<td>NOG</td>
+<td>NOG</td>
+<td>noggin</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=9241">9241</a></td>
+</tr>
+</tbody></table><br/><br/>
+<div><nav class="cl-effect-1"><a style="cursor:pointer;color:red;" onclick="$('#Table2').tableExport({type:'csv',escape:'false'});">Download Table</a></nav></div><table id="Table2" class="zebra"><thead><tr>
+<th colspan="4">
+<a name="GO:0048705"><font color="black"><a href ="http://amigo.geneontology.org/amigo/term/GO:0048705" target="_blank"><b>ID:GO:0048705&nbsp&nbsp&nbsp&nbsp&nbsp&nbspName:skeletal system morphogenesis</b></a></font></a>
+</th></tr>
+<tr><th colspan="4">
+C=99; O=7; E=0.91; R=7.68; PValue=2.49e-05; FDR=5.21e-02</th></tr>
+<tr>
+<th>userid</th>
+<th>Gene Symbol</th>
+<th>Gene Name</th>
+<th>Entrez Gene</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>COL10A1</td>
+<td>COL10A1</td>
+<td>collagen type X alpha 1 chain</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=1300">1300</a></td>
+</tr>
+<tr>
+<td>COL11A1</td>
+<td>COL11A1</td>
+<td>collagen type XI alpha 1 chain</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=1301">1301</a></td>
+</tr>
+<tr>
+<td>COMP</td>
+<td>COMP</td>
+<td>cartilage oligomeric matrix protein</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=1311">1311</a></td>
+</tr>
+<tr>
+<td>NKX3-2</td>
+<td>NKX3-2</td>
+<td>NK3 homeobox 2</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=579">579</a></td>
+</tr>
+<tr>
+<td>SFRP2</td>
+<td>SFRP2</td>
+<td>secreted frizzled related protein 2</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=6423">6423</a></td>
+</tr>
+<tr>
+<td>SOX11</td>
+<td>SOX11</td>
+<td>SRY-box 11</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=6664">6664</a></td>
+</tr>
+<tr>
+<td>NOG</td>
+<td>NOG</td>
+<td>noggin</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=9241">9241</a></td>
+</tr>
+</tbody></table><br/><br/>
+<div><nav class="cl-effect-1"><a style="cursor:pointer;color:red;" onclick="$('#Table3').tableExport({type:'csv',escape:'false'});">Download Table</a></nav></div><table id="Table3" class="zebra"><thead><tr>
+<th colspan="4">
+<a name="GO:0030574"><font color="black"><a href ="http://amigo.geneontology.org/amigo/term/GO:0030574" target="_blank"><b>ID:GO:0030574&nbsp&nbsp&nbsp&nbsp&nbsp&nbspName:collagen catabolic process</b></a></font></a>
+</th></tr>
+<tr><th colspan="4">
+C=42; O=5; E=0.39; R=12.93; PValue=3.32e-05; FDR=5.21e-02</th></tr>
+<tr>
+<th>userid</th>
+<th>Gene Symbol</th>
+<th>Gene Name</th>
+<th>Entrez Gene</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>COL8A1</td>
+<td>COL8A1</td>
+<td>collagen type VIII alpha 1 chain</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=1295">1295</a></td>
+</tr>
+<tr>
+<td>COL10A1</td>
+<td>COL10A1</td>
+<td>collagen type X alpha 1 chain</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=1300">1300</a></td>
+</tr>
+<tr>
+<td>COL11A1</td>
+<td>COL11A1</td>
+<td>collagen type XI alpha 1 chain</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=1301">1301</a></td>
+</tr>
+<tr>
+<td>FAP</td>
+<td>FAP</td>
+<td>fibroblast activation protein alpha</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=2191">2191</a></td>
+</tr>
+<tr>
+<td>ADAMTS2</td>
+<td>ADAMTS2</td>
+<td>ADAM metallopeptidase with thrombospondin type 1 motif 2</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=9509">9509</a></td>
+</tr>
+</tbody></table><br/><br/>
+<div><nav class="cl-effect-1"><a style="cursor:pointer;color:red;" onclick="$('#Table4').tableExport({type:'csv',escape:'false'});">Download Table</a></nav></div><table id="Table4" class="zebra"><thead><tr>
+<th colspan="4">
+<a name="GO:0044243"><font color="black"><a href ="http://amigo.geneontology.org/amigo/term/GO:0044243" target="_blank"><b>ID:GO:0044243&nbsp&nbsp&nbsp&nbsp&nbsp&nbspName:multicellular organismal catabolic process</b></a></font></a>
+</th></tr>
+<tr><th colspan="4">
+C=45; O=5; E=0.41; R=12.07; PValue=4.67e-05; FDR=5.21e-02</th></tr>
+<tr>
+<th>userid</th>
+<th>Gene Symbol</th>
+<th>Gene Name</th>
+<th>Entrez Gene</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>COL8A1</td>
+<td>COL8A1</td>
+<td>collagen type VIII alpha 1 chain</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=1295">1295</a></td>
+</tr>
+<tr>
+<td>COL10A1</td>
+<td>COL10A1</td>
+<td>collagen type X alpha 1 chain</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=1300">1300</a></td>
+</tr>
+<tr>
+<td>COL11A1</td>
+<td>COL11A1</td>
+<td>collagen type XI alpha 1 chain</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=1301">1301</a></td>
+</tr>
+<tr>
+<td>FAP</td>
+<td>FAP</td>
+<td>fibroblast activation protein alpha</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=2191">2191</a></td>
+</tr>
+<tr>
+<td>ADAMTS2</td>
+<td>ADAMTS2</td>
+<td>ADAM metallopeptidase with thrombospondin type 1 motif 2</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=9509">9509</a></td>
+</tr>
+</tbody></table><br/><br/>
+<div><nav class="cl-effect-1"><a style="cursor:pointer;color:red;" onclick="$('#Table5').tableExport({type:'csv',escape:'false'});">Download Table</a></nav></div><table id="Table5" class="zebra"><thead><tr>
+<th colspan="4">
+<a name="GO:0061448"><font color="black"><a href ="http://amigo.geneontology.org/amigo/term/GO:0061448" target="_blank"><b>ID:GO:0061448&nbsp&nbsp&nbsp&nbsp&nbsp&nbspName:connective tissue development</b></a></font></a>
+</th></tr>
+<tr><th colspan="4">
+C=110; O=7; E=1.01; R=6.91; PValue=4.96e-05; FDR=5.21e-02</th></tr>
+<tr>
+<th>userid</th>
+<th>Gene Symbol</th>
+<th>Gene Name</th>
+<th>Entrez Gene</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>COL10A1</td>
+<td>COL10A1</td>
+<td>collagen type X alpha 1 chain</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=1300">1300</a></td>
+</tr>
+<tr>
+<td>COL11A1</td>
+<td>COL11A1</td>
+<td>collagen type XI alpha 1 chain</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=1301">1301</a></td>
+</tr>
+<tr>
+<td>COMP</td>
+<td>COMP</td>
+<td>cartilage oligomeric matrix protein</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=1311">1311</a></td>
+</tr>
+<tr>
+<td>NKX3-2</td>
+<td>NKX3-2</td>
+<td>NK3 homeobox 2</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=579">579</a></td>
+</tr>
+<tr>
+<td>SFRP2</td>
+<td>SFRP2</td>
+<td>secreted frizzled related protein 2</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=6423">6423</a></td>
+</tr>
+<tr>
+<td>ADAMTS12</td>
+<td>ADAMTS12</td>
+<td>ADAM metallopeptidase with thrombospondin type 1 motif 12</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=81792">81792</a></td>
+</tr>
+<tr>
+<td>NOG</td>
+<td>NOG</td>
+<td>noggin</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=9241">9241</a></td>
+</tr>
+</tbody></table><br/><br/>
+<div><nav class="cl-effect-1"><a style="cursor:pointer;color:red;" onclick="$('#Table6').tableExport({type:'csv',escape:'false'});">Download Table</a></nav></div><table id="Table6" class="zebra"><thead><tr>
+<th colspan="4">
+<a name="GO:0007275"><font color="black"><a href ="http://amigo.geneontology.org/amigo/term/GO:0007275" target="_blank"><b>ID:GO:0007275&nbsp&nbsp&nbsp&nbsp&nbsp&nbspName:multicellular organism development</b></a></font></a>
+</th></tr>
+<tr><th colspan="4">
+C=1630; O=27; E=15; R=1.8; PValue=6.07e-05; FDR=5.31e-02</th></tr>
+<tr>
+<th>userid</th>
+<th>Gene Symbol</th>
+<th>Gene Name</th>
+<th>Entrez Gene</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>FAT3</td>
+<td>FAT3</td>
+<td>FAT atypical cadherin 3</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=120114">120114</a></td>
+</tr>
+<tr>
+<td>CNTN1</td>
+<td>CNTN1</td>
+<td>contactin 1</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=1272">1272</a></td>
+</tr>
+<tr>
+<td>COL8A1</td>
+<td>COL8A1</td>
+<td>collagen type VIII alpha 1 chain</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=1295">1295</a></td>
+</tr>
+<tr>
+<td>COL10A1</td>
+<td>COL10A1</td>
+<td>collagen type X alpha 1 chain</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=1300">1300</a></td>
+</tr>
+<tr>
+<td>COL11A1</td>
+<td>COL11A1</td>
+<td>collagen type XI alpha 1 chain</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=1301">1301</a></td>
+</tr>
+<tr>
+<td>COMP</td>
+<td>COMP</td>
+<td>cartilage oligomeric matrix protein</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=1311">1311</a></td>
+</tr>
+<tr>
+<td>ADAMTS16</td>
+<td>ADAMTS16</td>
+<td>ADAM metallopeptidase with thrombospondin type 1 motif 16</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=170690">170690</a></td>
+</tr>
+<tr>
+<td>EPYC</td>
+<td>EPYC</td>
+<td>epiphycan</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=1833">1833</a></td>
+</tr>
+<tr>
+<td>FAP</td>
+<td>FAP</td>
+<td>fibroblast activation protein alpha</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=2191">2191</a></td>
+</tr>
+<tr>
+<td>INHBA</td>
+<td>INHBA</td>
+<td>inhibin beta A subunit</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=3624">3624</a></td>
+</tr>
+<tr>
+<td>OMD</td>
+<td>OMD</td>
+<td>osteomodulin</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=4958">4958</a></td>
+</tr>
+<tr>
+<td>OGN</td>
+<td>OGN</td>
+<td>osteoglycin</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=4969">4969</a></td>
+</tr>
+<tr>
+<td>NTM</td>
+<td>NTM</td>
+<td>neurotrimin</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=50863">50863</a></td>
+</tr>
+<tr>
+<td>SHANK1</td>
+<td>SHANK1</td>
+<td>SH3 and multiple ankyrin repeat domains 1</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=50944">50944</a></td>
+</tr>
+<tr>
+<td>KIF26B</td>
+<td>KIF26B</td>
+<td>kinesin family member 26B</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=55083">55083</a></td>
+</tr>
+<tr>
+<td>PRKG1</td>
+<td>PRKG1</td>
+<td>protein kinase, cGMP-dependent, type I</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=5592">5592</a></td>
+</tr>
+<tr>
+<td>PTPRD</td>
+<td>PTPRD</td>
+<td>protein tyrosine phosphatase, receptor type D</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=5789">5789</a></td>
+</tr>
+<tr>
+<td>NKX3-2</td>
+<td>NKX3-2</td>
+<td>NK3 homeobox 2</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=579">579</a></td>
+</tr>
+<tr>
+<td>PTPRN</td>
+<td>PTPRN</td>
+<td>protein tyrosine phosphatase, receptor type N</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=5798">5798</a></td>
+</tr>
+<tr>
+<td>SFRP2</td>
+<td>SFRP2</td>
+<td>secreted frizzled related protein 2</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=6423">6423</a></td>
+</tr>
+<tr>
+<td>SOX11</td>
+<td>SOX11</td>
+<td>SRY-box 11</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=6664">6664</a></td>
+</tr>
+<tr>
+<td>BICC1</td>
+<td>BICC1</td>
+<td>BicC family RNA binding protein 1</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=80114">80114</a></td>
+</tr>
+<tr>
+<td>ST8SIA2</td>
+<td>ST8SIA2</td>
+<td>ST8 alpha-N-acetyl-neuraminide alpha-2,8-sialyltransferase 2</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=8128">8128</a></td>
+</tr>
+<tr>
+<td>ADAMTS12</td>
+<td>ADAMTS12</td>
+<td>ADAM metallopeptidase with thrombospondin type 1 motif 12</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=81792">81792</a></td>
+</tr>
+<tr>
+<td>ST6GAL2</td>
+<td>ST6GAL2</td>
+<td>ST6 beta-galactoside alpha-2,6-sialyltransferase 2</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=84620">84620</a></td>
+</tr>
+<tr>
+<td>NOG</td>
+<td>NOG</td>
+<td>noggin</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=9241">9241</a></td>
+</tr>
+<tr>
+<td>ADAMTS2</td>
+<td>ADAMTS2</td>
+<td>ADAM metallopeptidase with thrombospondin type 1 motif 2</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=9509">9509</a></td>
+</tr>
+</tbody></table><br/><br/>
+<div><nav class="cl-effect-1"><a style="cursor:pointer;color:red;" onclick="$('#Table7').tableExport({type:'csv',escape:'false'});">Download Table</a></nav></div><table id="Table7" class="zebra"><thead><tr>
+<th colspan="4">
+<a name="GO:0001706"><font color="black"><a href ="http://amigo.geneontology.org/amigo/term/GO:0001706" target="_blank"><b>ID:GO:0001706&nbsp&nbsp&nbsp&nbsp&nbsp&nbspName:endoderm formation</b></a></font></a>
+</th></tr>
+<tr><th colspan="4">
+C=28; O=4; E=0.26; R=15.52; PValue=1.06e-04; FDR=7.48e-02</th></tr>
+<tr>
+<th>userid</th>
+<th>Gene Symbol</th>
+<th>Gene Name</th>
+<th>Entrez Gene</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>COL8A1</td>
+<td>COL8A1</td>
+<td>collagen type VIII alpha 1 chain</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=1295">1295</a></td>
+</tr>
+<tr>
+<td>COL11A1</td>
+<td>COL11A1</td>
+<td>collagen type XI alpha 1 chain</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=1301">1301</a></td>
+</tr>
+<tr>
+<td>INHBA</td>
+<td>INHBA</td>
+<td>inhibin beta A subunit</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=3624">3624</a></td>
+</tr>
+<tr>
+<td>NOG</td>
+<td>NOG</td>
+<td>noggin</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=9241">9241</a></td>
+</tr>
+</tbody></table><br/><br/>
+<div><nav class="cl-effect-1"><a style="cursor:pointer;color:red;" onclick="$('#Table8').tableExport({type:'csv',escape:'false'});">Download Table</a></nav></div><table id="Table8" class="zebra"><thead><tr>
+<th colspan="4">
+<a name="GO:0001704"><font color="black"><a href ="http://amigo.geneontology.org/amigo/term/GO:0001704" target="_blank"><b>ID:GO:0001704&nbsp&nbsp&nbsp&nbsp&nbsp&nbspName:formation of primary germ layer</b></a></font></a>
+</th></tr>
+<tr><th colspan="4">
+C=54; O=5; E=0.5; R=10.06; PValue=1.14e-04; FDR=7.48e-02</th></tr>
+<tr>
+<th>userid</th>
+<th>Gene Symbol</th>
+<th>Gene Name</th>
+<th>Entrez Gene</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>COL8A1</td>
+<td>COL8A1</td>
+<td>collagen type VIII alpha 1 chain</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=1295">1295</a></td>
+</tr>
+<tr>
+<td>COL11A1</td>
+<td>COL11A1</td>
+<td>collagen type XI alpha 1 chain</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=1301">1301</a></td>
+</tr>
+<tr>
+<td>INHBA</td>
+<td>INHBA</td>
+<td>inhibin beta A subunit</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=3624">3624</a></td>
+</tr>
+<tr>
+<td>SFRP2</td>
+<td>SFRP2</td>
+<td>secreted frizzled related protein 2</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=6423">6423</a></td>
+</tr>
+<tr>
+<td>NOG</td>
+<td>NOG</td>
+<td>noggin</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=9241">9241</a></td>
+</tr>
+</tbody></table><br/><br/>
+<div><nav class="cl-effect-1"><a style="cursor:pointer;color:red;" onclick="$('#Table9').tableExport({type:'csv',escape:'false'});">Download Table</a></nav></div><table id="Table9" class="zebra"><thead><tr>
+<th colspan="4">
+<a name="GO:0030182"><font color="black"><a href ="http://amigo.geneontology.org/amigo/term/GO:0030182" target="_blank"><b>ID:GO:0030182&nbsp&nbsp&nbsp&nbsp&nbsp&nbspName:neuron differentiation</b></a></font></a>
+</th></tr>
+<tr><th colspan="4">
+C=460; O=13; E=4.23; R=3.07; PValue=1.3e-04; FDR=7.57e-02</th></tr>
+<tr>
+<th>userid</th>
+<th>Gene Symbol</th>
+<th>Gene Name</th>
+<th>Entrez Gene</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>CNTN1</td>
+<td>CNTN1</td>
+<td>contactin 1</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=1272">1272</a></td>
+</tr>
+<tr>
+<td>EPYC</td>
+<td>EPYC</td>
+<td>epiphycan</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=1833">1833</a></td>
+</tr>
+<tr>
+<td>INHBA</td>
+<td>INHBA</td>
+<td>inhibin beta A subunit</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=3624">3624</a></td>
+</tr>
+<tr>
+<td>OMD</td>
+<td>OMD</td>
+<td>osteomodulin</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=4958">4958</a></td>
+</tr>
+<tr>
+<td>OGN</td>
+<td>OGN</td>
+<td>osteoglycin</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=4969">4969</a></td>
+</tr>
+<tr>
+<td>NTM</td>
+<td>NTM</td>
+<td>neurotrimin</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=50863">50863</a></td>
+</tr>
+<tr>
+<td>SHANK1</td>
+<td>SHANK1</td>
+<td>SH3 and multiple ankyrin repeat domains 1</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=50944">50944</a></td>
+</tr>
+<tr>
+<td>KIF26B</td>
+<td>KIF26B</td>
+<td>kinesin family member 26B</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=55083">55083</a></td>
+</tr>
+<tr>
+<td>PRKG1</td>
+<td>PRKG1</td>
+<td>protein kinase, cGMP-dependent, type I</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=5592">5592</a></td>
+</tr>
+<tr>
+<td>PTPRD</td>
+<td>PTPRD</td>
+<td>protein tyrosine phosphatase, receptor type D</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=5789">5789</a></td>
+</tr>
+<tr>
+<td>SFRP2</td>
+<td>SFRP2</td>
+<td>secreted frizzled related protein 2</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=6423">6423</a></td>
+</tr>
+<tr>
+<td>SOX11</td>
+<td>SOX11</td>
+<td>SRY-box 11</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=6664">6664</a></td>
+</tr>
+<tr>
+<td>NOG</td>
+<td>NOG</td>
+<td>noggin</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=9241">9241</a></td>
+</tr>
+</tbody></table><br/><br/>
+<div><nav class="cl-effect-1"><a style="cursor:pointer;color:red;" onclick="$('#Table10').tableExport({type:'csv',escape:'false'});">Download Table</a></nav></div><table id="Table10" class="zebra"><thead><tr>
+<th colspan="4">
+<a name="GO:0048731"><font color="black"><a href ="http://amigo.geneontology.org/amigo/term/GO:0048731" target="_blank"><b>ID:GO:0048731&nbsp&nbsp&nbsp&nbsp&nbsp&nbspName:system development</b></a></font></a>
+</th></tr>
+<tr><th colspan="4">
+C=1494; O=25; E=13.75; R=1.82; PValue=1.59e-04; FDR=7.67e-02</th></tr>
+<tr>
+<th>userid</th>
+<th>Gene Symbol</th>
+<th>Gene Name</th>
+<th>Entrez Gene</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>CNTN1</td>
+<td>CNTN1</td>
+<td>contactin 1</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=1272">1272</a></td>
+</tr>
+<tr>
+<td>COL8A1</td>
+<td>COL8A1</td>
+<td>collagen type VIII alpha 1 chain</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=1295">1295</a></td>
+</tr>
+<tr>
+<td>COL10A1</td>
+<td>COL10A1</td>
+<td>collagen type X alpha 1 chain</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=1300">1300</a></td>
+</tr>
+<tr>
+<td>COL11A1</td>
+<td>COL11A1</td>
+<td>collagen type XI alpha 1 chain</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=1301">1301</a></td>
+</tr>
+<tr>
+<td>COMP</td>
+<td>COMP</td>
+<td>cartilage oligomeric matrix protein</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=1311">1311</a></td>
+</tr>
+<tr>
+<td>ADAMTS16</td>
+<td>ADAMTS16</td>
+<td>ADAM metallopeptidase with thrombospondin type 1 motif 16</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=170690">170690</a></td>
+</tr>
+<tr>
+<td>EPYC</td>
+<td>EPYC</td>
+<td>epiphycan</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=1833">1833</a></td>
+</tr>
+<tr>
+<td>FAP</td>
+<td>FAP</td>
+<td>fibroblast activation protein alpha</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=2191">2191</a></td>
+</tr>
+<tr>
+<td>INHBA</td>
+<td>INHBA</td>
+<td>inhibin beta A subunit</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=3624">3624</a></td>
+</tr>
+<tr>
+<td>OMD</td>
+<td>OMD</td>
+<td>osteomodulin</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=4958">4958</a></td>
+</tr>
+<tr>
+<td>OGN</td>
+<td>OGN</td>
+<td>osteoglycin</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=4969">4969</a></td>
+</tr>
+<tr>
+<td>NTM</td>
+<td>NTM</td>
+<td>neurotrimin</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=50863">50863</a></td>
+</tr>
+<tr>
+<td>SHANK1</td>
+<td>SHANK1</td>
+<td>SH3 and multiple ankyrin repeat domains 1</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=50944">50944</a></td>
+</tr>
+<tr>
+<td>KIF26B</td>
+<td>KIF26B</td>
+<td>kinesin family member 26B</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=55083">55083</a></td>
+</tr>
+<tr>
+<td>PRKG1</td>
+<td>PRKG1</td>
+<td>protein kinase, cGMP-dependent, type I</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=5592">5592</a></td>
+</tr>
+<tr>
+<td>PTPRD</td>
+<td>PTPRD</td>
+<td>protein tyrosine phosphatase, receptor type D</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=5789">5789</a></td>
+</tr>
+<tr>
+<td>NKX3-2</td>
+<td>NKX3-2</td>
+<td>NK3 homeobox 2</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=579">579</a></td>
+</tr>
+<tr>
+<td>PTPRN</td>
+<td>PTPRN</td>
+<td>protein tyrosine phosphatase, receptor type N</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=5798">5798</a></td>
+</tr>
+<tr>
+<td>SFRP2</td>
+<td>SFRP2</td>
+<td>secreted frizzled related protein 2</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=6423">6423</a></td>
+</tr>
+<tr>
+<td>SOX11</td>
+<td>SOX11</td>
+<td>SRY-box 11</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=6664">6664</a></td>
+</tr>
+<tr>
+<td>BICC1</td>
+<td>BICC1</td>
+<td>BicC family RNA binding protein 1</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=80114">80114</a></td>
+</tr>
+<tr>
+<td>ST8SIA2</td>
+<td>ST8SIA2</td>
+<td>ST8 alpha-N-acetyl-neuraminide alpha-2,8-sialyltransferase 2</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=8128">8128</a></td>
+</tr>
+<tr>
+<td>ADAMTS12</td>
+<td>ADAMTS12</td>
+<td>ADAM metallopeptidase with thrombospondin type 1 motif 12</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=81792">81792</a></td>
+</tr>
+<tr>
+<td>NOG</td>
+<td>NOG</td>
+<td>noggin</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=9241">9241</a></td>
+</tr>
+<tr>
+<td>ADAMTS2</td>
+<td>ADAMTS2</td>
+<td>ADAM metallopeptidase with thrombospondin type 1 motif 2</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=9509">9509</a></td>
+</tr>
+</tbody></table><br/><br/>
+</div>
+</div>
+</div>
+</div>
+<script>plotDAG('Project_wg_result1531945084_.json','[{"id":"Project_wg_result1531945084_.json","reports":[{"gID":["GO:0051216"],"Edge":["GO:0001501","GO:0048513","GO:0061448"],"Name":["cartilage development"],"Sig":["#FF0000"],"Link":["results//Project_wg_result1531945084/Report_wg_result1531945084.html#GO:0051216"],"gNum":["7"],"FDR":["5.21e-02"]},{"gID":["GO:0048705"],"Edge":["GO:0001501","GO:0009887"],"Name":["skeletal system morphogenesis"],"Sig":["#FF0000"],"Link":["results//Project_wg_result1531945084/Report_wg_result1531945084.html#GO:0048705"],"gNum":["7"],"FDR":["5.21e-02"]},{"gID":["GO:0030574"],"Edge":["GO:0032963","GO:0044243","GO:0044712"],"Name":["collagen catabolic process"],"Sig":["#FF0000"],"Link":["results//Project_wg_result1531945084/Report_wg_result1531945084.html#GO:0030574"],"gNum":["5"],"FDR":["5.21e-02"]},{"gID":["GO:0044243"],"Edge":["GO:0044236"],"Name":["multicellular organismal catabolic process"],"Sig":["#FF0000"],"Link":["results//Project_wg_result1531945084/Report_wg_result1531945084.html#GO:0044243"],"gNum":["5"],"FDR":["5.21e-02"]},{"gID":["GO:0061448"],"Edge":["GO:0009888"],"Name":["connective tissue development"],"Sig":["#FF0000"],"Link":["results//Project_wg_result1531945084/Report_wg_result1531945084.html#GO:0061448"],"gNum":["7"],"FDR":["5.21e-02"]},{"gID":["GO:0007275"],"Edge":["GO:0044707","GO:0044767","GO:0048856"],"Name":["multicellular organism development"],"Sig":["#FF0202"],"Link":["results//Project_wg_result1531945084/Report_wg_result1531945084.html#GO:0007275"],"gNum":["27"],"FDR":["5.31e-02"]},{"gID":["GO:0001706"],"Edge":["GO:0001704","GO:0007492"],"Name":["endoderm formation"],"Sig":["#FF2020"],"Link":["results//Project_wg_result1531945084/Report_wg_result1531945084.html#GO:0001706"],"gNum":["4"],"FDR":["7.48e-02"]},{"gID":["GO:0001704"],"Edge":["GO:0007369","GO:0044767","GO:0048646"],"Name":["formation of primary germ layer"],"Sig":["#FF2020"],"Link":["results//Project_wg_result1531945084/Report_wg_result1531945084.html#GO:0001704"],"gNum":["5"],"FDR":["7.48e-02"]},{"gID":["GO:0030182"],"Edge":["GO:0030154","GO:0048699"],"Name":["neuron differentiation"],"Sig":["#FF2222"],"Link":["results//Project_wg_result1531945084/Report_wg_result1531945084.html#GO:0030182"],"gNum":["13"],"FDR":["7.57e-02"]},{"gID":["GO:0048731"],"Edge":["GO:0007275","GO:0048856"],"Name":["system development"],"Sig":["#FF2222"],"Link":["results//Project_wg_result1531945084/Report_wg_result1531945084.html#GO:0048731"],"gNum":["25"],"FDR":["7.67e-02"]},{"gID":["GO:0001501"],"Edge":["GO:0048731"],"Name":["skeletal system development"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0048513"],"Edge":["GO:0048731","GO:0048856"],"Name":["animal organ development"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0009887"],"Edge":["GO:0009653","GO:0044767","GO:0048513"],"Name":["animal organ morphogenesis"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0032963"],"Edge":["GO:0044259"],"Name":["collagen metabolic process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0044712"],"Edge":["GO:0009056","GO:0044710"],"Name":["single-organism catabolic process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0044236"],"Edge":["GO:0044707","GO:0044710"],"Name":["multicellular organism metabolic process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0009888"],"Edge":["GO:0048856"],"Name":["tissue development"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0044707"],"Edge":["GO:0032501","GO:0044699"],"Name":["single-multicellular organism process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0044767"],"Edge":["GO:0032502","GO:0044699"],"Name":["single-organism developmental process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0048856"],"Edge":["GO:0032502"],"Name":["anatomical structure development"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0007492"],"Edge":["GO:0009888"],"Name":["endoderm development"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0007369"],"Edge":["GO:0048598"],"Name":["gastrulation"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0048646"],"Edge":["GO:0009653","GO:0032502"],"Name":["anatomical structure formation involved in morphogenesis"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0030154"],"Edge":["GO:0048869"],"Name":["cell differentiation"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0048699"],"Edge":["GO:0022008"],"Name":["generation of neurons"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0007275"],"Edge":["GO:0044707","GO:0044767","GO:0048856"],"Name":["multicellular organism development"],"Sig":["#FF0202"],"Link":["results//Project_wg_result1531945084/Report_wg_result1531945084.html#GO:0007275"],"gNum":["27"],"FDR":["5.31e-02"]},{"gID":["GO:0048731"],"Edge":["GO:0007275","GO:0048856"],"Name":["system development"],"Sig":["#FF2222"],"Link":["results//Project_wg_result1531945084/Report_wg_result1531945084.html#GO:0048731"],"gNum":["25"],"FDR":["7.67e-02"]},{"gID":["GO:0009653"],"Edge":["GO:0032502","GO:0048856"],"Name":["anatomical structure morphogenesis"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0048513"],"Edge":["GO:0048731","GO:0048856"],"Name":["animal organ development"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0044259"],"Edge":["GO:0043170","GO:0044236"],"Name":["multicellular organismal macromolecule metabolic process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0009056"],"Edge":["GO:0008152"],"Name":["catabolic process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0044710"],"Edge":["GO:0008152","GO:0044699"],"Name":["single-organism metabolic process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0032501"],"Edge":["GO:0008150"],"Name":["multicellular organismal process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0044699"],"Edge":["GO:0008150"],"Name":["single-organism process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0032502"],"Edge":["GO:0008150"],"Name":["developmental process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0009888"],"Edge":["GO:0048856"],"Name":["tissue development"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0048598"],"Edge":["GO:0009653","GO:0009790","GO:0044767"],"Name":["embryonic morphogenesis"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0048869"],"Edge":["GO:0044763","GO:0044767"],"Name":["cellular developmental process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0022008"],"Edge":["GO:0007399","GO:0030154"],"Name":["neurogenesis"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0044707"],"Edge":["GO:0032501","GO:0044699"],"Name":["single-multicellular organism process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0044767"],"Edge":["GO:0032502","GO:0044699"],"Name":["single-organism developmental process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0048856"],"Edge":["GO:0032502"],"Name":["anatomical structure development"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0007275"],"Edge":["GO:0044707","GO:0044767","GO:0048856"],"Name":["multicellular organism development"],"Sig":["#FF0202"],"Link":["results//Project_wg_result1531945084/Report_wg_result1531945084.html#GO:0007275"],"gNum":["27"],"FDR":["5.31e-02"]},{"gID":["GO:0048731"],"Edge":["GO:0007275","GO:0048856"],"Name":["system development"],"Sig":["#FF2222"],"Link":["results//Project_wg_result1531945084/Report_wg_result1531945084.html#GO:0048731"],"gNum":["25"],"FDR":["7.67e-02"]},{"gID":["GO:0043170"],"Edge":["GO:0071704"],"Name":["macromolecule metabolic process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0044236"],"Edge":["GO:0044707","GO:0044710"],"Name":["multicellular organism metabolic process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0008152"],"Edge":["GO:0008150"],"Name":["metabolic process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0008150"],"Edge":["NA",""],"Name":["biological_process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0009653"],"Edge":["GO:0032502","GO:0048856"],"Name":["anatomical structure morphogenesis"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0009790"],"Edge":["GO:0007275"],"Name":["embryo development"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0044763"],"Edge":["GO:0009987","GO:0044699"],"Name":["single-organism cellular process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0007399"],"Edge":["GO:0048731"],"Name":["nervous system development"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0030154"],"Edge":["GO:0048869"],"Name":["cell differentiation"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0032501"],"Edge":["GO:0008150"],"Name":["multicellular organismal process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0044699"],"Edge":["GO:0008150"],"Name":["single-organism process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0032502"],"Edge":["GO:0008150"],"Name":["developmental process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0044707"],"Edge":["GO:0032501","GO:0044699"],"Name":["single-multicellular organism process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0044767"],"Edge":["GO:0032502","GO:0044699"],"Name":["single-organism developmental process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0048856"],"Edge":["GO:0032502"],"Name":["anatomical structure development"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0007275"],"Edge":["GO:0044707","GO:0044767","GO:0048856"],"Name":["multicellular organism development"],"Sig":["#FF0202"],"Link":["results//Project_wg_result1531945084/Report_wg_result1531945084.html#GO:0007275"],"gNum":["27"],"FDR":["5.31e-02"]},{"gID":["GO:0071704"],"Edge":["GO:0008152"],"Name":["organic substance metabolic process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0044710"],"Edge":["GO:0008152","GO:0044699"],"Name":["single-organism metabolic process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0009987"],"Edge":["GO:0008150"],"Name":["cellular process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0048731"],"Edge":["GO:0007275","GO:0048856"],"Name":["system development"],"Sig":["#FF2222"],"Link":["results//Project_wg_result1531945084/Report_wg_result1531945084.html#GO:0048731"],"gNum":["25"],"FDR":["7.67e-02"]},{"gID":["GO:0048869"],"Edge":["GO:0044763","GO:0044767"],"Name":["cellular developmental process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0008150"],"Edge":["NA",""],"Name":["biological_process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0032501"],"Edge":["GO:0008150"],"Name":["multicellular organismal process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0044699"],"Edge":["GO:0008150"],"Name":["single-organism process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0032502"],"Edge":["GO:0008150"],"Name":["developmental process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0044707"],"Edge":["GO:0032501","GO:0044699"],"Name":["single-multicellular organism process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0044767"],"Edge":["GO:0032502","GO:0044699"],"Name":["single-organism developmental process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0048856"],"Edge":["GO:0032502"],"Name":["anatomical structure development"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0008152"],"Edge":["GO:0008150"],"Name":["metabolic process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0007275"],"Edge":["GO:0044707","GO:0044767","GO:0048856"],"Name":["multicellular organism development"],"Sig":["#FF0202"],"Link":["results//Project_wg_result1531945084/Report_wg_result1531945084.html#GO:0007275"],"gNum":["27"],"FDR":["5.31e-02"]},{"gID":["GO:0044763"],"Edge":["GO:0009987","GO:0044699"],"Name":["single-organism cellular process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0008150"],"Edge":["NA",""],"Name":["biological_process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0032501"],"Edge":["GO:0008150"],"Name":["multicellular organismal process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0044699"],"Edge":["GO:0008150"],"Name":["single-organism process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0032502"],"Edge":["GO:0008150"],"Name":["developmental process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0044707"],"Edge":["GO:0032501","GO:0044699"],"Name":["single-multicellular organism process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0044767"],"Edge":["GO:0032502","GO:0044699"],"Name":["single-organism developmental process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0048856"],"Edge":["GO:0032502"],"Name":["anatomical structure development"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0009987"],"Edge":["GO:0008150"],"Name":["cellular process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0008150"],"Edge":["NA",""],"Name":["biological_process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0032501"],"Edge":["GO:0008150"],"Name":["multicellular organismal process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0044699"],"Edge":["GO:0008150"],"Name":["single-organism process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0032502"],"Edge":["GO:0008150"],"Name":["developmental process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0008150"],"Edge":["NA",""],"Name":["biological_process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]}]}]','WJ.graph, .list { cursor: default; }WJ.graph.animate .node { opacity: 0; transition: fill 0.5s, stroke 0.5s, opacity 1s; }WJ.graph.animate .node.visible { opacity: 1; transition: fill 0.5s, stroke 0.5s, opacity 0.5s; }WJ.graph.animate .node.visible.entering { transition: fill 0.5s, stroke 0.5s, opacity 1.5s; }WJ.hovering .graph .node.visible { opacity: 0.2; }WJ.hovering .graph.animate .node.visible { transition: fill 0.5s, stroke 0.5s, opacity 0.4s; }WJ.hovering .graph .node.visible.hovered, .hovering .graph .node.visible.selected { opacity: 1; }WJ.hovering .graph .node.hovered.immediate rect { stroke: rgb(164, 1, 27); fill: rgb(255, 224, 229); }WJ.graph .node rect { fill: rgb(255, 242, 204); stroke-width: 2px; stroke: rgb(161, 109, 0); }WJ.graph.animate .node rect { transition: fill 0.5s, stroke 0.5s, stroke-width 0.5s; }WJ.graph .node text { font-family: Verdana; }WJ.graph .node.selected rect, .hovering .graph .node.selected rect, .hovering .graph .node.selected.hovered.immediate rect { stroke: rgb(15, 75, 255); fill: rgb(179, 236, 255); }WJ.graph .node.preview rect, .hovering .graph .node.preview rect { fill: rgb(234, 218, 236); stroke: rgb(154, 56, 162); }WJ.graph .edge { fill: none; stroke-width: 2.5px; stroke: rgb(209, 157, 0); opacity: 0; }WJ.graph.animate .edge { transition: fill 0.1s, stroke 0.1s, stroke-width 0.1s, opacity 0.3s; }WJ.graph .edge.visible.preview { stroke-width: 4px; stroke: rgb(154, 56, 162); }WJ.graph .edge.visible.selected, .hovering .graph .edge.hovered.immediate.selected { stroke-width: 6px; stroke: rgb(56, 106, 255); }WJ.graph .edge.visible.preview, .hovering .graph .edge.hovered.immediate.preview { stroke: rgb(154, 56, 162); }WJ.graph .edge.visible { opacity: 1; }WJ.graph.animate .edge.visible { transition: fill 0.5s, stroke 0.5s, stroke-width 0.5s, opacity 0.5s; }WJ.graph.animate .edge.visible.entering { transition: fill 0.5s, stroke 0.5s, stroke-width 0.5s, opacity 1.5s; }WJ.hovering .graph .edge.visible { opacity: 0.1; }WJ.hovering .graph.animate .edge.visible { transition: fill 0.5s, stroke 0.5s, stroke-width 0.5s, opacity 0.4s; }WJ.hovering .graph .edge.visible.hovered, .hovering .graph .edge.selected { opacity: 1; }WJ.hovering .graph .edge.hovered.immediate { stroke: rgb(164, 1, 27); stroke-width: 4px; }WJ.minimap .edge { stroke-width: 2px; stroke: black; fill-opacity: 0; }WJ.minimap .node rect { fill: rgb(221, 221, 221); stroke-width: 2px; stroke: black; }WJ.list .item rect { stroke: rgb(15, 75, 255); fill: rgb(179, 236, 255); fill-opacity: 0.5; stroke-width: 1; transition: fill 0.5s, stroke 0.5s; }WJ.list .item:hover rect { fill: rgb(255, 242, 204); stroke: rgb(161, 109, 0); }WJ.list .item text { x: 50%; text-anchor: middle; dominant-baseline: central; }WJ.xtrace-tooltip { text-align: left; }WJ.xtrace-tooltip .key { display: inline-block; float: left; width: 90px; font-weight: bold; }WJ.xtrace-tooltip .value { display: inline-block; float: left; word-wrap: break-word; max-width: 410px; }WJ.xtrace-tooltip .clear { clear: both; }WJ.context-menu .highlight { color: rgb(127, 35, 137); }WJ.context-menu a:hover .highlight { color: rgb(202, 120, 210); }WJtext, tspan, .tipsy { user-select: none; }WJ');</script><script>$( "#tabs" ).tabs();</script><iframe src="http://www.webgestalt.org/html/foot.html" style="border:0px;height:130px;width:100%"></iframe>
+</body></html>

@@ -9,6 +9,7 @@ The associated environment can be activated via:
 import os
 import csv
 import numpy as np
+from scipy.stats import skew, skewtest
 from tybalt_util import Util
 
 import matplotlib as mpl
@@ -129,7 +130,29 @@ def im_vector ():
     decoder = util.read_decoder()
     genes = decoder.predict(means)
     diff = genes[0] - genes[1] # mesenchymal - immunoreactive
-    srt = np.argsort(diff)
+
+    # histogram of diff
+    plt.figure()
+    plt.hist(diff, 20, facecolor='pink', alpha=0.75)
+    plt.title('Mesenchymal - Immunoreactive')
+    plt.xlabel('Gene expression diff')
+    plt.ylabel('Count')
+    plt.savefig('./result/mesen-immuno-diff.png')
+
+    # transform right-skewed data
+    print('Skewness: {}'.format(skew(diff)))
+    # make the data positive before taking square root
+    diff = np.sqrt(diff - diff.min())
+    print('Skewness after transformation: {}'.format(skew(diff)))
+    print(skewtest(diff))
+
+    # plot again
+    plt.figure()
+    plt.hist(diff, 20, facecolor='pink', alpha=0.75)
+    plt.title('Mesenchymal - Immunoreactive')
+    plt.xlabel('Gene expression diff, after transformation sqrt(x - min(x))')
+    plt.ylabel('Count')
+    plt.savefig('./result/mesen-immuno-transformed.png')
 
     # # what if I directly compute the mean of input genes?
     # raw = util.read_raw()
@@ -152,12 +175,13 @@ def im_vector ():
     save_gene_list(pos, 'mesenchymal_genes_sd.txt')
     save_gene_list(neg, 'immunoreactive_genes_sd.txt')
     print('Totol genes 2.5 standard deviation away:')
-    print('{} mesenchymal, {} immunoreactive'.format(len(neg), len(pos)))
+    print('{} mesenchymal, {} immunoreactive'.format(len(pos), len(neg)))
 
-    # output the top / bottom N genes
-    cutoff = 150
-    save_gene_list(header[srt[:cutoff]], 'immunoreactive_genes_{}.txt'.format(cutoff))
-    save_gene_list(header[srt[-cutoff:]], 'mesenchymal_genes_{}.txt'.format(cutoff))
+    # # output the top / bottom N genes
+    # srt = np.argsort(diff)
+    # cutoff = 150
+    # save_gene_list(header[srt[:cutoff]], 'immunoreactive_genes_{}.txt'.format(cutoff))
+    # save_gene_list(header[srt[-cutoff:]], 'mesenchymal_genes_{}.txt'.format(cutoff))
 
 def high_weight_genes (w, header, highsd=2):
     sd = np.std(w)

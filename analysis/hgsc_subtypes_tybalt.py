@@ -232,6 +232,7 @@ def pd_vector ():
     print('Totol genes 2.5 standard deviation away:')
     print('{} proliferative, {} differentiated'.format(len(pos), len(neg)))
 
+# helper function
 def high_weight_genes (w, header, highsd=2):
     sd = np.std(w)
     mean = np.mean(w)
@@ -265,19 +266,28 @@ def im_mean ():
     save_gene_list(high_weight_genes(genes[1], header)[0], 'immunoreactive_genes.txt')
 
 # cluster quality of mesen or immuno type
-def im_vector_quality ():
+def cluster_quality ():
     # get the indices of the two subtypes
     meta = util.read_meta()
     ids = util.join_meta()
-    names = ['Mesenchymal', 'Immunoreactive']
+    names = ['Mesenchymal', 'Immunoreactive', 'Proliferative', 'Differentiated']
     groups = [util.subtype_group(meta, ids, name) for name in names]
 
     z = util.read_ls()
-    # X = util.read_raw()
-    for i in range(2):
+
+    print('Cluster score in z space:')
+    l = len(names)
+    for i in range(l):
         score = util.cluster_score(groups[i], z)
-        # score = util.cluster_score(groups[i], X)
+        print('{}: {}%'.format(names[i], int(score * 100)))
+
+    print('Cluster score in raw X')
+    X = util.read_raw()
+    for i in range(l):
+        score = util.cluster_score(groups[i], X)
         print('{}: {}%'.format(names[i], int(score * 100)))
 
 if __name__ == '__main__':
-    pd_vector()
+    cluster_quality ()
+    # im_vector()
+    # pd_vector()

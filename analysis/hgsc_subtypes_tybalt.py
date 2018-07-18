@@ -183,6 +183,55 @@ def im_vector ():
     # save_gene_list(header[srt[:cutoff]], 'immunoreactive_genes_{}.txt'.format(cutoff))
     # save_gene_list(header[srt[-cutoff:]], 'mesenchymal_genes_{}.txt'.format(cutoff))
 
+# decode the centroid of proliferative or differentiated group, and find the max diff genes
+def pd_vector ():
+    # get the indices of the two subtypes
+    header = util.read_header()
+    meta = util.read_meta()
+    ids = util.join_meta()
+    names = ['Proliferative', 'Differentiated']
+    groups = [util.subtype_group(meta, ids, name) for name in names]
+
+    # compute centroid
+    z = util.read_ls()
+    means = np.asarray([np.mean(z[g], axis=0) for g in groups], dtype=float)
+
+    # decode centroid
+    decoder = util.read_decoder()
+    genes = decoder.predict(means)
+    diff = genes[0] - genes[1] # mesenchymal - immunoreactive
+
+    # histogram of diff
+    plt.figure()
+    plt.hist(diff, 20, facecolor='pink', alpha=0.75)
+    plt.title('Proliferative - Differentiated')
+    plt.xlabel('Gene expression diff')
+    plt.ylabel('Count')
+    plt.savefig('./result/pro-def-diff.png')
+
+    # transform right-skewed data
+    print('Skewness: {}'.format(skew(diff)))
+    # shift the data rightward before taking square root, so it doesn't adjust so much
+    shift = 0.3
+    diff = np.sqrt(diff - diff.min() + shift)
+    print('Skewness after transformation: {}'.format(skew(diff)))
+    print(skewtest(diff))
+
+    # plot again
+    plt.figure()
+    plt.hist(diff, 20, facecolor='pink', alpha=0.75)
+    plt.title('Proliferative - Differentiated')
+    plt.xlabel('Gene expression diff, after transformation')
+    plt.ylabel('Count')
+    plt.savefig('./result/pro-def-transformed.png')
+
+    # output our "high weight genes"
+    pos, neg = high_weight_genes(diff, header, 2.5)
+    save_gene_list(pos, 'proliferative_genes_sd.txt')
+    save_gene_list(neg, 'differentiated_genes_sd.txt')
+    print('Totol genes 2.5 standard deviation away:')
+    print('{} proliferative, {} differentiated'.format(len(pos), len(neg)))
+
 def high_weight_genes (w, header, highsd=2):
     sd = np.std(w)
     mean = np.mean(w)
@@ -231,4 +280,4 @@ def im_vector_quality ():
         print('{}: {}%'.format(names[i], int(score * 100)))
 
 if __name__ == '__main__':
-    im_vector()
+    pd_vector()

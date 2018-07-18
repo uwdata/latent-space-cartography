@@ -1,0 +1,38 @@
+userid	genesymbol	genename	entrezgene
+PDZK1IP1	PDZK1IP1	PDZK1 interacting protein 1	10158
+CHST4	CHST4	carbohydrate sulfotransferase 4	10164
+MSLN	MSLN	mesothelin	10232
+B3GNT3	B3GNT3	UDP-GlcNAc:betaGal beta-1,3-N-acetylglucosaminyltransferase 3	10331
+CLDN16	CLDN16	claudin 16	10686
+KLK11	KLK11	kallikrein related peptidase 11	11012
+LYPD2	LYPD2	LY6/PLAUR domain containing 2	137797
+CYP4B1	CYP4B1	cytochrome P450 family 4 subfamily B member 1	1580
+NXNL2	NXNL2	nucleoredoxin-like 2	158046
+LIPH	LIPH	lipase H	200879
+FUT3	FUT3	fucosyltransferase 3 (Lewis blood group)	2525
+ZNF683	ZNF683	zinc finger protein 683	257101
+SPDEF	SPDEF	SAM pointed domain containing ETS transcription factor	25803
+KLK5	KLK5	kallikrein related peptidase 5	25818
+ABO	ABO	ABO, alpha 1-3-N-acetylgalactosaminyltransferase and alpha 1-3-galactosyltransferase	28
+GPR12	GPR12	G protein-coupled receptor 12	2835
+CXCL17	CXCL17	C-X-C motif chemokine ligand 17	284340
+HTR3A	HTR3A	5-hydroxytryptamine receptor 3A	3359
+KCND3	KCND3	potassium voltage-gated channel subfamily D member 3	3752
+LDLRAD1	LDLRAD1	low density lipoprotein receptor class A domain containing 1	388633
+LCN2	LCN2	lipocalin 2	3934
+CYP4F3	CYP4F3	cytochrome P450 family 4 subfamily F member 3	4051
+SCGB2A1	SCGB2A1	secretoglobin family 2A member 1	4246
+VGLL1	VGLL1	vestigial like family member 1	51442
+RHBDL2	RHBDL2	rhomboid like 2	54933
+HRASLS2	HRASLS2	HRAS like suppressor 2	54979
+GSDMC	GSDMC	gasdermin C	56169
+KLK10	KLK10	kallikrein related peptidase 10	5655
+PTK6	PTK6	protein tyrosine kinase 6	5753
+CYP4F11	CYP4F11	cytochrome P450 family 4 subfamily F member 11	57834
+SLC28A3	SLC28A3	solute carrier family 28 member 3	64078
+SLC5A1	SLC5A1	solute carrier family 5 member 1	6523
+UCA1	UCA1	urothelial cancer associated 1 (non-protein coding)	652995
+SLPI	SLPI	secretory leukocyte peptidase inhibitor	6590
+MUC5B	MUC5B	mucin 5B, oligomeric mucus/gel-forming	727897
+PLEKHN1	PLEKHN1	pleckstrin homology domain containing N1	84069
+MUC16	MUC16	mucin 16, cell surface associated	94025

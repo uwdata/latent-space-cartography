@@ -1,0 +1,51 @@
+userid	genesymbol	genename	entrezgene
+USH1C	USH1C	USH1 protein network component harmonin	10083
+IGF2BP1	IGF2BP1	insulin like growth factor 2 mRNA binding protein 1	10642
+DLL3	DLL3	delta like canonical Notch ligand 3	10683
+TMSB15A	TMSB15A	thymosin beta 15a	11013
+POU6F2	POU6F2	POU class 6 homeobox 2	11281
+FOXN4	FOXN4	forkhead box N4	121643
+CNTFR	CNTFR	ciliary neurotrophic factor receptor	1271
+COL2A1	COL2A1	collagen type II alpha 1 chain	1280
+NKAIN4	NKAIN4	Sodium/potassium transporting ATPase interacting 4	128414
+ZNF280A	ZNF280A	zinc finger protein 280A	129025
+C10orf82	C10orf82	chromosome 10 open reading frame 82	143379
+CLDN19	CLDN19	claudin 19	149461
+HFM1	HFM1	HFM1, ATP dependent DNA helicase homolog	164045
+UGT3A2	UGT3A2	UDP glycosyltransferase family 3 member A2	167127
+GPC2	GPC2	glypican 2	221914
+GCK	GCK	glucokinase	2645
+CECR2	CECR2	CECR2, histone acetyl-lysine reader	27443
+DDX25	DDX25	DEAD-box helicase 25	29118
+PURG	PURG	purine rich element binding protein G	29942
+TUBB2B	TUBB2B	tubulin beta 2B class IIb	347733
+BTBD17	BTBD17	BTB domain containing 17	388419
+LIN28B	LIN28B	lin-28 homolog B	389421
+LHX1	LHX1	LIM homeobox 1	3975
+MAGEA11	MAGEA11	MAGE family member A11	4110
+PAX2	PAX2	paired box 2	5076
+KIF1A	KIF1A	kinesin family member 1A	547
+SLC6A15	SLC6A15	solute carrier family 6 member 15	55117
+BEX1	BEX1	brain expressed X-linked 1	55859
+TEX15	TEX15	testis expressed 15, meiosis and synapsis associated	56154
+SLC7A10	SLC7A10	solute carrier family 7 member 10	56301
+FSTL5	FSTL5	follistatin like 5	56884
+DPYSL5	DPYSL5	dihydropyrimidinase like 5	56896
+SLCO1A2	SLCO1A2	solute carrier organic anion transporter family member 1A2	6579
+ZBTB8B	ZBTB8B	zinc finger and BTB domain containing 8B	728116
+MAGED4	MAGED4	MAGE family member D4	728239
+MAGEA9B	MAGEA9B	MAGE family member A9B	728269
+TP53TG3B	TP53TG3B	TP53 target 3B	729355
+ZIC1	ZIC1	Zic family member 1	7545
+FSD1	FSD1	fibronectin type III and SPRY domain containing 1	79187
+HMGA2	HMGA2	high mobility group AT-hook 2	8091
+DPF1	DPF1	double PHD fingers 1	8193
+FBN3	FBN3	fibrillin 3	84467
+COL25A1	COL25A1	collagen type XXV alpha 1 chain	84570
+SLC7A3	SLC7A3	solute carrier family 7 member 3	84889
+DLK1	DLK1	delta like non-canonical Notch ligand 1	8788
+FGF17	FGF17	fibroblast growth factor 17	8822
+GAL3ST3	GAL3ST3	galactose-3-O-sulfotransferase 3	89792
+SPSB4	SPSB4	splA/ryanodine receptor domain and SOCS box containing 4	92369
+PCYT1B	PCYT1B	phosphate cytidylyltransferase 1, choline, beta	9468
+IGDCC3	IGDCC3	immunoglobulin superfamily DCC subclass member 3	9543

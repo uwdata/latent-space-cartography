@@ -10,11 +10,14 @@ import os
 import csv
 import numpy as np
 from scipy.stats import skew, norm
+from sklearn import preprocessing
 from tybalt_util import Util
 
 import matplotlib as mpl
 mpl.use('TkAgg')
 import matplotlib.pyplot as plt
+import seaborn as sns
+import pandas as pd
 
 # our helper class
 util = Util()
@@ -112,6 +115,34 @@ def compare_results (ids, arr, header, lookup):
             count += 1
     print('Total: {}/{}'.format(count, ids.shape[0]))
 
+def plot_vector (vec, fn):
+    # 1. make the axis a unit vector
+    v = preprocessing.normalize(vec.reshape(1, -1))
+
+    # 2. get z coordinates of all subtypes
+    header = util.read_header()
+    meta = util.read_meta()
+    ids = util.join_meta()
+    names = ['Mesenchymal', 'Immunoreactive', 'Proliferative', 'Differentiated']
+    groups = [util.subtype_group(meta, ids, name) for name in names]
+    z = util.read_ls()
+    groups = [z[g] for g in groups]
+
+    # 3. project
+    dist = [np.dot(g, v.T).flatten() for g in groups]
+
+    # 3. plot
+    x = []
+    y = []
+    for i in range(len(names)):
+        x += [names[i]] * dist[i].shape[0]
+        y = np.append(y, dist[i])
+    print(len(x), y.shape)
+    df = pd.DataFrame({'Subtype': x, 'Attribute Vector': y})
+    plt.figure()
+    sns.swarmplot(x = 'Subtype', y = 'Attribute Vector', data = df)
+    plt.savefig('./result/{}.png'.format(fn))
+
 # decode the centroid of mesen or immuno group, and find the max diff genes
 # compare our gene list with their list
 def im_vector ():
@@ -131,7 +162,8 @@ def im_vector ():
     genes = decoder.predict(means)
     diff = genes[0] - genes[1] # mesenchymal - immunoreactive
 
-    # histogram and skewness test
+    # histogram, skewness test and plot distrubtion along vector
+    plot_vector(means[0] - means[1], 'mesen-immuno-swarm')
     plt.figure()
     plt.hist(diff, 20, facecolor='pink', alpha=0.75)
     plt.title('Mesenchymal - Immunoreactive')
@@ -188,6 +220,7 @@ def pd_vector ():
     diff = genes[0] - genes[1] # mesenchymal - immunoreactive
 
     # histogram and skewness test
+    plot_vector(means[0] - means[1], 'pro-def-swarm')
     plt.figure()
     plt.hist(diff, 20, facecolor='pink', alpha=0.75)
     plt.title('Proliferative - Differentiated')

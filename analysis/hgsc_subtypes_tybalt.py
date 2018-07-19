@@ -9,7 +9,7 @@ The associated environment can be activated via:
 import os
 import csv
 import numpy as np
-from scipy.stats import skew, skewtest
+from scipy.stats import skew, norm
 from tybalt_util import Util
 
 import matplotlib as mpl
@@ -131,28 +131,14 @@ def im_vector ():
     genes = decoder.predict(means)
     diff = genes[0] - genes[1] # mesenchymal - immunoreactive
 
-    # histogram of diff
+    # histogram and skewness test
     plt.figure()
     plt.hist(diff, 20, facecolor='pink', alpha=0.75)
     plt.title('Mesenchymal - Immunoreactive')
     plt.xlabel('Gene expression diff')
     plt.ylabel('Count')
     plt.savefig('./result/mesen-immuno-diff.png')
-
-    # transform right-skewed data
     print('Skewness: {}'.format(skew(diff)))
-    # make the data positive before taking square root
-    diff = np.sqrt(diff - diff.min())
-    print('Skewness after transformation: {}'.format(skew(diff)))
-    print(skewtest(diff))
-
-    # plot again
-    plt.figure()
-    plt.hist(diff, 20, facecolor='pink', alpha=0.75)
-    plt.title('Mesenchymal - Immunoreactive')
-    plt.xlabel('Gene expression diff, after transformation sqrt(x - min(x))')
-    plt.ylabel('Count')
-    plt.savefig('./result/mesen-immuno-transformed.png')
 
     # # what if I directly compute the mean of input genes?
     # raw = util.read_raw()
@@ -171,7 +157,7 @@ def im_vector ():
     # compare_results(srt[-300:], diff, header, mesen)
 
     # output our "high weight genes"
-    pos, neg = high_weight_genes(diff, header, 2.5)
+    pos, neg = high_weight_genes_quantile(diff, header, 2.5)
     save_gene_list(pos, 'mesenchymal_genes_sd.txt')
     save_gene_list(neg, 'immunoreactive_genes_sd.txt')
     print('Totol genes 2.5 standard deviation away:')
@@ -201,32 +187,17 @@ def pd_vector ():
     genes = decoder.predict(means)
     diff = genes[0] - genes[1] # mesenchymal - immunoreactive
 
-    # histogram of diff
+    # histogram and skewness test
     plt.figure()
     plt.hist(diff, 20, facecolor='pink', alpha=0.75)
     plt.title('Proliferative - Differentiated')
     plt.xlabel('Gene expression diff')
     plt.ylabel('Count')
     plt.savefig('./result/pro-def-diff.png')
-
-    # transform right-skewed data
     print('Skewness: {}'.format(skew(diff)))
-    # shift the data rightward before taking square root, so it doesn't adjust so much
-    shift = 0.3
-    diff = np.sqrt(diff - diff.min() + shift)
-    print('Skewness after transformation: {}'.format(skew(diff)))
-    print(skewtest(diff))
-
-    # plot again
-    plt.figure()
-    plt.hist(diff, 20, facecolor='pink', alpha=0.75)
-    plt.title('Proliferative - Differentiated')
-    plt.xlabel('Gene expression diff, after transformation')
-    plt.ylabel('Count')
-    plt.savefig('./result/pro-def-transformed.png')
 
     # output our "high weight genes"
-    pos, neg = high_weight_genes(diff, header, 2.5)
+    pos, neg = high_weight_genes_quantile(diff, header, 2.5)
     save_gene_list(pos, 'proliferative_genes_sd.txt')
     save_gene_list(neg, 'differentiated_genes_sd.txt')
     print('Totol genes 2.5 standard deviation away:')
@@ -244,6 +215,16 @@ def high_weight_genes (w, header, highsd=2):
             pos.append(header[i])
         if w[i] < mean - highsd * sd:
             neg.append(header[i])
+    return pos, neg
+
+# compute quantile for the given SD in a standard normal
+# and then use the quantile as threshold
+def high_weight_genes_quantile (w, header, highsd=2):
+    n = w.shape[0]
+    cutoff = n - int(n * norm.cdf(highsd))
+    srt = np.argsort(w)
+    neg = [header[i] for i in srt[:cutoff]]
+    pos = [header[i] for i in srt[-cutoff:]]
     return pos, neg
 
 # like im_vector, but don't do the diff
@@ -299,8 +280,8 @@ def compare_gene_list ():
     for i in range(l):
         p_ours = os.path.join(util.base, 'results', '{}_genes_sd.txt'.format(ours[i]))
         p_theirs = os.path.join(util.base, 'results', theirs[i])
-        gene_ours = util.read_tsv(p_ours, str, 0)[:, 0]
-        gene_theirs = util.read_tsv(p_theirs, str, 0)[:, 0]
+        gene_ours = util.read_tsv(p_ours, str, 0, 0)[:, 0]
+        gene_theirs = util.read_tsv(p_theirs, str, 0, 0)[:, 0]
         lookup = arr_to_dict(gene_theirs)
         count = 0
         for gene in gene_ours:
@@ -311,6 +292,6 @@ def compare_gene_list ():
 
 if __name__ == '__main__':
     # cluster_quality ()
-    # im_vector()
-    # pd_vector()
+    im_vector()
+    pd_vector()
     compare_gene_list()

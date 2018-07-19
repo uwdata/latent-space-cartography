@@ -23,14 +23,14 @@ class Util(object):
         # schema index in the meta table
         self.i_subtype = 2
 
-    # read tsv, discarding the first row and (optionally) the first column
-    def read_tsv (self, fn, dtype=float, col_start=1):
+    # read tsv, discarding (optionally) the first row and (optionally) the first column
+    def read_tsv (self, fn, dtype=float, col_start=1, row_start=1):
         res = []
         with open(fn, newline='') as csvfile:
             reader = csv.reader(csvfile, delimiter='\t')
             for row in reader:
                 res.append(row[col_start:])
-        res = np.asarray(res[1:], dtype=dtype)
+        res = np.asarray(res[row_start:], dtype=dtype)
         return res
 
     # read csv that contain only one row (typically meta data)

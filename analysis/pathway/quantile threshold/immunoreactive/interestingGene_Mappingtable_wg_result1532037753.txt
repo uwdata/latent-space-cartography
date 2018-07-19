@@ -1,0 +1,28 @@
+userid	genesymbol	genename	entrezgene
+CSAG2	CSAG2	CSAG family member 2	102723547
+UBD	UBD	ubiquitin D	10537
+SCGB1D2	SCGB1D2	secretoglobin family 1D member 2	10647
+C1orf194	C1orf194	chromosome 1 open reading frame 194	127003
+RNF183	RNF183	ring finger protein 183	138065
+TCAM1P	TCAM1P	testicular cell adhesion molecule 1, pseudogene	146771
+WDR49	WDR49	WD repeat domain 49	151790
+ARMC3	ARMC3	armadillo repeat containing 3	219681
+ZNF683	ZNF683	zinc finger protein 683	257101
+SMC1B	SMC1B	structural maintenance of chromosomes 1B	27127
+CXCL17	CXCL17	C-X-C motif chemokine ligand 17	284340
+RUFY4	RUFY4	RUN and FYVE domain containing 4	285180
+IFNG	IFNG	interferon gamma	3458
+CCDC160	CCDC160	coiled-coil domain containing 160	347475
+FASLG	FASLG	Fas ligand	356
+CXCR2P1	CXCR2P1	C-X-C motif chemokine receptor 2 pseudogene 1	3580
+IDO1	IDO1	indoleamine 2,3-dioxygenase 1	3620
+CXCL10	CXCL10	C-X-C motif chemokine ligand 10	3627
+LDLRAD1	LDLRAD1	low density lipoprotein receptor class A domain containing 1	388633
+CSAG3	CSAG3	CSAG family member 3	389903
+LDHC	LDHC	lactate dehydrogenase C	3948
+SCGB2A1	SCGB2A1	secretoglobin family 2A member 1	4246
+ETV7	ETV7	ETS variant 7	51513
+CXCL11	CXCL11	C-X-C motif chemokine ligand 11	6373
+BCL2L14	BCL2L14	BCL2 like 14	79370
+DYDC2	DYDC2	DPY30 domain containing 2	84332
+WISP3	WISP3	WNT1 inducible signaling pathway protein 3	8838

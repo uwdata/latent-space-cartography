@@ -1,0 +1,28 @@
+userid	genesymbol	genename	entrezgene
+CORIN	CORIN	corin, serine peptidase	10699
+FAT3	FAT3	FAT atypical cadherin 3	120114
+NKAIN4	NKAIN4	Sodium/potassium transporting ATPase interacting 4	128414
+COL10A1	COL10A1	collagen type X alpha 1 chain	1300
+COL11A1	COL11A1	collagen type XI alpha 1 chain	1301
+COMP	COMP	cartilage oligomeric matrix protein	1311
+LRRC15	LRRC15	leucine rich repeat containing 15	131578
+KANK4	KANK4	KN motif and ankyrin repeat domains 4	163782
+ADAMTS16	ADAMTS16	ADAM metallopeptidase with thrombospondin type 1 motif 16	170690
+EPYC	EPYC	epiphycan	1833
+FAM189A1	FAM189A1	family with sequence similarity 189 member A1	23359
+NALCN	NALCN	sodium leak channel, non-selective	259232
+GPR1	GPR1	G protein-coupled receptor 1	2825
+INHBA	INHBA	inhibin beta A subunit	3624
+IGLON5	IGLON5	IgLON family member 5	402665
+OMD	OMD	osteomodulin	4958
+OGN	OGN	osteoglycin	4969
+SHANK1	SHANK1	SH3 and multiple ankyrin repeat domains 1	50944
+MAGEL2	MAGEL2	MAGE family member L2	54551
+SORCS2	SORCS2	sortilin related VPS10 domain containing receptor 2	57537
+PTPRD	PTPRD	protein tyrosine phosphatase, receptor type D	5789
+SFRP2	SFRP2	secreted frizzled related protein 2	6423
+SOX11	SOX11	SRY-box 11	6664
+BICC1	BICC1	BicC family RNA binding protein 1	80114
+ADAMTS12	ADAMTS12	ADAM metallopeptidase with thrombospondin type 1 motif 12	81792
+KIAA1644	KIAA1644	KIAA1644	85352
+ITGBL1	ITGBL1	integrin subunit beta like 1	9358

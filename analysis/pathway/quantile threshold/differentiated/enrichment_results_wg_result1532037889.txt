@@ -1,0 +1,11 @@
+geneset	description	link	C	O	E	R	PValue	FDR	overlapGene	OverlapGene_UserID
+GO:0016266	O-glycan processing	http://amigo.geneontology.org/amigo/term/GO:0016266	32	3	0.199004975124378	15.075	0.000935892238105307	1	10331;94025;727897	B3GNT3;MUC5B;MUC16
+GO:0006493	protein O-linked glycosylation	http://amigo.geneontology.org/amigo/term/GO:0006493	39	3	0.242537313432836	12.3692307692308	0.00167557266080265	1	10331;94025;727897	B3GNT3;MUC5B;MUC16
+GO:0006486	protein glycosylation	http://amigo.geneontology.org/amigo/term/GO:0006486	78	3	0.485074626865672	6.18461538461538	0.0118888262410906	1	10331;94025;727897	B3GNT3;MUC5B;MUC16
+GO:0043413	macromolecule glycosylation	http://amigo.geneontology.org/amigo/term/GO:0043413	78	3	0.485074626865672	6.18461538461538	0.0118888262410906	1	10331;94025;727897	B3GNT3;MUC5B;MUC16
+GO:0070085	glycosylation	http://amigo.geneontology.org/amigo/term/GO:0070085	78	3	0.485074626865672	6.18461538461538	0.0118888262410906	1	10331;94025;727897	B3GNT3;MUC5B;MUC16
+GO:0009101	glycoprotein biosynthetic process	http://amigo.geneontology.org/amigo/term/GO:0009101	105	3	0.652985074626866	4.59428571428571	0.0262389055242269	1	10331;94025;727897	B3GNT3;MUC5B;MUC16
+GO:0009109	coenzyme catabolic process	http://amigo.geneontology.org/amigo/term/GO:0009109	5	1	0.0310945273631841	32.16	0.0307252770418617	1	57834	CYP4F11
+GO:0009635	response to herbicide	http://amigo.geneontology.org/amigo/term/GO:0009635	5	1	0.0310945273631841	32.16	0.0307252770418617	1	3934	LCN2
+GO:0015858	nucleoside transport	http://amigo.geneontology.org/amigo/term/GO:0015858	5	1	0.0310945273631841	32.16	0.0307252770418617	1	64078	SLC28A3
+GO:0061099	negative regulation of protein tyrosine kinase activity	http://amigo.geneontology.org/amigo/term/GO:0061099	5	1	0.0310945273631841	32.16	0.0307252770418617	1	5753	PTK6

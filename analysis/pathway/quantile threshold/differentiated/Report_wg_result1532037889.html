@@ -1,0 +1,587 @@
+<html>
+<head>
+<title>WebGestalt (WEB-based GEne SeT AnaLysis Toolkit)</title>
+<script type="text/javascript" src="http://www.webgestalt.org/js/jquery.js"></script>
+<script type="text/javascript" src="http://www.webgestalt.org/js/jquery-ui.js"></script>
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-42098540-1', 'auto');
+  ga('send', 'pageview');
+</script>
+<script type="text/javascript" src="http://www.webgestalt.org/js/changeColor.js"></script>
+<script type="text/javascript" src="http://www.webgestalt.org/js/tableExport.js"></script>
+<script type="text/javascript" src="http://www.webgestalt.org/js/jquery.base64.js"></script>
+<script type="text/javascript" src="http://www.webgestalt.org/js/html2canvas.js"></script>
+<script type="text/javascript" src="http://www.webgestalt.org/js/jspdf/libs/sprintf.js"></script>
+<script type="text/javascript" src="http://www.webgestalt.org/js/jspdf.js"></script>
+<script type="text/javascript" src="http://www.webgestalt.org/js/jspdf/libs/base64.js"></script>
+<script type="text/javascript" src="http://www.webgestalt.org/js/search.js"></script>
+<script type="text/javascript" src="http://www.webgestalt.org/js/d3/d3.v3.min.js"></script>
+<script type="text/javascript" src="http://www.webgestalt.org/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="http://www.webgestalt.org/js/jquery.tipsy.js"></script>
+<script type="text/javascript" src="http://www.webgestalt.org/js/jquery.contextMenu.js"></script>
+<script type="text/javascript" src="http://www.webgestalt.org/js/jquery.floatThead.min.js"></script>
+<script type="text/javascript" src="http://www.webgestalt.org/js/dagre/dagre.js"></script>
+<script type="text/javascript" src="http://www.webgestalt.org/js/Minimap.js"></script>
+<script type="text/javascript" src="http://www.webgestalt.org/js/MinimapZoom.js"></script>
+<script type="text/javascript" src="http://www.webgestalt.org/js/DirectedAcyclicGraph.js"></script>
+<script type="text/javascript" src="http://www.webgestalt.org/js/List.js"></script>
+<script type="text/javascript" src="http://www.webgestalt.org/js/Selectable_svv.js"></script>
+<script type="text/javascript" src="http://www.webgestalt.org/js/Graph.js"></script>
+<script type="text/javascript" src="http://www.webgestalt.org/js/History.js"></script>
+<script type="text/javascript" src="http://www.webgestalt.org/js/Tooltip.js"></script>
+<script type="text/javascript" src="http://www.webgestalt.org/js/FileSaver.js"></script>
+<script type="text/javascript" src="http://www.webgestalt.org/js/download.js"></script>
+<script type="text/javascript" src="http://www.webgestalt.org/js/ContextMenu.js"></script>
+<script type="text/javascript" src="http://www.webgestalt.org/js/searchView.js"></script>
+<script type="text/javascript" src="http://www.webgestalt.org/js/canvg/rgbcolor.js"></script>
+<script type="text/javascript" src="http://www.webgestalt.org/js/canvg/StackBlur.js"></script>
+<script type="text/javascript" src="http://www.webgestalt.org/js/canvg/canvg.js"></script>
+<script type="text/javascript" src="js/xtrace_utils.js"></script>
+<script type="text/javascript" src="js/xtrace_graph.js"></script>
+<script type="text/javascript" src="js/plotDAG.js"></script>
+<script type="text/javascript" src="http://www.webgestalt.org/js/tooltipster.bundle.min.js"></script>
+<script>$(document).ready(function(){$('.tooltip-container').tooltipster({functionInit: function (instance, helper) {var content = $(helper.origin).find('.tooltip_content').detach();instance.content(content);}});});</script>
+<link href="http://www.webgestalt.org/css/jquery-ui.css" rel="stylesheet" type="text/css">
+<link href="http://www.webgestalt.org/css/xtrace.css" rel="stylesheet" type="text/css">
+<link href="http://www.webgestalt.org/css/tipsy.css" rel="stylesheet" type="text/css">
+<link href="http://www.webgestalt.org/css/jquery.contextMenu.css" rel="stylesheet" type="text/css">
+<link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css">
+<link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+<link href="http://www.webgestalt.org/css/graph.css" rel="stylesheet" type="text/css">
+<link href="http://www.webgestalt.org/css/report.css" rel="stylesheet" type="text/css">
+<link href="http://www.webgestalt.org/css/zebra.css" rel="stylesheet" type="text/css">
+<link href="http://www.webgestalt.org/css/search.css" rel="stylesheet" type="text/css">
+<link href="http://www.webgestalt.org/css/tooltipster.bundle.min.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<p align="center">
+<iframe src="http://www.webgestalt.org/html/head.html" style="border:0px;height:180px;width:100%"></iframe>
+<div id ="tabs"> <ul>
+<li><a href="#summary">Summary</a></li>
+<li><a href="#interestGene">User ID Mapping Table</a></li>
+<li><a href="#referenceGene">GOSlim Summary</a></li>
+<li><a href="#result">Enrichment Results</a></li>
+</ul>
+<div id="summary">
+<h3>Summary&nbsp&nbsp&nbsp(<a href="Project_wg_result1532037889.tar.gz" target="_blank" style="color:red"><u>Result Download</u></a>)</h3>
+<b>Enrich method:</b> ORA<br/>
+<b>Organism:</b>hsapiens<br/>
+<b>Enrichment Categories: </b>geneontology_Biological_Process<br/>
+<b>Interesting gene list: </b>differentiated_genes_sd_1532037889.txt. <b>ID type: </b>genesymbol<br/>
+The interesting gene list contains <b>32</b> user IDs in which <b>28</b> user IDs are unambiguously mapped to the unique Entrez Gene IDs and <b>4</b> user IDs are mapped to multiple Entrez Gene IDs or could not be mapped to any Entrez Gene ID. The GO Slim summary are based upon the <b>28</b> unique Entrez Gene IDs.<br/>
+Among the <b>28</b> unique Entrez Gene IDs, <b>25</b> IDs are annotated to the selected functional categories and also in the reference gene list, which are used for the enrichment analysis.<br/>
+<b>Reference gene list: </b>uploads/background_genes_1532037889.txt <b>ID type: </b>genesymbol<br/>
+The reference gene list contains <b>5000</b> IDs in which <b>4627</b> IDs are unambiguously mapped to the unique Entrez Gene IDs and <b>373</b> IDs are mapped to multiple Entrez Gene IDs or could not be mapped to any Entrez Gene ID.<br/>
+Among the <b>4627</b> unique Entrez Gene IDs, <b>4020</b> IDs are annotated to the selected functional categories, which are used as the reference for the enrichment analysis.<br/>
+<b>Parameters for the enrichment analysis:</b>
+<ul><li><b>Minimum number of Entrez Gene IDs in the category:</b>5</li>
+<li><b>Maximum number of Entrez Gene IDs in the category:</b>2000</li>
+<li><b>FDR Method:</b>BH</li>
+<li><b>Significance Level:</b> Top10</li>
+</ul>
+Based on the above parameters, <b>10</b> categories are identified as enriched categories and all are shown in this report.<br/>
+</div>
+<div id="interestGene">
+<div id="mappedGene">
+<h4>Mapped User IDs</h4>
+<table class="zebra"><thead><tr>
+<th>userid</th>
+<th>Gene Symbol</th>
+<th>Gene Name</th>
+<th>Entrez Gene</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>PDZK1IP1</td>
+<td>PDZK1IP1</td>
+<td>PDZK1 interacting protein 1</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=10158">10158</a></td>
+</tr>
+<tr>
+<td>MSLN</td>
+<td>MSLN</td>
+<td>mesothelin</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=10232">10232</a></td>
+</tr>
+<tr>
+<td>B3GNT3</td>
+<td>B3GNT3</td>
+<td>UDP-GlcNAc:betaGal beta-1,3-N-acetylglucosaminyltransferase 3</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=10331">10331</a></td>
+</tr>
+<tr>
+<td>CLDN16</td>
+<td>CLDN16</td>
+<td>claudin 16</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=10686">10686</a></td>
+</tr>
+<tr>
+<td>KLK11</td>
+<td>KLK11</td>
+<td>kallikrein related peptidase 11</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=11012">11012</a></td>
+</tr>
+<tr>
+<td>LYPD2</td>
+<td>LYPD2</td>
+<td>LY6/PLAUR domain containing 2</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=137797">137797</a></td>
+</tr>
+<tr>
+<td>CYP4B1</td>
+<td>CYP4B1</td>
+<td>cytochrome P450 family 4 subfamily B member 1</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=1580">1580</a></td>
+</tr>
+<tr>
+<td>NXNL2</td>
+<td>NXNL2</td>
+<td>nucleoredoxin-like 2</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=158046">158046</a></td>
+</tr>
+<tr>
+<td>LIPH</td>
+<td>LIPH</td>
+<td>lipase H</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=200879">200879</a></td>
+</tr>
+<tr>
+<td>GPR12</td>
+<td>GPR12</td>
+<td>G protein-coupled receptor 12</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=2835">2835</a></td>
+</tr>
+<tr>
+<td>CXCL17</td>
+<td>CXCL17</td>
+<td>C-X-C motif chemokine ligand 17</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=284340">284340</a></td>
+</tr>
+<tr>
+<td>HTR3A</td>
+<td>HTR3A</td>
+<td>5-hydroxytryptamine receptor 3A</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=3359">3359</a></td>
+</tr>
+<tr>
+<td>LCN2</td>
+<td>LCN2</td>
+<td>lipocalin 2</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=3934">3934</a></td>
+</tr>
+<tr>
+<td>SCGB2A1</td>
+<td>SCGB2A1</td>
+<td>secretoglobin family 2A member 1</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=4246">4246</a></td>
+</tr>
+<tr>
+<td>VGLL1</td>
+<td>VGLL1</td>
+<td>vestigial like family member 1</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=51442">51442</a></td>
+</tr>
+<tr>
+<td>RHBDL2</td>
+<td>RHBDL2</td>
+<td>rhomboid like 2</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=54933">54933</a></td>
+</tr>
+<tr>
+<td>HRASLS2</td>
+<td>HRASLS2</td>
+<td>HRAS like suppressor 2</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=54979">54979</a></td>
+</tr>
+<tr>
+<td>GSDMC</td>
+<td>GSDMC</td>
+<td>gasdermin C</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=56169">56169</a></td>
+</tr>
+<tr>
+<td>KLK10</td>
+<td>KLK10</td>
+<td>kallikrein related peptidase 10</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=5655">5655</a></td>
+</tr>
+<tr>
+<td>PTK6</td>
+<td>PTK6</td>
+<td>protein tyrosine kinase 6</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=5753">5753</a></td>
+</tr>
+<tr>
+<td>CYP4F11</td>
+<td>CYP4F11</td>
+<td>cytochrome P450 family 4 subfamily F member 11</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=57834">57834</a></td>
+</tr>
+<tr>
+<td>SLC28A3</td>
+<td>SLC28A3</td>
+<td>solute carrier family 28 member 3</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=64078">64078</a></td>
+</tr>
+<tr>
+<td>SLC5A1</td>
+<td>SLC5A1</td>
+<td>solute carrier family 5 member 1</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=6523">6523</a></td>
+</tr>
+<tr>
+<td>UCA1</td>
+<td>UCA1</td>
+<td>urothelial cancer associated 1 (non-protein coding)</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=652995">652995</a></td>
+</tr>
+<tr>
+<td>SLPI</td>
+<td>SLPI</td>
+<td>secretory leukocyte peptidase inhibitor</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=6590">6590</a></td>
+</tr>
+<tr>
+<td>MUC5B</td>
+<td>MUC5B</td>
+<td>mucin 5B, oligomeric mucus/gel-forming</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=727897">727897</a></td>
+</tr>
+<tr>
+<td>PLEKHN1</td>
+<td>PLEKHN1</td>
+<td>pleckstrin homology domain containing N1</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=84069">84069</a></td>
+</tr>
+<tr>
+<td>MUC16</td>
+<td>MUC16</td>
+<td>mucin 16, cell surface associated</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=94025">94025</a></td>
+</tr>
+</tbody></table>
+</div>
+<div id="empty">&nbsp&nbsp&nbsp&nbsp</div>
+<div id="unmappedGene">
+<h4>User IDs mapped to multiple Entrtez IDs or not mapped</h4>
+<table class="zebra"><thead><tr>
+<th>userid</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>WBSCR26</td>
+</tr>
+<tr>
+<td>C10orf81</td>
+</tr>
+<tr>
+<td>LOC121838</td>
+</tr>
+<tr>
+<td>ANXA8L2</td>
+</tr>
+</tbody></table>
+</div>
+</div>
+<div id="referenceGene">
+<h4>GOSlim summary for the user list genes</h4>
+Each Biological Process, Cellular Component and Molecular Function category is represented by a red, blue and green bar, repectively.<br/>
+The height of the bar represents the number of user list genes observed in the category.
+<img src="goslim_summary_wg_result1532037889.png" width="100%" height="100%"/></div>
+<div id="result">
+<div id="dag">
+<div id = "graphDAG" style="height:100%;width:100%"></div>
+</div>
+<div id="empty1">&nbsp&nbsp&nbsp&nbsp</div>
+<div id="genelist_wrap">
+<div id="genelist_des">
+<h4>Detailed information of the enriched categories</h4>
+<div class="tooltip_templates">The statistics
+<a class="tooltip-container"><img src="http://www.webgestalt.org/images/info.png" width="13" height="13"/>
+<span class="tooltip_content"><strong><ul><li>C: the number of reference genes in the category</li><li>O: the number of genes in the user gene list and also in the category</li><li>E: The expected number in the category</li><li>R: ratio of enrichment</li><li>PValue: p value from hyergeometric test</li><li>FDR: FDR from BH</li></ul></strong></span></a>
+ for the enriched categories and the genes in the user gene list and also in the category are listed in the table. <br/></div>
+<div class="search"><input id="tags" type="text" name="q" placeholder="ID Search"><ul id="searchData"><li><a id="aid0" href="#GO:0016266">GO:0016266 O-glycan processing</a></li><li><a id="aid1" href="#GO:0006493">GO:0006493 protein O-linked glycosylation</a></li><li><a id="aid2" href="#GO:0006486">GO:0006486 protein glycosylation</a></li><li><a id="aid3" href="#GO:0043413">GO:0043413 macromolecule glycosylation</a></li><li><a id="aid4" href="#GO:0070085">GO:0070085 glycosylation</a></li><li><a id="aid5" href="#GO:0009101">GO:0009101 glycoprotein biosynthetic process</a></li><li><a id="aid6" href="#GO:0009109">GO:0009109 coenzyme catabolic process</a></li><li><a id="aid7" href="#GO:0009635">GO:0009635 response to herbicide</a></li><li><a id="aid8" href="#GO:0015858">GO:0015858 nucleoside transport</a></li><li><a id="aid9" href="#GO:0061099">GO:0061099 negative regulation of protein tyrosine kinase activity</a></li></ul></div>
+</div>
+<br/>
+<div id="genelist">
+<div><nav class="cl-effect-1"><a style="cursor:pointer;color:red;" onclick="$('#Table1').tableExport({type:'csv',escape:'false'});">Download Table</a></nav></div><table id="Table1" class="zebra"><thead><tr>
+<th colspan="4">
+<a name="GO:0016266"><font color="black"><a href ="http://amigo.geneontology.org/amigo/term/GO:0016266" target="_blank"><b>ID:GO:0016266&nbsp&nbsp&nbsp&nbsp&nbsp&nbspName:O-glycan processing</b></a></font></a>
+</th></tr>
+<tr><th colspan="4">
+C=32; O=3; E=0.2; R=15.07; PValue=9.36e-04; FDR=1e+00</th></tr>
+<tr>
+<th>userid</th>
+<th>Gene Symbol</th>
+<th>Gene Name</th>
+<th>Entrez Gene</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>B3GNT3</td>
+<td>B3GNT3</td>
+<td>UDP-GlcNAc:betaGal beta-1,3-N-acetylglucosaminyltransferase 3</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=10331">10331</a></td>
+</tr>
+<tr>
+<td>MUC5B</td>
+<td>MUC5B</td>
+<td>mucin 5B, oligomeric mucus/gel-forming</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=727897">727897</a></td>
+</tr>
+<tr>
+<td>MUC16</td>
+<td>MUC16</td>
+<td>mucin 16, cell surface associated</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=94025">94025</a></td>
+</tr>
+</tbody></table><br/><br/>
+<div><nav class="cl-effect-1"><a style="cursor:pointer;color:red;" onclick="$('#Table2').tableExport({type:'csv',escape:'false'});">Download Table</a></nav></div><table id="Table2" class="zebra"><thead><tr>
+<th colspan="4">
+<a name="GO:0006493"><font color="black"><a href ="http://amigo.geneontology.org/amigo/term/GO:0006493" target="_blank"><b>ID:GO:0006493&nbsp&nbsp&nbsp&nbsp&nbsp&nbspName:protein O-linked glycosylation</b></a></font></a>
+</th></tr>
+<tr><th colspan="4">
+C=39; O=3; E=0.24; R=12.37; PValue=1.68e-03; FDR=1e+00</th></tr>
+<tr>
+<th>userid</th>
+<th>Gene Symbol</th>
+<th>Gene Name</th>
+<th>Entrez Gene</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>B3GNT3</td>
+<td>B3GNT3</td>
+<td>UDP-GlcNAc:betaGal beta-1,3-N-acetylglucosaminyltransferase 3</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=10331">10331</a></td>
+</tr>
+<tr>
+<td>MUC5B</td>
+<td>MUC5B</td>
+<td>mucin 5B, oligomeric mucus/gel-forming</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=727897">727897</a></td>
+</tr>
+<tr>
+<td>MUC16</td>
+<td>MUC16</td>
+<td>mucin 16, cell surface associated</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=94025">94025</a></td>
+</tr>
+</tbody></table><br/><br/>
+<div><nav class="cl-effect-1"><a style="cursor:pointer;color:red;" onclick="$('#Table3').tableExport({type:'csv',escape:'false'});">Download Table</a></nav></div><table id="Table3" class="zebra"><thead><tr>
+<th colspan="4">
+<a name="GO:0006486"><font color="black"><a href ="http://amigo.geneontology.org/amigo/term/GO:0006486" target="_blank"><b>ID:GO:0006486&nbsp&nbsp&nbsp&nbsp&nbsp&nbspName:protein glycosylation</b></a></font></a>
+</th></tr>
+<tr><th colspan="4">
+C=78; O=3; E=0.49; R=6.18; PValue=1.19e-02; FDR=1e+00</th></tr>
+<tr>
+<th>userid</th>
+<th>Gene Symbol</th>
+<th>Gene Name</th>
+<th>Entrez Gene</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>B3GNT3</td>
+<td>B3GNT3</td>
+<td>UDP-GlcNAc:betaGal beta-1,3-N-acetylglucosaminyltransferase 3</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=10331">10331</a></td>
+</tr>
+<tr>
+<td>MUC5B</td>
+<td>MUC5B</td>
+<td>mucin 5B, oligomeric mucus/gel-forming</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=727897">727897</a></td>
+</tr>
+<tr>
+<td>MUC16</td>
+<td>MUC16</td>
+<td>mucin 16, cell surface associated</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=94025">94025</a></td>
+</tr>
+</tbody></table><br/><br/>
+<div><nav class="cl-effect-1"><a style="cursor:pointer;color:red;" onclick="$('#Table4').tableExport({type:'csv',escape:'false'});">Download Table</a></nav></div><table id="Table4" class="zebra"><thead><tr>
+<th colspan="4">
+<a name="GO:0043413"><font color="black"><a href ="http://amigo.geneontology.org/amigo/term/GO:0043413" target="_blank"><b>ID:GO:0043413&nbsp&nbsp&nbsp&nbsp&nbsp&nbspName:macromolecule glycosylation</b></a></font></a>
+</th></tr>
+<tr><th colspan="4">
+C=78; O=3; E=0.49; R=6.18; PValue=1.19e-02; FDR=1e+00</th></tr>
+<tr>
+<th>userid</th>
+<th>Gene Symbol</th>
+<th>Gene Name</th>
+<th>Entrez Gene</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>B3GNT3</td>
+<td>B3GNT3</td>
+<td>UDP-GlcNAc:betaGal beta-1,3-N-acetylglucosaminyltransferase 3</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=10331">10331</a></td>
+</tr>
+<tr>
+<td>MUC5B</td>
+<td>MUC5B</td>
+<td>mucin 5B, oligomeric mucus/gel-forming</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=727897">727897</a></td>
+</tr>
+<tr>
+<td>MUC16</td>
+<td>MUC16</td>
+<td>mucin 16, cell surface associated</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=94025">94025</a></td>
+</tr>
+</tbody></table><br/><br/>
+<div><nav class="cl-effect-1"><a style="cursor:pointer;color:red;" onclick="$('#Table5').tableExport({type:'csv',escape:'false'});">Download Table</a></nav></div><table id="Table5" class="zebra"><thead><tr>
+<th colspan="4">
+<a name="GO:0070085"><font color="black"><a href ="http://amigo.geneontology.org/amigo/term/GO:0070085" target="_blank"><b>ID:GO:0070085&nbsp&nbsp&nbsp&nbsp&nbsp&nbspName:glycosylation</b></a></font></a>
+</th></tr>
+<tr><th colspan="4">
+C=78; O=3; E=0.49; R=6.18; PValue=1.19e-02; FDR=1e+00</th></tr>
+<tr>
+<th>userid</th>
+<th>Gene Symbol</th>
+<th>Gene Name</th>
+<th>Entrez Gene</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>B3GNT3</td>
+<td>B3GNT3</td>
+<td>UDP-GlcNAc:betaGal beta-1,3-N-acetylglucosaminyltransferase 3</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=10331">10331</a></td>
+</tr>
+<tr>
+<td>MUC5B</td>
+<td>MUC5B</td>
+<td>mucin 5B, oligomeric mucus/gel-forming</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=727897">727897</a></td>
+</tr>
+<tr>
+<td>MUC16</td>
+<td>MUC16</td>
+<td>mucin 16, cell surface associated</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=94025">94025</a></td>
+</tr>
+</tbody></table><br/><br/>
+<div><nav class="cl-effect-1"><a style="cursor:pointer;color:red;" onclick="$('#Table6').tableExport({type:'csv',escape:'false'});">Download Table</a></nav></div><table id="Table6" class="zebra"><thead><tr>
+<th colspan="4">
+<a name="GO:0009101"><font color="black"><a href ="http://amigo.geneontology.org/amigo/term/GO:0009101" target="_blank"><b>ID:GO:0009101&nbsp&nbsp&nbsp&nbsp&nbsp&nbspName:glycoprotein biosynthetic process</b></a></font></a>
+</th></tr>
+<tr><th colspan="4">
+C=105; O=3; E=0.65; R=4.59; PValue=2.62e-02; FDR=1e+00</th></tr>
+<tr>
+<th>userid</th>
+<th>Gene Symbol</th>
+<th>Gene Name</th>
+<th>Entrez Gene</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>B3GNT3</td>
+<td>B3GNT3</td>
+<td>UDP-GlcNAc:betaGal beta-1,3-N-acetylglucosaminyltransferase 3</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=10331">10331</a></td>
+</tr>
+<tr>
+<td>MUC5B</td>
+<td>MUC5B</td>
+<td>mucin 5B, oligomeric mucus/gel-forming</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=727897">727897</a></td>
+</tr>
+<tr>
+<td>MUC16</td>
+<td>MUC16</td>
+<td>mucin 16, cell surface associated</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=94025">94025</a></td>
+</tr>
+</tbody></table><br/><br/>
+<div><nav class="cl-effect-1"><a style="cursor:pointer;color:red;" onclick="$('#Table7').tableExport({type:'csv',escape:'false'});">Download Table</a></nav></div><table id="Table7" class="zebra"><thead><tr>
+<th colspan="4">
+<a name="GO:0009109"><font color="black"><a href ="http://amigo.geneontology.org/amigo/term/GO:0009109" target="_blank"><b>ID:GO:0009109&nbsp&nbsp&nbsp&nbsp&nbsp&nbspName:coenzyme catabolic process</b></a></font></a>
+</th></tr>
+<tr><th colspan="4">
+C=5; O=1; E=0.03; R=32.16; PValue=3.07e-02; FDR=1e+00</th></tr>
+<tr>
+<th>userid</th>
+<th>Gene Symbol</th>
+<th>Gene Name</th>
+<th>Entrez Gene</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>CYP4F11</td>
+<td>CYP4F11</td>
+<td>cytochrome P450 family 4 subfamily F member 11</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=57834">57834</a></td>
+</tr>
+</tbody></table><br/><br/>
+<div><nav class="cl-effect-1"><a style="cursor:pointer;color:red;" onclick="$('#Table8').tableExport({type:'csv',escape:'false'});">Download Table</a></nav></div><table id="Table8" class="zebra"><thead><tr>
+<th colspan="4">
+<a name="GO:0009635"><font color="black"><a href ="http://amigo.geneontology.org/amigo/term/GO:0009635" target="_blank"><b>ID:GO:0009635&nbsp&nbsp&nbsp&nbsp&nbsp&nbspName:response to herbicide</b></a></font></a>
+</th></tr>
+<tr><th colspan="4">
+C=5; O=1; E=0.03; R=32.16; PValue=3.07e-02; FDR=1e+00</th></tr>
+<tr>
+<th>userid</th>
+<th>Gene Symbol</th>
+<th>Gene Name</th>
+<th>Entrez Gene</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>LCN2</td>
+<td>LCN2</td>
+<td>lipocalin 2</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=3934">3934</a></td>
+</tr>
+</tbody></table><br/><br/>
+<div><nav class="cl-effect-1"><a style="cursor:pointer;color:red;" onclick="$('#Table9').tableExport({type:'csv',escape:'false'});">Download Table</a></nav></div><table id="Table9" class="zebra"><thead><tr>
+<th colspan="4">
+<a name="GO:0015858"><font color="black"><a href ="http://amigo.geneontology.org/amigo/term/GO:0015858" target="_blank"><b>ID:GO:0015858&nbsp&nbsp&nbsp&nbsp&nbsp&nbspName:nucleoside transport</b></a></font></a>
+</th></tr>
+<tr><th colspan="4">
+C=5; O=1; E=0.03; R=32.16; PValue=3.07e-02; FDR=1e+00</th></tr>
+<tr>
+<th>userid</th>
+<th>Gene Symbol</th>
+<th>Gene Name</th>
+<th>Entrez Gene</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>SLC28A3</td>
+<td>SLC28A3</td>
+<td>solute carrier family 28 member 3</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=64078">64078</a></td>
+</tr>
+</tbody></table><br/><br/>
+<div><nav class="cl-effect-1"><a style="cursor:pointer;color:red;" onclick="$('#Table10').tableExport({type:'csv',escape:'false'});">Download Table</a></nav></div><table id="Table10" class="zebra"><thead><tr>
+<th colspan="4">
+<a name="GO:0061099"><font color="black"><a href ="http://amigo.geneontology.org/amigo/term/GO:0061099" target="_blank"><b>ID:GO:0061099&nbsp&nbsp&nbsp&nbsp&nbsp&nbspName:negative regulation of protein tyrosine kinase activity</b></a></font></a>
+</th></tr>
+<tr><th colspan="4">
+C=5; O=1; E=0.03; R=32.16; PValue=3.07e-02; FDR=1e+00</th></tr>
+<tr>
+<th>userid</th>
+<th>Gene Symbol</th>
+<th>Gene Name</th>
+<th>Entrez Gene</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>PTK6</td>
+<td>PTK6</td>
+<td>protein tyrosine kinase 6</td>
+<td><a target="entrez" href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&cmd=Retrieve&dopt=Graphics&list_uids=5753">5753</a></td>
+</tr>
+</tbody></table><br/><br/>
+</div>
+</div>
+</div>
+</div>
+<script>plotDAG('Project_wg_result1532037889_.json','[{"id":"Project_wg_result1532037889_.json","reports":[{"gID":["GO:0016266"],"Edge":["GO:0006493"],"Name":["O-glycan processing"],"Sig":["NA"],"Link":["results//Project_wg_result1532037889/Report_wg_result1532037889.html#GO:0016266"],"gNum":["3"],"FDR":["1e+00"]},{"gID":["GO:0006493"],"Edge":["GO:0006486"],"Name":["protein O-linked glycosylation"],"Sig":["NA"],"Link":["results//Project_wg_result1532037889/Report_wg_result1532037889.html#GO:0006493"],"gNum":["3"],"FDR":["1e+00"]},{"gID":["GO:0006486"],"Edge":["GO:0006464","GO:0009101","GO:0043413","GO:0044763"],"Name":["protein glycosylation"],"Sig":["NA"],"Link":["results//Project_wg_result1532037889/Report_wg_result1532037889.html#GO:0006486"],"gNum":["3"],"FDR":["1e+00"]},{"gID":["GO:0043413"],"Edge":["GO:0043412","GO:0070085"],"Name":["macromolecule glycosylation"],"Sig":["NA"],"Link":["results//Project_wg_result1532037889/Report_wg_result1532037889.html#GO:0043413"],"gNum":["3"],"FDR":["1e+00"]},{"gID":["GO:0070085"],"Edge":["GO:0044710"],"Name":["glycosylation"],"Sig":["NA"],"Link":["results//Project_wg_result1532037889/Report_wg_result1532037889.html#GO:0070085"],"gNum":["3"],"FDR":["1e+00"]},{"gID":["GO:0009101"],"Edge":["GO:0009100","GO:0034645","GO:1901137"],"Name":["glycoprotein biosynthetic process"],"Sig":["NA"],"Link":["results//Project_wg_result1532037889/Report_wg_result1532037889.html#GO:0009101"],"gNum":["3"],"FDR":["1e+00"]},{"gID":["GO:0009109"],"Edge":["GO:0006732","GO:0051187"],"Name":["coenzyme catabolic process"],"Sig":["NA"],"Link":["results//Project_wg_result1532037889/Report_wg_result1532037889.html#GO:0009109"],"gNum":["1"],"FDR":["1e+00"]},{"gID":["GO:0009635"],"Edge":["GO:0006950","GO:0009636"],"Name":["response to herbicide"],"Sig":["NA"],"Link":["results//Project_wg_result1532037889/Report_wg_result1532037889.html#GO:0009635"],"gNum":["1"],"FDR":["1e+00"]},{"gID":["GO:0015858"],"Edge":["GO:0015931","GO:1901264"],"Name":["nucleoside transport"],"Sig":["NA"],"Link":["results//Project_wg_result1532037889/Report_wg_result1532037889.html#GO:0015858"],"gNum":["1"],"FDR":["1e+00"]},{"gID":["GO:0061099"],"Edge":["GO:0006469","GO:0050732","GO:0061097"],"Name":["negative regulation of protein tyrosine kinase activity"],"Sig":["NA"],"Link":["results//Project_wg_result1532037889/Report_wg_result1532037889.html#GO:0061099"],"gNum":["1"],"FDR":["1e+00"]},{"gID":["GO:0006464"],"Edge":["GO:0036211","GO:0044267"],"Name":["cellular protein modification process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0044763"],"Edge":["GO:0009987","GO:0044699"],"Name":["single-organism cellular process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0043412"],"Edge":["GO:0043170"],"Name":["macromolecule modification"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0044710"],"Edge":["GO:0008152","GO:0044699"],"Name":["single-organism metabolic process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0009100"],"Edge":["GO:0044260","GO:1901135"],"Name":["glycoprotein metabolic process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0034645"],"Edge":["GO:0009059","GO:0044249","GO:0044260"],"Name":["cellular macromolecule biosynthetic process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:1901137"],"Edge":["GO:1901135","GO:1901576"],"Name":["carbohydrate derivative biosynthetic process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0006732"],"Edge":["GO:0051186"],"Name":["coenzyme metabolic process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0051187"],"Edge":["GO:0044248","GO:0051186"],"Name":["cofactor catabolic process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0006950"],"Edge":["GO:0050896"],"Name":["response to stress"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0009636"],"Edge":["GO:0042221"],"Name":["response to toxic substance"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0015931"],"Edge":["GO:0071702","GO:0071705"],"Name":["nucleobase-containing compound transport"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:1901264"],"Edge":["GO:0044765","GO:0071702"],"Name":["carbohydrate derivative transport"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0006469"],"Edge":["GO:0001933","GO:0033673","GO:0045859"],"Name":["negative regulation of protein kinase activity"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0050732"],"Edge":["GO:0001933","GO:0018108","GO:0050730"],"Name":["negative regulation of peptidyl-tyrosine phosphorylation"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0061097"],"Edge":["GO:0045859","GO:0050730"],"Name":["regulation of protein tyrosine kinase activity"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0036211"],"Edge":["GO:0019538","GO:0043412"],"Name":["protein modification process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0044267"],"Edge":["GO:0019538","GO:0044260"],"Name":["cellular protein metabolic process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0009987"],"Edge":["GO:0008150"],"Name":["cellular process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0044699"],"Edge":["GO:0008150"],"Name":["single-organism process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0043170"],"Edge":["GO:0071704"],"Name":["macromolecule metabolic process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0008152"],"Edge":["GO:0008150"],"Name":["metabolic process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0044260"],"Edge":["GO:0043170","GO:0044237"],"Name":["cellular macromolecule metabolic process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:1901135"],"Edge":["GO:0071704"],"Name":["carbohydrate derivative metabolic process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0009059"],"Edge":["GO:0043170","GO:1901576"],"Name":["macromolecule biosynthetic process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0044249"],"Edge":["GO:0009058","GO:0044237"],"Name":["cellular biosynthetic process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:1901576"],"Edge":["GO:0009058","GO:0071704"],"Name":["organic substance biosynthetic process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0051186"],"Edge":["GO:0044237"],"Name":["cofactor metabolic process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0044248"],"Edge":["GO:0009056","GO:0044237"],"Name":["cellular catabolic process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0050896"],"Edge":["GO:0008150"],"Name":["response to stimulus"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0042221"],"Edge":["GO:0050896"],"Name":["response to chemical"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0071702"],"Edge":["GO:0006810"],"Name":["organic substance transport"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0071705"],"Edge":["GO:0006810"],"Name":["nitrogen compound transport"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0044765"],"Edge":["GO:0006810","GO:1902578"],"Name":["single-organism transport"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0001933"],"Edge":["GO:0001932","GO:0006468","GO:0031400","GO:0042326"],"Name":["negative regulation of protein phosphorylation"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0033673"],"Edge":["GO:0042326","GO:0043549","GO:0051348"],"Name":["negative regulation of kinase activity"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0045859"],"Edge":["GO:0001932","GO:0043549"],"Name":["regulation of protein kinase activity"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0018108"],"Edge":["GO:0006468","GO:0018212"],"Name":["peptidyl-tyrosine phosphorylation"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0050730"],"Edge":["GO:0001932","GO:0018108"],"Name":["regulation of peptidyl-tyrosine phosphorylation"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0019538"],"Edge":["GO:0043170","GO:0044238"],"Name":["protein metabolic process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0043412"],"Edge":["GO:0043170"],"Name":["macromolecule modification"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0008150"],"Edge":["NA",""],"Name":["biological_process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0071704"],"Edge":["GO:0008152"],"Name":["organic substance metabolic process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0043170"],"Edge":["GO:0071704"],"Name":["macromolecule metabolic process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0044237"],"Edge":["GO:0008152","GO:0009987"],"Name":["cellular metabolic process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0009058"],"Edge":["GO:0008152"],"Name":["biosynthetic process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0009056"],"Edge":["GO:0008152"],"Name":["catabolic process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0050896"],"Edge":["GO:0008150"],"Name":["response to stimulus"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0006810"],"Edge":["GO:0051234"],"Name":["transport"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:1902578"],"Edge":["GO:0044699","GO:0051179"],"Name":["single-organism localization"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0001932"],"Edge":["GO:0006468","GO:0031399","GO:0042325"],"Name":["regulation of protein phosphorylation"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0006468"],"Edge":["GO:0006464","GO:0016310"],"Name":["protein phosphorylation"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0031400"],"Edge":["GO:0006464","GO:0031399","GO:0032269"],"Name":["negative regulation of protein modification process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0042326"],"Edge":["GO:0016310","GO:0042325","GO:0045936"],"Name":["negative regulation of phosphorylation"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0043549"],"Edge":["GO:0042325","GO:0051338"],"Name":["regulation of kinase activity"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0051348"],"Edge":["GO:0043086","GO:0051338"],"Name":["negative regulation of transferase activity"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0018212"],"Edge":["GO:0018193"],"Name":["peptidyl-tyrosine modification"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0018108"],"Edge":["GO:0006468","GO:0018212"],"Name":["peptidyl-tyrosine phosphorylation"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0044238"],"Edge":["GO:0008152"],"Name":["primary metabolic process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0008152"],"Edge":["GO:0008150"],"Name":["metabolic process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0071704"],"Edge":["GO:0008152"],"Name":["organic substance metabolic process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0009987"],"Edge":["GO:0008150"],"Name":["cellular process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0008150"],"Edge":["NA",""],"Name":["biological_process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0051234"],"Edge":["GO:0051179"],"Name":["establishment of localization"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0044699"],"Edge":["GO:0008150"],"Name":["single-organism process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0051179"],"Edge":["GO:0008150"],"Name":["localization"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0031399"],"Edge":["GO:0006464","GO:0032268"],"Name":["regulation of protein modification process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0042325"],"Edge":["GO:0016310","GO:0019220"],"Name":["regulation of phosphorylation"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0006464"],"Edge":["GO:0036211","GO:0044267"],"Name":["cellular protein modification process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0016310"],"Edge":["GO:0006796"],"Name":["phosphorylation"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0032269"],"Edge":["GO:0031324","GO:0032268","GO:0044267","GO:0051248"],"Name":["negative regulation of cellular protein metabolic process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0045936"],"Edge":["GO:0006796","GO:0010563","GO:0019220"],"Name":["negative regulation of phosphate metabolic process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0051338"],"Edge":["GO:0050790"],"Name":["regulation of transferase activity"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0043086"],"Edge":["GO:0044092","GO:0050790"],"Name":["negative regulation of catalytic activity"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0018193"],"Edge":["GO:0006464"],"Name":["peptidyl-amino acid modification"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0006468"],"Edge":["GO:0006464","GO:0016310"],"Name":["protein phosphorylation"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0018212"],"Edge":["GO:0018193"],"Name":["peptidyl-tyrosine modification"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0008152"],"Edge":["GO:0008150"],"Name":["metabolic process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0008150"],"Edge":["NA",""],"Name":["biological_process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0032268"],"Edge":["GO:0031323","GO:0044267","GO:0051246"],"Name":["regulation of cellular protein metabolic process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0019220"],"Edge":["GO:0006796","GO:0051174"],"Name":["regulation of phosphate metabolic process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0036211"],"Edge":["GO:0019538","GO:0043412"],"Name":["protein modification process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0044267"],"Edge":["GO:0019538","GO:0044260"],"Name":["cellular protein metabolic process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0006796"],"Edge":["GO:0006793"],"Name":["phosphate-containing compound metabolic process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0031324"],"Edge":["GO:0009892","GO:0031323","GO:0044237","GO:0048523"],"Name":["negative regulation of cellular metabolic process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0051248"],"Edge":["GO:0010605","GO:0019538","GO:0051246"],"Name":["negative regulation of protein metabolic process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0010563"],"Edge":["GO:0006793","GO:0031324","GO:0051174"],"Name":["negative regulation of phosphorus metabolic process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0050790"],"Edge":["GO:0065009"],"Name":["regulation of catalytic activity"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0044092"],"Edge":["GO:0065009"],"Name":["negative regulation of molecular function"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0006464"],"Edge":["GO:0036211","GO:0044267"],"Name":["cellular protein modification process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0016310"],"Edge":["GO:0006796"],"Name":["phosphorylation"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0018193"],"Edge":["GO:0006464"],"Name":["peptidyl-amino acid modification"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0031323"],"Edge":["GO:0019222","GO:0044237","GO:0050794"],"Name":["regulation of cellular metabolic process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0051246"],"Edge":["GO:0019538","GO:0060255","GO:0080090"],"Name":["regulation of protein metabolic process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0051174"],"Edge":["GO:0006793","GO:0031323"],"Name":["regulation of phosphorus metabolic process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0019538"],"Edge":["GO:0043170","GO:0044238"],"Name":["protein metabolic process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0043412"],"Edge":["GO:0043170"],"Name":["macromolecule modification"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0044260"],"Edge":["GO:0043170","GO:0044237"],"Name":["cellular macromolecule metabolic process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0006793"],"Edge":["GO:0044237"],"Name":["phosphorus metabolic process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0009892"],"Edge":["GO:0008152","GO:0019222","GO:0048519"],"Name":["negative regulation of metabolic process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0044237"],"Edge":["GO:0008152","GO:0009987"],"Name":["cellular metabolic process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0048523"],"Edge":["GO:0009987","GO:0048519","GO:0050794"],"Name":["negative regulation of cellular process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0010605"],"Edge":["GO:0009892","GO:0043170","GO:0060255"],"Name":["negative regulation of macromolecule metabolic process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0031324"],"Edge":["GO:0009892","GO:0031323","GO:0044237","GO:0048523"],"Name":["negative regulation of cellular metabolic process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0065009"],"Edge":["GO:0065007"],"Name":["regulation of molecular function"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0036211"],"Edge":["GO:0019538","GO:0043412"],"Name":["protein modification process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0044267"],"Edge":["GO:0019538","GO:0044260"],"Name":["cellular protein metabolic process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0006796"],"Edge":["GO:0006793"],"Name":["phosphate-containing compound metabolic process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0006464"],"Edge":["GO:0036211","GO:0044267"],"Name":["cellular protein modification process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0019222"],"Edge":["GO:0008152","GO:0050789"],"Name":["regulation of metabolic process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0050794"],"Edge":["GO:0009987","GO:0050789"],"Name":["regulation of cellular process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0060255"],"Edge":["GO:0019222","GO:0043170"],"Name":["regulation of macromolecule metabolic process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0080090"],"Edge":["GO:0019222","GO:0044238"],"Name":["regulation of primary metabolic process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0031323"],"Edge":["GO:0019222","GO:0044237","GO:0050794"],"Name":["regulation of cellular metabolic process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0043170"],"Edge":["GO:0071704"],"Name":["macromolecule metabolic process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0044238"],"Edge":["GO:0008152"],"Name":["primary metabolic process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0008152"],"Edge":["GO:0008150"],"Name":["metabolic process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0048519"],"Edge":["GO:0008150","GO:0050789"],"Name":["negative regulation of biological process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0009987"],"Edge":["GO:0008150"],"Name":["cellular process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0009892"],"Edge":["GO:0008152","GO:0019222","GO:0048519"],"Name":["negative regulation of metabolic process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0044237"],"Edge":["GO:0008152","GO:0009987"],"Name":["cellular metabolic process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0048523"],"Edge":["GO:0009987","GO:0048519","GO:0050794"],"Name":["negative regulation of cellular process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0065007"],"Edge":["GO:0008150"],"Name":["biological regulation"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0019538"],"Edge":["GO:0043170","GO:0044238"],"Name":["protein metabolic process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0043412"],"Edge":["GO:0043170"],"Name":["macromolecule modification"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0044260"],"Edge":["GO:0043170","GO:0044237"],"Name":["cellular macromolecule metabolic process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0006793"],"Edge":["GO:0044237"],"Name":["phosphorus metabolic process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0036211"],"Edge":["GO:0019538","GO:0043412"],"Name":["protein modification process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0044267"],"Edge":["GO:0019538","GO:0044260"],"Name":["cellular protein metabolic process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0050789"],"Edge":["GO:0008150","GO:0065007"],"Name":["regulation of biological process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0019222"],"Edge":["GO:0008152","GO:0050789"],"Name":["regulation of metabolic process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0050794"],"Edge":["GO:0009987","GO:0050789"],"Name":["regulation of cellular process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0071704"],"Edge":["GO:0008152"],"Name":["organic substance metabolic process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0008150"],"Edge":["NA",""],"Name":["biological_process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0008152"],"Edge":["GO:0008150"],"Name":["metabolic process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0048519"],"Edge":["GO:0008150","GO:0050789"],"Name":["negative regulation of biological process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0009987"],"Edge":["GO:0008150"],"Name":["cellular process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0043170"],"Edge":["GO:0071704"],"Name":["macromolecule metabolic process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0044238"],"Edge":["GO:0008152"],"Name":["primary metabolic process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0044237"],"Edge":["GO:0008152","GO:0009987"],"Name":["cellular metabolic process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0019538"],"Edge":["GO:0043170","GO:0044238"],"Name":["protein metabolic process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0043412"],"Edge":["GO:0043170"],"Name":["macromolecule modification"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0044260"],"Edge":["GO:0043170","GO:0044237"],"Name":["cellular macromolecule metabolic process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0065007"],"Edge":["GO:0008150"],"Name":["biological regulation"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0050789"],"Edge":["GO:0008150","GO:0065007"],"Name":["regulation of biological process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0008150"],"Edge":["NA",""],"Name":["biological_process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0071704"],"Edge":["GO:0008152"],"Name":["organic substance metabolic process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0008152"],"Edge":["GO:0008150"],"Name":["metabolic process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0009987"],"Edge":["GO:0008150"],"Name":["cellular process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0043170"],"Edge":["GO:0071704"],"Name":["macromolecule metabolic process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0044238"],"Edge":["GO:0008152"],"Name":["primary metabolic process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0044237"],"Edge":["GO:0008152","GO:0009987"],"Name":["cellular metabolic process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0065007"],"Edge":["GO:0008150"],"Name":["biological regulation"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0008150"],"Edge":["NA",""],"Name":["biological_process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0071704"],"Edge":["GO:0008152"],"Name":["organic substance metabolic process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0008152"],"Edge":["GO:0008150"],"Name":["metabolic process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0009987"],"Edge":["GO:0008150"],"Name":["cellular process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]},{"gID":["GO:0008150"],"Edge":["NA",""],"Name":["biological_process"],"Sig":["white"],"Link":[""],"gNum":[""],"FDR":[""]}]}]','WJ.graph, .list { cursor: default; }WJ.graph.animate .node { opacity: 0; transition: fill 0.5s, stroke 0.5s, opacity 1s; }WJ.graph.animate .node.visible { opacity: 1; transition: fill 0.5s, stroke 0.5s, opacity 0.5s; }WJ.graph.animate .node.visible.entering { transition: fill 0.5s, stroke 0.5s, opacity 1.5s; }WJ.hovering .graph .node.visible { opacity: 0.2; }WJ.hovering .graph.animate .node.visible { transition: fill 0.5s, stroke 0.5s, opacity 0.4s; }WJ.hovering .graph .node.visible.hovered, .hovering .graph .node.visible.selected { opacity: 1; }WJ.hovering .graph .node.hovered.immediate rect { stroke: rgb(164, 1, 27); fill: rgb(255, 224, 229); }WJ.graph .node rect { fill: rgb(255, 242, 204); stroke-width: 2px; stroke: rgb(161, 109, 0); }WJ.graph.animate .node rect { transition: fill 0.5s, stroke 0.5s, stroke-width 0.5s; }WJ.graph .node text { font-family: Verdana; }WJ.graph .node.selected rect, .hovering .graph .node.selected rect, .hovering .graph .node.selected.hovered.immediate rect { stroke: rgb(15, 75, 255); fill: rgb(179, 236, 255); }WJ.graph .node.preview rect, .hovering .graph .node.preview rect { fill: rgb(234, 218, 236); stroke: rgb(154, 56, 162); }WJ.graph .edge { fill: none; stroke-width: 2.5px; stroke: rgb(209, 157, 0); opacity: 0; }WJ.graph.animate .edge { transition: fill 0.1s, stroke 0.1s, stroke-width 0.1s, opacity 0.3s; }WJ.graph .edge.visible.preview { stroke-width: 4px; stroke: rgb(154, 56, 162); }WJ.graph .edge.visible.selected, .hovering .graph .edge.hovered.immediate.selected { stroke-width: 6px; stroke: rgb(56, 106, 255); }WJ.graph .edge.visible.preview, .hovering .graph .edge.hovered.immediate.preview { stroke: rgb(154, 56, 162); }WJ.graph .edge.visible { opacity: 1; }WJ.graph.animate .edge.visible { transition: fill 0.5s, stroke 0.5s, stroke-width 0.5s, opacity 0.5s; }WJ.graph.animate .edge.visible.entering { transition: fill 0.5s, stroke 0.5s, stroke-width 0.5s, opacity 1.5s; }WJ.hovering .graph .edge.visible { opacity: 0.1; }WJ.hovering .graph.animate .edge.visible { transition: fill 0.5s, stroke 0.5s, stroke-width 0.5s, opacity 0.4s; }WJ.hovering .graph .edge.visible.hovered, .hovering .graph .edge.selected { opacity: 1; }WJ.hovering .graph .edge.hovered.immediate { stroke: rgb(164, 1, 27); stroke-width: 4px; }WJ.minimap .edge { stroke-width: 2px; stroke: black; fill-opacity: 0; }WJ.minimap .node rect { fill: rgb(221, 221, 221); stroke-width: 2px; stroke: black; }WJ.list .item rect { stroke: rgb(15, 75, 255); fill: rgb(179, 236, 255); fill-opacity: 0.5; stroke-width: 1; transition: fill 0.5s, stroke 0.5s; }WJ.list .item:hover rect { fill: rgb(255, 242, 204); stroke: rgb(161, 109, 0); }WJ.list .item text { x: 50%; text-anchor: middle; dominant-baseline: central; }WJ.xtrace-tooltip { text-align: left; }WJ.xtrace-tooltip .key { display: inline-block; float: left; width: 90px; font-weight: bold; }WJ.xtrace-tooltip .value { display: inline-block; float: left; word-wrap: break-word; max-width: 410px; }WJ.xtrace-tooltip .clear { clear: both; }WJ.context-menu .highlight { color: rgb(127, 35, 137); }WJ.context-menu a:hover .highlight { color: rgb(202, 120, 210); }WJtext, tspan, .tipsy { user-select: none; }WJ');</script><script>$( "#tabs" ).tabs();</script><iframe src="http://www.webgestalt.org/html/foot.html" style="border:0px;height:130px;width:100%"></iframe>
+</body></html>

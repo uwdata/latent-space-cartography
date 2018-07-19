@@ -287,7 +287,30 @@ def cluster_quality ():
         score = util.cluster_score(groups[i], X)
         print('{}: {}%'.format(names[i], int(score * 100)))
 
+# compare their and our high weight genes
+def compare_gene_list ():
+    l = 8
+    ours = ['mesenchymal', 'immunoreactive', 'proliferative', 'differentiated']
+    ours = [ours[int(i/2)] for i in range(l)]
+    prefix = ['87', '56', '56', '87', '79', '38', '38', '79']
+    suffix = ['pos', 'neg'] * 4
+    theirs = ['hgsc_node{}genes_{}.tsv'.format(prefix[i], suffix[i]) for i in range(l)]
+
+    for i in range(l):
+        p_ours = os.path.join(util.base, 'results', '{}_genes_sd.txt'.format(ours[i]))
+        p_theirs = os.path.join(util.base, 'results', theirs[i])
+        gene_ours = util.read_tsv(p_ours, str, 0)[:, 0]
+        gene_theirs = util.read_tsv(p_theirs, str, 0)[:, 0]
+        lookup = arr_to_dict(gene_theirs)
+        count = 0
+        for gene in gene_ours:
+            if gene in lookup:
+                count += 1
+        print('Comparing {} and {} {}:'.format(ours[i], prefix[i], suffix[i]))
+        print('Overlap | Ours | Theirs: {} | {} | {}'.format(count, gene_ours.shape[0], gene_theirs.shape[0]))
+
 if __name__ == '__main__':
-    cluster_quality ()
+    # cluster_quality ()
     # im_vector()
     # pd_vector()
+    compare_gene_list()

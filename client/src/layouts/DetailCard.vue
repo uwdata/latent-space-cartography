@@ -10,10 +10,12 @@
     </div>
     <div class="card-body">
       <div class="d-flex" style="font-size: 0.8em;">
-        <div class="p1">
+        <!--Image-->
+        <div class="p1" v-if="show_image">
           <img :src="imageUrl(detail)" />
         </div>
-        <div class="w-100 ml-2">
+        <!--Special formatting for emoji dataset-->
+        <div class="w-100 ml-2" v-if="dataset==='emoji'">
           <div class="mb-1 d-flex justify-content-between">
             <div>
               <b>{{detail.name}}</b>
@@ -27,19 +29,21 @@
               </span>
             </div>
           </div>
-          <div class="mb-1" v-if="detail.industry">
-            <b>Industry: </b>
-            {{detail.industry}}
-          </div>
-          <div class="mb-1" v-if="detail.source">
-            <b>Data Source: </b>
-            {{detail.source}}
-          </div>
           <div class="mb-1" v-if="detail.platform">
             {{detail.platform}} {{detail.version}}
           </div>
           <div class="mb-1 text-muted" v-if="detail.codepoints">
             <small>Code Points: {{detail.codepoints}}</small>
+          </div>
+        </div>
+        <!--Generic formatting-->
+        <div class="w-100 ml-2" v-else>
+          <div class="mb-1">
+            <b>{{detail.name}}</b>
+          </div>
+          <div class="mb-1" v-for="field in fields" v-if="detail[field]">
+            <b>{{fieldName(field)}}:</b>
+            {{detail[field]}}
           </div>
         </div>
       </div>
@@ -49,15 +53,22 @@
 
 <script>
   import {store, CONFIG} from '../controllers/config'
+  import _ from 'lodash'
 
   export default {
     name: 'DetailCard',
     data () {
       return {
-        shared: store.state
+        shared: store.state,
+        dataset: CONFIG.dataset,
+        show_image: CONFIG.rendering.image
       }
     },
     computed: {
+      fields () {
+        let fields = CONFIG.schema.meta
+        return _.filter(fields, (f) => f !== 'i' && f !== 'name' && f !== 'mean_color')
+      },
       necessary () {
         return CONFIG.schema.meta.length > 2
       },
@@ -97,6 +108,9 @@
       },
       imageUrl (p) {
         return store.getImageUrl(p.i)
+      },
+      fieldName (f) {
+        return _.map(f.split('_'), (word) => _.capitalize(word)).join(' ')
       }
     }
   }

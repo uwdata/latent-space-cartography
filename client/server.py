@@ -23,7 +23,7 @@ models = {}
 
 # dataset we're working with
 # from config_emoji import dset, img_rows, img_cols, img_chns, img_mode, dims, schema_meta
-from config_glove_6b import dset, dims, schema_meta
+from config_tybalt import dset, dims, schema_meta
 
 # FIXME: hack
 temp_store = {}

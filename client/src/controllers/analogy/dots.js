@@ -373,9 +373,10 @@ class Dots {
   _colorDot (d) {
     let c = this.color
 
+    //FIXME
     if (c === 'mean_color') {
       return d['mean_color']
-    } else if (c === 'industry' || c === 'source' || c === 'platform') {
+    } else if (c === 'industry' || c === 'source' || c === 'organ') {
       return this._scales.palette(d[c])
     }
 

@@ -5,32 +5,38 @@
         <img :src="imageUrl(detail)" />
       </div>
       <div class="w-100 ml-2">
-        <div class="mb-1 d-flex justify-content-between">
-          <div>
-            <b>{{detail.name}}</b>
-            <small class="ml-1 text-muted" v-if="detail.shortcode">
-              {{detail.shortcode}}
-            </small>
-          </div>
-          <div v-if="detail.category">
+        <!--Special formatting for emoji dataset-->
+        <div v-if="dataset==='emoji'">
+          <div class="mb-1 d-flex justify-content-between">
+            <div>
+              <b>{{detail.name}}</b>
+              <small class="ml-1 text-muted" v-if="detail.shortcode">
+                {{detail.shortcode}}
+              </small>
+            </div>
+            <div>
             <span class="badge" :style="badgeStyle(detail.category)">
               {{detail.category}}
             </span>
+            </div>
+          </div>
+          <div class="mb-1" v-if="detail.platform">
+            {{detail.platform}} {{detail.version}}
+          </div>
+          <div class="mb-1 text-muted" v-if="detail.codepoints">
+            <small>Code Points: {{detail.codepoints}}</small>
           </div>
         </div>
-        <div class="mb-1" v-if="detail.industry">
-          <b>Industry: </b>
-          {{detail.industry}}
-        </div>
-        <div class="mb-1" v-if="detail.source">
-          <b>Data Source: </b>
-          {{detail.source}}
-        </div>
-        <div class="mb-1" v-if="detail.platform">
-          {{detail.platform}} {{detail.version}}
-        </div>
-        <div class="mb-1 text-muted" v-if="detail.codepoints">
-          <small>Code Points: {{detail.codepoints}}</small>
+
+        <!--Generic case-->
+        <div v-else>
+          <div class="mb-1">
+            <b>{{detail.name}}</b>
+          </div>
+          <div class="mb-1" v-for="field in fields" v-if="detail[field]">
+            <b>{{fieldName(field)}}:</b>
+            {{detail[field]}}
+          </div>
         </div>
       </div>
     </div>
@@ -38,18 +44,22 @@
 </template>
 
 <script>
+  import _ from 'lodash'
   import {store, CONFIG} from '../controllers/config'
 
   export default {
     name: 'DetailTip',
     data () {
       return {
-        shared: store.state
+        shared: store.state,
+        dataset: CONFIG.dataset,
+        show_image: CONFIG.rendering.image
       }
     },
     computed: {
-      show_image () {
-        return CONFIG.rendering.image
+      fields () {
+        let fields = CONFIG.schema.meta
+        return _.filter(fields, (f) => f !== 'i' && f !== 'name' && f !== 'mean_color')
       },
       detail () {
         return this.shared.detail
@@ -105,6 +115,9 @@
       },
       imageUrl (p) {
         return store.getImageUrl(p.i)
+      },
+      fieldName (f) {
+        return _.map(f.split('_'), (word) => _.capitalize(word)).join(' ')
       }
     }
   }

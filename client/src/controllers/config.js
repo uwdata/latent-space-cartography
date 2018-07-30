@@ -10,6 +10,7 @@ const config_logo = {
   },
   rendering: {
     image: true,
+    dot_color: 'mean_color',
     ext: 'jpg',
   },
   search: {
@@ -26,6 +27,7 @@ const config_emoji = {
   },
   rendering: {
     image: true,
+    dot_color: 'mean_color',
     ext: 'png',
   },
   search: {
@@ -43,17 +45,37 @@ const config_glove = {
     'meta': ['i', 'name']
   },
   rendering: {
-    image: false
+    image: false,
+    dot_color: null
   },
   search: {
     simple: true
   }
 }
 
+const config_tybalt = {
+  dataset: 'tybalt',
+  train_split: 10458,
+  dims: [100],
+  schema: {
+    'meta': ['i', 'name', 'platform', 'age_at_diagnosis', 'race', 'stage', 'vital_status',
+      'disease', 'organ', 'gender', 'analysis_center', 'year_of_diagnosis']
+  },
+  rendering: {
+    image: false,
+    dot_color: 'organ'
+  },
+  search: {
+    simple: false,
+    by: ['name'],
+    filter: 'stage'
+  }
+}
+
 /**
  * Toggle dataset here!
  */
-let CONFIG = config_glove
+let CONFIG = config_tybalt
 
 const DEBUG = process.env.NODE_ENV === 'development'
 const DATASET = CONFIG.dataset

@@ -134,7 +134,7 @@
       right: 0
     }
     s.dot_radius = 3
-    s.dot_color = CONFIG.rendering.image ? 'mean_color' : null
+    s.dot_color = CONFIG.rendering.dot_color
     s.mark_type = CONFIG.rendering.image ? 2 : 3
     // s.dot_color = 'platform'
   }

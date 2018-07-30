@@ -45,15 +45,13 @@
       show_platform () {
         let meta = CONFIG.schema.meta
         return _.find('platform', meta) && _.find('version', meta)
-      },
-      show_image () {
-        return CONFIG.rendering.image
       }
     },
     data () {
       return {
         hovered: false,
-        dset: DATASET
+        dset: DATASET,
+        show_image: CONFIG.data_type === 'image'
       }
     },
     methods: {

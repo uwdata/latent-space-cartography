@@ -53,7 +53,7 @@
       return {
         shared: store.state,
         dataset: CONFIG.dataset,
-        show_image: CONFIG.rendering.image
+        show_image: CONFIG.data_type === 'image'
       }
     },
     computed: {

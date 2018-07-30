@@ -26,7 +26,7 @@
     },
     data () {
       return {
-        show_image: CONFIG.rendering.image
+        show_image: CONFIG.data_type === 'image'
       }
     },
     computed: {

@@ -29,7 +29,7 @@ class Scales {
     this.x = null
     this.y = null
 
-    this.palette = d3.scaleOrdinal(d3.schemeCategory10)
+    this.palette = d3.scaleOrdinal(d3.schemeCategory20)
 
     /**
      * Initialize

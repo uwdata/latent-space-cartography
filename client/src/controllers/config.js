@@ -3,13 +3,13 @@ import Vue from 'vue'
 
 const config_logo = {
   dataset: 'logo',
+  date_type: 'image',
   train_split: 15000,
   dims: [32, 64, 128, 256, 512, 1024],
   schema: {
     'meta': ['i', 'name', 'mean_color', 'source', 'industry']
   },
   rendering: {
-    image: true,
     dot_color: 'mean_color',
     ext: 'jpg',
   },
@@ -20,13 +20,13 @@ const config_logo = {
 
 const config_emoji = {
   dataset: 'emoji',
+  data_type: 'image',
   train_split: 13500,
   dims: [4, 8, 16, 32, 64, 128, 256, 512, 1024],
   schema: {
     'meta': ['i','name', 'mean_color', 'category', 'platform', 'version', 'codepoints', 'shortcode']
   },
   rendering: {
-    image: true,
     dot_color: 'mean_color',
     ext: 'png',
   },
@@ -39,13 +39,13 @@ const config_emoji = {
 
 const config_glove = {
   dataset: 'glove_6b',
+  data_type: 'text',
   train_split: 10000,
   dims: [50, 100, 200, 300],
   schema: {
     'meta': ['i', 'name']
   },
   rendering: {
-    image: false,
     dot_color: null
   },
   search: {
@@ -55,6 +55,7 @@ const config_glove = {
 
 const config_tybalt = {
   dataset: 'tybalt',
+  data_type: 'other',
   train_split: 10458,
   dims: [100],
   schema: {
@@ -62,7 +63,6 @@ const config_tybalt = {
       'disease', 'organ', 'gender', 'analysis_center', 'year_of_diagnosis']
   },
   rendering: {
-    image: false,
     dot_color: 'organ'
   },
   search: {

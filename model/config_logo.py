@@ -2,6 +2,7 @@
 # configurations unique to logo dataset
 
 dset = 'logo'
+data_type = 'image'
 img_rows, img_cols, img_chns = 64, 64, 3
 img_mode = 'RGB'
 train_split = 15000

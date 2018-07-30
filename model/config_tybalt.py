@@ -2,6 +2,7 @@
 # configurations of Tybalt data, produced by VAE on cancer gene expression.
 
 dset = 'tybalt'
+data_type = 'other'
 dims = [100]
 
 # MySQL table schema

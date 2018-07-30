@@ -22,8 +22,8 @@ from flaskext.mysql import MySQL
 models = {}
 
 # dataset we're working with
-# from config_emoji import dset, img_rows, img_cols, img_chns, img_mode, dims, schema_meta
-from config_tybalt import dset, dims, schema_meta
+# from config_emoji import dset, data_type, img_rows, img_cols, img_chns, img_mode, dims, schema_meta
+from config_tybalt import dset, data_type, dims, schema_meta
 
 # FIXME: hack
 temp_store = {}
@@ -45,12 +45,21 @@ def connect_db ():
 
     return conn, cursor
 
+# instantiate the model from our image generation VAE
 def create_model (latent_dim):
     base = './data/{}/models/{}/'.format(dset, latent_dim)
     mpath = abs_path(base + '{}_model_dim={}.json'.format(dset, latent_dim))
     wpath = abs_path(base + '{}_model_dim={}.h5'.format(dset, latent_dim))
     m = model.Vae(latent_dim = latent_dim, img_dim=(img_chns, img_rows, img_cols))
     models[latent_dim] = m.read(mpath, wpath) + (m,)
+
+# instantiate the model that's simply an h5py file
+def load_model (latent_dim):
+    from keras.models import load_model
+
+    mpath = './data/{}/models/{}_model_dim={}.h5'.format(dset, dset, latent_dim)
+    decoder = load_model(mpath)
+    models[latent_dim] = decoder
 
 # read latent space
 def read_ls (latent_dim):
@@ -60,7 +69,7 @@ def read_ls (latent_dim):
     return X
 
 # given a list of points in latent space, generate their corresponding images
-def _generate (latent_dim, points):
+def _generate_image (latent_dim, points):
     if not latent_dim in models:
         create_model(latent_dim)
     vae, encoder, decoder, m = models[latent_dim]
@@ -75,6 +84,15 @@ def _generate (latent_dim, points):
     print('Done.')
 
     return images
+
+# given a list of points in latent space, reconstruct via decoder
+# the reconstruction results are just arbitrary tensors
+def _generate_other (latent_dim, points):
+    if not latent_dim in models:
+        load_model(latent_dim)
+    decoder = models[latent_dim]
+    points = np.asarray(points, float)
+    return decoder.predict(points)
 
 # number of points within L2 distance of a given point
 # also return the nearest neighbor
@@ -106,14 +124,20 @@ def _sample_vec (start, end, n_samples = 8, over = True):
     return loc
 
 # interpolate between two points in a latent space
-# return a list of images sampled at equal steps along the path
+# return a list of reconstructed outputs sampled at equal steps along the path
 def _interpolate (X, start, end):
     n, latent_dim = X.shape
-    loc = _sample_vec(start, end)
+    if data_type == 'image':
+        loc = _sample_vec(start, end)
+        # generate these images
+        recon = _generate_image(latent_dim, loc)
+    else:
+        loc = _sample_vec(start, end, 1, False)
+        # generate tensor outputs
+        recon = _generate_other(latent_dim, loc)
     count, nn = _num_neighbors(X, loc)
 
-    # generate these images
-    return loc, _generate(latent_dim, loc), count, nn
+    return loc, recon, count, nn
 
 # linear orthogonal transformation of all points to the given axis
 def _project_axis (X, axis):
@@ -258,7 +282,7 @@ def pca_back ():
         re = pca.inverse_transform(d)
 
     # project from latent space to image
-    img =  _generate(latent_dim, re[i:i+1])[0]
+    img =  _generate_image(latent_dim, re[i:i+1])[0]
     img_fn = '{}.png'.format(int(time.time()))
     img.save(abs_path('./build/' + img_fn))
 
@@ -338,6 +362,7 @@ def apply_analogy ():
 def focus_vector():
     latent_dim = request.json['latent_dim']
     gid = request.json['groups'].split(',')
+    reply = {}
 
     # read latent space
     X = read_ls(latent_dim)
@@ -347,29 +372,32 @@ def focus_vector():
     end = _compute_group_centroid(X, gid[1])
     vec = end - start
 
-    # interpolate
-    loc, images, count, nearest = _interpolate(X, start, end)
-    fns = []
-    for idx, img in enumerate(images):
-        img_fn = '{}_{}.png'.format('to'.join(gid), idx)
-        fns.append(img_fn)
-        img.save(abs_path('./build/' + img_fn))
-
     # project
     X_transformed, U, _mean = _project_axis(np.copy(X), vec)
-    loc = np.dot(loc - _mean, U.T)
     temp_store['U'] = U #FIXME
     temp_store['_mean'] = _mean
+    reply['points'] = X_transformed.tolist()
 
-    reply = {
-        'images': fns,
-        'locations': loc.tolist(),
-        'neighbors': count,
-        'nearest': nearest,
-        'points': X_transformed.tolist()
-    }
+    # interpolate
+    if data_type == 'image':
+        loc, images, count, nearest = _interpolate(X, start, end)
+        loc = np.dot(loc - _mean, U.T)
+        fns = []
+        for idx, img in enumerate(images):
+            img_fn = '{}_{}.png'.format('to'.join(gid), idx)
+            fns.append(img_fn)
+            img.save(abs_path('./build/' + img_fn))
+        reply['images'] = fns
+        reply['locations'] = loc.tolist()
+        reply['neighbors'] = count
+        reply['nearest'] = nearest
+    elif data_type == 'other':
+        loc, recon, count, nearest = _interpolate(X, start, end)
+        loc = np.dot(loc - _mean, U.T)
+        reply['locations'] = loc.tolist()
 
-    return jsonify(reply), 200
+    return jsonify({}), 200
+    # return jsonify(reply), 200
 
 @app.route('/api/all_vector_diff', methods=['POST'])
 def all_vector_diff ():

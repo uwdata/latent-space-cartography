@@ -2,6 +2,7 @@
 # configurations unique to emoji dataset
 
 dset = 'emoji'
+data_type = 'image'
 img_rows, img_cols, img_chns = 64, 64, 4
 img_mode = 'RGBA'
 train_split = 19500

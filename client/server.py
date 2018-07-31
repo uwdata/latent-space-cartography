@@ -349,7 +349,7 @@ def apply_analogy ():
     loc = np.dot(loc - _mean, U.T)
 
     reply = {
-        'images': fns,
+        'outputs': fns,
         'locations': loc.tolist(),
         'neighbors': count,
         'nearest': nearest
@@ -382,22 +382,23 @@ def focus_vector():
     if data_type == 'image':
         loc, images, count, nearest = _interpolate(X, start, end)
         loc = np.dot(loc - _mean, U.T)
-        fns = []
+        recon = []
         for idx, img in enumerate(images):
             img_fn = '{}_{}.png'.format('to'.join(gid), idx)
-            fns.append(img_fn)
+            recon.append(img_fn)
             img.save(abs_path('./build/' + img_fn))
-        reply['images'] = fns
-        reply['locations'] = loc.tolist()
-        reply['neighbors'] = count
-        reply['nearest'] = nearest
     elif data_type == 'other':
         loc, recon, count, nearest = _interpolate(X, start, end)
         loc = np.dot(loc - _mean, U.T)
-        reply['locations'] = loc.tolist()
+        recon = recon.tolist()
 
-    return jsonify({}), 200
-    # return jsonify(reply), 200
+    if recon is not None:
+        reply['outputs'] = recon
+        reply['locations'] = loc.tolist()
+        reply['neighbors'] = count
+        reply['nearest'] = nearest
+
+    return jsonify(reply), 200
 
 @app.route('/api/all_vector_diff', methods=['POST'])
 def all_vector_diff ():

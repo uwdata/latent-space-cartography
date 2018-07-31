@@ -149,7 +149,7 @@
 </template>
 
 <script>
-  import {store, bus} from '../controllers/config'
+  import {store, bus, CONFIG} from '../controllers/config'
   import _ from 'lodash'
   import VueLoading from 'vue-loading-template'
 
@@ -187,6 +187,9 @@
 
       // register event
       bus.$on('draw-focus-vec', this.drawPrimaryVector)
+
+      // vector style
+      this.chart._vectors.data_type = CONFIG.data_type
 
       // vector score
       store.vectorScore(this.latent_dim, this.focus.start, this.focus.end)

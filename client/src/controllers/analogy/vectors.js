@@ -12,6 +12,7 @@ class Vectors {
      */
     this.lineWidth = styles.lineWidth || 2
     this.background = styles.background || '#fff'
+    this.data_type = 'image'
 
     /**
      * Private
@@ -39,7 +40,7 @@ class Vectors {
    * @param vector
    * @private
    */
-  _drawOne (vector) {
+  _drawImageVector (vector) {
     if (!vector) {
       return
     }
@@ -143,6 +144,52 @@ class Vectors {
     }
   }
 
+  _drawGenericVector (vector) {
+    if (!vector) {
+      return
+    }
+
+    let scales = this._scales
+
+    let line = d3.line()
+      .x((d) => scales.x(d.x))
+      .y((d) => scales.y(d.y))
+
+    // group
+    let group = this._parent.append('g')
+      .datum(vector) // so we can retrieve later
+      .classed('vector-group', true)
+      .on('mouseover', () => {moveToFront(group)})
+
+    // line background
+    this._drawLine(line, vector, group)
+      .classed('vector-background', true)
+      .style('stroke', this.background)
+      .style('stroke-opacity', 0.9)
+      .style('stroke-linecap', 'round')
+      .style('stroke-width', 10)
+
+    // draw lines with different textures
+    _.each(NEIGHBOR_BIN, (num, j) => {
+      let bin = _.filter(vector, (d) => d.neighbors >= num)
+      let path = this._drawLine(line, bin, group)
+      this._styleTexture(path, j)
+    })
+
+    // dot at each sampled location
+    group.selectAll('.vector-dot')
+      .data(vector)
+      .enter()
+      .append('circle')
+      .classed('vector-dot', true)
+      .attr('r', 3)
+      .attr('cx', (d) => scales.x(d.x))
+      .attr('cy', (d) => scales.y(d.y))
+      .style('fill', '#fff')
+      .style('stroke', (d) => d.neighbors > NEIGHBOR_BIN[3] ? '#222' : '#888')
+      .style('stroke-width', 2)
+  }
+
   _drawHull (pts, color) {
     let layer = this._parent.select('.halo_layer')
 
@@ -183,8 +230,10 @@ class Vectors {
 
     if(this.primary) {
       // draw vectors
-      this._drawOne(this.primary.line)
-      this._drawOne(this.analogy)
+      let drawFunc = this.data_type === 'image' ? this._drawImageVector.bind(this) :
+        this.data_type === 'other' ? this._drawGenericVector.bind(this) : () => {}
+      drawFunc(this.primary.line)
+      drawFunc(this.analogy)
 
       // draw confidence cone
       this._drawCone()

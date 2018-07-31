@@ -430,7 +430,7 @@ class Store {
           if (msg) {
             let points = this._formatPcaPoints(msg['points'])
             let line = this._formatVectorLine(msg['locations'], msg['neighbors'],
-              msg['images'], msg['nearest'])
+              msg['outputs'], msg['nearest'])
             resolve([points, line])
           } else {
             reject()
@@ -458,7 +458,7 @@ class Store {
 
           if (msg) {
             let line = this._formatVectorLine(msg['locations'], msg['neighbors'],
-              msg['images'], msg['nearest'])
+              msg['outputs'], msg['nearest'])
             resolve(line)
           } else {
             reject()
@@ -543,16 +543,20 @@ class Store {
     return _.map(points, (p) => _.assign(p, meta_dict[p.i]))
   }
 
-  _formatVectorLine (locations, neighbors, images, nearest) {
+  _formatVectorLine (locations, neighbors, outputs, nearest) {
     let n = neighbors.length
     return _.range(n).map((j) => {
-      return {
+      let res = {
         x: locations[j][0],
         y: locations[j][1],
         neighbors: neighbors[j],
-        image: images[j],
+        output: outputs[j],
         nearest: nearest[j]
       }
+      if (CONFIG.data_type === 'image') {
+        res.image = res.output
+      }
+      return res
     })
   }
 

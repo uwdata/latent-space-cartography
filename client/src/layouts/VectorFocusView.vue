@@ -151,8 +151,12 @@
 
       <!--List of the Most Different Output Dimensions-->
       <div class="m-3" v-if="data_type === 'other' && top">
-        <list-top-signal :signals="top[1]" :start="false"></list-top-signal>
-        <list-top-signal :signals="top[0]" :start="true" class="mt-3"></list-top-signal>
+        <list-top-signal :signals="top[1]" :start="false"
+                         :name_start="focus.alias_start"
+                         :name_end="focus.alias_end"></list-top-signal>
+        <list-top-signal :signals="top[0]" :start="true" class="mt-3"
+                         :name_start="focus.alias_start"
+                         :name_end="focus.alias_end"></list-top-signal>
       </div>
     </div>
 

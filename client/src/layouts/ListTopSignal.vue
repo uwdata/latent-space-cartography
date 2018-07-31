@@ -1,8 +1,16 @@
 <template>
-  <div>
-    <div class="bd-subtitle mb-3 text-uppercase">
-      Largest in {{start ? 'Start' : 'End'}} Group
+  <div class="mt-4">
+    <!--Title-->
+    <div class="bd-subtitle mb-3 text-uppercase" v-if="start">
+      Top Genes in V<sub class="text-capitalize">{{name_start}}</sub>
+      - V<sub class="text-capitalize">{{name_end}}</sub>
     </div>
+    <div class="bd-subtitle mb-3 text-uppercase" v-if="!start">
+      Top Genes in V<sub class="text-capitalize">{{name_end}}</sub>
+      - V<sub class="text-capitalize">{{name_start}}</sub>
+    </div>
+
+    <!--List-->
     <div>
       <div v-for="signal in signals" class="d-flex">
         <div class="mr-3 text-right w-25" style="font-size: 0.7em;">{{signal.gene}}</div>
@@ -24,6 +32,13 @@
       },
       start: {
         required: true
+      },
+      // group name for display purpose
+      name_start: {
+        'default': 'start'
+      },
+      name_end: {
+        'default': 'end'
       }
     },
     data() {

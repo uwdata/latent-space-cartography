@@ -148,6 +148,12 @@
           </div>
         </div>
       </div>
+
+      <!--List of the Most Different Output Dimensions-->
+      <div class="m-3" v-if="data_type === 'other' && top">
+        <list-top-signal :signals="top[1]" :start="false"></list-top-signal>
+        <list-top-signal :signals="top[0]" :start="true" class="mt-3"></list-top-signal>
+      </div>
     </div>
 
     <!--Footer-->
@@ -175,10 +181,14 @@
   import {store, bus, CONFIG} from '../controllers/config'
   import _ from 'lodash'
   import VueLoading from 'vue-loading-template'
+  import ListTopSignal from './ListTopSignal.vue'
+  import * as d3 from 'd3'
 
   export default {
     name: 'VectorFocusView',
-    components: {VueLoading},
+    components: {
+      ListTopSignal,
+      VueLoading},
     props: {
       latent_dim: {
         type: Number,
@@ -203,6 +213,7 @@
         score_hint: 'The average cosine similarity between all possible start and end pairs',
         analogy: null,
         original: null,
+        top: null,
         flipped: false,
         loading_analogy: false
       }
@@ -265,11 +276,20 @@
         store.state.tab = 0
       },
 
-      drawPrimaryVector (vector) {
+      drawPrimaryVector (vector, top) {
         this.original = vector.line
 
         this.chart._vectors.primary = vector
         this.chart._vectors.redraw()
+
+        // the strongest output signal (for arbitrary tensor data type)
+        let data = _.concat(top[0], top[1])
+        let xMax = d3.max(data, (d) => Math.abs(d.diff)) * 1.05
+        let xMin = d3.min(data, (d) => Math.abs(d.diff)) * 1.05
+        let scale = d3.scaleLinear().range([0, 100]).domain([xMin, xMax])
+        top[0] = _.map(top[0], (t) => _.extend({}, t, {width: scale(Math.abs(t.diff))}))
+        top[1] = _.reverse(_.map(top[1], (t) => _.extend({}, t, {width: scale(Math.abs(t.diff))})))
+        this.top = top
       },
 
       applyAnalogy (flipped = false) {

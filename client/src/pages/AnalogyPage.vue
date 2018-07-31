@@ -307,7 +307,7 @@
             vector.points_end = indicesToPoint(vector.list_end, points)
             // points_start and points_end are useful to draw confidence cone
             log_debug(vector.line)
-            bus.$emit('draw-focus-vec', vector)
+            bus.$emit('draw-focus-vec', vector, all[2])
           }, () => {
             this.loading = false
             //handle error
@@ -383,6 +383,11 @@
     border-left: 1px solid rgba(0,0,0,.1);
     background-color: #fafafa;
     padding-left: 0;
+  }
+
+  .bd-subtitle {
+    font-size: 0.8em;
+    font-weight: 500;
   }
 
   /* ------- D3 STYLE START ------- */

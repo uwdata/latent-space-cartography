@@ -9,7 +9,7 @@
     <!--List View-->
     <div v-if="!focus">
       <!--Top Division-->
-      <div class="m-3 bd-vector-title text-uppercase">
+      <div class="m-3 bd-subtitle text-uppercase">
         Add Vector
       </div>
       <div class="m-3 d-flex">
@@ -52,7 +52,7 @@
 
       <!--Vector List-->
       <div class="bd-vector-list p-3 pt-4">
-        <div class="mb-3 bd-vector-title text-uppercase">
+        <div class="mb-3 bd-subtitle text-uppercase">
           Vector List
         </div>
         <div class="h-100 d-flex flex-column justify-content-center"
@@ -243,10 +243,5 @@
     position: absolute;
     left: 40%;
     margin-top: -15px;
-  }
-
-  .bd-vector-title {
-    font-size: 0.8em;
-    font-weight: 500;
   }
 </style>

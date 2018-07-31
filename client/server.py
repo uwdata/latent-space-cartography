@@ -3,6 +3,7 @@ import json
 from sklearn.decomposition import PCA
 from sklearn.metrics.pairwise import cosine_similarity
 from sklearn import preprocessing
+from scipy.stats import norm
 import numpy as np
 import h5py
 import sys
@@ -93,6 +94,17 @@ def _generate_other (latent_dim, points):
     decoder = models[latent_dim]
     points = np.asarray(points, float)
     return decoder.predict(points)
+
+# given a vector w, return the index in top and bottom quantile
+# the quantile is computed as highsd away in a standard normal distribution
+def _top_and_bottom (w, highsd=2.5):
+    n = w.shape[0]
+    cutoff = n - int(n * norm.cdf(highsd))
+    srt = np.argsort(w)
+    w = w.tolist() # numpy float32 is not JSON serializable
+    pos = [{'i': i, 'diff': w[i]} for i in srt[-cutoff:]]
+    neg = [{'i': i, 'diff': w[i]} for i in srt[:cutoff]]
+    return pos, neg
 
 # number of points within L2 distance of a given point
 # also return the nearest neighbor
@@ -399,6 +411,9 @@ def focus_vector():
     elif data_type == 'other':
         loc, recon, count, nearest = _interpolate(X, start, end)
         loc = np.dot(loc - _mean, U.T)
+        # high weight genes
+        diff = recon[-1] - recon[0]
+        reply['top_end'], reply['top_start'] = _top_and_bottom(diff)
         recon = recon.tolist()
 
     if recon is not None:

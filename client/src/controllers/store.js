@@ -1,6 +1,6 @@
 import http from 'axios'
 import _ from 'lodash'
-import {DATASET, CONFIG} from './config'
+import {DATASET, CONFIG, log_debug} from './config'
 
 /**
  * Handles client-server connection and serves as a central data store for client.
@@ -445,7 +445,9 @@ class Store {
             let points = this._formatPcaPoints(msg['points'])
             let line = this._formatVectorLine(msg['locations'], msg['neighbors'],
               msg['outputs'], msg['nearest'])
-            resolve([points, line])
+            let top = [this._joinHeader(msg['top_start']),
+              this._joinHeader(msg['top_end'])]
+            resolve([points, line, top])
           } else {
             reject()
           }
@@ -555,6 +557,21 @@ class Store {
   _joinMeta (points) {
     let meta_dict = _.keyBy(this.meta, 'i')
     return _.map(points, (p) => _.assign(p, meta_dict[p.i]))
+  }
+
+  /**
+   * Map input dimension index to corresponding header
+   * @param vec
+   * @private
+   */
+  _joinHeader (vec) {
+    vec = vec || []
+    if (!this.header || !this.header.length) {
+      log_debug('[WARNING]: lack input header information.')
+      return vec
+    }
+    let meta_dict = _.keyBy(this.header, 'i')
+    return _.map(vec, (v) => _.assign(v, meta_dict[v.i]))
   }
 
   _formatVectorLine (locations, neighbors, outputs, nearest) {

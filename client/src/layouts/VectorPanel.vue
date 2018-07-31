@@ -17,14 +17,18 @@
           <button v-if="!start" class="btn btn-outline-secondary">
             <i class="fa fa-fw fa-circle-o"></i>
           </button>
-          <group-thumb v-if="start" :list="start.list" :width="4"
+          <button v-if="start && !show_image" class="btn btn-info">
+            <i class="fa fa-fw fa-check"></i>
+          </button>
+          <group-thumb v-if="start && show_image" :list="start.list" :width="4"
                        class="m-1 bd-pointer"></group-thumb>
         </div>
 
         <!--Middle-->
         <div class="d-inline-block w-100">
           <div class="bd-arrow h-50"></div>
-          <button class="btn btn-secondary btn-sm bd-arrow-btn"
+          <button class="btn btn-sm bd-arrow-btn"
+                  :class="{'btn-secondary': !start || !end, 'btn-warning': start && end}"
                   @click="clickAdd" :disabled="!start || !end">Add</button>
         </div>
 
@@ -34,6 +38,9 @@
              v-b-modal.modal-group v-b-tooltip.hover>
           <group-thumb v-if="end" :list="end.list" :width="4"
                        class="m-1 bd-pointer"></group-thumb>
+          <button v-if="end && !show_image" class="btn btn-info">
+            <i class="fa fa-fw fa-check"></i>
+          </button>
           <button v-if="!end" class="btn btn-outline-secondary">
             <i class="fa fa-fw fa-circle-o"></i>
           </button>
@@ -81,7 +88,7 @@
 </template>
 
 <script>
-  import {store} from '../controllers/config'
+  import {store, CONFIG} from '../controllers/config'
   import moment from 'moment'
   import GroupModal from './GroupModal.vue'
   import GroupThumb from './GroupThumbnail.vue'
@@ -117,6 +124,7 @@
         vectors: [],
         focus: null,
         shared: store.state,
+        show_image: CONFIG.data_type === 'image',
         loading_vectors: false
       }
     },

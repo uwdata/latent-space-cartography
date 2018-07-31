@@ -36,36 +36,58 @@
         <!--Start Group-->
         <div class="bd-panel-card bd-pointer w-50"
              @click="viewGroup(focus.list_start)">
-          <div>
-            <b>Start:</b>
-            <div class="text-truncate">{{focus.alias_start}}</div>
-          </div>
-          <div class="mt-2">
-            <img v-for="pi in focus.list_start.slice(0, totalImage)"
-                 :src="imageUrl(pi)" class="bd-img-box"/>
-            <div class="text-right">
-              <small class="text-muted" v-if="startMore">
-                ... {{startMore}} more
-              </small>
+
+          <!--If we have images-->
+          <div v-if="data_type === 'image'">
+            <div>
+              <b>Start:</b>
+              <div class="text-truncate">{{focus.alias_start}}</div>
             </div>
+            <div class="mt-2">
+              <img v-for="pi in focus.list_start.slice(0, totalImage)"
+                   :src="imageUrl(pi)" class="bd-img-box"/>
+              <div class="text-right">
+                <small class="text-muted" v-if="startMore">
+                  ... {{startMore}} more
+                </small>
+              </div>
+            </div>
+          </div>
+
+          <!--If we don't have images-->
+          <div v-else>
+            <b>Start:</b>
+            <div class="mb-2">{{focus.alias_start}}</div>
+            <small class="text-muted">{{focus.list_start.length}} total</small>
           </div>
         </div>
 
         <!--End Group-->
         <div class="bd-panel-card bd-pointer ml-3 w-50"
              @click="viewGroup(focus.list_end)">
-          <div>
-            <b>End:</b>
-            <div class="text-truncate">{{focus.alias_end}}</div>
-          </div>
-          <div class="mt-2">
-            <img v-for="pi in focus.list_end.slice(0, totalImage)"
-                 :src="imageUrl(pi)" class="bd-img-box"/>
-            <div class="text-right">
-              <small class="text-muted" v-if="endMore">
-                ... {{endMore}} more
-              </small>
+
+          <!--If we have images-->
+          <div v-if="data_type === 'image'">
+            <div>
+              <b>End:</b>
+              <div class="text-truncate">{{focus.alias_end}}</div>
             </div>
+            <div class="mt-2">
+              <img v-for="pi in focus.list_end.slice(0, totalImage)"
+                   :src="imageUrl(pi)" class="bd-img-box"/>
+              <div class="text-right">
+                <small class="text-muted" v-if="endMore">
+                  ... {{endMore}} more
+                </small>
+              </div>
+            </div>
+          </div>
+
+          <!--If we don't have images-->
+          <div v-else>
+            <b>End:</b>
+            <div class="mb-2">{{focus.alias_end}}</div>
+            <small class="text-muted">{{focus.list_end.length}} total</small>
           </div>
         </div>
       </div>
@@ -95,12 +117,12 @@
       </div>
 
       <!--Hint-->
-      <div v-if="!detail" class="m-5 text-muted text-center">
+      <div v-if="!detail && support_analogy" class="m-5 text-muted text-center">
         Select a point (click, or search) to apply this attribute vector.
       </div>
 
-      <!--Vector Details-->
-      <div class="d-flex m-3" v-if="original && analogy">
+      <!--Vector Details Comparing Original & Analogy-->
+      <div class="d-flex m-3" v-if="support_analogy && original && analogy">
         <!--Original-->
         <div class="w-50 d-flex mt-3"
              :class="{'flex-column-reverse': flipped, 'flex-column': !flipped}">
@@ -128,7 +150,7 @@
     </div>
 
     <!--Footer-->
-    <div class="bd-panel-footer" v-if="detail">
+    <div class="bd-panel-footer" v-if="detail && support_analogy">
       <!--Apply Analogy-->
       <div class="d-flex justify-content-center" v-if="!loading_analogy">
         <div class="mt-3">
@@ -173,6 +195,8 @@
         shared: store.state,
         tutorial: store.tutorial,
         need_help: true,
+        support_analogy: CONFIG.data_type === 'image',
+        data_type: CONFIG.data_type,
         totalImage: 5,
         score: null,
         score_hint: 'The average cosine similarity between all possible start and end pairs',

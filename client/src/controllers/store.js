@@ -41,7 +41,7 @@ class Store {
      * Display help information in prominent places.
      */
     this.tutorial = {
-      vector: true
+      vector: false
     }
 
     /**

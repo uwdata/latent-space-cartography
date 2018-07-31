@@ -23,7 +23,7 @@ models = {}
 
 # dataset we're working with
 # from config_emoji import dset, data_type, img_rows, img_cols, img_chns, img_mode, dims, schema_meta
-from config_tybalt import dset, data_type, dims, schema_meta
+from config_tybalt import dset, data_type, dims, schema_meta, schema_header
 
 # FIXME: hack
 temp_store = {}
@@ -310,7 +310,16 @@ def get_meta ():
     query = 'SELECT {} FROM {}_meta'.format(schema_meta, dset)
     cursor.execute(query)
     data = [list(i) for i in cursor.fetchall()]
-    return jsonify({'data': data}), 200
+    reply = {'meta': data}
+
+    # header is meta data on input data columns
+    if schema_header:
+        query = 'SELECT {} FROM {}_header'.format(schema_header, dset)
+        cursor.execute(query)
+        header = [list(i) for i in cursor.fetchall()]
+        reply['header'] = header
+
+    return jsonify(reply), 200
 
 # apply analogy
 @app.route('/api/apply_analogy', methods=['POST'])

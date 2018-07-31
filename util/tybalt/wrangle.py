@@ -11,11 +11,13 @@ p_latent = os.path.join(base, 'data', 'encoded_rnaseq_onehidden_warmup_batchnorm
 p_raw = os.path.join(base, 'data', 'pancan_scaled_zeroone_rnaseq.h5')
 p_id = os.path.join(base, 'data', 'patient_id.csv')
 p_clinical = os.path.join(base, 'data', 'tybalt_features_with_clinical.tsv')
+p_header = os.path.join(base, 'data', 'pancan_scaled_zeroone_rnaseq_header.csv')
 
 out_base = '/Users/yliu0/data/tybalt/'
 out_latent = os.path.join(out_base, 'latent/latent100.h5')
 out_raw = os.path.join(out_base, 'raw.h5')
 out_db = os.path.join(out_base, 'database.csv')
+out_header = os.path.join(out_base, 'header.csv')
 
 # read tsv, discarding (optionally) the first row and (optionally) the first column
 def read_tsv (fn, dtype=float, col_start=1, row_start=1):
@@ -81,7 +83,17 @@ def wrangle_meta ():
         for row in out:
             writer.writerow(row)
 
+# produce a CSV to be imported into database, that contains gene names
+def wrangle_header ():
+    header = read_csv_single(p_header)
+    with open(out_header, 'wb') as csvfile:
+        writer = csv.writer(csvfile, delimiter=',')
+        writer.writerow(['i', 'name'])
+        for i in range(header.shape[0]):
+            writer.writerow([i, header[i]])
+
 if __name__ == '__main__':
     # convert_ls()
     # copy_raw()
-    wrangle_meta()
+    # wrangle_meta()
+    wrangle_header()

@@ -24,6 +24,11 @@ class Store {
     this.meta = []
 
     /**
+     * Meta data about what each input dimension means
+     */
+    this.header = []
+
+    /**
      * An array of indices of user's favorite points.
      * Warning: do not re-assign the pointer! Only mutate the content of the array.
      */
@@ -69,6 +74,7 @@ class Store {
 
       // data schema
       let schema = CONFIG.schema.meta
+      let schema_header = CONFIG.schema.header
 
       // go fetch from the server
       http.post('/api/get_meta', {})
@@ -76,14 +82,22 @@ class Store {
           let msg = response.data
 
           if (msg) {
-            this.meta = _.map(msg.data, (m) => {
+            this.meta = _.map(msg.meta, (m) => {
               let result = {}
               _.each(m, (val, idx) => {
                 result[schema[idx]] = val
               })
               return result
             })
-            resolve(this.meta)
+
+            this.header = !msg.header ? [] : _.map(msg.header, (m) => {
+              let result = {}
+              _.each(m, (val, idx) => {
+                result[schema_header[idx]] = val
+              })
+              return result
+            })
+            resolve()
           } else {
             reject(`Fail to initialize.`)
           }

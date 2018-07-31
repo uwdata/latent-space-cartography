@@ -60,7 +60,8 @@ const config_tybalt = {
   dims: [100],
   schema: {
     'meta': ['i', 'name', 'platform', 'age_at_diagnosis', 'race', 'stage', 'vital_status',
-      'disease', 'organ', 'gender', 'analysis_center', 'year_of_diagnosis']
+      'disease', 'organ', 'gender', 'analysis_center', 'year_of_diagnosis'],
+    'header': ['i', 'gene']
   },
   rendering: {
     dot_color: 'organ'

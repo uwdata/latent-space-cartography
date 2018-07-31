@@ -32,7 +32,8 @@
         <div v-if="!score" class="mb-3"></div>
       </div>
 
-      <div class="ml-3 mr-3 mb-3 d-flex bd-vector-groups">
+      <!--Start & End-->
+      <div class="ml-3 mr-3 mb-1 d-flex bd-vector-groups">
         <!--Start Group-->
         <div class="bd-panel-card bd-pointer w-50"
              @click="viewGroup(focus.list_start)">
@@ -90,6 +91,13 @@
             <small class="text-muted">{{focus.list_end.length}} total</small>
           </div>
         </div>
+      </div>
+      <!--Start & End Legend-->
+      <div class="ml-3 mr-3 mb-3 d-flex bd-vector-groups">
+        <div class="w-50 bd-group-legend"
+             style="background-color: rgba(131,88,213, 0.2);"></div>
+        <div class="w-50 ml-3 bd-group-legend"
+             style="background-color: rgba(244,196,76, 0.2);"></div>
       </div>
 
       <!--Tutorial-->
@@ -334,6 +342,11 @@
   .bd-footer-img {
     width: 2.5rem;
     height: 2.5rem;
+  }
+
+  .bd-group-legend {
+    height: 6px;
+    border-radius: 2px;
   }
 
   .img-24 {

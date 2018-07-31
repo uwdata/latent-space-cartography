@@ -33,9 +33,9 @@
       </div>
 
       <!--Start & End-->
-      <div class="ml-3 mr-3 mb-1 d-flex bd-vector-groups">
+      <div class="ml-3 mr-3 mb-3 d-flex bd-vector-groups">
         <!--Start Group-->
-        <div class="bd-panel-card bd-pointer w-50"
+        <div class="bd-panel-card start bd-pointer w-50"
              @click="viewGroup(focus.list_start)">
 
           <!--If we have images-->
@@ -64,7 +64,7 @@
         </div>
 
         <!--End Group-->
-        <div class="bd-panel-card bd-pointer ml-3 w-50"
+        <div class="bd-panel-card end bd-pointer ml-3 w-50"
              @click="viewGroup(focus.list_end)">
 
           <!--If we have images-->
@@ -91,13 +91,6 @@
             <small class="text-muted">{{focus.list_end.length}} total</small>
           </div>
         </div>
-      </div>
-      <!--Start & End Legend-->
-      <div class="ml-3 mr-3 mb-3 d-flex bd-vector-groups">
-        <div class="w-50 bd-group-legend"
-             style="background-color: rgba(131,88,213, 0.2);"></div>
-        <div class="w-50 ml-3 bd-group-legend"
-             style="background-color: rgba(244,196,76, 0.2);"></div>
       </div>
 
       <!--Tutorial-->
@@ -325,6 +318,14 @@
     background-color: #fff;
   }
 
+  .bd-panel-card.start {
+    border-top: rgba(131,88,213, 0.2) 6px solid;
+  }
+
+  .bd-panel-card.end {
+    border-top: rgba(244,196,76, 0.2) 6px solid;
+  }
+
   .bd-panel-card:hover {
     background-color: #fafafa;
   }
@@ -342,11 +343,6 @@
   .bd-footer-img {
     width: 2.5rem;
     height: 2.5rem;
-  }
-
-  .bd-group-legend {
-    height: 6px;
-    border-radius: 2px;
   }
 
   .img-24 {

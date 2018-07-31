@@ -104,7 +104,7 @@ def _top_and_bottom (w, highsd=2.5):
     w = w.tolist() # numpy float32 is not JSON serializable
     pos = [{'i': i, 'diff': w[i]} for i in srt[-cutoff:]]
     neg = [{'i': i, 'diff': w[i]} for i in srt[:cutoff]]
-    return pos, neg
+    return pos[::-1], neg
 
 # number of points within L2 distance of a given point
 # also return the nearest neighbor

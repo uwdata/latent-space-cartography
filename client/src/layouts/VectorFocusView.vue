@@ -292,7 +292,7 @@
         let xMin = d3.min(data, (d) => Math.abs(d.diff)) * 1.05
         let scale = d3.scaleLinear().range([0, 100]).domain([xMin, xMax])
         top[0] = _.map(top[0], (t) => _.extend({}, t, {width: scale(Math.abs(t.diff))}))
-        top[1] = _.reverse(_.map(top[1], (t) => _.extend({}, t, {width: scale(Math.abs(t.diff))})))
+        top[1] = _.map(top[1], (t) => _.extend({}, t, {width: scale(Math.abs(t.diff))}))
         this.top = top
       },
 

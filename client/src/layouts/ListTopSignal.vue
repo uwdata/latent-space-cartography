@@ -56,10 +56,10 @@
   }
 
   .bd-bar.start{
-    background-color: rgba(131,88,213, 0.6);
+    background-color: rgba(131,88,213, 0.65);
   }
 
   .bd-bar.end{
-    background-color: rgba(244,196,76, 0.6);
+    background-color: rgba(244,196,76, 0.8);
   }
 </style>

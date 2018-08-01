@@ -42,9 +42,7 @@
             <b>{{detail.name}}</b>
           </div>
           <!--The heatmap-->
-          <div v-if="data_type === 'other'" class="mb-1">
-            <div class="mb-1">Gene Expression Profile:</div>
-            <div id="heatmap-container"></div>
+          <div v-if="data_type === 'other'" class="mt-3" id="heatmap-container">
           </div>
           <div class="mb-1" v-for="field in fields" v-if="detail[field]">
             <b>{{fieldName(field)}}:</b>

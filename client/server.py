@@ -69,6 +69,12 @@ def read_ls (latent_dim):
         X = np.asarray(f['latent'])
     return X
 
+def read_raw ():
+    p_raw = abs_path('./data/{}/raw.h5'.format(dset))
+    with h5py.File(p_raw, 'r') as f:
+        X = np.asarray(f['data'])
+    return X
+
 # given a list of points in latent space, generate their corresponding images
 def _generate_image (latent_dim, points):
     if not latent_dim in models:
@@ -502,6 +508,14 @@ def cluster_score ():
     score = (b - a) / max(a, b)
 
     return jsonify({'score': score}), 200
+
+# get the raw (input) data for a given index
+# useful if the data type is arbitrary vector
+@app.route('/api/get_raw', methods=['POST'])
+def get_raw ():
+    i = request.json['i']
+    X = read_raw()
+    return jsonify({'data': X[i].tolist()}), 200
 
 # save a group
 @app.route('/api/save_group', methods=['POST'])

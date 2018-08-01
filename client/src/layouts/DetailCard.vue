@@ -73,6 +73,12 @@
         return CONFIG.schema.meta.length > 2
       },
       detail () {
+        if (this.shared.detail_card) {
+          store.getRaw(this.shared.detail_card.i)
+            .then((data) => {
+              console.log(data)
+            }, () => {})
+        }
         return this.shared.detail_card
       }
     },

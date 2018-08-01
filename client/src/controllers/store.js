@@ -242,6 +242,30 @@ class Store {
   }
 
   /**
+   * Get the raw (input) data for the i-th sample
+   * Useful when input data type is arbitrary vector
+   * @param i
+   */
+  getRaw (i) {
+    return new Promise((resolve, reject) => {
+      http.post('/api/get_raw', {'i': i})
+        .then((response) => {
+          let msg = response.data
+
+          if (msg) {
+            resolve(_.map(msg.data, (val, idx) => {
+              return _.assign({}, this.header[idx], {'i': idx, 'value': val})
+            }))
+          } else {
+            reject(`Internal server error.`)
+          }
+        }, () => {
+          reject(`Network error.`)
+        })
+    })
+  }
+
+  /**
    * Given a point in the PCA space, transform it back to latent space and then to images.
    * @param x
    * @param y

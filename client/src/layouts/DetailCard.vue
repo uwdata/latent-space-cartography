@@ -11,7 +11,7 @@
     <div class="card-body">
       <div class="d-flex" style="font-size: 0.8em;">
         <!--Image-->
-        <div class="p1" v-if="show_image">
+        <div class="p1" v-if="data_type === 'image'">
           <img :src="imageUrl(detail)" />
         </div>
         <!--Special formatting for emoji dataset-->
@@ -41,6 +41,11 @@
           <div class="mb-1">
             <b>{{detail.name}}</b>
           </div>
+          <!--The heatmap-->
+          <div v-if="data_type === 'other'" class="mb-1">
+            <div class="mb-1">Gene Expression Profile:</div>
+            <div id="heatmap-container"></div>
+          </div>
           <div class="mb-1" v-for="field in fields" v-if="detail[field]">
             <b>{{fieldName(field)}}:</b>
             {{detail[field]}}
@@ -54,6 +59,7 @@
 <script>
   import {store, CONFIG} from '../controllers/config'
   import _ from 'lodash'
+  import Heatmap from '../controllers/analogy/heatmap'
 
   export default {
     name: 'DetailCard',
@@ -61,7 +67,8 @@
       return {
         shared: store.state,
         dataset: CONFIG.dataset,
-        show_image: CONFIG.data_type === 'image'
+        data_type: CONFIG.data_type,
+        chart: new Heatmap()
       }
     },
     computed: {
@@ -76,7 +83,8 @@
         if (this.shared.detail_card) {
           store.getRaw(this.shared.detail_card.i)
             .then((data) => {
-              console.log(data)
+              this.chart.setData(data)
+              this.chart.draw('#heatmap-container')
             }, () => {})
         }
         return this.shared.detail_card

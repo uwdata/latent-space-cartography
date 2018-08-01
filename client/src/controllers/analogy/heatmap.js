@@ -1,5 +1,8 @@
 import * as d3 from 'd3'
 
+/**
+ * A heatmap showing arbitrary vector value, e.g. gene expression profile.
+ */
 class Heatmap {
   constructor () {
     /**
@@ -17,6 +20,7 @@ class Heatmap {
     this._color_scale = null
     this._ctx = null
     this._custom = null
+    this._parent = null
 
     /**
      * Data
@@ -29,28 +33,28 @@ class Heatmap {
    * @param parent
    */
   draw (parent) {
-    if (!this._ctx) {
-      // compute height
-      let r = this.radius
-      this.outerHeight = this.data.length * r * r / this.outerWidth
-
-      // create a canvas
-      let canvas = d3.select(parent)
-        .append('canvas')
-        .attr('width', this.outerWidth)
-        .attr('height', this.outerHeight)
-
-      let ctx = canvas.node().getContext('2d')
-
-      // create the hidden DOM ...
-      let customDom = document.createElement('custom')
-      let custom = d3.select(customDom)
-
-      this._ctx = ctx
-      this._custom = custom
-    }
-
+    this._parent = parent
     this.clearData()
+
+    // compute height
+    let r = this.radius
+    this.outerHeight = this.data.length * r * r / this.outerWidth
+
+    // create a canvas
+    let canvas = d3.select(parent)
+      .append('canvas')
+      .attr('width', this.outerWidth)
+      .attr('height', this.outerHeight)
+
+    let ctx = canvas.node().getContext('2d')
+
+    // create the hidden DOM ...
+    let customDom = document.createElement('custom')
+    let custom = d3.select(customDom)
+
+    this._ctx = ctx
+    this._custom = custom
+
     // binding data to element
     this.bindData()
 
@@ -59,15 +63,23 @@ class Heatmap {
   }
 
   /**
-   * Remove previous nodes in the virtual DOM
+   * Remove previous drawing
    */
   clearData () {
-    if (!this._custom) {
-      return
+    if (this._custom) {
+      let node = this._custom.node()
+      while (node.firstChild) {
+        node.removeChild(node.firstChild)
+      }
+      node.remove()
+      this._custom = null
     }
-    let node = this._custom.node()
-    while (node.firstChild) {
-      node.removeChild(node.firstChild)
+    if (this._ctx && this._parent) {
+      let node = d3.select(this._parent).node()
+      while (node.firstChild) {
+        node.removeChild(node.firstChild)
+      }
+      this._ctx = null
     }
   }
 

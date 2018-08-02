@@ -1,4 +1,5 @@
 import * as d3 from 'd3'
+import _ from 'lodash'
 
 import Scales from './analogy/scales'
 import DotBrush from './analogy/brush'
@@ -117,8 +118,8 @@ class Scatter {
       .classed('halo_layer', true)
 
     // Dots
-    this._dots = new Dots(scales, objects, this.dot_radius,
-      this.dot_color, this.mark_type)
+    this._dots = new Dots(scales, objects, _.pick(this, ['dot_color', 'dot_radius',
+      'mark_type', 'outerWidth', 'outerHeight']))
     this._dots.draw(data, emitter, this.dispatch)
 
     // Lines

@@ -2,7 +2,6 @@ import * as d3 from 'd3'
 import _ from 'lodash'
 import {store} from '../../controllers/config'
 import {moveToFront} from './util'
-import {legendColor} from 'd3-svg-legend'
 
 /**
  * @fileOverview
@@ -13,17 +12,17 @@ class Dots {
    * Constructor
    * @param scales
    * @param parent
-   * @param radius
-   * @param mark_type
-   * @param color
+   * @param style
    */
-  constructor (scales, parent, radius, color, mark_type) {
+  constructor (scales, parent, style) {
     /**
      * Styling
      */
-    this.radius = radius
-    this.color = color
-    this.mark_type = mark_type
+    this.radius = style.dot_radius
+    this.color = style.dot_color
+    this.mark_type = style.mark_type
+    this.parent_width = style.outerWidth
+    this.parent_height = style.outerHeight
 
     /**
      * Communicate with parent
@@ -102,6 +101,11 @@ class Dots {
         .style('filter', 'url(#text-bg)')
 
       this._positionText(t, font_size)
+    }
+
+    // draw color legend
+    if (this._useCategorical()) {
+      this._drawColorLegend(parent)
     }
 
     function dotMouseover(d) {
@@ -187,15 +191,66 @@ class Dots {
    * @private
    */
   _drawColorLegend (parent) {
-    let legend = legendColor()
-      .scale(this._scales.palette)
-      .shape('circle')
-      .shapeRadius(7)
+    // prepare data
+    let names = this._scales.palette.domain()
+    let data = []
+    for (let i = 0; i < names.length; i++) {
+      data.push({'i': i, 'name': names[i], 'color': this._scales.palette(names[i])})
+    }
 
-    parent.append('g')
-      .attr('class', 'colorLegend')
-      .attr('transform', 'translate(30, 30)')
-      .call(legend)
+    // calculate width and height
+    const outer_padding = 15
+    const inner_padding = 10
+    const mark_size = 5
+    const font_size = 12
+
+    // find the longest word
+    let max = 0
+    _.each(names, (name) => {
+      max = Math.max(max, name.length)
+    })
+
+    // assuming vertical layout
+    let width = outer_padding * 2 + inner_padding + mark_size + font_size * max * 0.5
+    let height = outer_padding * 2 + font_size * names.length * 0.95
+
+    // we want to place the legend in lower right
+    let x0 = this.parent_width - width
+    let y0 = this.parent_height - height
+
+    // background
+    let bg = parent.append('g')
+      .attr('class', 'color-legend')
+      .attr('transform', `translate(${x0},${y0})`)
+
+    bg
+      .append('rect')
+      .attr('width', width)
+      .attr('height', height)
+      .attr('fill', '#fff')
+
+    // the mark
+    bg.selectAll('.legend-mark')
+      .data(data)
+      .enter()
+      .append('circle')
+      .classed('legend-mark', true)
+      .attr('r', () => mark_size)
+      .attr('cx', () => outer_padding)
+      .attr('cy', (d) => outer_padding + d.i * font_size - mark_size)
+      .style('fill', (d) => d.color)
+
+    // the text
+    bg.selectAll('.legend-label')
+      .data(data)
+      .enter()
+      .append('text')
+      .classed('legend-label', true)
+      .text((d) => d.name || 'Unknown')
+      .attr('x', () => outer_padding + mark_size + inner_padding)
+      .attr('y', (d) => outer_padding + d.i * font_size)
+      .style('font-size', () => font_size + 'px')
+      .attr('fill', '#343a40')
   }
 
   /**
@@ -382,6 +437,14 @@ class Dots {
   }
 
   /**
+   * Whether the dots use a categorical palette
+   * @private
+   */
+  _useCategorical () {
+    return (this.color && this.color !== 'mean_color')
+  }
+
+  /**
    * Given a D3 datum, color it according to the current color attribute.
    * @param d
    * @returns {*}
@@ -390,10 +453,9 @@ class Dots {
   _colorDot (d) {
     let c = this.color
 
-    //FIXME
     if (c === 'mean_color') {
       return d['mean_color']
-    } else if (c === 'industry' || c === 'source' || c === 'organ') {
+    } else if (this._useCategorical()) {
       return this._scales.palette(d[c])
     }
 

@@ -163,7 +163,7 @@ class Heatmap {
       .attr('transform', 'translate(0, -5)')
 
     // axis
-    let axis = d3.axisBottom(num_scale)
+    let axis = d3.axisBottom(num_scale).ticks(4)
     svg.append('g')
       .attr('class', 'axis')
       .call(axis)
@@ -173,7 +173,7 @@ class Heatmap {
       .attr('x', this.outerWidth * 0.5)
       .attr('y', 35)
       .attr('text-anchor', 'middle')
-      .style('font-weight', '500')
+      .style('font-size', '11px')
       .text('Gene Expression Level')
   }
 

@@ -2,6 +2,7 @@ import * as d3 from 'd3'
 import _ from 'lodash'
 import {store} from '../../controllers/config'
 import {moveToFront} from './util'
+import {legendColor} from 'd3-svg-legend'
 
 /**
  * @fileOverview
@@ -126,7 +127,6 @@ class Dots {
       emitter.onDotClicked(d)
     }
 
-
     this._registerCallbacks(dispatch)
   }
 
@@ -179,6 +179,23 @@ class Dots {
         .attr('width', () => img_size)
         .attr('height', () => img_size)
     }
+  }
+
+  /**
+   * Draw a legend for the categorical palette.
+   * @param parent
+   * @private
+   */
+  _drawColorLegend (parent) {
+    let legend = legendColor()
+      .scale(this._scales.palette)
+      .shape('circle')
+      .shapeRadius(7)
+
+    parent.append('g')
+      .attr('class', 'colorLegend')
+      .attr('transform', 'translate(30, 30)')
+      .call(legend)
   }
 
   /**

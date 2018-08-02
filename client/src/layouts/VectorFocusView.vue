@@ -178,6 +178,13 @@
                      :size="{ width: '2rem', height: '1rem' }"></vue-loading>
       </div>
     </div>
+
+    <!--Footer for gene data-->
+    <div class="bd-panel-footer" v-if="data_type === 'other'">
+      <div class="text-center mt-3">
+        <a class="btn btn-light" @click="saveFile">Export Gene List</a>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -187,6 +194,7 @@
   import VueLoading from 'vue-loading-template'
   import ListTopSignal from './ListTopSignal.vue'
   import * as d3 from 'd3'
+  import { saveAs } from 'file-saver/FileSaver'
 
   export default {
     name: 'VectorFocusView',
@@ -313,6 +321,24 @@
             this.loading_analogy = false
             alert(e)
           })
+      },
+
+      // save gene list as an CSV file
+      saveFile () {
+        let rows = [['gene', 'difference']]
+        _.each(this.top, (t) => {
+          _.each(t, (d) => {
+            rows.push([d.gene, d.diff])
+          })
+        })
+
+        let content = ''
+        _.each(rows, (row) => {
+          content += row.join(',') + '\r\n'
+        })
+
+        let blob = new Blob([content], {type: 'data:text/csv;charset=utf-8'})
+        saveAs(blob, `${this.focus.alias_end}-${this.focus.alias_start}.csv`)
       },
 
       // helper

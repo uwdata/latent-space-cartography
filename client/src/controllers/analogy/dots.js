@@ -35,6 +35,7 @@ class Dots {
      * State data
      */
     this.hull = []
+    this.need_legend = false
   }
 
   /**
@@ -54,7 +55,10 @@ class Dots {
     let mark_type = inside.length > 500 ? 1 : this.mark_type
 
     if (mark_type === 1) {
-      parent.selectAll('.dot')
+      parent
+        .append('g')
+        .classed('dot-group', true)
+        .selectAll('.dot')
         .data(data)
         .enter()
         .append('circle')
@@ -104,7 +108,7 @@ class Dots {
     }
 
     // draw color legend
-    if (this._useCategorical()) {
+    if (this.need_legend) {
       this._drawColorLegend(parent)
     }
 
@@ -199,7 +203,8 @@ class Dots {
     }
 
     // calculate width and height
-    const outer_padding = 15
+    const ver_padding = 15
+    const hor_paddding = 10
     const inner_padding = 10
     const mark_size = 5
     const font_size = 12
@@ -211,8 +216,8 @@ class Dots {
     })
 
     // assuming vertical layout
-    let width = outer_padding * 2 + inner_padding + mark_size + font_size * max * 0.5
-    let height = outer_padding * 2 + font_size * names.length * 0.95
+    let width = hor_paddding * 2 + inner_padding + mark_size + font_size * max * 0.5
+    let height = ver_padding * 2 + font_size * names.length
 
     // we want to place the legend in lower right
     let x0 = this.parent_width - width
@@ -229,6 +234,15 @@ class Dots {
       .attr('height', height)
       .attr('fill', '#fff')
 
+    // title
+    let title = _.capitalize(this.color.split('_').join(' '))
+    bg.append('text')
+      .text(title)
+      .attr('x', hor_paddding)
+      .attr('y', ver_padding)
+      .style('font-weight', '500')
+      .style('font-size', `${font_size}px`)
+
     // the mark
     bg.selectAll('.legend-mark')
       .data(data)
@@ -236,8 +250,8 @@ class Dots {
       .append('circle')
       .classed('legend-mark', true)
       .attr('r', () => mark_size)
-      .attr('cx', () => outer_padding)
-      .attr('cy', (d) => outer_padding + d.i * font_size - mark_size)
+      .attr('cx', () => hor_paddding + mark_size)
+      .attr('cy', (d) => ver_padding * 2 + d.i * font_size - mark_size)
       .style('fill', (d) => d.color)
 
     // the text
@@ -247,8 +261,8 @@ class Dots {
       .append('text')
       .classed('legend-label', true)
       .text((d) => d.name || 'Unknown')
-      .attr('x', () => outer_padding + mark_size + inner_padding)
-      .attr('y', (d) => outer_padding + d.i * font_size)
+      .attr('x', () => hor_paddding + mark_size + inner_padding)
+      .attr('y', (d) => ver_padding * 2 + d.i * font_size)
       .style('font-size', () => font_size + 'px')
       .attr('fill', '#343a40')
   }
@@ -437,14 +451,6 @@ class Dots {
   }
 
   /**
-   * Whether the dots use a categorical palette
-   * @private
-   */
-  _useCategorical () {
-    return (this.color && this.color !== 'mean_color')
-  }
-
-  /**
    * Given a D3 datum, color it according to the current color attribute.
    * @param d
    * @returns {*}
@@ -455,7 +461,8 @@ class Dots {
 
     if (c === 'mean_color') {
       return d['mean_color']
-    } else if (this._useCategorical()) {
+    } else if (c) {
+      this.need_legend = true
       return this._scales.palette(d[c])
     }
 

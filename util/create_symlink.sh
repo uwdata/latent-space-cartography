@@ -9,10 +9,12 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 client="$DIR/../client/data/$dset/"
 data="/Users/yliu0/data/$dset/"
 
-declare -a arr=("latent" "models" "pca" "tsne" "images" "raw.h5")
+declare -a arr=("latent" "models" "pca" "tsne" "images")
 
 # symbolic links
 for i in "${arr[@]}"
 do
    ln -s "$data$i/" "$client$i"
 done
+file="raw.h5"
+ln -s "$data$file" "$client$file"

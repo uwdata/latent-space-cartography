@@ -13,7 +13,8 @@
     <!--List-->
     <div>
       <div v-for="signal in signals" class="d-flex">
-        <div class="mr-3 text-right w-25" style="font-size: 0.7em;">{{signal.gene}}</div>
+        <div class="mr-3 text-right w-25 text-truncate" :title="signal.gene"
+             style="font-size: 0.7em;">{{signal.gene}}</div>
         <div class="w-75 d-flex align-items-center">
           <div class="bd-bar" :class="{'start': start, 'end': !start}"
                :style="{width: signal.width + '%'}"></div>

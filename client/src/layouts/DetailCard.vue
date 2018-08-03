@@ -2,6 +2,7 @@
   <div class="card mb-3" v-if="detail && necessary">
     <div class="card-header d-flex justify-content-between">
       <div>Details</div>
+      <!--Close button-->
       <div class="pl-3 bd-pointer" @click="clickClose()">
         <span>
           <i class="fa fa-fw fa-times text-muted"></i>
@@ -40,10 +41,15 @@
         <div class="w-100 ml-2" v-else>
           <div class="mb-1">
             <b>{{detail.name}}</b>
+            <!--Add to Group button-->
+            <button class="btn btn-light btn-sm float-right" style="margin-top: -5px;"
+                    v-b-tooltip.hover title="Add this sample to the current group"
+                    v-if="data_type==='other'" @click="addToGroup">Select</button>
           </div>
           <!--The heatmap-->
           <div v-if="data_type === 'other'" class="mt-3" id="heatmap-container">
           </div>
+          <!--Other fields-->
           <div class="mb-1" v-for="field in fields" v-if="detail[field]">
             <b>{{fieldName(field)}}:</b>
             {{detail[field]}}
@@ -89,6 +95,10 @@
       }
     },
     methods: {
+      addToGroup () {
+        store.addToSelected([this.shared.detail_card.i])
+      },
+
       clickClose () {
         this.shared.detail_card = null
       },

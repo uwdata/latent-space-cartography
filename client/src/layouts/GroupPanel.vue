@@ -30,7 +30,9 @@
     <div v-if="selected.length" class="bd-logo-list">
       <div class="d-flex justify-content-between text-muted mb-2">
         <div><small>{{selected.length}} total</small></div>
-        <div v-if="cluster_score"><small>Cluster Score: {{cluster_score}}</small></div>
+        <div v-if="cluster_score" title="Higher score indicates tighter cluster">
+          <small>Cluster Score: {{cluster_score}}</small>
+        </div>
       </div>
       <div v-for="p in selected_points" :key="p.i"
            @click="clickLogo(p)"

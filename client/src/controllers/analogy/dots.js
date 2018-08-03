@@ -1,7 +1,7 @@
 import * as d3 from 'd3'
 import _ from 'lodash'
 import {store} from '../../controllers/config'
-import {moveToFront} from './util'
+import {moveToFront, tableau10, tableau20} from './util'
 
 /**
  * @fileOverview
@@ -35,7 +35,12 @@ class Dots {
      * State data
      */
     this.hull = []
+
+    /**
+     * Other private properties
+     */
     this.need_legend = false
+    this.palette = null
   }
 
   /**
@@ -54,6 +59,7 @@ class Dots {
     let inside = this._isInsideView(data)
     let mark_type = inside.length > 500 ? 1 : this.mark_type
 
+    this._createPalette(data)
     if (mark_type === 1) {
       parent
         .append('g')
@@ -196,11 +202,12 @@ class Dots {
    */
   _drawColorLegend (parent) {
     // prepare data
-    let names = this._scales.palette.domain()
+    let names = this.palette.domain()
     let data = []
     for (let i = 0; i < names.length; i++) {
-      data.push({'i': i, 'name': names[i], 'color': this._scales.palette(names[i])})
+      data.push({'i': i, 'name': names[i], 'color': this.palette(names[i])})
     }
+    let title = _.capitalize(this.color.split('_').join(' '))
 
     // calculate width and height
     const ver_padding = 15
@@ -211,12 +218,12 @@ class Dots {
 
     // find the longest word
     let max = 0
-    _.each(names, (name) => {
+    _.each(names.concat([title]), (name) => {
       max = Math.max(max, name.length)
     })
 
     // assuming vertical layout
-    let width = hor_paddding * 2 + inner_padding + mark_size + font_size * max * 0.5
+    let width = hor_paddding * 3 + inner_padding + mark_size + font_size * max * 0.5
     let height = ver_padding * 2 + font_size * names.length
 
     // we want to place the legend in lower right
@@ -235,7 +242,6 @@ class Dots {
       .attr('fill', '#fff')
 
     // title
-    let title = _.capitalize(this.color.split('_').join(' '))
     bg.append('text')
       .text(title)
       .attr('x', hor_paddding)
@@ -451,6 +457,23 @@ class Dots {
   }
 
   /**
+   * Decide which palette to use.
+   * @param data
+   * @private
+   */
+  _createPalette (data) {
+    if (this.color && this.color !== 'mean_color') {
+      let values = _.uniq(data[this.color])
+
+      if (values.length > 10) {
+        this.palette = d3.scaleOrdinal(tableau20)
+      } else {
+        this.palette = d3.scaleOrdinal(tableau10)
+      }
+    }
+  }
+
+  /**
    * Given a D3 datum, color it according to the current color attribute.
    * @param d
    * @returns {*}
@@ -463,7 +486,7 @@ class Dots {
       return d['mean_color']
     } else if (c) {
       this.need_legend = true
-      return this._scales.palette(d[c])
+      return this.palette(d[c])
     }
 
     return '#9467bd'

@@ -1,5 +1,4 @@
 import * as d3 from 'd3'
-import {tableau20} from './util'
 
 /**
  * @fileOverview
@@ -29,8 +28,6 @@ class Scales {
 
     this.x = null
     this.y = null
-
-    this.palette = d3.scaleOrdinal(tableau20)
 
     /**
      * Initialize

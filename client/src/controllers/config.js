@@ -70,7 +70,8 @@ const config_tybalt = {
     simple: false,
     by: ['name'],
     filter: 'stage'
-  }
+  },
+  color_by: ['organ', 'race', 'stage', 'vital_status', 'gender', 'analysis_center']
 }
 
 /**

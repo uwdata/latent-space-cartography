@@ -72,6 +72,15 @@
                 {{perp}}
               </b-dropdown-item>
             </b-dropdown>
+
+            <!--On the right-->
+            <div v-if="all_color.length" class="float-right">
+              <b-dropdown :text="`Color By: ${prettyName(current_color)}`" variant="light" class="mr-2">
+                <b-dropdown-item v-for="c in all_color" @click="changeColor(c)" :key="c">
+                  {{prettyName(c)}}
+                </b-dropdown-item>
+              </b-dropdown>
+            </div>
             <filter-dropdown :meta="suggestions"
                              v-on:filter="onFilter"></filter-dropdown>
           </div>
@@ -218,6 +227,8 @@
         all_projections: ['PCA', 't-SNE'],
         perplexity: 30,
         all_perplexity: [5, 10, 30, 50, 100],
+        current_color: CONFIG.rendering.dot_color,
+        all_color: CONFIG.color_by || [],
         filter_func: (d) => d,
         show_search: !CONFIG.search.simple,
         open_search: false,
@@ -253,6 +264,17 @@
       // helper
       imageUrl (p) {
         return store.getImageUrl(p.i)
+      },
+      prettyName (text) {
+        if (!text)  return ''
+        return _.capitalize(text.split('_').join(' '))
+      },
+
+      // change the color by
+      changeColor (c) {
+        this.current_color = c
+        this.scatter.dot_color = c
+        lets_draw.call(this, this.points)
       },
 
       // change latent dimensions

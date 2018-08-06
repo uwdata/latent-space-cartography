@@ -16,9 +16,10 @@
     <!--Hint-->
     <div v-if="!selected.length" class="m-3 d-flex align-items-center bd-logo-list">
       <div class="text-center w-100 mb-5">
-        <button class="mb-4 btn btn-outline-warning" v-b-modal.modal-save>
+        <b-btn class="mb-4 btn btn-outline-warning"
+               v-b-modal.modal-save @click="load_only=true">
           Load
-        </button>
+        </b-btn>
         <div class="text-muted">
           Start by brushing or searching!
         </div>
@@ -57,10 +58,10 @@
                  v-b-tooltip.hover :title="`Display all logos`"
                  :class="{active: view_mode === 1}"
                  @click="toggleAll">Show All</b-btn>
-          <button class="btn btn-outline-secondary w-100"
-                  :class="{active: view_mode === 2}"
-                  v-b-tooltip.hover :title="`Display the selected logos`"
-                  @click="toggleSubset">Highlight</button>
+          <b-btn class="btn btn-outline-secondary w-100"
+                 :class="{active: view_mode === 2}"
+                 v-b-tooltip.hover :title="`Display the selected logos`"
+                 @click="toggleSubset">Highlight</b-btn>
           <b-btn class="btn btn-outline-secondary w-100"
                  v-b-tooltip.hover :title="`PCA over selected logos`"
                  :class="{active: view_mode === 3}"
@@ -74,6 +75,7 @@
             <i class="fa fa-fw fa-trash"></i>
           </b-btn>
           <b-btn class="btn btn-outline-secondary"
+                 @click="load_only = false"
                  v-b-modal.modal-save
                  v-b-tooltip.hover :title="`Save your selection`">
             <i class="fa fa-fw fa-cloud-upload"></i>
@@ -83,7 +85,7 @@
     </div>
 
     <!--Save and Load Modal-->
-    <group-save-modal v-on:load="load"></group-save-modal>
+    <group-save-modal v-on:load="load" :load_only="load_only"></group-save-modal>
   </div>
 </template>
 
@@ -123,6 +125,7 @@
         shared: store.state,
         show_search: CONFIG.search.simple,
         cluster_score: null,
+        load_only: false,
         view_mode: 1 // 1 - All, 2 - Subset, 3 - Reprojected
       }
     },

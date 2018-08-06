@@ -1,17 +1,23 @@
 <template>
   <!--Save and Load Modal-->
   <b-modal id="modal-save" ref="modalSave"
-           title="Save and Load"
-           @shown="fetchSaves">
-    <div class="d-flex justify-content-between">
-      <input class="w-100" placeholder="(optional) title" v-model="current_alias">
-      <button class="btn btn-primary ml-3"
-              :disabled="saving"
-              @click="clickSave">Save</button>
+           :title="load_only ? `Load a Group` : `Save / Load a Group`"
+           @shown="fetchSaves" hide-footer>
+    <!--Save-->
+    <div v-if="!load_only">
+      <div class="mb-3 text-center bd-subtitle text-uppercase">Save</div>
+      <div class="d-flex justify-content-between">
+        <input class="w-100" placeholder="(optional) title" v-model="current_alias">
+        <button class="btn btn-primary ml-3"
+                :disabled="saving"
+                @click="clickSave">Save</button>
+      </div>
+      <hr>
     </div>
-    <hr>
+    <!--Load-->
+    <div class="mb-3 text-center bd-subtitle text-uppercase">Load</div>
     <div v-if="loading">Loading ...</div>
-    <div v-if="!loading" class="bd-group">
+    <div v-if="!loading" class="bd-group mb-4">
       <div v-for="list in groups"  @click="load(list)"
            class="d-flex justify-content-between bd-group-item">
         <div>
@@ -49,6 +55,11 @@
     },
     components: {
       GroupThumb
+    },
+    props: {
+      load_only: {
+        'default': false
+      }
     },
     methods: {
       // load the list of groups
@@ -113,6 +124,10 @@
     border-top: #eee 1px solid;
     padding: 10px;
     cursor: pointer;
+  }
+
+  .bd-group-item:last-child {
+    border-bottom: #eee 1px solid;
   }
 
   .bd-group-item:hover {

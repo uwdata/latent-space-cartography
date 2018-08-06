@@ -546,7 +546,7 @@ def get_groups ():
     query = 'SELECT id, alias, list, timestamp FROM {}_group'.format(dset)
     cursor.execute(query)
     data = [list(i) for i in cursor.fetchall()]
-    return jsonify({'data': data}), 200
+    return jsonify({'data': data[::-1]}), 200
 
 # delete a group
 @app.route('/api/delete_group', methods=['POST'])
@@ -590,7 +590,7 @@ def get_vectors ():
     """.format(dset, dset, dset)
     cursor.execute(query)
     data = [list(i) for i in cursor.fetchall()]
-    return jsonify({'data': data}), 200
+    return jsonify({'data': data[::-1]}), 200
 
 # delete a vector
 @app.route('/api/delete_vector', methods=['POST'])

@@ -213,8 +213,8 @@ class Dots {
     const ver_padding = 15
     const hor_paddding = 10
     const inner_padding = 10
-    const mark_size = 5
-    const font_size = 12
+    const mark_size = 4
+    const font_size = 10
 
     // find the longest word
     let max = 0
@@ -266,7 +266,10 @@ class Dots {
       .enter()
       .append('text')
       .classed('legend-label', true)
-      .text((d) => d.name || 'Unknown')
+      .text((d) => {
+        let name = d.name || 'Unknown'
+        return _.toUpper(name[0]) + name.substr(1)
+      })
       .attr('x', () => hor_paddding + mark_size + inner_padding)
       .attr('y', (d) => ver_padding * 2 + d.i * font_size)
       .style('font-size', () => font_size + 'px')

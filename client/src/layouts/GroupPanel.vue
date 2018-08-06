@@ -16,10 +16,17 @@
     <!--Hint-->
     <div v-if="!selected.length" class="m-3 d-flex align-items-center bd-logo-list">
       <div class="text-center w-100 mb-5">
-        <b-btn class="mb-4 btn btn-outline-warning"
-               v-b-modal.modal-save @click="load_only=true">
-          Load
-        </b-btn>
+        <div class="mb-4">
+          <b-btn class="btn btn-outline-warning"
+                 v-b-modal.modal-save @click="load_only=true">
+            Load
+          </b-btn>
+          <span class="text-warning ml-1 mr-1">or</span>
+          <b-btn class="btn btn-outline-warning"
+                 v-b-modal.modal-upload>
+            Upload
+          </b-btn>
+        </div>
         <div class="text-muted">
           Start by brushing or searching!
         </div>
@@ -86,6 +93,9 @@
 
     <!--Save and Load Modal-->
     <group-save-modal v-on:load="load" :load_only="load_only"></group-save-modal>
+
+    <!--Upload Modal-->
+    <group-upload-modal></group-upload-modal>
   </div>
 </template>
 
@@ -95,6 +105,7 @@
   import {store, CONFIG} from '../controllers/config'
   import _ from 'lodash'
   import ListRow from './ListRow.vue'
+  import GroupUploadModal from './GroupUploadModal.vue'
 
   export default {
     name: 'SearchPanel',
@@ -114,6 +125,7 @@
       }
     },
     components: {
+      GroupUploadModal,
       ListRow,
       AutoComplete,
       GroupSaveModal

@@ -412,6 +412,10 @@
     font-weight: 500;
   }
 
+  .text-sm {
+    font-size: 0.8em;
+  }
+
   /* ------- D3 STYLE START ------- */
   .axis path,
   .axis line {

@@ -27,9 +27,17 @@
                 v-if="csv_string">Done</button>
       </div>
     </div>
+    <div>
+      <!--Divider-->
+      <div class="d-flex justify-content-center">
+        <div class="bd-text-divider"></div>
+        <div class="text-muted text-sm ml-2 mr-2">OR</div>
+        <div class="bd-text-divider"></div>
+      </div>
+    </div>
     <div class="mt-3 mb-3">
       <!--Upload File-->
-      <div class="mb-3 text-center bd-subtitle text-uppercase">CSV File</div>
+      <div class="mb-3 text-center bd-subtitle text-uppercase">Upload File</div>
       <div class="d-flex justify-content-between">
         <b-form-file v-model="file" plain class="text-sm"></b-form-file>
         <button class="btn btn-primary btn-sm" style="min-width: 100px;"
@@ -139,9 +147,21 @@
           arr = namesToIndices(arr)
         }
 
-        store.addToSelected(arr)
-        this.$refs.modalUpload.hide()
+        if (!arr.length) {
+          this.err = 'No valid samples found. Did you choose the right field?'
+        } else {
+          store.addToSelected(arr)
+          this.$refs.modalUpload.hide()
+        }
       }
     }
   }
 </script>
+
+<style>
+  .bd-text-divider {
+    border-bottom: #818078 1px solid;
+    height: 0.7em;
+    width: 15%;
+  }
+</style>

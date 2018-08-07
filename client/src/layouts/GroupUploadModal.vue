@@ -24,11 +24,17 @@
                 @click="csv_string=''">Clear</button>
         <button class="btn btn-primary btn-sm" style="min-width: 100px;"
                 @click="parseString"
-                :disabled="!csv_string">Done</button>
+                v-if="csv_string">Done</button>
       </div>
-      <hr>
     </div>
-
+    <div class="mt-3 mb-3">
+      <div class="mb-3 text-center bd-subtitle text-uppercase">CSV File</div>
+      <div class="d-flex justify-content-between">
+        <b-form-file v-model="file" plain class="text-sm"></b-form-file>
+        <button class="btn btn-primary btn-sm" style="min-width: 100px;"
+                @click="parseFile" v-if="file">Upload</button>
+      </div>
+    </div>
   </b-modal>
 </template>
 
@@ -64,6 +70,7 @@
     data () {
       return {
         csv_string: '',
+        file: null,
         field: 'i',
         all_fields: [
           {text: 'Index', value: 'i'},
@@ -76,24 +83,45 @@
       }
     },
     methods: {
+      parseFile () {
+        Papa.parse(this.file, {
+          complete: (res) => {
+            if (res.data) {
+              this.parse(res)
+            } else {
+              // handle error
+              console.log(res.errors)
+            }
+          },
+          error: (err) => {
+            // handle error
+            console.log(err)
+          }
+        })
+      },
       parseString () {
         let res = Papa.parse(this.csv_string, csv_config)
         if (res && !res.errors.length) {
-          let arr = _.flatten(res.data)
-
-          if (this.field === 'i') {
-            arr = _.map(arr, (n) => Number(n))
-            arr = validIndex(arr)
-          } else if (this.field === 'name') {
-            arr = namesToIndices(arr)
-          }
-
-          store.addToSelected(arr)
-          this.$refs.modalUpload.hide()
+          this.parse(res)
         } else {
           // handle error
           console.log(res.errors)
         }
+      },
+
+      // common parse helper
+      parse (res) {
+        let arr = _.flatten(res.data)
+
+        if (this.field === 'i') {
+          arr = validIndex(arr)
+          arr = _.map(arr, (n) => Number(n))
+        } else if (this.field === 'name') {
+          arr = namesToIndices(arr)
+        }
+
+        store.addToSelected(arr)
+        this.$refs.modalUpload.hide()
       }
     }
   }

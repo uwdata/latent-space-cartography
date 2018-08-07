@@ -12,6 +12,7 @@ p_raw = os.path.join(base, 'data', 'pancan_scaled_zeroone_rnaseq.h5')
 p_id = os.path.join(base, 'data', 'patient_id.csv')
 p_clinical = os.path.join(base, 'data', 'tybalt_features_with_clinical.tsv')
 p_header = os.path.join(base, 'data', 'pancan_scaled_zeroone_rnaseq_header.csv')
+p_meta = os.path.join(base, 'data', 'ov_subtype_info.tsv')
 
 out_base = '/Users/yliu0/data/tybalt/'
 out_latent = os.path.join(out_base, 'latent/latent100.h5')
@@ -37,6 +38,45 @@ def read_csv_single (fn):
         for row in reader:
             res = row
     return np.asarray(res)
+
+# helper
+def right_outer_join (left, right):
+    # convert left to a dictionary
+    lookup = {}
+    for i in range(left.shape[0]):
+        lookup[left[i]] = i
+
+    # right outer join
+    ids = []
+    for i in range(len(right)):
+        if right[i] in lookup:
+            ids.append([i, lookup[right[i]]])
+
+    # each row is [index in right, index in left]
+    return np.asarray(ids, dtype=int)
+
+# helper
+def subtype_group (meta, ids, subtype):
+    # schema index in the meta table
+    i_subtype = 2
+    res = []
+    for tup in ids:
+        if meta[tup[1]][i_subtype] == subtype:
+            res.append(tup[0])
+    return np.asarray(res, dtype=int)
+
+# save cancer subtype index as csv
+def subtype_csv ():
+    pid = read_csv_single(p_id)
+    meta = read_tsv(p_meta, str, 0)
+    ids = right_outer_join(meta[:, 0], pid)
+    names = ['Mesenchymal', 'Immunoreactive', 'Proliferative', 'Differentiated']
+    groups = [subtype_group(meta, ids, name) for name in names]
+    for i in range(4):
+        with open('./{}.csv'.format(names[i]), 'wb') as csvfile:
+            writer = csv.writer(csvfile)
+            for num in groups[i]:
+                writer.writerow([num])
 
 def convert_ls ():
     res = read_tsv(p_latent)
@@ -96,4 +136,5 @@ if __name__ == '__main__':
     # convert_ls()
     # copy_raw()
     # wrangle_meta()
-    wrangle_header()
+    # wrangle_header()
+    subtype_csv()

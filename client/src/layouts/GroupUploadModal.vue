@@ -28,6 +28,7 @@
       </div>
     </div>
     <div class="mt-3 mb-3">
+      <!--Upload File-->
       <div class="mb-3 text-center bd-subtitle text-uppercase">CSV File</div>
       <div class="d-flex justify-content-between">
         <b-form-file v-model="file" plain class="text-sm"></b-form-file>
@@ -35,6 +36,9 @@
                 @click="parseFile" v-if="file">Upload</button>
       </div>
     </div>
+
+    <!--Error-->
+    <div class="mt-3 mb-3 text-danger text-sm" v-if="err">{{err}}</div>
   </b-modal>
 </template>
 
@@ -79,23 +83,37 @@
         placeholders: {
           'i': 'For example: 1,5,16,289',
           'name': 'For example: TCGA-02-0055-01,TCGA-02-2483-01,TCGA-02-2485-01'
-        }
+        },
+        err: ''
+      }
+    },
+    watch: {
+      csv_string: function () {
+        this.err = ''
+      },
+      field: function () {
+        this.err = ''
+      },
+      file: function () {
+        this.err = ''
       }
     },
     methods: {
       parseFile () {
         Papa.parse(this.file, {
           complete: (res) => {
-            if (res.data) {
+            if (res.data && res.data.length) {
               this.parse(res)
             } else {
               // handle error
               console.log(res.errors)
+              this.err = 'Could not parse the file.'
             }
           },
           error: (err) => {
             // handle error
             console.log(err)
+            this.err = 'Could not parse the file.'
           }
         })
       },
@@ -106,6 +124,7 @@
         } else {
           // handle error
           console.log(res.errors)
+          this.err = 'Could not parse the content.'
         }
       },
 

@@ -92,7 +92,6 @@
         <group-panel :points="suggestions" :view_state="view_state" :latent_dim="dim"
                      v-on:center="onCenter"
                      v-on:highlight="onHighlight"
-                     v-on:subset="onToggleSubset"
                      v-on:reproject="reproject"
                      v-on:original="showOriginal"></group-panel>
         <vector-panel :latent_dim="dim" :chart="scatter" :view_state="view_state"
@@ -253,6 +252,9 @@
         }
         store.state.detail = pt
       }
+
+      // register event
+      bus.$on('highlight-subset', this.onToggleSubset)
 
       // Get points from server
       lets_load.call(this, () => {

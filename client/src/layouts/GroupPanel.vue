@@ -102,7 +102,7 @@
 <script>
   import AutoComplete from './AutoComplete.vue'
   import GroupSaveModal from './GroupSaveModal.vue'
-  import {store, CONFIG} from '../controllers/config'
+  import {store, bus, CONFIG} from '../controllers/config'
   import _ from 'lodash'
   import ListRow from './ListRow.vue'
   import GroupUploadModal from './GroupUploadModal.vue'
@@ -163,7 +163,7 @@
       // button "show all"
       toggleAll () {
         if (this.view_mode === 2) {
-          this.$emit('subset', null)
+          bus.$emit('highlight-subset', null)
         } else if (this.view_mode === 3) {
           this.$emit('original')
         }
@@ -174,7 +174,7 @@
       toggleSubset () {
         if (this.view_mode === 3) return
         this.view_mode = 2
-        this.$emit('subset', store.selected)
+        bus.$emit('highlight-subset', store.selected)
       },
 
       // button "re-project"

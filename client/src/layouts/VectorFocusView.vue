@@ -36,6 +36,8 @@
       <div class="ml-3 mr-3 mb-3 d-flex bd-vector-groups">
         <!--Start Group-->
         <div class="bd-panel-card start bd-pointer w-50"
+             @mouseover="hoverGroup(focus.list_start)"
+             @mouseout="hoverGroup()"
              @click="viewGroup(focus.list_start)">
 
           <!--If we have images-->
@@ -65,6 +67,8 @@
 
         <!--End Group-->
         <div class="bd-panel-card end bd-pointer ml-3 w-50"
+             @mouseover="hoverGroup(focus.list_end)"
+             @mouseout="hoverGroup()"
              @click="viewGroup(focus.list_end)">
 
           <!--If we have images-->
@@ -274,6 +278,11 @@
           }, (e) => {
             alert(e)
           })
+      },
+
+      // hover to highlight a group
+      hoverGroup (indices) {
+        bus.$emit('highlight-subset', indices)
       },
 
       viewGroup (list) {

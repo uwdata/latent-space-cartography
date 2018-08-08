@@ -196,7 +196,7 @@ class Vectors {
     if (pts && pts.length) {
       let vertices = _.map(pts, (p) => [this._scales.x(p.x), this._scales.y(p.y)])
       layer.append('path')
-        .attr('class', 'hull')
+        .attr('class', 'hull-vector')
         .datum(d3.polygonHull(vertices))
         .attr('d', (d) => 'M' + d.join('L') + 'Z')
         .style('fill', () => color)
@@ -226,7 +226,7 @@ class Vectors {
 
     // remove cone
     let layer = this._parent.select('.halo_layer')
-    layer.selectAll('.hull').remove()
+    layer.selectAll('.hull-vector').remove()
 
     if(this.primary) {
       // draw vectors

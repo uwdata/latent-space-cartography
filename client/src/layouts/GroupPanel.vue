@@ -1,5 +1,5 @@
 <template>
-  <div v-if="shared.tab === 0" class="d-flex flex-column bd-panel-right">
+  <div v-if="shared.tab === 0">
     <!--Tabs-->
     <b-nav justified tabs class="ml-3 mr-3 mt-1 bd-panel-tab">
       <b-nav-item active>Groups</b-nav-item>
@@ -7,14 +7,30 @@
     </b-nav>
 
     <!--Top Division-->
-    <div class="p-3 bd-border-bottom" v-if="show_search">
-      <auto-complete v-model="selection" :points="points" hint="Search ..."
-                     v-on:chosen="addItem"
-                     v-on:tentative="hoverItem"></auto-complete>
+    <div class="d-flex bd-border-bottom" v-if="selected.length">
+      <!--Back Button-->
+      <div @click="removeAll" title="Clear your selection and start over"
+           class="bd-btn-trans p-3" v-b-tooltip.hover>
+        <i class="fa fa-fw fa-arrow-left text-muted"></i>
+      </div>
+
+      <!--Title-->
+      <div class="p-3 w-100 text-center text-truncate">
+        {{alias || 'Untitled Group'}}
+      </div>
+
+      <!--Right Buttons-->
+      <div>
+        <div title="Save your selection" class="bd-btn-trans p-3"
+             v-b-tooltip.hover @click="load_only = false" v-b-modal.modal-save>
+          <i class="fa fa-fw fa-cloud-upload text-muted"></i>
+        </div>
+      </div>
     </div>
 
     <!--Hint-->
-    <div v-if="!selected.length" class="m-3 d-flex align-items-center bd-logo-list">
+    <div class="d-flex align-items-center m-3" v-if="!selected.length"
+         style="height: calc(100vh - 7rem);">
       <div class="text-center w-100 mb-5">
         <div class="mb-4">
           <b-btn class="btn btn-outline-warning"
@@ -30,63 +46,59 @@
         <div class="text-muted">
           Start by brushing or searching!
         </div>
-
       </div>
     </div>
 
-    <!--Logo List-->
-    <div v-if="selected.length" class="bd-logo-list">
-      <div class="d-flex justify-content-between text-muted mb-2">
-        <div><small>{{selected.length}} total</small></div>
-        <div v-if="cluster_score" title="Higher score indicates tighter cluster">
-          <small>Cluster Score: {{cluster_score}}</small>
-        </div>
+    <!--Main View-->
+    <div class="bd-group-panel-body">
+      <!--Top Stats-->
+      <div class="p-3 bd-border-bottom" v-if="show_search">
+        <auto-complete v-model="selection" :points="points" hint="Search ..."
+                       v-on:chosen="addItem"
+                       v-on:tentative="hoverItem"></auto-complete>
       </div>
-      <div v-for="p in selected_points" :key="p.i"
-           @click="clickLogo(p)"
-           @mouseover="hoverLogo(p)"
-           @mouseout="unhoverLogo">
-        <list-row :p="p" hoverColor="#eee">
-          <button class="close p-2 mr-2"
-                  @mouseover.stop=""
-                  @click.stop="removeItem(p)">
-            <span>&times;</span>
-          </button>
-        </list-row>
+
+      <!--Logo List-->
+      <div v-if="selected.length" class="ml-2 mr-2 mt-2">
+        <div class="d-flex justify-content-between text-muted mb-2">
+          <div><small>{{selected.length}} total</small></div>
+          <div v-if="cluster_score" title="Higher score indicates tighter cluster">
+            <small>Cluster Score: {{cluster_score}}</small>
+          </div>
+        </div>
+        <div v-for="p in selected_points" :key="p.i"
+             @click="clickLogo(p)"
+             @mouseover="hoverLogo(p)"
+             @mouseout="unhoverLogo">
+          <list-row :p="p" hoverColor="#eee">
+            <button class="close p-2 mr-2"
+                    @mouseover.stop=""
+                    @click.stop="removeItem(p)">
+              <span>&times;</span>
+            </button>
+          </list-row>
+        </div>
       </div>
     </div>
 
     <!--Footer-->
     <div v-if="selected.length" class="bd-panel-footer p-3">
-      <div class="d-flex justify-content-between bd-panel-footer-margin">
+      <div class="bd-panel-footer-margin">
         <!--View Buttons-->
         <div class="btn-group btn-group-sm d-flex w-100">
           <b-btn class="btn btn-outline-secondary w-100"
-                 v-b-tooltip.hover :title="`Display all logos`"
+                 v-b-tooltip.hover :title="`Display all points`"
                  :class="{active: view_mode === 1}"
                  @click="toggleAll">Show All</b-btn>
           <b-btn class="btn btn-outline-secondary w-100"
                  :class="{active: view_mode === 2}"
-                 v-b-tooltip.hover :title="`Display the selected logos`"
+                 v-b-tooltip.hover :title="`Highlight the selected points`"
                  @click="toggleSubset">Highlight</b-btn>
           <b-btn class="btn btn-outline-secondary w-100"
-                 v-b-tooltip.hover :title="`PCA over selected logos`"
+                 v-b-tooltip.hover :title="`PCA over selected points`"
                  :class="{active: view_mode === 3}"
                  :disabled="!canPca()"
                  @click="reproject">Isolate</b-btn>
-        </div>
-        <div class="btn-group btn-group-sm ml-3">
-          <b-btn class="btn btn-outline-secondary"
-                 v-b-tooltip.hover :title="`Clear your selection`"
-                 @click="removeAll">
-            <i class="fa fa-fw fa-trash"></i>
-          </b-btn>
-          <b-btn class="btn btn-outline-secondary"
-                 @click="load_only = false"
-                 v-b-modal.modal-save
-                 v-b-tooltip.hover :title="`Save your selection`">
-            <i class="fa fa-fw fa-cloud-upload"></i>
-          </b-btn>
         </div>
       </div>
     </div>
@@ -97,6 +109,7 @@
     <!--Upload Modal-->
     <group-upload-modal></group-upload-modal>
   </div>
+
 </template>
 
 <script>
@@ -138,7 +151,8 @@
         show_search: CONFIG.search.simple,
         cluster_score: null,
         load_only: false,
-        view_mode: 1 // 1 - All, 2 - Subset, 3 - Reprojected
+        alias: null,
+        view_mode: 1 // 1 - All, 2 - Highlight, 3 - Reprojected
       }
     },
     watch: {
@@ -177,7 +191,7 @@
         bus.$emit('highlight-subset', store.selected)
       },
 
-      // button "re-project"
+      // button "isolate"
       reproject () {
         this.view_mode = 3
         if (this.canPca()) {
@@ -187,6 +201,7 @@
 
       // load logo group
       load (group) {
+        this.alias = group.alias
         while (store.selected.length) {
           store.selected.splice(0, 1)
         }
@@ -230,6 +245,7 @@
         store.selected.splice(idx, 1)
       },
       removeAll () {
+        this.alias = null
         while (store.selected.length) {
           store.selected.splice(0, 1)
         }
@@ -265,15 +281,9 @@
 </script>
 
 <style>
-  .bd-panel-right {
-    height: calc(100vh - 4rem);
-    overflow-y: hidden;
-  }
-
-  .bd-logo-list {
+  .bd-group-panel-body {
+    height: calc(100vh - 15rem);
     overflow-y: auto;
-    height: calc(100vh - 4rem);
-    margin: 1rem 0.5rem 0;
   }
 
   .bd-panel-footer {

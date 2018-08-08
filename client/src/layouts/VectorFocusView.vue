@@ -359,14 +359,6 @@
 </script>
 
 <style>
-  .bd-btn-trans {
-    display: inline-block;
-    cursor: pointer;
-  }
-  .bd-btn-trans:hover {
-    background-color: #eee;
-  }
-
   .bd-vector-groups {
     width: calc(25vw - 3rem);
   }

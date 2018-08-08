@@ -418,6 +418,14 @@
     font-size: 0.8em;
   }
 
+  .bd-btn-trans {
+    display: inline-block;
+    cursor: pointer;
+  }
+  .bd-btn-trans:hover {
+    background-color: #eee;
+  }
+
   /* ------- D3 STYLE START ------- */
   .axis path,
   .axis line {

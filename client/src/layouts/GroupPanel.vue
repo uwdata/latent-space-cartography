@@ -92,6 +92,7 @@
                  @click="toggleAll">Show All</b-btn>
           <b-btn class="btn btn-outline-secondary w-100"
                  :class="{active: view_mode === 2}"
+                 :disabled="view_mode === 3"
                  v-b-tooltip.hover :title="`Highlight the selected points`"
                  @click="toggleSubset">Highlight</b-btn>
           <b-btn class="btn btn-outline-secondary w-100"
@@ -261,8 +262,8 @@
 
       // interactions of the logo list
       clickLogo (p) {
-        // TODO: center view
-        this.$emit('center', p.i)
+        // center the view around the point
+        // this.$emit('center', p.i)
         store.state.detail_card = p
       },
       hoverLogo (p) {

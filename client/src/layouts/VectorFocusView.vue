@@ -266,7 +266,7 @@
       // go back to the list
       clickBack () {
         this.chart._vectors.clearData()
-        this.$emit('back')
+        this.$emit('back', true)
       },
 
       // delete this vector

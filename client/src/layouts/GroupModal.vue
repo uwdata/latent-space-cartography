@@ -2,9 +2,9 @@
   <!--Choose Group Modal-->
   <b-modal id="modal-group" ref="modalGroup"
            title="Choose a Group ..."
-           @shown="fetchSaves">
+           @shown="fetchSaves" hide-footer>
     <div v-if="loading">Loading ...</div>
-    <div v-if="!loading" class="bd-group">
+    <div v-if="!loading" class="bd-group pb-3">
       <div v-for="list in groups" @click="clickGroup(list)"
            class="d-flex justify-content-between bd-group-item">
         <div>

@@ -23,11 +23,8 @@ from flaskext.mysql import MySQL
 models = {}
 
 # dataset we're working with
-# from config_emoji import dset, data_type, img_rows, img_cols, img_chns, img_mode, dims, schema_meta
+# from config_emoji import img_rows, img_cols, img_chns, img_mode
 from config_tybalt import dset, data_type, dims, schema_meta, schema_header
-
-# FIXME: hack
-temp_store = {}
 
 # for absolute path
 def abs_path (rel_path):
@@ -346,13 +343,8 @@ def apply_analogy ():
     pid = request.json['pid']
     gid = request.json['groups'].split(',')
 
-    # FIXME
-    if not 'U' in temp_store or temp_store['U'].shape[1] != latent_dim:
-        print 'Could not apply anaology because projection is corrupt.'
-        print temp_store['U'].shape
-        return jsonify({}), 400
-    U = temp_store['U']
-    _mean = temp_store['_mean']
+    U = np.asarray(request.json['projection'], dtype=np.float64)
+    _mean = np.asarray(request.json['mean'], dtype=np.float64)
 
     # read latent space
     rawpath = abs_path('./data/{}/latent/latent{}.h5'.format(dset, latent_dim))
@@ -401,9 +393,9 @@ def focus_vector():
 
     # project
     X_transformed, U, _mean = _project_axis(np.copy(X), vec)
-    temp_store['U'] = U #FIXME
-    temp_store['_mean'] = _mean
     reply['points'] = X_transformed.tolist()
+    reply['mean'] = _mean.tolist()
+    reply['projection'] = U.tolist()
 
     # interpolate
     if data_type == 'image':

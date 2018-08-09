@@ -39,6 +39,13 @@ class Store {
      */
     this.groups = []
 
+    /**
+     * Matrix and mean for attribute vector projection.
+     * @private
+     */
+    this._projection_matrix = null
+    this._projection_mean = null
+
     // FIXME: latent dim shouldn't be here
     this.latent_dim = 32
 
@@ -466,6 +473,9 @@ class Store {
           let msg = response['data']
 
           if (msg) {
+            this._projection_matrix = msg['projection']
+            this._projection_mean = msg['mean']
+
             let points = this._formatPcaPoints(msg['points'])
             let line = this._formatVectorLine(msg['locations'], msg['neighbors'],
               msg['outputs'], msg['nearest'])
@@ -490,7 +500,8 @@ class Store {
    */
   applyAnalogy (latent_dim, pid, start, end) {
     return new Promise((resolve, reject) => {
-      let payload = {pid: pid, latent_dim: latent_dim, groups: `${start},${end}`}
+      let payload = {pid: pid, latent_dim: latent_dim, groups: `${start},${end}`,
+        projection: this._projection_matrix, mean: this._projection_mean}
 
       http.post('/api/apply_analogy', payload)
         .then((response) => {

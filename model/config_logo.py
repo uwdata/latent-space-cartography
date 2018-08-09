@@ -14,3 +14,4 @@ dims = [32, 64, 128, 256, 512, 1024] # all latent dims
 
 # MySQL table schema
 schema_meta = 'i,name,mean_color,data_source,industry'
+schema_header = None

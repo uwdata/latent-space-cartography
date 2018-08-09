@@ -466,7 +466,7 @@ class Dots {
    */
   _createPalette (data) {
     if (this.color && this.color !== 'mean_color') {
-      let values = _.uniq(data[this.color])
+      let values = _.uniqBy(data, (d) => d[this.color])
 
       if (values.length > 10) {
         this.palette = d3.scaleOrdinal(tableau20)

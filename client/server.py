@@ -30,18 +30,36 @@ from config_tybalt import dset, data_type, dims, schema_meta, schema_header
 def abs_path (rel_path):
     return os.path.join(os.path.dirname(__file__), rel_path)
 
-def connect_db ():
-    # read config file
-    with open(abs_path('mysql_config.json')) as jsonfile:
-        app.config.update(json.load(jsonfile))
-    
-    mysql = MySQL()
-    mysql.init_app(app)
-    conn = mysql.connect()
-    cursor =conn.cursor()
-    print 'MySQL connected!'
+# wrapper class for database
+class DB:
+    conn = None
 
-    return conn, cursor
+    def __init__(self):
+        # read config file
+        with open(abs_path('mysql_config.json')) as jsonfile:
+            app.config.update(json.load(jsonfile))
+        
+        self.mysql = MySQL()
+        self.mysql.init_app(app)
+
+    def execute(self, query):
+        try:
+            cursor = self.conn.cursor()
+            cursor.execute(query)
+        except: #TODO: handle specific error
+            self.conn = self.mysql.connect()
+            print 'MySQL connected!'
+            cursor = self.conn.cursor()
+            cursor.execute(query)
+        return cursor, self.conn
+    
+    def safe_commit(self, conn, cursor):
+        try:
+            conn.commit()
+        except:
+            conn.rollback()
+        finally:
+            cursor.close()
 
 # instantiate the model from our image generation VAE
 def create_model (latent_dim):
@@ -199,7 +217,7 @@ def _project_axis (X, axis):
 # given a group ID, query the DB for image indices, as an int array
 def _get_group_indices (gid):
     # find image indices in each group
-    cursor.execute('SELECT list FROM {}_group WHERE id={}'.format(dset, gid))
+    cursor, conn = db.execute('SELECT list FROM {}_group WHERE id={}'.format(dset, gid))
     d = cursor.fetchone()[0]
     id_list = d.split(',')
 
@@ -233,7 +251,7 @@ def _pointwise_dist (X, Y=None):
 
 # global app and DB cursor
 app = Flask(__name__, static_url_path='')
-db, cursor = connect_db()
+db = DB()
 
 # static files
 @app.route('/')
@@ -323,7 +341,7 @@ def get_tsne ():
 @app.route('/api/get_meta', methods=['POST'])
 def get_meta ():
     query = 'SELECT {} FROM {}_meta'.format(schema_meta, dset)
-    cursor.execute(query)
+    cursor, conn = db.execute(query)
     data = [list(i) for i in cursor.fetchall()]
     reply = {'meta': data}
 
@@ -426,7 +444,7 @@ def focus_vector():
 def all_vector_diff ():
     # get all attribute vectors from database
     query = 'SELECT a.start, a.end FROM {}_vector a'.format(dset)
-    cursor.execute(query)
+    cursor, conn = db.execute(query)
     data = [list(i) for i in cursor.fetchall()]
 
     # compute vector coordinates in each latent space
@@ -524,19 +542,15 @@ def save_group ():
     """.format(dset, alias, ids)
     print query
 
-    try:
-        cursor.execute(query)
-        db.commit()
-        return jsonify({'status': 'success'}), 200
-    except Exception as e:
-        print("Could not insert: \n" + str(e))
-        return jsonify({'status': 'fail'}), 200
+    cursor, conn = db.execute(query)
+    db.safe_commit(conn, cursor)
+    return jsonify({'status': 'success'}), 200
 
 # get all groups
 @app.route('/api/get_groups', methods=['POST'])
 def get_groups ():
     query = 'SELECT id, alias, list, timestamp FROM {}_group'.format(dset)
-    cursor.execute(query)
+    cursor, conn = db.execute(query)
     data = [list(i) for i in cursor.fetchall()]
     return jsonify({'data': data[::-1]}), 200
 
@@ -547,8 +561,8 @@ def delete_group ():
     query = 'DELETE FROM {}_group WHERE id={}'.format(dset, gid)
     print query
 
-    cursor.execute(query)
-    db.commit()
+    cursor, conn = db.execute(query)
+    db.safe_commit(conn, cursor)
     return jsonify({'status': 'success'}), 200
 
 # create a vector
@@ -562,13 +576,9 @@ def create_vector():
     VALUES('{}', '{}', '{}')""".format(dset, start, end, desc)
     print query
 
-    try:
-        cursor.execute(query)
-        db.commit()
-        return jsonify({'status': 'success'}), 200
-    except Exception as e:
-        print("Could not insert: \n" + str(e))
-        return jsonify({'status': 'fail'}), 200
+    cursor, conn = db.execute(query)
+    db.safe_commit(conn, cursor)
+    return jsonify({'status': 'success'}), 200
 
 # get all vectors
 @app.route('/api/get_vectors', methods=['POST'])
@@ -580,7 +590,7 @@ def get_vectors ():
     LEFT OUTER JOIN (SELECT id, list, alias FROM {}_group) AS b ON a.start = b.id
     LEFT OUTER JOIN (SELECT id, list, alias FROM {}_group) AS c ON a.end = c.id
     """.format(dset, dset, dset)
-    cursor.execute(query)
+    cursor, conn = db.execute(query)
     data = [list(i) for i in cursor.fetchall()]
     return jsonify({'data': data[::-1]}), 200
 
@@ -592,13 +602,9 @@ def delete_vector ():
     query = 'DELETE FROM {}_vector WHERE id={}'.format(dset, vid)
     print query
 
-    try:
-        cursor.execute(query)
-        db.commit()
-        return jsonify({'status': 'success'}), 200
-    except Exception as e:
-        print("Could not delete: \n" + str(e))
-        return jsonify({'status': 'fail'}), 200
+    cursor, conn = db.execute(query)
+    db.safe_commit(conn, cursor)
+    return jsonify({'status': 'success'}), 200
 
 # create the groups table. internal use only
 @app.route('/api/_create_table_group', methods=['POST'])
@@ -613,7 +619,7 @@ def _create_table_group ():
         PRIMARY KEY (`id`)
     ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
     """.format(dset)
-    cursor.execute(query)
+    db.execute(query)
     return jsonify({'status': 'success'}), 200
 
 # create the vectors table. internal use only
@@ -630,7 +636,7 @@ def _create_table_vector ():
         PRIMARY KEY (`id`)
     ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
     """.format(dset)
-    cursor.execute(query)
+    db.execute(query)
     return jsonify({'status': 'success'}), 200
 
 if __name__ == '__main__':

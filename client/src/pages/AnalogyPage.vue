@@ -141,6 +141,8 @@
       left: 0,
       right: 0
     }
+    s.y_field = 'race'
+    s.chart_type = 2
     s.dot_radius = 3
     s.dot_color = CONFIG.rendering.dot_color
     s.mark_type = CONFIG.data_type === 'text' ? 3 : CONFIG.data_slice === 'image' ? 2 : 1

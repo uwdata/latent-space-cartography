@@ -77,39 +77,46 @@ class Scales {
     let x = d3.scaleLinear()
       .range([0, this.width()]).nice()
       .domain(d3.extent(data, (d) => d.x))
-    this.x = x
+
+    // make a "identity" x and y scale for interfacing purpose
+    this.x = d3.scaleLinear()
+      .range([0, this.width()])
+      .domain([0, this.width()])
+    this.y = d3.scaleLinear()
+      .range([0, this.height()])
+      .domain([0, this.height()])
 
     // this is a temporary scale that maps category to height
     let y = d3.scaleBand().rangeRound([0, this.height()]).padding(0.1)
       .domain(data.map((d) => d[this.y_field]))
 
     // simulate bee swarm
-    let dd = _.map(data, (d) => {
-      return {x: d.x, y: d[this.y_field]}
+    _.each(y.domain(), (cat) => {
+      let dd = _.filter(_.map(data, (d, idx) => {
+        return {i: idx, x: d.x, y: d[this.y_field]}
+      }), (d) => d.y === cat)
+
+      let h = y(cat)
+      let simulation = d3.forceSimulation(dd)
+        .force('x', d3.forceX((d) => x(d.x)).strength(1))
+        .force('y', d3.forceY(h).strength(0.1))
+        .force('collide', d3.forceCollide(3))
+        .stop()
+
+      for (let i = 0; i < 40; i++) {
+        simulation.tick()
+      }
+
+      _.each(dd, (d) => {
+        data[d.i]._x = d.x
+        // TODO: why does '' has weird y value?
+        data[d.i]._y = _.isNaN(this.y(d.y)) ? 0 : d.y
+      })
     })
 
-    let simulation = d3.forceSimulation(dd)
-      .force('x', d3.forceX((d) => x(d.x)).strength(1))
-      // .force('y', d3.forceY((d) => y(d.y)))
-      .force('y', d3.forceY(this.height() / 2))
-      .force('collide', d3.forceCollide(4))
-      .stop()
-
-    for (let i = 0; i < 2; i++) {
-      simulation.tick()
-      console.log(dd[0])
-    }
-    console.log(dd)
-
-    for (let i = 0; i < data.length; i++) {
-      data[i]._x = dd[i].x
-      data[i]._y = dd[i].y
-    }
-
-    // make a "identity" y scale for interfacing purpose
-    this.y = d3.scaleLinear()
-      .range([0, this.height()])
-      .domain([0, this.height()])
+    console.log(d3.extent(data, (d) => d.x))
+    console.log(d3.extent(data, (d) => x(d.x)))
+    console.log(d3.extent(data, (d) => d._x))
   }
 
   /**

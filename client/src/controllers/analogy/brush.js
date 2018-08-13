@@ -42,7 +42,7 @@ class DotBrush {
       // change color of selected points
       d3.selectAll('.dot')
         .classed('muted', (p) => {
-          let inside = p.x >= bounds[0] && p.x <= bounds[2] && p.y >= bounds[3] && p.y <=bounds[1]
+          let inside = p._x >= bounds[0] && p._x <= bounds[2] && p._y >= bounds[3] && p._y <=bounds[1]
           return !inside
         })
     }
@@ -56,7 +56,7 @@ class DotBrush {
       let bounds = _.map(sel, (s, idx) => idx % 2 ? scales.y.invert(s) : scales.x.invert(s))
 
       let pts = _.filter(data, (p) => {
-        return p.x >= bounds[0] && p.x <= bounds[2] && p.y >= bounds[3] && p.y <=bounds[1]
+        return p._x >= bounds[0] && p._x <= bounds[2] && p._y >= bounds[3] && p._y <=bounds[1]
       })
 
       emitter.onSelected(pts)

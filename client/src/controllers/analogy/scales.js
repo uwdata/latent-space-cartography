@@ -1,4 +1,5 @@
 import * as d3 from 'd3'
+import _ from 'lodash'
 
 /**
  * @fileOverview
@@ -8,17 +9,17 @@ class Scales {
   /**
    * Constructor
    * @param data
-   * @param outerWidth
-   * @param outerHeight
-   * @param margin
+   * @param params
    */
-  constructor (data, outerWidth, outerHeight, margin) {
+  constructor (data, params) {
     /**
-     * Width and height
+     * Public parameters
      */
-    this.outerWidth = outerWidth
-    this.outerHeight = outerHeight
-    this.margin = margin
+    this.outerWidth = params.outerWidth
+    this.outerHeight = params.outerHeight
+    this.margin = params.margin
+    this.chart_type = params.chart_type
+    this.y_field = params.y_field
 
     /**
      * Scales
@@ -36,28 +37,94 @@ class Scales {
   }
 
   /**
-   * Initialize: create the scales
+   * Initialize the scales for scatter plot
    * @param data
+   * @private
    */
-  init (data) {
+  _initScatterScales (data) {
+    // create x and y plotting fields so we can unify the code
+    for (let i = 0; i < data.length; i++) {
+      data[i]._x = data[i].x
+      data[i]._y = data[i][this.y_field]
+    }
+
+    // create the scales
     let x = d3.scaleLinear()
       .range([0, this.width()]).nice()
 
     let y = d3.scaleLinear()
       .range([this.height(), 0]).nice()
 
-    let xMax = d3.max(data, (d) => d.x) * 1.05
-    let xMin = d3.min(data, (d) => d.x) * 1.05
-    let yMax = d3.max(data, (d) => d.y) * 1.05
-    let yMin = d3.min(data, (d) => d.y) * 1.05
+    let xMax = d3.max(data, (d) => d._x) * 1.05
+    let xMin = d3.min(data, (d) => d._x) * 1.05
+    let yMax = d3.max(data, (d) => d._y) * 1.05
+    let yMin = d3.min(data, (d) => d._y) * 1.05
 
     x.domain([xMin, xMax])
     y.domain([yMin, yMax])
 
     this.x = x
     this.y = y
-    this.initialX = x.copy()
-    this.initialY = y.copy()
+  }
+
+  /**
+   * Initialize the scales for bee swarm plots
+   * @param data
+   * @private
+   */
+  _initSwarmScales (data) {
+    // x scale is still a continuous linear scale
+    let x = d3.scaleLinear()
+      .range([0, this.width()]).nice()
+      .domain(d3.extent(data, (d) => d.x))
+    this.x = x
+
+    // this is a temporary scale that maps category to height
+    let y = d3.scaleBand().rangeRound([0, this.height()]).padding(0.1)
+      .domain(data.map((d) => d[this.y_field]))
+
+    // simulate bee swarm
+    let dd = _.map(data, (d) => {
+      return {x: d.x, y: d[this.y_field]}
+    })
+
+    let simulation = d3.forceSimulation(dd)
+      .force('x', d3.forceX((d) => x(d.x)).strength(1))
+      // .force('y', d3.forceY((d) => y(d.y)))
+      .force('y', d3.forceY(this.height() / 2))
+      .force('collide', d3.forceCollide(4))
+      .stop()
+
+    for (let i = 0; i < 2; i++) {
+      simulation.tick()
+      console.log(dd[0])
+    }
+    console.log(dd)
+
+    for (let i = 0; i < data.length; i++) {
+      data[i]._x = dd[i].x
+      data[i]._y = dd[i].y
+    }
+
+    // make a "identity" y scale for interfacing purpose
+    this.y = d3.scaleLinear()
+      .range([0, this.height()])
+      .domain([0, this.height()])
+  }
+
+  /**
+   * Initialize: create the scales
+   * @param data
+   */
+  init (data) {
+    if (this.chart_type === 1) {
+      this._initScatterScales(data)
+    } else {
+      this._initSwarmScales(data)
+    }
+
+    this.initialX = this.x.copy()
+    this.initialY = this.y.copy()
   }
 
   /**

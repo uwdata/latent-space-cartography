@@ -28,7 +28,9 @@ class Scatter {
     this.background = '#fff'
     this.dot_radius = 4
     this.dot_color = 'mean_color'
-    this.mark_type = 1 //FIXME: create a new file
+    this.mark_type = 1
+    this.chart_type = 1 // 1 - scatter, 2 - bee swarm
+    this.y_field = 'y' // which field is the y axis
 
     /**
      * Interactions
@@ -77,7 +79,8 @@ class Scatter {
     let data = this.data
     let emitter = this.emitter
 
-    let scales = new Scales(data, outerWidth, outerHeight, margin)
+    let scales = new Scales(data, _.pick(this, ['outerWidth', 'outerHeight',
+      'margin', 'chart_type', 'y_field']))
     this._scales = scales
 
     let svg = d3.select(parent)
@@ -126,6 +129,7 @@ class Scatter {
     let vector_style = {background: this.background}
     if (!this._vectors) {
       this._vectors = new Vectors(scales, objects, this.dispatch, vector_style)
+      this._vectors.hide = this.y_field !== 'y'
     } else {
       this._vectors._scales = scales
       this._vectors._parent = objects
@@ -168,9 +172,12 @@ class Scatter {
       }
     }
 
+    /**
+     * @deprecated
+     */
     function centerPoint (d) {
-      let xc = scales.width() / 2 - scales.x(d.x)
-      let yc = scales.height() / 2 - scales.y(d.y)
+      let xc = scales.width() / 2 - scales.x(d._x)
+      let yc = scales.height() / 2 - scales.y(d._y)
 
       let rangeX = scales.x.range().map((n) => n - xc)
       let rangeY = scales.y.range().map((n) => n - yc)

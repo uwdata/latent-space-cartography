@@ -70,8 +70,8 @@ class Dots {
         .append('circle')
         .classed('dot', true)
         .attr('r', () => this.radius)
-        .attr('cx', (d) => scales.x(d.x))
-        .attr('cy', (d) => scales.y(d.y))
+        .attr('cx', (d) => scales.x(d._x))
+        .attr('cy', (d) => scales.y(d._y))
         .style('fill', (d) => this._colorDot(d))
         .on('click', dotClick)
         .on('mouseover', dotMouseover)
@@ -88,8 +88,8 @@ class Dots {
         .enter()
         .append('image')
         .classed('mark-img', true)
-        .attr('x', (d) => scales.x(d.x) - img_size * 0.5)
-        .attr('y', (d) => scales.y(d.y) - img_size * 0.5)
+        .attr('x', (d) => scales.x(d._x) - img_size * 0.5)
+        .attr('y', (d) => scales.y(d._y) - img_size * 0.5)
         .attr('width', () => img_size)
         .attr('height', () => img_size)
         .attr('xlink:href', (d) => store.getImageUrl(d.i))
@@ -120,7 +120,6 @@ class Dots {
 
     function dotMouseover(d) {
       that._focusDot(d, d3.select(this), true)
-      // emitter.onDotHovered(d, scales.x(d.x), scales.y(d. y))
       emitter.onDotHovered(d, d3.event.clientX, d3.event.clientY)
     }
 
@@ -150,11 +149,11 @@ class Dots {
   zoom () {
     let scales = this._scales
     this._parent.selectAll('.dot')
-      .attr('cx', (d) => scales.x(d.x))
-      .attr('cy', (d) => scales.y(d.y))
+      .attr('cx', (d) => scales.x(d._x))
+      .attr('cy', (d) => scales.y(d._y))
     this._parent.selectAll('.halo')
-      .attr('cx', (d) => scales.x(d.x))
-      .attr('cy', (d) => scales.y(d.y))
+      .attr('cx', (d) => scales.x(d._x))
+      .attr('cy', (d) => scales.y(d._y))
     this._positionTextLabel(this._parent.selectAll('.focus-label'))
     this._positionText(this._parent.selectAll('.dot-text'))
 
@@ -163,8 +162,8 @@ class Dots {
     if (!img.empty()) {
       let img_size = img.attr('width')
       this._parent.selectAll('.mark-img')
-        .attr('x', (d) => scales.x(d.x) - img_size * 0.5)
-        .attr('y', (d) => scales.y(d.y) - img_size * 0.5)
+        .attr('x', (d) => scales.x(d._x) - img_size * 0.5)
+        .attr('y', (d) => scales.y(d._y) - img_size * 0.5)
     }
 
     this._drawHull()
@@ -188,8 +187,8 @@ class Dots {
       let t = this._parent.transition().duration(200)
 
       this._parent.selectAll('.mark-img').transition(t)
-        .attr('x', (d) => this._scales.x(d.x) - img_size * 0.5)
-        .attr('y', (d) => this._scales.y(d.y) - img_size * 0.5)
+        .attr('x', (d) => this._scales.x(d._x) - img_size * 0.5)
+        .attr('y', (d) => this._scales.y(d._y) - img_size * 0.5)
         .attr('width', () => img_size)
         .attr('height', () => img_size)
     }
@@ -306,8 +305,8 @@ class Dots {
    * @private
    */
   _computeImageSize (inside) {
-    let x = [d3.min(inside, (d) => d.x), d3.max(inside, (d) => d.x)]
-    let y = [d3.min(inside, (d) => d.y), d3.max(inside, (d) => d.y)]
+    let x = [d3.min(inside, (d) => d._x), d3.max(inside, (d) => d._x)]
+    let y = [d3.min(inside, (d) => d._y), d3.max(inside, (d) => d._y)]
     x = _.map(x, (d) => this._scales.x(d))
     y = _.map(y, (d) => this._scales.y(d))
 
@@ -329,7 +328,7 @@ class Dots {
     let x = _.sortBy([scales.x.invert(0), scales.x.invert(scales.width())])
     let y = _.sortBy([scales.y.invert(0), scales.y.invert(scales.height())])
 
-    return _.filter(data, (p) => p.x >= x[0] && p.x <= x[1] && p.y >=y[0] && p.y <= y[1])
+    return _.filter(data, (p) => p._x >= x[0] && p._x <= x[1] && p._y >=y[0] && p._y <= y[1])
   }
 
   /**
@@ -348,8 +347,8 @@ class Dots {
         .append('circle')
         .classed('halo', true)
         .attr('r', () => 20)
-        .attr('cx', (d) => this._scales.x(d.x))
-        .attr('cy', (d) => this._scales.y(d.y))
+        .attr('cx', (d) => this._scales.x(d._x))
+        .attr('cy', (d) => this._scales.y(d._y))
         .style('fill', () => '#ebdef3')
     }
   }
@@ -361,7 +360,7 @@ class Dots {
     layer.selectAll('.hull').remove()
 
     if (pts && pts.length) {
-      let vertices = _.map(pts, (p) => [this._scales.x(p.x), this._scales.y(p.y)])
+      let vertices = _.map(pts, (p) => [this._scales.x(p._x), this._scales.y(p._y)])
       layer.append('path')
         .attr('class', 'hull')
         .datum(d3.polygonHull(vertices))
@@ -404,14 +403,14 @@ class Dots {
     let font_width = font_size * 0.45
 
     text
-      .attr('x', (d) => this._scales.x(d.x) - font_width * d.name.length * 0.5)
-      .attr('y', (d) => this._scales.y(d.y))
+      .attr('x', (d) => this._scales.x(d._x) - font_width * d.name.length * 0.5)
+      .attr('y', (d) => this._scales.y(d._y))
   }
 
   _positionTextLabel (text) {
     text
-      .attr('x', (d) => Math.max(this._scales.x(d.x) - 30, 15))
-      .attr('y', (d) => Math.max(this._scales.y(d.y) - 15, 15))
+      .attr('x', (d) => Math.max(this._scales.x(d._x) - 30, 15))
+      .attr('y', (d) => Math.max(this._scales.y(d._y) - 15, 15))
   }
 
   /**
@@ -441,7 +440,7 @@ class Dots {
 
     d3.selectAll('.dot')
       .filter((d) => !indices[d.i])
-      .style('fill', (d) => '#ccc')
+      .style('fill', () => '#ccc')
 
     this.hull = pts
     this._drawHull()

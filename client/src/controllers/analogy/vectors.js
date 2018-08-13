@@ -13,6 +13,7 @@ class Vectors {
     this.lineWidth = styles.lineWidth || 2
     this.background = styles.background || '#fff'
     this.data_type = 'image'
+    this.hide = false
 
     /**
      * Private
@@ -36,7 +37,7 @@ class Vectors {
   }
 
   /**
-   * Draw a vector.
+   * Draw a vector for image data.
    * @param vector
    * @private
    */
@@ -144,6 +145,11 @@ class Vectors {
     }
   }
 
+  /**
+   * Draw a vector for generic data.
+   * @param vector
+   * @private
+   */
   _drawGenericVector (vector) {
     if (!vector) {
       return
@@ -213,48 +219,6 @@ class Vectors {
     this._drawHull(end, '#f4c44c')
   }
 
-  clearData () {
-    this.primary = null
-    this.analogy = null
-  }
-
-  /**
-   * Redraw everything (e.g. because scale is updated)
-   */
-  redraw () {
-    d3.selectAll('.vector-group').remove()
-
-    // remove cone
-    let layer = this._parent.select('.halo_layer')
-    layer.selectAll('.hull-vector').remove()
-
-    if(this.primary) {
-      // draw vectors
-      let drawFunc = this.data_type === 'image' ? this._drawImageVector.bind(this) :
-        this.data_type === 'other' ? this._drawGenericVector.bind(this) : () => {}
-      drawFunc(this.primary.line)
-      drawFunc(this.analogy)
-
-      // draw confidence cone
-      this._drawCone()
-
-      // dim other marks
-      this._parent.selectAll('.mark-img-group')
-        .attr('opacity', 0.5)
-    }
-  }
-
-  /**
-   * Remove a vector with matching data.
-   * @param vector
-   */
-  removeOne (vector) {
-    // FIXME: d may be undefined
-    d3.selectAll('.vector-group')
-      .filter((d) => d[0].x === vector[0].x && d[0].y === vector[0].y)
-      .remove()
-  }
-
   /**
    * Register callbacks to dispatcher.
    * @private
@@ -302,11 +266,38 @@ class Vectors {
       .classed('line', true)
       .attr('d', line)
   }
-}
 
-function match (name, which) {
-  return d3.selectAll(name)
-    .filter((d) => d.x === which.x && d.y === which.y)
+  clearData () {
+    this.primary = null
+    this.analogy = null
+  }
+
+  /**
+   * Redraw everything (e.g. because scale is updated)
+   */
+  redraw () {
+    // remove previous vector
+    d3.selectAll('.vector-group').remove()
+
+    // remove cone
+    let layer = this._parent.select('.halo_layer')
+    layer.selectAll('.hull-vector').remove()
+
+    if(this.primary && !this.hide) {
+      // draw vectors
+      let drawFunc = this.data_type === 'image' ? this._drawImageVector.bind(this) :
+        this.data_type === 'other' ? this._drawGenericVector.bind(this) : () => {}
+      drawFunc(this.primary.line)
+      drawFunc(this.analogy)
+
+      // draw confidence cone
+      this._drawCone()
+
+      // dim other marks
+      this._parent.selectAll('.mark-img-group')
+        .attr('opacity', 0.5)
+    }
+  }
 }
 
 export default Vectors

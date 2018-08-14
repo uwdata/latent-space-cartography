@@ -291,7 +291,7 @@
       changeYAxis (y) {
         this.current_y = y
         let type = CONFIG.schema.type
-        if (y === 'y' || type[y] === DTYPE.numeric) {
+        if (type[y] === DTYPE.numeric) {
           this.scatter.chart_type = 1
         } else {
           this.scatter.chart_type = 2

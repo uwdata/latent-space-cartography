@@ -3,7 +3,7 @@ import _ from 'lodash'
 
 /**
  * @fileOverview
- * Creates and holds all the scales in analogy scatter plot.
+ * Creates and holds the shared scales in analogy scatter plot.
  */
 class Scales {
   /**
@@ -29,6 +29,11 @@ class Scales {
 
     this.x = null
     this.y = null
+
+    // categorical y scale for strip chart
+    // note that this might remain null
+    this.y_band = null
+    this.initialYBand = null
 
     /**
      * Initialize
@@ -86,6 +91,8 @@ class Scales {
     // y scale for drawing, which maps category to height
     let y = d3.scaleBand().rangeRound([0, this.height()]).padding(0.1)
       .domain(data.map((d) => d[this.y_field]))
+    this.y_band = y
+    this.initialYBand = y.copy()
 
     let max_bw = 80
     if (y.bandwidth() > max_bw) {

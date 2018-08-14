@@ -5,6 +5,7 @@ import Scales from './analogy/scales'
 import DotBrush from './analogy/brush'
 import Dots from './analogy/dots'
 import Vectors from './analogy/vectors'
+import DotAxis from './analogy/axis'
 
 /**
  * Handles drawing a scatter plot for 2-dimensional data.
@@ -64,6 +65,7 @@ class Scatter {
     this._scales = null
     this._dots = null
     this._vectors = null
+    this._axis = null
   }
 
   /**
@@ -115,6 +117,10 @@ class Scatter {
       .classed('objects', true)
       .attr('width', scales.width())
       .attr('height', scales.height())
+
+    // Axis
+    this._axis = new DotAxis(objects, scales, _.pick(this, ['chart_type', 'y_field']))
+    this._axis.draw()
 
     // Halo Layer
     objects.append('g')
@@ -197,9 +203,11 @@ class Scatter {
       // create new scales
       scales.x = d3.event.transform.rescaleX(scales.initialX)
       scales.y = d3.event.transform.rescaleY(scales.initialY)
+      scales.y_band.range(scales.initialYBand.range().map((d) => d3.event.transform.applyY(d)))
 
-      // update dots
+      // update dots and axis
       that._dots.zoom()
+      that._axis.zoom()
 
       // update vectors
       that._vectors.redraw()

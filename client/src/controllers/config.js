@@ -65,6 +65,7 @@ const config_tybalt = {
   dims: [100],
   schema: {
     'type': {
+      'y': DTYPE.numeric,
       'organ': DTYPE.categorical,
       'stage': DTYPE.categorical,
       'gender': DTYPE.categorical,

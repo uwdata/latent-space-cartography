@@ -391,6 +391,7 @@
 
       // draw original
       showOriginal () {
+        this.current_y = 'y'
         // too lazy to rewrite ...
         this.changeDim(this.dim)
       }

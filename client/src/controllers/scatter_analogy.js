@@ -203,7 +203,9 @@ class Scatter {
       // create new scales
       scales.x = d3.event.transform.rescaleX(scales.initialX)
       scales.y = d3.event.transform.rescaleY(scales.initialY)
-      scales.y_band.range(scales.initialYBand.range().map((d) => d3.event.transform.applyY(d)))
+      if (scales.y_band) {
+        scales.y_band.range(scales.initialYBand.range().map((d) => d3.event.transform.applyY(d)))
+      }
 
       // update dots and axis
       that._dots.zoom()

@@ -57,6 +57,7 @@ class DotAxis {
 
     let scales = this._scales
 
+    // y axis
     this._y_axis = d3.axisLeft(scales.y_band)
       .tickSize(scales.width())
       .tickFormat((d) => {
@@ -76,12 +77,48 @@ class DotAxis {
       .classed('axis-y', true)
       .attr('transform', `translate(${scales.width()}, 0)`)
       .call(this._custom_y.bind(this))
+
+    // draw x axis manually
+    let loc = scales.height() * 0.5
+    let ends = [{x: 0, y: loc}, {x: scales.width(), y: loc}]
+
+    let line = d3.line()
+      .x((d) => d.x)
+      .y((d) => d.y)
+
+    let gy = g.append('g')
+      .classed('axis-y', true)
+
+    // x axis line
+    gy.append('path')
+      .datum(ends)
+      .classed('line', true)
+      .attr('d', line)
+      .style('stroke-width', 2)
+      .style('stroke', '#000')
+
+    // text background
+    gy.append('rect')
+      .attr('x', scales.width() - 155)
+      .attr('y', loc - 20)
+      .attr('width', 130)
+      .attr('height', 18)
+      .attr('fill', '#fff')
+
+    // axis title
+    gy.append('text')
+      .text('Attribute Vector Axis')
+      .attr('x', scales.width() - 150)
+      .attr('y', loc - 5)
+      .style('font-weight', '500')
+      .style('font-size', `14px`)
   }
 
   /**
    * Handle zoom, assuming all scales are already updated
    */
   zoom () {
+    if (!this.show) return
     this._y_axis.scale(this._scales.y_band)
     let g = this._parent.select('.axis-y')
     g.call(this._custom_y.bind(this))

@@ -74,10 +74,17 @@
             </b-dropdown>
 
             <!--On the right-->
-            <div v-if="all_color.length" class="float-right">
-              <b-dropdown :text="`Color By: ${prettyName(current_color)}`" variant="light" class="mr-2">
+            <div v-if="all_color.length" class="float-right ml-2">
+              <b-dropdown :text="`Color By: ${prettyName(current_color)}`" variant="light">
                 <b-dropdown-item v-for="c in all_color" @click="changeColor(c)" :key="c">
                   {{prettyName(c)}}
+                </b-dropdown-item>
+              </b-dropdown>
+            </div>
+            <div v-if="all_y.length && view_state === 2" class="float-right ml-2">
+              <b-dropdown :text="`Y Axis: ${prettyName(current_y)}`" variant="light">
+                <b-dropdown-item v-for="y in all_y" @click="changeYAxis(y)" :key="y">
+                  {{prettyName(y)}}
                 </b-dropdown-item>
               </b-dropdown>
             </div>
@@ -113,7 +120,7 @@
   import BrushedList from '../layouts/BrushedList.vue'
 
   import Scatter from '../controllers/scatter_analogy'
-  import {store, bus, log_debug, CONFIG} from '../controllers/config'
+  import {store, bus, log_debug, CONFIG, DTYPE} from '../controllers/config'
   import _ from 'lodash'
   import VueLoading from 'vue-loading-template'
   import FilterDropdown from '../layouts/FilterDropdown.vue'
@@ -141,9 +148,9 @@
       left: 0,
       right: 0
     }
-    s.y_field = 'race'
-    s.chart_type = 2
     s.dot_radius = 3
+    s.chart_type = 1
+    s.y_field = 'y'
     s.dot_color = CONFIG.rendering.dot_color
     s.mark_type = CONFIG.data_type === 'text' ? 3 : CONFIG.data_slice === 'image' ? 2 : 1
   }
@@ -180,6 +187,11 @@
 
   function lets_load (callback) {
     this.view_state = 0
+
+    // reset chart style
+    this.scatter.chart_type = 1
+    this.scatter.y_field = 'y'
+
     clear.call(this)
     this.loading = true
     let func = this.projection === 't-SNE' ? store.getTsnePoints : store.getPcaPoints
@@ -230,6 +242,8 @@
         all_perplexity: [5, 10, 30, 50, 100],
         current_color: CONFIG.rendering.dot_color,
         all_color: CONFIG.color_by || [],
+        current_y: 'y',
+        all_y: CONFIG.y_axis || [],
         filter_func: (d) => d,
         show_search: !CONFIG.search.simple,
         open_search: false,
@@ -271,7 +285,22 @@
       },
       prettyName (text) {
         if (!text)  return ''
+        if (text === 'y')  return 'Default'
         return _.capitalize(text.split('_').join(' '))
+      },
+
+      // change the y axis
+      changeYAxis (y) {
+        this.current_y = y
+        let type = CONFIG.schema.type
+        if (y === 'y' || type[y] === DTYPE.numeric) {
+          this.scatter.chart_type = 1
+        } else {
+          this.scatter.chart_type = 2
+        }
+
+        this.scatter.y_field = y
+        lets_draw.call(this, this.points)
       },
 
       // change the color by

@@ -131,6 +131,7 @@ class Scatter {
       this._vectors = new Vectors(scales, objects, this.dispatch, vector_style)
       this._vectors.hide = this.y_field !== 'y'
     } else {
+      this._vectors.hide = this.y_field !== 'y'
       this._vectors._scales = scales
       this._vectors._parent = objects
       this._vectors.redraw()

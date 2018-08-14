@@ -1,6 +1,11 @@
 import Store from '../controllers/store'
 import Vue from 'vue'
 
+const DTYPE = {
+  numeric: 'numeric',
+  categorical: 'categorical'
+}
+
 const config_logo = {
   dataset: 'logo',
   date_type: 'image',
@@ -59,6 +64,12 @@ const config_tybalt = {
   train_split: 10458,
   dims: [100],
   schema: {
+    'type': {
+      'organ': DTYPE.categorical,
+      'stage': DTYPE.categorical,
+      'gender': DTYPE.categorical,
+      'age_at_diagnosis': DTYPE.numeric
+    },
     'meta': ['i', 'name', 'platform', 'age_at_diagnosis', 'race', 'stage', 'vital_status',
       'disease', 'organ', 'gender', 'analysis_center', 'year_of_diagnosis'],
     'header': ['i', 'gene']
@@ -71,7 +82,8 @@ const config_tybalt = {
     by: ['name'],
     filter: 'stage'
   },
-  color_by: ['organ', 'race', 'stage', 'vital_status', 'gender', 'analysis_center']
+  color_by: ['organ', 'race', 'stage', 'vital_status', 'gender', 'analysis_center'],
+  y_axis: ['y', 'organ', 'stage', 'gender', 'age_at_diagnosis']
 }
 
 /**
@@ -105,6 +117,7 @@ let bus = new Vue()
 export {
   DEBUG,
   CONFIG,
+  DTYPE,
   DATASET,
   TRAIN_SPLIT,
   store,

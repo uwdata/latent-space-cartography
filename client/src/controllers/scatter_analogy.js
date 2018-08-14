@@ -118,10 +118,6 @@ class Scatter {
       .attr('width', scales.width())
       .attr('height', scales.height())
 
-    // Axis
-    this._axis = new DotAxis(objects, scales, _.pick(this, ['chart_type', 'y_field']))
-    this._axis.draw()
-
     // Halo Layer
     objects.append('g')
       .classed('halo_layer', true)
@@ -130,6 +126,10 @@ class Scatter {
     this._dots = new Dots(scales, objects, _.pick(this, ['dot_color', 'dot_radius',
       'mark_type', 'outerWidth', 'outerHeight']))
     this._dots.draw(data, emitter, this.dispatch)
+
+    // Axis
+    this._axis = new DotAxis(objects, scales, _.pick(this, ['chart_type', 'y_field']))
+    this._axis.draw()
 
     // Lines
     let vector_style = {background: this.background}

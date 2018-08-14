@@ -79,10 +79,9 @@ class Scales {
       .domain([0, this.height()])
 
     // x is still a continuous scale
-    let x = d3.scaleLinear()
+    this.x = d3.scaleLinear()
       .range([0, this.width()]).nice()
       .domain(d3.extent(data, (d) => d.x))
-    this.x = x
 
     // y scale for drawing, which maps category to height
     let y = d3.scaleBand().rangeRound([0, this.height()]).padding(0.1)

@@ -38,11 +38,12 @@ class DotBrush {
       // x0, y0, x1, y1
       let sel = _.flatten(d3.event.selection)
       let bounds = _.map(sel, (s, idx) => idx % 2 ? scales.y.invert(s) : scales.x.invert(s))
+      bounds = label_bounds(bounds)
 
       // change color of selected points
       d3.selectAll('.dot')
         .classed('muted', (p) => {
-          let inside = p._x >= bounds[0] && p._x <= bounds[2] && p._y >= bounds[3] && p._y <=bounds[1]
+          let inside = p._x >= bounds.x0 && p._x <= bounds.x1 && p._y >= bounds.y0 && p._y <=bounds.y1
           return !inside
         })
     }
@@ -54,9 +55,10 @@ class DotBrush {
       // x0, y0, x1, y1
       let sel = _.flatten(d3.event.selection)
       let bounds = _.map(sel, (s, idx) => idx % 2 ? scales.y.invert(s) : scales.x.invert(s))
+      bounds = label_bounds(bounds)
 
       let pts = _.filter(data, (p) => {
-        return p._x >= bounds[0] && p._x <= bounds[2] && p._y >= bounds[3] && p._y <=bounds[1]
+        return p._x >= bounds.x0 && p._x <= bounds.x1 && p._y >= bounds.y0 && p._y <=bounds.y1
       })
 
       emitter.onSelected(pts)
@@ -90,6 +92,20 @@ class DotBrush {
    */
   attach (svg) {
     svg.append('g').attr('class', 'brush').call(this.behavior)
+  }
+}
+
+/**
+ * Helper function converting bounds array to an object.
+ * @param arr
+ * @returns {{x0: number, x1: number, y0: number, y1: number}}
+ */
+function label_bounds (arr) {
+  return {
+    x0: Math.min(arr[0], arr[2]),
+    x1: Math.max(arr[0], arr[2]),
+    y0: Math.min(arr[1], arr[3]),
+    y1: Math.max(arr[1], arr[3])
   }
 }
 

@@ -88,6 +88,13 @@ def convert_ls ():
 def copy_raw ():
     copyfile(p_raw, out_raw)
 
+# turn array into a dictionary
+def arr_to_dict (arr):
+    res = {}
+    for i in arr:
+        res[i] = 1
+    return res
+
 # produce a CSV file of meta data to be imported into database
 def wrangle_meta ():
     # read meta data
@@ -98,14 +105,28 @@ def wrangle_meta ():
     # read patient ID
     pid = read_csv_single(p_id)
 
+    # read cancer subtype
+    pid = read_csv_single(p_id)
+    cancer = read_tsv(p_meta, str, 0)
+    ids = right_outer_join(cancer[:, 0], pid)
+    names = ['Mesenchymal', 'Immunoreactive', 'Proliferative', 'Differentiated']
+    groups = [arr_to_dict(subtype_group(cancer, ids, name)) for name in names]
+    arr_subtype = []
+    for i in range(pid.shape[0]):
+        tag = ''
+        for j in range(4):
+            if (i in groups[j]):
+                tag = names[j]
+        arr_subtype.append(tag)
+
     out = []
     out.append(['i', 'name', 'sample_base', 'platform', 'portion_id',
     'age_at_diagnosis', 'stage', 'vital_status', 'race', 'acronym', 'disease',
     'organ', 'drug', 'ethnicity', 'percent_tumor_nuclei', 'gender', 'sample_type',
-    'analysis_center', 'year_of_diagnosis'])
+    'analysis_center', 'year_of_diagnosis', 'ovarian_cancer_subtype'])
     j = 0
     for i in range(pid.shape[0]):
-        row = [''] * n
+        row = [''] * len(out[0])
         row[0] = i
         row[1] = pid[i]
         if pid[i] == meta[j][0]:
@@ -114,7 +135,8 @@ def wrangle_meta ():
                 if meta[j][k] == 'NA':
                     meta[j][k] = ''
             # the patient ID matches, so we populate the row
-            row[2:] = meta[j][1:]
+            row[2:-1] = meta[j][1:]
+            row[-1] = arr_subtype[i]
             j += 1
         out.append(row)
 
@@ -135,6 +157,6 @@ def wrangle_header ():
 if __name__ == '__main__':
     # convert_ls()
     # copy_raw()
-    # wrangle_meta()
+    wrangle_meta()
     # wrangle_header()
-    subtype_csv()
+    # subtype_csv()

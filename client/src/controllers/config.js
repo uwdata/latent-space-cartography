@@ -72,7 +72,8 @@ const config_tybalt = {
       'age_at_diagnosis': DTYPE.numeric
     },
     'meta': ['i', 'name', 'platform', 'age_at_diagnosis', 'race', 'stage', 'vital_status',
-      'disease', 'organ', 'gender', 'analysis_center', 'year_of_diagnosis'],
+      'disease', 'organ', 'gender', 'analysis_center', 'year_of_diagnosis',
+      'ovarian_cancer_subtype'],
     'header': ['i', 'gene']
   },
   rendering: {
@@ -83,8 +84,10 @@ const config_tybalt = {
     by: ['name'],
     filter: 'stage'
   },
-  color_by: ['organ', 'race', 'stage', 'vital_status', 'gender', 'analysis_center'],
-  y_axis: ['y', 'organ', 'race', 'stage', 'gender', 'age_at_diagnosis']
+  color_by: ['organ', 'race', 'stage', 'vital_status', 'gender',
+    'analysis_center', 'ovarian_cancer_subtype'],
+  y_axis: ['y', 'organ', 'race', 'stage', 'gender', 'age_at_diagnosis',
+    'ovarian_cancer_subtype']
 }
 
 /**

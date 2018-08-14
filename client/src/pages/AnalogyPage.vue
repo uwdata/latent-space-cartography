@@ -149,8 +149,6 @@
       right: 0
     }
     s.dot_radius = 3
-    s.chart_type = 1
-    s.y_field = 'y'
     s.dot_color = CONFIG.rendering.dot_color
     s.mark_type = CONFIG.data_type === 'text' ? 3 : CONFIG.data_slice === 'image' ? 2 : 1
   }

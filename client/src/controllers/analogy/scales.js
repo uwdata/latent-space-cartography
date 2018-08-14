@@ -87,6 +87,13 @@ class Scales {
     let y = d3.scaleBand().rangeRound([0, this.height()]).padding(0.1)
       .domain(data.map((d) => d[this.y_field]))
 
+    let max_bw = 80
+    if (y.bandwidth() > max_bw) {
+      let h = max_bw * y.domain().length
+      let h0 = (this.height() - h) * 0.5
+      y.rangeRound([h0, h0 + h])
+    }
+
     // add random offsets to y position
     for (let i = 0; i < data.length; i++) {
       data[i]._x = data[i].x

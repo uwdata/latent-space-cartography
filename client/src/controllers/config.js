@@ -83,7 +83,7 @@ const config_tybalt = {
     filter: 'stage'
   },
   color_by: ['organ', 'race', 'stage', 'vital_status', 'gender', 'analysis_center'],
-  y_axis: ['y', 'organ', 'stage', 'gender', 'age_at_diagnosis']
+  y_axis: ['y', 'organ', 'race', 'stage', 'gender', 'age_at_diagnosis']
 }
 
 /**

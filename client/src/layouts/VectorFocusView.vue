@@ -10,7 +10,7 @@
 
       <!--Title-->
       <div class="p-3 w-100 text-center text-truncate">
-        {{focus.description || 'Untitled Vector'}}
+        {{focus.description || `${focus.alias_end} - ${focus.alias_start}`}}
       </div>
 
       <!--Right Buttons-->

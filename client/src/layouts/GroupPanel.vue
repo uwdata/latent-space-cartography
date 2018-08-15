@@ -48,8 +48,9 @@
       <div class="ml-2 mr-2 mt-2" v-if="selected.length">
         <div class="d-flex justify-content-between text-muted mb-2">
           <div><small>{{selected.length}} total</small></div>
-          <div v-if="cluster_score" title="Higher score indicates tighter cluster">
-            <small>Cluster Score: {{cluster_score}}</small>
+          <div v-if="cluster_score">
+            <small title="Higher score indicates tighter cluster"
+                   v-b-tooltip.hover >Cluster Score: {{cluster_score}}</small>
           </div>
         </div>
         <div v-for="p in selected_points" :key="p.i"

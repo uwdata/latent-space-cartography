@@ -6,7 +6,7 @@
 
     <!--Header-->
     <header class="navbar bd-navbar">
-      <span class="ml-3" style="font-weight: 500;">Latent Space Explorer</span>
+      <span class="ml-3" style="font-weight: 500;">Latent Space Cartography</span>
       <help-button class="ml-3"></help-button>
     </header>
 
@@ -283,7 +283,11 @@
       },
       prettyName (text) {
         if (!text)  return ''
-        if (text === 'y')  return 'Default'
+        if (text === 'y') {
+          if (this.view_state === 2) return 'PC1'
+          if (this.view_state === 0 && this.projection === 't-SNE') return 'Default'
+          return 'PC2'
+        }
         return _.capitalize(text.split('_').join(' '))
       },
 

@@ -24,7 +24,7 @@ models = {}
 
 # dataset we're working with
 # from config_emoji import img_rows, img_cols, img_chns, img_mode
-from config_glove_6b import dset, data_type, dims, schema_meta, schema_header
+from config_tybalt import dset, data_type, dims, schema_meta, schema_header
 
 # for absolute path
 def abs_path (rel_path):

@@ -6,7 +6,7 @@
     </div>
 
     <!--Modal-->
-    <b-modal id="model-help" title="Latent Space Explorer" class="text-dark">
+    <b-modal id="model-help" title="Latent Space Cartography" class="text-dark">
       <!--Help information for image data-->
       <div class="bd-group" v-if="data_type === 'image'">
         <h5>Introduction</h5>

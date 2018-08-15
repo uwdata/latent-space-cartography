@@ -29,7 +29,7 @@ class Scatter {
     this.background = '#fff'
     this.dot_radius = 4
     this.dot_color = 'mean_color'
-    this.mark_type = 1
+    this.mark_type = 1 // 1 - dot, 2 - image, 3 - text
     this.chart_type = 1 // 1 - scatter, 2 - bee swarm
     this.y_field = 'y' // which field is the y axis
 

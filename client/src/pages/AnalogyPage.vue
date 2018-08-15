@@ -150,7 +150,7 @@
     }
     s.dot_radius = 3
     s.dot_color = CONFIG.rendering.dot_color
-    s.mark_type = CONFIG.data_type === 'text' ? 3 : CONFIG.data_slice === 'image' ? 2 : 1
+    s.mark_type = CONFIG.data_type === 'text' ? 3 : CONFIG.data_type === 'image' ? 2 : 1
   }
 
   /**

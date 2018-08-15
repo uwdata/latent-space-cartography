@@ -17,7 +17,7 @@
           data points cluster. Additionally, you can define <b>attribute vectors</b>
           and perform vector arithmetic.
         </p>
-        <p class="text-center text-muted" v-if="analogy">
+        <p class="text-center text-muted">
           <b>Man - Woman + Queen = King</b>
         </p>
         <p>

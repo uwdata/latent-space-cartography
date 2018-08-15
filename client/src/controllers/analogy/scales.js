@@ -135,6 +135,24 @@ class Scales {
   }
 
   /**
+   * A wrapper around scales.x() because _x may not exist
+   * @param d
+   */
+  getX (d) {
+    if (d._x) return this.x(d._x)
+    return this.x(d.x)
+  }
+
+  /**
+   * A wrapper around scales.y() because _y may not exist
+   * @param d
+   */
+  getY (d) {
+    if (d._y) return this.y(d._y)
+    return this.y(d.y)
+  }
+
+  /**
    * A helper function to get the canvas width (outer minus margin)
    */
   width () {

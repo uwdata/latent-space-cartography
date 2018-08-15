@@ -304,13 +304,15 @@
         this.chart._vectors.redraw()
 
         // the strongest output signal (for arbitrary tensor data type)
-        let data = _.concat(top[0], top[1])
-        let xMax = d3.max(data, (d) => Math.abs(d.diff)) * 1.05
-        let xMin = d3.min(data, (d) => Math.abs(d.diff)) * 1.05
-        let scale = d3.scaleLinear().range([0, 100]).domain([xMin, xMax])
-        top[0] = _.map(top[0], (t) => _.extend({}, t, {width: scale(Math.abs(t.diff))}))
-        top[1] = _.map(top[1], (t) => _.extend({}, t, {width: scale(Math.abs(t.diff))}))
-        this.top = top
+        if (CONFIG.data_type === 'other') {
+          let data = _.concat(top[0], top[1])
+          let xMax = d3.max(data, (d) => Math.abs(d.diff)) * 1.05
+          let xMin = d3.min(data, (d) => Math.abs(d.diff)) * 1.05
+          let scale = d3.scaleLinear().range([0, 100]).domain([xMin, xMax])
+          top[0] = _.map(top[0], (t) => _.extend({}, t, {width: scale(Math.abs(t.diff))}))
+          top[1] = _.map(top[1], (t) => _.extend({}, t, {width: scale(Math.abs(t.diff))}))
+          this.top = top
+        }
       },
 
       applyAnalogy (flipped = false) {

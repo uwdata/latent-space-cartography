@@ -479,8 +479,8 @@ class Store {
             let points = this._formatPcaPoints(msg['points'])
             let line = this._formatVectorLine(msg['locations'], msg['neighbors'],
               msg['outputs'], msg['nearest'])
-            let top = [this._joinHeader(msg['top_start']),
-              this._joinHeader(msg['top_end'])]
+            let top = CONFIG.data_type === 'other' ? [this._joinHeader(msg['top_start']),
+              this._joinHeader(msg['top_end'])] : []
             resolve([points, line, top])
           } else {
             reject()

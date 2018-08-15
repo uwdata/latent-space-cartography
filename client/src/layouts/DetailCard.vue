@@ -84,7 +84,8 @@
         return CONFIG.schema.meta.length > 2
       },
       detail () {
-        if (this.shared.detail_card) {
+        // when a new point is clicked, fetch input space data to draw a heat map
+        if (this.shared.detail_card && this.data_type === 'other') {
           store.getRaw(this.shared.detail_card.i)
             .then((data) => {
               this.chart.setData(data)

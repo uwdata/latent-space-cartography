@@ -28,38 +28,24 @@
       </div>
     </div>
 
-    <!--Hint-->
-    <div class="d-flex align-items-center m-3" v-if="!selected.length"
-         style="height: calc(100vh - 7rem);">
-      <div class="text-center w-100 mb-5">
-        <div class="mb-4">
-          <b-btn class="btn btn-outline-warning"
-                 v-b-modal.modal-save @click="load_only=true">
-            Load
-          </b-btn>
-          <span class="text-warning ml-1 mr-1">or</span>
-          <b-btn class="btn btn-outline-warning"
-                 v-b-modal.modal-upload>
-            Upload
-          </b-btn>
-        </div>
-        <div class="text-muted">
-          Start by brushing or searching!
-        </div>
-      </div>
-    </div>
-
     <!--Main View-->
-    <div class="bd-group-panel-body">
-      <!--Top Stats-->
+    <div class="bd-group-panel-body" :class="{long: !selected.length}">
+      <!--Search Bar-->
       <div class="p-3 bd-border-bottom" v-if="show_search">
         <auto-complete v-model="selection" :points="points" hint="Search ..."
                        v-on:chosen="addItem"
                        v-on:tentative="hoverItem"></auto-complete>
       </div>
 
+      <!--Hints-->
+      <div class="d-flex align-items-center m-3 h-100" v-if="!selected.length">
+        <div class="text-center w-100 mb-3 text-muted">
+          Start by brushing or searching!
+        </div>
+      </div>
+
       <!--Logo List-->
-      <div v-if="selected.length" class="ml-2 mr-2 mt-2">
+      <div class="ml-2 mr-2 mt-2" v-if="selected.length">
         <div class="d-flex justify-content-between text-muted mb-2">
           <div><small>{{selected.length}} total</small></div>
           <div v-if="cluster_score" title="Higher score indicates tighter cluster">
@@ -82,8 +68,8 @@
     </div>
 
     <!--Footer-->
-    <div v-if="selected.length" class="bd-panel-footer p-3">
-      <div class="bd-panel-footer-margin">
+    <div class="bd-panel-footer p-3">
+      <div class="bd-panel-footer-margin" v-if="selected.length">
         <!--View Buttons-->
         <div class="btn-group btn-group-sm d-flex w-100">
           <b-btn class="btn btn-outline-secondary w-100"
@@ -101,6 +87,17 @@
                  :disabled="!canPca()"
                  @click="reproject">Isolate</b-btn>
         </div>
+      </div>
+
+      <div class="bd-panel-footer-margin text-center" v-if="!selected.length">
+        <b-btn class="btn-outline-warning mr-3"
+               v-b-modal.modal-save @click="load_only=true">
+          Load
+        </b-btn>
+        <b-btn class="btn-outline-warning"
+               v-b-modal.modal-upload>
+          Upload
+        </b-btn>
       </div>
     </div>
 
@@ -285,6 +282,10 @@
   .bd-group-panel-body {
     height: calc(100vh - 15rem);
     overflow-y: auto;
+  }
+
+  .bd-group-panel-body.long {
+    height: calc(100vh - 11.45rem) !important;
   }
 
   .bd-panel-footer {

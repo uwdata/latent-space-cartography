@@ -4,6 +4,7 @@
 dset = 'tybalt'
 data_type = 'other'
 dims = [100]
+metric = 'l2'
 
 # MySQL table schema
 schema_meta = '''

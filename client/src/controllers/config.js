@@ -93,7 +93,7 @@ const config_tybalt = {
 /**
  * Toggle dataset here!
  */
-let CONFIG = config_tybalt
+let CONFIG = config_glove
 
 const DEBUG = process.env.NODE_ENV === 'development'
 const DATASET = CONFIG.dataset

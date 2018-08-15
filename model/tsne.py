@@ -4,8 +4,9 @@
 Run t-SNE on the latent dim.
 '''
 
-from sklearn.decomposition import PCA
 from sklearn.manifold import TSNE
+from sklearn.metrics import pairwise_distances
+import numpy as np
 import h5py
 import json
 import csv
@@ -13,7 +14,7 @@ import os
 import time
 
 # dataset config
-from config_emoji import *
+from config_glove_6b import *
 
 # path to the stored model
 base = '/home/yliu0/data/{}/'.format(dset)
@@ -46,9 +47,17 @@ if __name__ == '__main__':
             n_iter = 1000
             time_start = time.time()
             print 't-SNE starts! Latent dimensions: {}, perplexity: {}'.format(latent_dim, perp)
-            tsne = TSNE(n_components=dim, verbose=1, perplexity=perp, n_iter=n_iter)
-            # shape: (length, n_components), each point is a float
-            d = tsne.fit_transform(dset)
+
+            if metric == 'cosine':
+                X = np.copy(dset)
+                dists = pairwise_distances(X, X, metric='cosine')
+                tsne = TSNE(n_components=dim, verbose=1, perplexity=perp, n_iter=n_iter, metric='precomputed')
+                d = tsne.fit_transform(dists)
+            else:
+                tsne = TSNE(n_components=dim, verbose=1, perplexity=perp, n_iter=n_iter)
+                d = tsne.fit_transform(dset)
+
+            # shape of d: (length, n_components), each point is a float
             print 't-SNE done! Time elapsed: {} s'.format(time.time()-time_start)
             log.append([latent_dim, perp, tsne.kl_divergence_, n_iter])
 

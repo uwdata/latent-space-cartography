@@ -78,31 +78,41 @@ class Scales {
    * @private
    */
   _initSwarmScales (data) {
+    let h = this.height()
+    let w = this.width()
+
     // make a "identity" y scale for interfacing purpose
-    this.y = d3.scaleLinear()
-      .range([0, this.height()])
-      .domain([0, this.height()])
+    this.y = d3.scaleLinear().range([0, h]).domain([0, h])
 
     // x is still a continuous scale
     this.x = d3.scaleLinear()
-      .range([0, this.width()]).nice()
+      .range([0, w]).nice()
       .domain(d3.extent(data, (d) => d.x))
 
     // y scale for drawing, which maps category to height
-    let y = d3.scaleBand().rangeRound([0, this.height()]).padding(0.1)
+    let y = d3.scaleBand().rangeRound([0, h]).padding(0.1)
       .domain(data.map((d) => d[this.y_field]))
 
+    // make it aesthetically more pleasing
     let max_bw = 80
     if (y.bandwidth() > max_bw) {
-      let h = max_bw * y.domain().length
-      let h0 = (this.height() - h) * 0.5
-      y.rangeRound([h0, h0 + h])
+      let l = max_bw * y.domain().length
+      let h0 = (this.height() - l) * 0.5
+      y.rangeRound([h0, h0 + l])
     }
+
+    let cats = _.groupBy(data, (d) => d[this.y_field])
+    let variance = {}
+    _.each(cats, (val, key) => {
+      variance[key] = Math.min(y.bandwidth(), val.length * 100 / w)
+    })
 
     // add random offsets to y position
     for (let i = 0; i < data.length; i++) {
       data[i]._x = data[i].x
-      data[i]._y = y(data[i][this.y_field]) + _.random(0, y.bandwidth(), true)
+      let y_val = data[i][this.y_field]
+      data[i]._y = y(y_val) + _.random(0, variance[y_val], true)
+        + (y.bandwidth() - variance[y_val]) * 0.5
     }
 
     this.y_band = y

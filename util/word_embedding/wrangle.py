@@ -8,7 +8,7 @@ import numpy as np
 base = '/Users/yliu0/data/word'
 
 # limit the total amount of words
-LIMIT = 50000
+LIMIT = 10000
 
 # read in word2vec embeddings
 def read_w2v ():

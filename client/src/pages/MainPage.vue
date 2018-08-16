@@ -1,6 +1,6 @@
 <template>
   <div class="row">
-    <div class="col-8">
+    <div class="col-7">
       <div class="landing-left d-flex flex-column justify-content-between">
         <div>
           <!--Title-->
@@ -37,7 +37,27 @@
         </div>
       </div>
     </div>
-    <div class="col-4"></div>
+    <div class="col-5">
+      <div class="text-muted landing-right">
+        <p>
+          Latent spaces, vector spaces produced by machine learning algorithms, can learn important semantic features of the data.
+        </p>
+        <p>
+          These meaningful structures are buried in the multi-dimensional space.
+          How do we explore the space to discover and verify these relationships?
+        </p>
+        <p>
+          In this visual analysis tool, you may:
+        </p>
+        <ul>
+          <li>View global clusters</li>
+          <li>Inspect local neighborhood</li>
+          <li>Gauge relations within a subset</li>
+          <li>Experiment with attribute vector</li>
+          <li>And more!</li>
+        </ul>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -85,7 +105,26 @@
     height: 100vh;
   }
 
+  .landing-right {
+    padding-top: 120px;
+    padding-right: 120px;
+    height: calc(100vh - 4rem);
+    overflow-y: auto;
+  }
+
   .landing-idl {
     max-height: 32px;
+  }
+
+  ul {
+    list-style: none;
+    margin-left: 0;
+    padding-left: 3rem;
+    text-indent: -1em;
+  }
+
+  li:before {
+    content: '-';
+    padding-right: 5px;
   }
 </style>

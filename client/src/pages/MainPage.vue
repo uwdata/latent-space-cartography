@@ -133,16 +133,4 @@
   .landing-idl {
     max-height: 32px;
   }
-
-  ul {
-    list-style: none;
-    margin-left: 0;
-    padding-left: 3rem;
-    text-indent: -1em;
-  }
-
-  li:before {
-    content: '-';
-    padding-right: 5px;
-  }
 </style>

@@ -47,15 +47,33 @@
           How do we explore the space to discover and verify these relationships?
         </p>
         <p>
-          In this visual analysis tool, you may:
+          You may ask ...
         </p>
-        <ul>
-          <li>View global clusters</li>
-          <li>Inspect local neighborhood</li>
-          <li>Gauge relations within a subset</li>
-          <li>Experiment with attribute vector</li>
-          <li>And more!</li>
-        </ul>
+        <p>
+          How do input data distribute in the space? Do they form meaningful clusters?
+        </p>
+        <p>
+          What are the neighboring points of my favorite sample?
+        </p>
+        <p>
+          Here is a subset of interesting samples. What are the relationships among them?
+        </p>
+        <p>
+          What are the key differences between two conceptual groups?
+        </p>
+        <p class="d-none">
+          Can I find analogies similar to "King - Man - Woman = Queen"?
+        </p>
+        <p>...</p>
+        <p>
+          Our visual analysis tool let you explore the answers interactively.
+          Hit the demo button to start!
+        </p>
+        <p>
+          Dataset: a latent space of gene expression data in cancer patients,
+          fit using a Variational Auto-Encoder by
+          <a href="https://github.com/greenelab/tybalt" target="_blank">Way & Greene</a>
+        </p>
       </div>
     </div>
   </div>
@@ -106,9 +124,9 @@
   }
 
   .landing-right {
-    padding-top: 120px;
+    padding-top: 110px;
     padding-right: 120px;
-    height: calc(100vh - 4rem);
+    height: calc(100vh - 6rem);
     overflow-y: auto;
   }
 

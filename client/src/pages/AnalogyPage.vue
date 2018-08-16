@@ -176,7 +176,7 @@
    */
   function lets_draw (points) {
     clear.call(this)
-//    points = _.slice(points, 0, 1000)
+    // points = _.slice(points, 0, 999)
     points = _.slice(points, 0, CONFIG.train_split)
     let active = this.filter_func(points)
     this.scatter.setData(active)
@@ -481,6 +481,22 @@
   .dot.muted {
     fill: #ccc !important;
     fill-opacity: .4 !important;
+  }
+
+  .legend-mark {
+    cursor: pointer;
+  }
+
+  .legend-label {
+    cursor: pointer;
+  }
+
+  .legend-mark.muted {
+    fill-opacity: .3;
+  }
+
+  .legend-label.muted {
+    opacity: .3;
   }
 
   .focus-label {

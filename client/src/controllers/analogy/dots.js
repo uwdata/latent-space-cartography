@@ -41,6 +41,7 @@ class Dots {
      */
     this.need_legend = false
     this.palette = null
+    this.active_category = null // for interactive legend
   }
 
   /**
@@ -239,6 +240,8 @@ class Dots {
       .attr('width', width)
       .attr('height', height)
       .attr('fill', '#fff')
+      .on('click', legendUnclick)
+      .on('dblclick', stopped)
 
     // title
     bg.append('text')
@@ -258,6 +261,8 @@ class Dots {
       .attr('cx', () => hor_paddding + mark_size)
       .attr('cy', (d) => ver_padding * 2 + d.i * font_size - mark_size)
       .style('fill', (d) => d.color)
+      .on('click', legendClick)
+      .on('dblclick', stopped)
 
     // the text
     bg.selectAll('.legend-label')
@@ -273,6 +278,67 @@ class Dots {
       .attr('y', (d) => ver_padding * 2 + d.i * font_size)
       .style('font-size', () => font_size + 'px')
       .attr('fill', '#343a40')
+      .on('click', legendClick)
+      .on('dblclick', stopped)
+
+    let that = this
+
+    function legendClick(d) {
+      d3.event.stopPropagation()
+      if (!d || d.name === that.active_category) {
+        that.active_category = null
+        that._unfocusSet()
+      } else {
+        that.active_category = d.name
+        let active = _.filter(that._data, (dd) => dd[that.color] === d.name)
+        that._focusSet(active, false)
+      }
+      that._styleLegend()
+    }
+    
+    function legendUnclick() {
+      d3.event.stopPropagation()
+      that.active_category = null
+      that._styleLegend()
+      that._unfocusSet()
+    }
+
+    // intercept the double click to zoom event
+    function stopped () {
+      d3.event.stopPropagation()
+    }
+  }
+
+  /**
+   * Change the legend style in reaction to events
+   * @private
+   */
+  _styleLegend () {
+    let bg = this._parent.select('.color-legend')
+
+    if (this.active_category !== null) {
+      bg.selectAll('.legend-mark')
+        .filter((d) => d.name !== this.active_category)
+        .classed('muted', true)
+
+      bg.selectAll('.legend-label')
+        .filter((d) => d.name !== this.active_category)
+        .classed('muted', true)
+
+      bg.selectAll('.legend-mark')
+        .filter((d) => d.name === this.active_category)
+        .classed('muted', false)
+
+      bg.selectAll('.legend-label')
+        .filter((d) => d.name === this.active_category)
+        .classed('muted', false)
+    } else {
+      bg.selectAll('.legend-mark')
+        .classed('muted', false)
+
+      bg.selectAll('.legend-label')
+        .classed('muted', false)
+    }
   }
 
   /**
@@ -290,6 +356,10 @@ class Dots {
     })
 
     dispatch.on('dot-focus-set', (points) => {
+      // focus-set and interactive legend are in conflicts
+      this.active_category = null
+      this._styleLegend()
+
       if (points) {
         this._focusSet(points)
       } else {
@@ -427,23 +497,27 @@ class Dots {
   /**
    * Focus a set of dots.
    * @param pts
+   * @param show_hull
    * @private
    */
-  _focusSet (pts) {
+  _focusSet (pts, show_hull = true) {
     let indices = {}
     _.each(pts, (pt) => indices[pt.i] = true)
 
     let grapes = d3.selectAll('.dot')
       .filter((d) => indices[d.i])
       .classed('focused-set', true)
+      .style('fill', (d) => this._colorDot(d))
     moveToFront(grapes)
 
     d3.selectAll('.dot')
       .filter((d) => !indices[d.i])
       .style('fill', () => '#ccc')
 
-    this.hull = pts
-    this._drawHull()
+    if (show_hull) {
+      this.hull = pts
+      this._drawHull()
+    }
   }
 
   /**

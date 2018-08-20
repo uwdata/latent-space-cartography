@@ -68,6 +68,13 @@
           </div>
         </div>
       </div>
+
+      <!--Show more-->
+      <div class="p-2 text-center" v-if="selected.length > show_limit">
+        <small class="text-muted">... and {{selected.length - selected_points.length}} more</small>
+        <button @click="clickMore" class="btn btn-link btn-sm">
+          show next 50</button>
+      </div>
     </div>
 
     <!--Footer-->
@@ -121,6 +128,8 @@
   import ListRow from './ListRow.vue'
   import GroupUploadModal from './GroupUploadModal.vue'
 
+  const BULK = 50
+
   export default {
     name: 'SearchPanel',
     props: {
@@ -150,6 +159,7 @@
         selected: store.selected,
         shared: store.state,
         show_search: CONFIG.search.simple,
+        show_limit: BULK,
         cluster_score: null,
         load_only: false,
         alias: null,
@@ -171,7 +181,7 @@
     },
     computed: {
       selected_points: function () {
-        return _.map(this.selected, (i) => this.points[i])
+        return _.map(_.slice(this.selected, 0, this.show_limit), (i) => this.points[i])
       }
     },
     methods: {
@@ -198,6 +208,10 @@
         if (this.canPca()) {
           this.$emit('reproject', store.selected)
         }
+      },
+
+      clickMore () {
+        this.show_limit = Math.min(this.show_limit + BULK, store.selected.length)
       },
 
       // load logo group
@@ -247,6 +261,7 @@
       },
       removeAll () {
         this.alias = null
+        this.show_limit = BULK
         while (store.selected.length) {
           store.selected.splice(0, 1)
         }

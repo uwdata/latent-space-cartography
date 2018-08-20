@@ -255,9 +255,17 @@
       this.scatter.emitter.onSelected = (pts) => {
         this.brushed = pts
       }
-      this.scatter.emitter.onDotClicked = (pt) => {
-        store.state.detail_card = pt
-        store.state.clicked_point = pt
+      this.scatter.emitter.onDotClicked = (pt, shift) => {
+        if (!shift) {
+          // 1. normal click brings up detail
+          store.state.detail_card = pt
+          store.state.clicked_point = pt
+        } else {
+          // 2. shift + click adds a point to the current group
+          store.state.detail_card = null
+          store.state.clicked_point = null
+          store.selected.push(pt.i)
+        }
       }
       this.scatter.emitter.onDotHovered = (pt, x, y) => {
         if (pt) {

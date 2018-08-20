@@ -138,7 +138,8 @@ class Dots {
     }
 
     function dotClick (d) {
-      emitter.onDotClicked(d)
+      let shift = d3.event.shiftKey
+      emitter.onDotClicked(d, shift)
     }
 
     this._registerCallbacks(dispatch)

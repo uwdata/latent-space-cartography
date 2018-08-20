@@ -53,17 +53,19 @@
                    v-b-tooltip.hover >Cluster Score: {{cluster_score}}</small>
           </div>
         </div>
-        <div v-for="p in selected_points" :key="p.i"
-             @click="clickLogo(p)"
-             @mouseover="hoverLogo(p)"
-             @mouseout="unhoverLogo">
-          <list-row :p="p" hoverColor="#eee">
-            <button class="close p-2 mr-2"
-                    @mouseover.stop=""
-                    @click.stop="removeItem(p)">
-              <span>&times;</span>
-            </button>
-          </list-row>
+        <div class="d-flex flex-column-reverse">
+          <div v-for="p in selected_points" :key="p.i"
+               @click="clickLogo(p)"
+               @mouseover="hoverLogo(p)"
+               @mouseout="unhoverLogo">
+            <list-row :p="p" hoverColor="#eee">
+              <button class="close p-2 mr-2"
+                      @mouseover.stop=""
+                      @click.stop="removeItem(p)">
+                <span>&times;</span>
+              </button>
+            </list-row>
+          </div>
         </div>
       </div>
     </div>

@@ -2,6 +2,7 @@
 import json
 from sklearn.decomposition import PCA
 from sklearn.metrics.pairwise import cosine_similarity
+from sklearn.neighbors import KDTree
 from sklearn import preprocessing
 from scipy.stats import norm
 import numpy as np
@@ -334,7 +335,7 @@ def get_tsne ():
     print(fn)
     with open(fn) as data_file:
         data = json.load(data_file)
-    
+
     return jsonify({'data': data}), 200
 
 # get meta data
@@ -393,6 +394,48 @@ def apply_analogy ():
     }
 
     return jsonify(reply), 200
+
+# visualize vectors together in a global projection
+@app.route('/api/plot_vectors', methods=['POST'])
+def plot_vectors ():
+    latent_dim = request.json['latent_dim']
+    projection = request.json['projection']
+    vectors = request.json['vectors'].split(';')
+
+    # read latent space
+    X = read_ls(latent_dim)
+
+    # t-SNE: use the coordinate of nearest neighbors
+    if projection == 'tsne':
+        # use kd-tree to compute k nearest neighbors
+        tree = KDTree(X)
+
+        # read t-SNE coordinates
+        perp = request.json['perplexity']
+        tpath = abs_path('./data/{}/tsne/tsne{}_perp{}.h5'.format(dset, latent_dim, perp))
+        with h5py.File(tpath, 'r') as f:
+            Y = np.asarray(f['tsne']) # shape: (n, 2)
+
+        result = []
+        for gids in vectors:
+            # compute centroid
+            gid = gids.split(',')
+            start = _compute_group_centroid(X, gid[0])
+            end = _compute_group_centroid(X, gid[1])
+            locs = _sample_vec(start, end, over=False)
+
+            # k nearest neighbors
+            kn = 5
+            dist, idx = tree.query(locs, k=kn)
+            res = []
+            for i in range(idx.shape[0]):
+                # weighted average
+                res.append(np.average(Y[idx[i]], weights=dist[i], axis=0))
+            result.append(res)
+        result = np.asarray(result).tolist()
+        return jsonify({'status': 'success', 'data': result}), 200
+
+    return jsonify({'status': 'fail', 'message': 'unknown projection'}), 200
 
 # bring a vector to focus: interpolate along the path, and reproject all points
 @app.route('/api/focus_vector', methods=['POST'])

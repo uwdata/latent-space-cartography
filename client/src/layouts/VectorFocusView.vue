@@ -244,12 +244,16 @@
       this.chart._vectors.data_type = CONFIG.data_type
 
       // vector score
-      store.vectorScore(this.latent_dim, this.focus.start, this.focus.end)
-        .then((s) => {
-          this.score = Math.round(s * 100) + '%'
-        }, (e) => {
-          alert(e)
-        })
+      // for performance reason, skip if either group has too many items
+      const limit = 500
+      if (this.focus.start.length < limit && this.focus.end.length < limit) {
+        store.vectorScore(this.latent_dim, this.focus.start, this.focus.end)
+          .then((s) => {
+            this.score = Math.round(s * 100) + '%'
+          }, (e) => {
+            alert(e)
+          })
+      }
     },
     computed: {
       startMore: function () {

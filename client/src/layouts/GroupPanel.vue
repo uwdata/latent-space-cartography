@@ -228,8 +228,11 @@
 
       // compute cluster score
       clusterScore () {
+        const limit = 500
+
         this.cluster_score = null
-        if (this.selected.length) {
+        // for performance reason, do not compute if the group has too many items
+        if (this.selected.length && this.selected.length < limit) {
           store.clusterScore(this.latent_dim, this.selected)
             .then((s) => {
               this.cluster_score = Math.round(s * 100) + '%'

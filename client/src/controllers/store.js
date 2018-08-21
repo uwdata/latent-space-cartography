@@ -458,6 +458,46 @@ class Store {
   }
 
   /**
+   * Get the coordinate of vectors to visualize in a global projection.
+   * @param latent_dim
+   * @param {string} projection - Projection code that encodes multiple info
+   * @param {array} vectors - A 2D array of start and end group id per vector
+   * @returns {Promise}
+   */
+  plotVectors (latent_dim, projection, vectors) {
+    // parse projection string
+    let perp = ''
+    if (projection.startsWith('tsne')) {
+      perp = projection.split('-')[1]
+      projection = 'tsne'
+    }
+
+    // serialize vectors
+    vectors = _.map(vectors, (v) => v.join(',')).join(';')
+
+    return new Promise((resolve, reject) => {
+      let payload = {latent_dim: latent_dim, projection: projection,
+        perplexity: perp, vectors: vectors}
+
+      http.post('/api/plot_vectors', payload)
+        .then((response) => {
+          let msg = response['data']
+
+          if (msg && msg.status === 'success') {
+            // data is a 2D array, in the same sequence as input vectors
+            // each vector gets an array of screen coordinates
+            // for t-SNE, these are approx. control points
+            resolve(msg.data)
+          } else {
+            reject(msg ? msg.message : 'Oops ... server error.')
+          }
+        }, () => {
+          reject(`Could not connect to the server.`)
+        })
+    })
+  }
+
+  /**
    * Bring a vector to focus.
    * @param latent_dim
    * @param start Group id of the starting group.

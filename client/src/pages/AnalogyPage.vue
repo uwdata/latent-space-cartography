@@ -104,7 +104,7 @@
                      v-on:reproject="reproject"
                      v-on:original="showOriginal"></group-panel>
         <vector-panel :latent_dim="dim" :chart="scatter" :view_state="view_state"
-                      v-on:focus="focusVector"
+                      v-on:focus="focusVector" :proj_state="proj_state"
                       v-on:reset="showOriginal"></vector-panel>
       </div>
     </div>
@@ -252,6 +252,15 @@
         show_filter: CONFIG.filter,
         loading: true,
         err: ''
+      }
+    },
+    computed: {
+      proj_state: function () {
+        let code = this.view_state === 0 ? this.projection : 'custom'
+        if (code === 't-SNE') {
+          code = 'tsne-' + this.perplexity
+        }
+        return _.toLower(code)
       }
     },
     mounted: function () {

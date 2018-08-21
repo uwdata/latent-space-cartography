@@ -100,6 +100,7 @@
   import GroupThumb from './GroupThumbnail.vue'
   import VectorFocus from './VectorFocusView.vue'
   import VueLoading from 'vue-loading-template'
+  import _ from 'lodash'
 
   export default {
     name: 'VectorPanel',
@@ -114,6 +115,10 @@
       view_state: {
         type: Number,
         required: true
+      },
+      proj_state: {
+        type: String,
+        required: true
       }
     },
     components: {
@@ -127,6 +132,9 @@
         start: null,
         end: null,
         which: 'start',
+        // each vector contains: id, description, timestamp
+        // start, list_start, alias_start, (and same for end)
+        // path -- to visualize a vector in a global projection
         vectors: [],
         focus: null,
         shared: store.state,
@@ -144,20 +152,41 @@
           }
           this.focus = null
         }
+      },
+      proj_state () {
+        this.plotVectors()
       }
     },
     mounted: function () {
       this.fetchVectors()
+        .then(() => {
+          this.plotVectors()
+        })
     },
     methods: {
       fetchVectors () {
         this.loading_vectors = true
-        store.getVectors()
+        return store.getVectors()
           .then((vectors) => {
             this.loading_vectors = false
             this.vectors = vectors
           }, (e) => {
             this.loading_vectors = false
+            alert(e)
+          })
+      },
+
+      plotVectors () {
+        // the backend only supports t-SNE for now ...
+        if (!this.proj_state.startsWith('tsne')) return
+
+        let vs = _.map(this.vectors, (v) => [v.start, v.end])
+        store.plotVectors(this.latent_dim, this.proj_state, vs)
+          .then((data) => {
+            _.each(data, (path, i) => {
+              this.vectors[i].path = path
+            })
+          }, (e) => {
             alert(e)
           })
       },

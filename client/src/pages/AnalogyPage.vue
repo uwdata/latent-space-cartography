@@ -90,6 +90,8 @@
             </div>
             <filter-dropdown :meta="suggestions"
                              v-on:filter="onFilter"></filter-dropdown>
+            <filter-button :meta="suggestions" v-if="show_filter"
+                           v-on:filter="onFilter"></filter-button>
           </div>
         </div>
       </div>
@@ -125,6 +127,7 @@
   import VueLoading from 'vue-loading-template'
   import FilterDropdown from '../layouts/FilterDropdown.vue'
   import SearchPanel from '../layouts/SearchPanel.vue'
+  import FilterButton from '../layouts/FilterButton.vue'
 
   function clear () {
     // remove all nodes
@@ -212,6 +215,7 @@
 
   export default {
     components: {
+      FilterButton,
       SearchPanel,
       FilterDropdown,
       BrushedList,
@@ -245,6 +249,7 @@
         filter_func: (d) => d,
         show_search: !CONFIG.search.simple,
         open_search: false,
+        show_filter: CONFIG.filter,
         loading: true,
         err: ''
       }

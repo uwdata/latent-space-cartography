@@ -84,6 +84,10 @@ const config_tybalt = {
     by: ['name'],
     filter: 'stage'
   },
+  filter: {
+    fields: ['organ', 'race', 'stage', 'vital_status', 'gender',
+      'ovarian_cancer_subtype']
+  },
   color_by: ['organ', 'race', 'stage', 'vital_status', 'gender',
     'analysis_center', 'ovarian_cancer_subtype'],
   y_axis: ['y', 'organ', 'race', 'stage', 'gender', 'age_at_diagnosis',

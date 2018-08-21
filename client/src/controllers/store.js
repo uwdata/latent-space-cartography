@@ -644,12 +644,12 @@ class Store {
     }))
   }
 
-  _formatPoints (points) {
-    return this._joinMeta(_.map(points, (p) => {
+  _formatPoints (data) {
+    return this._joinMeta(_.map(data, (d, idx) => {
       return {
-        'x': Number(p.x),
-        'y': Number(p.y),
-        'i': p.i
+        'x': Number(d[0]),
+        'y': Number(d[1]),
+        'i': idx
       }
     }))
   }

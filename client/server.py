@@ -331,12 +331,12 @@ def get_tsne ():
     latent_dim = request.json['latent_dim']
     perp = request.json['perplexity']
     suffix = '_pca' if request.json['pca'] else ''
-    fn = abs_path('./data/{}/tsne/tsne{}_perp{}{}.json'.format(dset, latent_dim, perp, suffix))
+    fn = abs_path('./data/{}/tsne/tsne{}_perp{}{}.h5'.format(dset, latent_dim, perp, suffix))
+    with h5py.File(fn, 'r') as f:
+        data = np.asarray(f['tsne']) # shape: (n, 2)
     print(fn)
-    with open(fn) as data_file:
-        data = json.load(data_file)
 
-    return jsonify({'data': data}), 200
+    return jsonify({'data': data.tolist()}), 200
 
 # get meta data
 @app.route('/api/get_meta', methods=['POST'])

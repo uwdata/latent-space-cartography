@@ -5,16 +5,20 @@
       <i class="fa fa-filter"></i>
     </b-btn>
 
-    <b-modal id="modal-filter" ref="modalFilter"
+    <b-modal id="modal-filter" ref="modalFilter" size="lg"
              title="Filter" hide-footer>
-      <div class="m-3" v-if="active_fields.length">
+      <div class="m-3" v-if="active_fields.length" >
         <div v-for="(f, idx) in active_fields" class="mb-2 d-flex">
           <div>
-            <b-dropdown :text="f" variant="light">
-              <div class="d-none">{{redraw}}</div>
-              <b-dropdown-item v-for="opt in getAvalFields()" :key="opt"
-                               @click="selectField(idx, opt)">{{opt}}</b-dropdown-item>
-            </b-dropdown>
+            <multiselect v-model="active_fields[idx]" :options="getAvalFields()"
+                         :show-labels="false" style="min-width: 150px"></multiselect>
+          </div>
+          <div class="ml-2">
+            <multiselect v-model="active[f]" :options="all[f]" :multiple="true"
+                         :close-on-select="false" :preserve-search="true"
+                         :show-labels="false"
+                         :hide-selected="true" placeholder="Pick values ...">
+            </multiselect>
           </div>
           <button class="btn btn-link ml-2" @click="clickRemove(idx)">
             remove
@@ -33,8 +37,7 @@
 <script>
   import {CONFIG} from '../controllers/config'
   import _ from 'lodash'
-
-  const ALL = 'All'
+  import Multiselect from 'vue-multiselect'
 
   export default {
     name: 'FilterButton',
@@ -43,6 +46,9 @@
         type: Array,
         required: true
       }
+    },
+    components: {
+      Multiselect
     },
     watch: {
       meta () {
@@ -54,17 +60,15 @@
           let u = _.uniqWith(this.meta, (a, b) => a[col] === b[col])
           u = _.sortBy(_.map(u, (uu) => uu[col]))
           u = _.filter(u, (uu) => uu) // discard null / empty value
-          u.push(ALL)
           this.all[col] = u
 
           // 2. initialize active option (default to ALL)
-          this.active[col] = ALL
+          this.active[col] = []
         })
       }
     },
     data () {
       return {
-        redraw: 0,
         ready: false,
         fields: CONFIG.filter.fields,
         all: {},
@@ -75,10 +79,6 @@
     methods: {
       getAvalFields () {
         return _.difference(this.fields, this.active_fields)
-      },
-      selectField (i, field) {
-        this.redraw += 1
-        this.active_fields[i] = field
       },
       clickAdd () {
         let inactive_fields = this.getAvalFields()
@@ -111,3 +111,5 @@
     }
   }
 </script>
+
+<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>

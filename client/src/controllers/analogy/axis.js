@@ -51,6 +51,49 @@ class DotAxis {
   }
 
   /**
+   * Manually draw the attribute vector X axis
+   * @param g
+   * @private
+   */
+  _drawVectorX (g) {
+    let scales = this._scales
+
+    let loc = scales.height() * 0.5
+    let ends = [{x: 0, y: loc}, {x: scales.width(), y: loc}]
+
+    let line = d3.line()
+      .x((d) => d.x)
+      .y((d) => d.y)
+
+    let gy = g.append('g')
+      .classed('axis-x', true)
+
+    // x axis line
+    gy.append('path')
+      .datum(ends)
+      .classed('line', true)
+      .attr('d', line)
+      .style('stroke-width', 2)
+      .style('stroke', '#000')
+
+    // text background
+    gy.append('rect')
+      .attr('x', scales.width() - 155)
+      .attr('y', loc - 20)
+      .attr('width', 130)
+      .attr('height', 18)
+      .attr('fill', '#fff')
+
+    // axis title
+    gy.append('text')
+      .text('Attribute Vector Axis')
+      .attr('x', scales.width() - 150)
+      .attr('y', loc - 5)
+      .style('font-weight', '500')
+      .style('font-size', `14px`)
+  }
+
+  /**
    * Draw the axis
    */
   draw () {
@@ -79,40 +122,7 @@ class DotAxis {
       .attr('transform', `translate(${scales.width()}, 0)`)
       .call(this._custom_y.bind(this))
 
-    // draw x axis manually
-    let loc = scales.height() * 0.5
-    let ends = [{x: 0, y: loc}, {x: scales.width(), y: loc}]
-
-    let line = d3.line()
-      .x((d) => d.x)
-      .y((d) => d.y)
-
-    let gy = g.append('g')
-      .classed('axis-y', true)
-
-    // x axis line
-    gy.append('path')
-      .datum(ends)
-      .classed('line', true)
-      .attr('d', line)
-      .style('stroke-width', 2)
-      .style('stroke', '#000')
-
-    // text background
-    gy.append('rect')
-      .attr('x', scales.width() - 155)
-      .attr('y', loc - 20)
-      .attr('width', 130)
-      .attr('height', 18)
-      .attr('fill', '#fff')
-
-    // axis title
-    gy.append('text')
-      .text('Attribute Vector Axis')
-      .attr('x', scales.width() - 150)
-      .attr('y', loc - 5)
-      .style('font-weight', '500')
-      .style('font-size', `14px`)
+    this._drawVectorX(g)
   }
 
   /**

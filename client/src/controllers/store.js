@@ -120,7 +120,7 @@ class Store {
    * @param pca_dim The number of principal components in PCA
    * @returns {Promise}
    */
-  getPcaPoints (dim, pca_dim = 2) {
+  getPcaPoints (dim, pca_dim = 4) {
     this.latent_dim = dim
     return new Promise((resolve, reject) => {
       if (this.pca[dim]) {
@@ -675,13 +675,13 @@ class Store {
       let res = {i: indices.length ? indices[i] : i}
 
       _.forEach(p, (pp, j) => {
-        let key = `PC${j}`
+        let key = `PC${j + 1}`
         res[key] = Number(Number(pp).toFixed(3))
       })
 
       // backward compatibility
-      res['x'] = res['PC0']
-      res['y'] = res['PC1']
+      res['x'] = res['PC1']
+      res['y'] = res['PC2']
       return res
     }))
   }

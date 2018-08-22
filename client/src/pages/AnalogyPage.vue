@@ -81,7 +81,7 @@
                 </b-dropdown-item>
               </b-dropdown>
             </div>
-            <div v-if="all_y.length && view_state === 2" class="float-right ml-2">
+            <div v-if="all_y.length" class="float-right ml-2">
               <b-dropdown :text="`Y-Axis: ${prettyName(current_y)}`" variant="light">
                 <b-dropdown-item v-for="y in all_y" @click="changeYAxis(y)" :key="y">
                   {{prettyName(y)}}
@@ -245,13 +245,18 @@
         current_color: CONFIG.rendering.dot_color,
         all_color: CONFIG.color_by || [],
         current_y: 'y',
-        all_y: CONFIG.y_axis || [],
         filter_func: (d) => d,
         show_search: !CONFIG.search.simple,
         open_search: false,
         show_filter: CONFIG.filter,
         loading: true,
         err: ''
+      }
+    },
+    watch: {
+      view_state () {
+        this.current_y = 'y'
+        this.scatter.y_field = this.current_y
       }
     },
     computed: {
@@ -261,6 +266,15 @@
           code = 'tsne-' + this.perplexity
         }
         return _.toLower(code)
+      },
+      all_y: function () {
+        if (this.view_state === 0 && this.projection === 'PCA') {
+          return _.map(_.range(4), (j) => `PC${j + 1}`)
+        }
+        if (this.view_state === 2) {
+          return CONFIG.y_axis || []
+        }
+        return []
       }
     },
     mounted: function () {
@@ -320,10 +334,11 @@
       changeYAxis (y) {
         this.current_y = y
         let type = CONFIG.schema.type
-        if (type[y] === DTYPE.numeric) {
-          this.scatter.chart_type = 1
-        } else {
+        if (type[y] === DTYPE.categorical) {
           this.scatter.chart_type = 2
+        } else {
+          // assume numeric by default
+          this.scatter.chart_type = 1
         }
 
         this.scatter.y_field = y
@@ -420,7 +435,6 @@
 
       // draw original
       showOriginal () {
-        this.current_y = 'y'
         // too lazy to rewrite ...
         this.changeDim(this.dim)
       }

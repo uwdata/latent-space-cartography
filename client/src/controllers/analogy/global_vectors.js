@@ -110,7 +110,6 @@ class GlobalVectors {
   }
 
   hoverVector (vid) {
-    console.log(vid)
     let g = d3.select('.global-vector-group')
 
     g.selectAll('.line.vector-curve')

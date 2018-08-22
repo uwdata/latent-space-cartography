@@ -47,6 +47,7 @@ class DotAxis {
       .attr('dx', offset)
       .attr('dy', -4)
       .attr('fill', '#6c757d')
+      .classed('outlined-text', true)
   }
 
   /**

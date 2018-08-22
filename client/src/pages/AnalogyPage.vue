@@ -82,7 +82,7 @@
               </b-dropdown>
             </div>
             <div v-if="all_y.length && view_state === 2" class="float-right ml-2">
-              <b-dropdown :text="`Y Axis: ${prettyName(current_y)}`" variant="light">
+              <b-dropdown :text="`Y-Axis: ${prettyName(current_y)}`" variant="light">
                 <b-dropdown-item v-for="y in all_y" @click="changeYAxis(y)" :key="y">
                   {{prettyName(y)}}
                 </b-dropdown-item>

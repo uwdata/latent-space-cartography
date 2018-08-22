@@ -16,6 +16,7 @@ class GlobalVectors {
      */
     this.lineWidth = styles.lineWidth || 2
     this.background = styles.background || '#fff'
+    this.hide = true
 
     /**
      * Private
@@ -84,6 +85,11 @@ class GlobalVectors {
   redraw () {
     // remove previous vector
     d3.selectAll('.global-vector-group').remove()
+
+    // hide flag on: do not draw anything
+    if (this.hide) {
+      return
+    }
 
     // draw curves
     if (this.paths && this.paths.length) {

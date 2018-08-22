@@ -52,8 +52,15 @@
 
       <!--Vector List-->
       <div class="bd-vector-list p-3 pt-4">
-        <div class="mb-3 bd-subtitle text-uppercase">
-          Vector List
+        <div class="mb-3">
+          <div class="bd-subtitle text-uppercase">
+            Vector List
+
+            <span class="ml-2 pl-2 pr-2 bd-btn-trans" @click.stop="toggleVectorPlot"
+                  v-b-tooltip.hover :title="plotted ? 'Hide Vectors' : 'Visualize Vectors'">
+              <i class="fa" :class="{'fa-eye-slash': !plotted, 'fa-eye': plotted}"></i>
+            </span>
+          </div>
         </div>
         <div class="h-100 d-flex flex-column justify-content-center"
              v-if="loading_vectors">
@@ -137,6 +144,7 @@
         // path -- to visualize a vector in a global projection
         vectors: [],
         focus: null,
+        plotted: false,
         shared: store.state,
         show_image: CONFIG.data_type === 'image',
         loading_vectors: false
@@ -202,6 +210,13 @@
             alert(e)
           })
       },
+
+      toggleVectorPlot () {
+        this.plotted = !this.plotted
+        this.chart._global_vectors.hide = !this.plotted
+        this.chart._global_vectors.redraw()
+      },
+
       // the tab at top
       clickTab () {
         store.state.tab = 0

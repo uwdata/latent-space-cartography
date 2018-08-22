@@ -179,8 +179,8 @@
    */
   function lets_draw (points) {
     clear.call(this)
-    points = _.slice(points, 0, 999)
-    // points = _.slice(points, 0, CONFIG.train_split)
+    // points = _.slice(points, 0, 999)
+    points = _.slice(points, 0, CONFIG.train_split)
     let active = this.filter_func(points)
     this.scatter.setData(active)
     this.scatter.draw('#container')

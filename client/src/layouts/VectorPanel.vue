@@ -194,8 +194,9 @@
       },
 
       plotVectors () {
-        // the backend only supports t-SNE for now ...
-        if (!this.proj_state.startsWith('tsne')) {
+        // the backend does not support custom projection
+        let supported = this.proj_state.startsWith('tsne') || this.proj_state === 'pca'
+        if (!supported) {
           // clear previous plot
           this.chart._global_vectors.setData([])
           this.chart._global_vectors.redraw()

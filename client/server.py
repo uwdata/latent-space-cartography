@@ -434,6 +434,19 @@ def plot_vectors ():
             result.append(res)
         result = np.asarray(result).tolist()
         return jsonify({'status': 'success', 'data': result}), 200
+    
+    # PCA: multiply projection matrix directly
+    elif projection == 'pca':
+        pca = PCA(n_components = 2).fit(X)
+        res = []
+        for gids in vectors:
+            # compute centroid
+            gid = gids.split(',')
+            start = _compute_group_centroid(X, gid[0])
+            end = _compute_group_centroid(X, gid[1])
+            locs = _sample_vec(start, end, 1, False)
+            res.append(np.dot(locs, pca.components_.T).tolist())
+        return jsonify({'status': 'success', 'data': res}), 200
 
     return jsonify({'status': 'fail', 'message': 'unknown projection'}), 200
 

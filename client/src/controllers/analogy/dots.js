@@ -376,10 +376,11 @@ class Dots {
    * @private
    */
   _computeImageSize (inside) {
-    let x = [d3.min(inside, (d) => d._x), d3.max(inside, (d) => d._x)]
-    let y = [d3.min(inside, (d) => d._y), d3.max(inside, (d) => d._y)]
-    x = _.map(x, (d) => this._scales.x(d))
-    y = _.map(y, (d) => this._scales.y(d))
+    let scales = this._scales
+    let x = [d3.min(inside, (d) => scales.getRawX(d)), d3.max(inside, (d) => scales.getRawX(d))]
+    let y = [d3.min(inside, (d) => scales.getRawY(d)), d3.max(inside, (d) => scales.getRawY(d))]
+    x = _.map(x, (d) => scales.x(d))
+    y = _.map(y, (d) => scales.y(d))
 
     let view_size = Math.min(Math.abs(x[0] - x[1]), Math.abs(y[0] - y[1]))
     let img_size = Math.floor(view_size * 0.5 / Math.sqrt(inside.length))
@@ -399,7 +400,8 @@ class Dots {
     let x = _.sortBy([scales.x.invert(0), scales.x.invert(scales.width())])
     let y = _.sortBy([scales.y.invert(0), scales.y.invert(scales.height())])
 
-    return _.filter(data, (p) => p._x >= x[0] && p._x <= x[1] && p._y >=y[0] && p._y <= y[1])
+    return _.filter(data, (p) => scales.getRawX(p) >= x[0] &&
+      scales.getRawX(p) <= x[1] && scales.getRawY(p) >=y[0] && scales.getRawY(p) <= y[1])
   }
 
   /**

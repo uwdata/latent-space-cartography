@@ -88,6 +88,13 @@
                 </b-dropdown-item>
               </b-dropdown>
             </div>
+            <div v-if="all_x.length" class="float-right ml-2">
+              <b-dropdown :text="`X-Axis: ${prettyName(current_x)}`" variant="light">
+                <b-dropdown-item v-for="x in all_x" @click="changeXAxis(x)" :key="x">
+                  {{prettyName(x)}}
+                </b-dropdown-item>
+              </b-dropdown>
+            </div>
             <filter-dropdown :meta="suggestions"
                              v-on:filter="onFilter"></filter-dropdown>
             <filter-button :meta="suggestions" v-if="show_filter"
@@ -244,6 +251,7 @@
         all_perplexity: [5, 10, 30, 50, 100],
         current_color: CONFIG.rendering.dot_color,
         all_color: CONFIG.color_by || [],
+        current_x: 'x',
         current_y: 'y',
         filter_func: (d) => d,
         show_search: !CONFIG.search.simple,
@@ -256,7 +264,9 @@
     watch: {
       view_state () {
         this.current_y = 'y'
+        this.current_x = 'x'
         this.scatter.y_field = this.current_y
+        this.scatter.x_field = this.current_x
       }
     },
     computed: {
@@ -273,6 +283,12 @@
         }
         if (this.view_state === 2) {
           return CONFIG.y_axis || []
+        }
+        return []
+      },
+      all_x: function () {
+        if (this.view_state === 0 && this.projection === 'PCA') {
+          return _.map(_.range(4), (j) => `PC${j + 1}`)
         }
         return []
       }
@@ -327,6 +343,9 @@
           if (this.view_state === 0 && this.projection === 't-SNE') return 'Default'
           return 'PC2'
         }
+        if (text === 'x' && this.view_state === 0 && this.projection === 'PCA') {
+          return 'PC1'
+        }
         return _.capitalize(text.split('_').join(' '))
       },
 
@@ -342,6 +361,13 @@
         }
 
         this.scatter.y_field = y
+        lets_draw.call(this, this.points)
+      },
+
+      // change the x axis
+      changeXAxis (x) {
+        this.current_x = x
+        this.scatter.x_field = x
         lets_draw.call(this, this.points)
       },
 

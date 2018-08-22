@@ -19,6 +19,8 @@ class Scales {
     this.outerHeight = params.outerHeight
     this.margin = params.margin
     this.chart_type = params.chart_type
+
+    this.x_field = params.x_field
     this.y_field = params.y_field
 
     /**
@@ -49,7 +51,7 @@ class Scales {
   _initScatterScales (data) {
     // create x and y plotting fields so we can unify the code
     for (let i = 0; i < data.length; i++) {
-      data[i]._x = data[i].x
+      data[i]._x = data[i][this.x_field]
       data[i]._y = data[i][this.y_field]
     }
 

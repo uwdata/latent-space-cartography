@@ -32,6 +32,8 @@ class Scatter {
     this.dot_color = 'mean_color'
     this.mark_type = 1 // 1 - dot, 2 - image, 3 - text
     this.chart_type = 1 // 1 - scatter, 2 - bee swarm
+
+    this.x_field = 'x' // which field is the x axis
     this.y_field = 'y' // which field is the y axis
 
     /**
@@ -84,7 +86,7 @@ class Scatter {
     let emitter = this.emitter
 
     let scales = new Scales(data, _.pick(this, ['outerWidth', 'outerHeight',
-      'margin', 'chart_type', 'y_field']))
+      'margin', 'chart_type', 'x_field', 'y_field']))
     this._scales = scales
 
     let svg = d3.select(parent)

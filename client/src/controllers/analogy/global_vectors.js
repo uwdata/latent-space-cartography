@@ -48,7 +48,7 @@ class GlobalVectors {
     })
   }
 
-  _drawCurve (vector, group) {
+  _drawCurve (vector, group, id = '') {
     let scales = this._scales
 
     let line = d3.line()
@@ -65,10 +65,15 @@ class GlobalVectors {
       .style('stroke-width', 6)
 
     // the actual line
-    this._drawLine(line, vector, group)
+    let l = this._drawLine(line, vector, group)
+      .classed('vector-curve', true)
       .style('stroke', '#f00')
       .style('stroke-linecap', 'round')
       .style('stroke-width', this.lineWidth)
+
+    if (id) {
+      l.attr('id', id)
+    }
   }
 
   _drawLine (line, vector, container) {
@@ -99,9 +104,20 @@ class GlobalVectors {
         .on('mouseover', () => {moveToFront(group)})
 
       _.each(this.paths, (path) => {
-        this._drawCurve(path, group)
+        this._drawCurve(path.coordinates, group, path.id)
       })
     }
+  }
+
+  hoverVector (vid) {
+    console.log(vid)
+    let g = d3.select('.global-vector-group')
+
+    g.selectAll('.line.vector-curve')
+      .style('stroke', '#f00')
+
+    g.selectAll('#' + vid)
+      .style('stroke', '#0ff')
   }
 }
 

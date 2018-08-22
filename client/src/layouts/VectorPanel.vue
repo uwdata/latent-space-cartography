@@ -53,15 +53,19 @@
       <!--Vector List-->
       <div class="bd-vector-list p-3 pt-4">
         <div class="mb-3">
+          <!--Title-->
           <div class="bd-subtitle text-uppercase">
             Vector List
 
+            <!--Toggle button-->
             <span class="ml-2 pl-2 pr-2 bd-btn-trans" @click.stop="toggleVectorPlot"
                   v-b-tooltip.hover :title="plotted ? 'Hide Vectors' : 'Visualize Vectors'">
               <i class="fa" :class="{'fa-eye-slash': !plotted, 'fa-eye': plotted}"></i>
             </span>
           </div>
         </div>
+
+        <!--Loading-->
         <div class="h-100 d-flex flex-column justify-content-center"
              v-if="loading_vectors">
           <div>
@@ -70,8 +74,11 @@
             <div class="mt-4 text-center text-muted">Loading Vectors</div>
           </div>
         </div>
+
+        <!--List of Vectors-->
         <div v-if="!loading_vectors" v-for="v in vectors"
-             class="d-flex bd-vector"  @click="focusVector(v)">
+             class="d-flex bd-vector"  @click="focusVector(v)"
+             @mouseover="hoverVector(v)" @mouseout="hoverVector()">
           <div class="mr-2 d-flex flex-column">
             <i class="fa fa-fw fa-circle-o bd-arrow-end mt-1"></i>
             <div class="bd-arrow-vertical h-100"></div>
@@ -199,6 +206,9 @@
         store.plotVectors(this.latent_dim, this.proj_state, vs)
           .then((data) => {
             // save the data
+            data = _.map(data, (arr, i) => {
+              return {id: 'glo-vec-' + i, coordinates: arr}
+            })
             _.each(data, (path, i) => {
               this.vectors[i].path = path
             })
@@ -211,6 +221,13 @@
           })
       },
 
+      // when a vector is hovered in the list
+      hoverVector (v) {
+        let vid = v ? v.path.id : null
+        this.chart._global_vectors.hoverVector(vid)
+      },
+
+      // toggle the visibility of vectors plotted on the global view
       toggleVectorPlot () {
         this.plotted = !this.plotted
         this.chart._global_vectors.hide = !this.plotted

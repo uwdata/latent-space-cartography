@@ -225,6 +225,7 @@ class Scatter {
 
       // update vectors
       that._vectors.redraw()
+      that._global_vectors.redraw()
 
       // clear brush
       dot_brush.clear()

@@ -48,7 +48,7 @@ class GlobalVectors {
     })
   }
 
-  _drawCurve (vector, group, id = '') {
+  _drawCurve (vector, group, id = '', label = '') {
     let scales = this._scales
 
     let line = d3.line()
@@ -70,6 +70,29 @@ class GlobalVectors {
       .style('stroke', '#f00')
       .style('stroke-linecap', 'round')
       .style('stroke-width', this.lineWidth)
+
+    // text label
+    label = label || 'Untitled'
+    const font_size = 10
+    let words = label.split('-')
+    let x0 = scales.x(vector[0].x) + 5
+    let y0 = scales.y(vector[0].y)
+
+    let txt = group.append('text')
+      .text(null)
+      .attr('x', x0)
+      .attr('y', y0)
+      .attr('fill', '#343a40')
+      .style('font-size', `${font_size}px`)
+      .classed('outlined-text', true)
+
+    _.each(words, (word, idx) => {
+      txt.append('tspan')
+        .text(word)
+        .attr('x', x0)
+        .attr('y', y0)
+        .attr('dy', idx * font_size)
+    })
 
     if (id) {
       l.attr('id', id)
@@ -104,7 +127,7 @@ class GlobalVectors {
         .on('mouseover', () => {moveToFront(group)})
 
       _.each(this.paths, (path) => {
-        this._drawCurve(path.coordinates, group, path.id)
+        this._drawCurve(path.coordinates, group, path.id, path.label)
       })
     }
   }

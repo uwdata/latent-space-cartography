@@ -208,7 +208,12 @@
           .then((data) => {
             // save the data
             data = _.map(data, (arr, i) => {
-              return {id: 'glo-vec-' + i, coordinates: arr}
+              let vt = this.vectors[i]
+              return {
+                id: 'glo-vec-' + i,
+                label: `${vt.alias_start}-${vt.alias_end}`,
+                coordinates: arr
+              }
             })
             _.each(data, (path, i) => {
               this.vectors[i].path = path

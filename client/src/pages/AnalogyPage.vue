@@ -524,6 +524,14 @@
     opacity: .3;
   }
 
+  .outlined-text {
+    paint-order: stroke;
+    stroke: #fff;
+    stroke-width: 2px;
+    stroke-linecap: butt;
+    stroke-linejoin: miter;
+  }
+
   .focus-label {
     font-size: 20px;
     font-weight: 500;

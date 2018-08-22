@@ -487,7 +487,9 @@ class Store {
             // data is a 2D array, in the same sequence as input vectors
             // each vector gets an array of screen coordinates
             // for t-SNE, these are approx. control points
-            resolve(msg.data)
+            resolve(_.map(msg.data, (path) => _.map(path, (pt) => {
+              return {x: pt[0], y: pt[1]}
+            })))
           } else {
             reject(msg ? msg.message : 'Oops ... server error.')
           }

@@ -6,6 +6,7 @@ import DotBrush from './analogy/brush'
 import Dots from './analogy/dots'
 import Vectors from './analogy/vectors'
 import DotAxis from './analogy/axis'
+import GlobalVectors from './analogy/global_vectors'
 
 /**
  * Handles drawing a scatter plot for 2-dimensional data.
@@ -65,6 +66,7 @@ class Scatter {
     this._scales = null
     this._dots = null
     this._vectors = null
+    this._global_vectors = null
     this._axis = null
   }
 
@@ -141,6 +143,16 @@ class Scatter {
       this._vectors._scales = scales
       this._vectors._parent = objects
       this._vectors.redraw()
+    }
+
+    // Multiple vectors in global projection
+    if (!this._global_vectors) {
+      this._global_vectors = new GlobalVectors(scales, objects, this.dispatch,
+        vector_style)
+    } else {
+      this._global_vectors._scales = scales
+      this._global_vectors._parent = objects
+      this._global_vectors.redraw()
     }
 
     /**

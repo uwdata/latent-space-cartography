@@ -94,7 +94,7 @@
 </template>
 
 <script>
-  import {store, CONFIG} from '../controllers/config'
+  import {store, CONFIG, bus} from '../controllers/config'
   import moment from 'moment'
   import GroupModal from './GroupModal.vue'
   import GroupThumb from './GroupThumbnail.vue'
@@ -160,7 +160,9 @@
     mounted: function () {
       this.fetchVectors()
         .then(() => {
-          this.plotVectors()
+          // register callback
+          // plotting has to be after fetching
+          bus.$on('chart-ready', this.plotVectors)
         })
     },
     methods: {
@@ -178,14 +180,24 @@
 
       plotVectors () {
         // the backend only supports t-SNE for now ...
-        if (!this.proj_state.startsWith('tsne')) return
+        if (!this.proj_state.startsWith('tsne')) {
+          // clear previous plot
+          this.chart._global_vectors.setData([])
+          this.chart._global_vectors.redraw()
+          return
+        }
 
         let vs = _.map(this.vectors, (v) => [v.start, v.end])
         store.plotVectors(this.latent_dim, this.proj_state, vs)
           .then((data) => {
+            // save the data
             _.each(data, (path, i) => {
               this.vectors[i].path = path
             })
+
+            // plot
+            this.chart._global_vectors.setData(data)
+            this.chart._global_vectors.redraw()
           }, (e) => {
             alert(e)
           })

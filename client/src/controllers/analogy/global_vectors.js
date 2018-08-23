@@ -52,8 +52,8 @@ class GlobalVectors {
     let scales = this._scales
 
     let line = d3.line()
-      .x((d) => scales.x(d.x))
-      .y((d) => scales.y(d.y))
+      .x((d) => scales.getX(d))
+      .y((d) => scales.getY(d))
       .curve(d3.curveCatmullRom)
 
     // line background
@@ -75,8 +75,8 @@ class GlobalVectors {
     label = label || 'Untitled'
     const font_size = 10
     let words = label.split('-')
-    let x0 = scales.x(vector[0].x) + 5
-    let y0 = scales.y(vector[0].y)
+    let x0 = scales.getX(vector[0]) + 5
+    let y0 = scales.getY(vector[0])
 
     let txt = group.append('text')
       .text(null)

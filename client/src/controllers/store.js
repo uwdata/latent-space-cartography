@@ -2,6 +2,8 @@ import http from 'axios'
 import _ from 'lodash'
 import {DATASET, CONFIG, log_debug} from './config'
 
+const nPC = 4
+
 /**
  * Handles client-server connection and serves as a central data store for client.
  * Also contains data manipulation functions.
@@ -120,7 +122,7 @@ class Store {
    * @param pca_dim The number of principal components in PCA
    * @returns {Promise}
    */
-  getPcaPoints (dim, pca_dim = 4) {
+  getPcaPoints (dim, pca_dim = nPC) {
     this.latent_dim = dim
     return new Promise((resolve, reject) => {
       if (this.pca[dim]) {
@@ -477,7 +479,7 @@ class Store {
 
     return new Promise((resolve, reject) => {
       let payload = {latent_dim: latent_dim, projection: projection,
-        perplexity: perp, vectors: vectors}
+        perplexity: perp, pca_dim: nPC, vectors: vectors}
 
       http.post('/api/plot_vectors', payload)
         .then((response) => {
@@ -485,10 +487,16 @@ class Store {
 
           if (msg && msg.status === 'success') {
             // data is a 2D array, in the same sequence as input vectors
-            // each vector gets an array of screen coordinates
-            // for t-SNE, these are approx. control points
+            // for t-SNE, each vector gets an array of control points
+            // for PCA, each vector gets an array of the first several PCs
             resolve(_.map(msg.data, (path) => _.map(path, (pt) => {
-              return {x: pt[0], y: pt[1]}
+              let res = {x: pt[0], y: pt[1]}
+              if (/pca/i.test(projection)) {
+                _.each(pt, (val, j) => {
+                  res[`PC${j + 1}`] = val
+                })
+              }
+              return res
             })))
           } else {
             reject(msg ? msg.message : 'Oops ... server error.')

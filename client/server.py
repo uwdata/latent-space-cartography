@@ -437,7 +437,8 @@ def plot_vectors ():
     
     # PCA: multiply projection matrix directly
     elif projection == 'pca':
-        pca = PCA(n_components = 2).fit(X)
+        pca_dim = request.json['pca_dim']
+        pca = PCA(n_components = pca_dim).fit(X)
         res = []
         for gids in vectors:
             # compute centroid

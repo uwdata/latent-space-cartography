@@ -198,7 +198,7 @@
 
     // reset chart style
     this.scatter.chart_type = 1
-    this.scatter.y_field = 'y'
+    resetAxes.call(this)
 
     clear.call(this)
     this.loading = true
@@ -218,6 +218,13 @@
         this.err = e
         this.loading = false
       })
+  }
+
+  function resetAxes () {
+    this.current_y = 'y'
+    this.current_x = 'x'
+    this.scatter.y_field = this.current_y
+    this.scatter.x_field = this.current_x
   }
 
   export default {
@@ -263,10 +270,7 @@
     },
     watch: {
       view_state () {
-        this.current_y = 'y'
-        this.current_x = 'x'
-        this.scatter.y_field = this.current_y
-        this.scatter.x_field = this.current_x
+        resetAxes.call(this)
       }
     },
     computed: {
@@ -461,6 +465,7 @@
 
       // draw original
       showOriginal () {
+        resetAxes.call(this)
         // too lazy to rewrite ...
         this.changeDim(this.dim)
       }

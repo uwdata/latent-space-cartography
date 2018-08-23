@@ -14,7 +14,7 @@ class GlobalVectors {
     /**
      * Public
      */
-    this.lineWidth = styles.lineWidth || 2
+    this.lineWidth = styles.lineWidth || 3
     this.background = styles.background || '#fff'
     this.hide = true
 
@@ -62,12 +62,12 @@ class GlobalVectors {
       .style('stroke', this.background)
       .style('stroke-opacity', 0.9)
       .style('stroke-linecap', 'round')
-      .style('stroke-width', 6)
+      .style('stroke-width', this.lineWidth + 6)
 
     // the actual line
     let l = this._drawLine(line, vector, group)
       .classed('vector-curve', true)
-      .style('stroke', '#f00')
+      .style('stroke', 'red')
       .style('stroke-linecap', 'round')
       .style('stroke-width', this.lineWidth)
 
@@ -104,6 +104,7 @@ class GlobalVectors {
       .datum(vector)
       .classed('line', true)
       .attr('d', line)
+      .attr('fill', 'none')
   }
 
   setData (paths) {
@@ -136,7 +137,7 @@ class GlobalVectors {
     let g = d3.select('.global-vector-group')
 
     g.selectAll('.line.vector-curve')
-      .style('stroke', '#f00')
+      .style('stroke', 'red')
 
     g.selectAll('#' + vid)
       .style('stroke', '#0ff')

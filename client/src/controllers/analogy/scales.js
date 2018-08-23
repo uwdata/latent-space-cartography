@@ -49,6 +49,12 @@ class Scales {
    * @private
    */
   _initScatterScales (data) {
+    // create x and y plotting fields, primarily to override previous values
+    for (let i = 0; i < data.length; i++) {
+      data[i]._x = data[i][this.x_field]
+      data[i]._y = data[i][this.y_field]
+    }
+
     // create the scales
     let x = d3.scaleLinear()
       .range([0, this.width()]).nice()
@@ -56,10 +62,10 @@ class Scales {
     let y = d3.scaleLinear()
       .range([this.height(), 0]).nice()
 
-    let xMax = d3.max(data, (d) => d[this.x_field]) * 1.05
-    let xMin = d3.min(data, (d) => d[this.x_field]) * 1.05
-    let yMax = d3.max(data, (d) => d[this.y_field]) * 1.05
-    let yMin = d3.min(data, (d) => d[this.y_field]) * 1.05
+    let xMax = d3.max(data, (d) => d._x) * 1.05
+    let xMin = d3.min(data, (d) => d._x) * 1.05
+    let yMax = d3.max(data, (d) => d._y) * 1.05
+    let yMin = d3.min(data, (d) => d._y) * 1.05
 
     x.domain([xMin, xMax])
     y.domain([yMin, yMax])

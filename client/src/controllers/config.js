@@ -66,9 +66,11 @@ const config_tybalt = {
   schema: {
     'type': {
       'organ': DTYPE.categorical,
+      'race': DTYPE.categorical,
       'stage': DTYPE.categorical,
       'gender': DTYPE.categorical,
-      'age_at_diagnosis': DTYPE.numeric
+      'age_at_diagnosis': DTYPE.numeric,
+      'ovarian_cancer_subtype': DTYPE.categorical
     },
     'meta': ['i', 'name', 'platform', 'age_at_diagnosis', 'race', 'stage', 'vital_status',
       'disease', 'organ', 'gender', 'analysis_center', 'year_of_diagnosis',

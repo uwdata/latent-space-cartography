@@ -511,6 +511,34 @@ def focus_vector():
 
     return jsonify(reply), 200
 
+@app.route('/api/vector_diff', methods=['POST'])
+def vector_diff ():
+    latent_dim = request.json['latent_dim']
+    vid = request.json['vid']
+
+    # get all attribute vectors from database
+    query = 'SELECT a.start, a.end, a.id FROM {}_vector a'.format(dset)
+    cursor, conn = db.execute(query)
+    data = [list(i) for i in cursor.fetchall()]
+
+    # compute vector coordinates
+    X = read_ls(latent_dim)
+    vecs = []
+    idx = 0
+    for i, v in enumerate(data):
+        if v[2] == vid:
+            idx = i
+        vecs.append(_compute_group_centroid(X, v[1]) - _compute_group_centroid(X, v[0]))
+    vecs = np.asarray(vecs)
+
+    # compute cosine similarity between this vector and all others
+    cos = []
+    for i in range(len(vecs)):
+        sim = cosine_similarity(vecs[i].reshape(1, -1), vecs[idx].reshape(1, -1))[0][0]
+        cos.append({'id': data[i][2], 'cosine': sim})
+
+    return jsonify({'data': cos}), 200
+
 @app.route('/api/all_vector_diff', methods=['POST'])
 def all_vector_diff ():
     # get all attribute vectors from database

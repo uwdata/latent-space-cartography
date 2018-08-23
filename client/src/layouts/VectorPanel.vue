@@ -99,7 +99,7 @@
     </div>
 
     <!--Focus View-->
-    <vector-focus v-if="focus" :focus="focus" :chart="chart"
+    <vector-focus v-if="focus" :focus="focus" :chart="chart" :vectors="vectors"
                   :latent_dim="latent_dim" v-on:back="unfocus"></vector-focus>
 
     <!--Modal-->
@@ -270,6 +270,9 @@
           })
       },
       focusVector (vector) {
+        if (this.plotted) {
+          this.toggleVectorPlot() // turn off
+        }
         this.focus = vector
         this.$emit('focus', vector)
       },

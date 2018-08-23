@@ -162,6 +162,29 @@
                          :name_start="focus.alias_start"
                          :name_end="focus.alias_end"></list-top-signal>
       </div>
+
+      <!--Other vectors-->
+      <div class="m-3" v-if="vecs.length">
+        <!--Title-->
+        <div class="bd-subtitle mb-2 text-uppercase">
+          Other Vectors
+          <!--Toggle button-->
+          <span class="ml-2 pl-2 pr-2 bd-btn-trans" @click.stop="toggleVectorPlot"
+                v-b-tooltip.hover :title="other_vec ? 'Hide Vectors' : 'Visualize Vectors'">
+            <i class="fa" :class="{'fa-eye-slash': !other_vec, 'fa-eye': other_vec}"></i>
+          </span>
+        </div>
+
+        <!--List-->
+        <div class="d-flex mb-1 text-muted bd-vec-table-header">
+          <div class="w-25 text-right mr-2 text-uppercase">Cosine</div>
+          <div class="w-75 text-uppercase">Label</div>
+        </div>
+        <div v-for="v in vecs" style="font-size: 0.7em;" class="d-flex">
+          <div class="w-25 text-right mr-2">{{v.cosine}}</div>
+          <div class="w-75 text-truncate">{{v.label}}</div>
+        </div>
+      </div>
     </div>
 
     <!--Footer-->
@@ -210,6 +233,9 @@
         type: Number,
         required: true
       },
+      vectors: {
+        required: true
+      },
       focus: {
         required: true
       },
@@ -225,12 +251,14 @@
         support_analogy: CONFIG.data_type === 'image',
         data_type: CONFIG.data_type,
         totalImage: 5,
+        vecs: [],
         score: null,
         score_hint: 'The average cosine similarity between all possible start and end pairs',
         analogy: null,
         original: null,
         top: null,
         flipped: false,
+        other_vec: false,
         loading_analogy: false
       }
     },
@@ -254,6 +282,20 @@
             alert(e)
           })
       }
+
+      // cosines to other vectors
+      store.vectorDiff(this.latent_dim, this.focus.id)
+        .then((cos) => {
+          let vs = this.vectors
+          _.each(cos, (c) => {
+            let i = _.findIndex(vs, (v) => v.id === c.id)
+            this.vecs.push({
+              cosine: Number(c.cosine).toFixed(2),
+              label: `${vs[i].alias_end} - ${vs[i].alias_start}`})
+          })
+        }, (e) => {
+          alert(e)
+        })
     },
     computed: {
       startMore: function () {
@@ -269,6 +311,10 @@
     methods: {
       // go back to the list
       clickBack () {
+        if (this.other_vec) {
+          this.toggleVectorPlot() // turn off
+        }
+
         this.chart._vectors.clearData()
         this.$emit('back', true)
       },
@@ -282,6 +328,13 @@
           }, (e) => {
             alert(e)
           })
+      },
+
+      // toggle the visibility of vectors plotted on the global view
+      toggleVectorPlot () {
+        this.other_vec = !this.other_vec
+        this.chart._global_vectors.hide = !this.other_vec
+        this.chart._global_vectors.redraw()
       },
 
       // hover to highlight a group
@@ -415,6 +468,11 @@
   .div-48 {
     line-height: 48px;
     font-size: 0.7em;
+  }
+
+  .bd-vec-table-header {
+    font-size: 0.7em;
+    border-bottom: 1px solid #eee;
   }
 
   .btn-outline-theme {

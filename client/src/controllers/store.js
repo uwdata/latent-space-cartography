@@ -550,6 +550,31 @@ class Store {
   }
 
   /**
+   * Pairwise cosine similarity between a vector and all other vectors.
+   * @param latent_dim
+   * @param {number} vid - The id of the vector.
+   * @returns {Promise}
+   */
+  vectorDiff (latent_dim, vid) {
+    return new Promise((resolve, reject) => {
+      let payload = {vid: vid, latent_dim: latent_dim}
+
+      http.post('/api/vector_diff', payload)
+        .then((response) => {
+          let msg = response.data
+
+          if (msg) {
+            resolve(msg['data'])
+          } else {
+            reject(`Internal server error.`)
+          }
+        }, () => {
+          reject(`Could not connect to the server.`)
+        })
+    })
+  }
+
+  /**
    * Apply the analogy vector
    * @param latent_dim
    * @param pid Number Point index of the data point to apply analogy to.

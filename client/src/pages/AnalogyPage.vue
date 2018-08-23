@@ -343,6 +343,8 @@
       },
       prettyName (text) {
         if (!text)  return ''
+
+        // hard-code default axis name
         if (text === 'y') {
           if (this.view_state === 2) return 'PC1'
           if (this.view_state === 0 && this.projection === 't-SNE') return 'Default'
@@ -351,7 +353,10 @@
         if (text === 'x' && this.view_state === 0 && this.projection === 'PCA') {
           return 'PC1'
         }
-        return _.capitalize(text.split('_').join(' '))
+
+        // only make the first letter of each word uppercase
+        let words = _.map(text.split('_'), (w) => _.toUpper(w[0]) + w.substr(1))
+        return words.join(' ')
       },
 
       // change the y axis

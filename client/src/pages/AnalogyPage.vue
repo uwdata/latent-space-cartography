@@ -275,7 +275,8 @@
     },
     computed: {
       proj_state: function () {
-        let code = this.view_state === 0 ? this.projection : 'custom'
+        let code = this.view_state === 0 ? this.projection :
+          this.view_state === 1 ? 'subset' : 'vector'
         if (code === 't-SNE') {
           code = 'tsne-' + this.perplexity
         }

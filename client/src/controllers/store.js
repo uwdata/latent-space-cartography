@@ -469,9 +469,16 @@ class Store {
   plotVectors (latent_dim, projection, vectors) {
     // parse projection string
     let perp = ''
-    if (projection.startsWith('tsne')) {
+    if (/^tsne/.test(projection)) {
       perp = projection.split('-')[1]
       projection = 'tsne'
+    }
+
+    let matrix = ''
+    let mean = ''
+    if (projection === 'vector') {
+      matrix = this._projection_matrix
+      mean = this._projection_mean
     }
 
     // serialize vectors
@@ -479,7 +486,8 @@ class Store {
 
     return new Promise((resolve, reject) => {
       let payload = {latent_dim: latent_dim, projection: projection,
-        perplexity: perp, pca_dim: nPC, vectors: vectors}
+        perplexity: perp, pca_dim: nPC, matrix: matrix, mean: mean,
+        vectors: vectors}
 
       http.post('/api/plot_vectors', payload)
         .then((response) => {

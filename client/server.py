@@ -448,6 +448,20 @@ def plot_vectors ():
             locs = _sample_vec(start, end, 1, False)
             res.append(np.dot(locs, pca.components_.T).tolist())
         return jsonify({'status': 'success', 'data': res}), 200
+    
+    # Custom vector projection: multiply custom matrix
+    elif projection == 'vector':
+        U = np.asarray(request.json['matrix'], dtype=np.float64)
+        _mean = np.asarray(request.json['mean'], dtype=np.float64)
+        res = []
+        for gids in vectors:
+            # compute centroid
+            gid = gids.split(',')
+            start = _compute_group_centroid(X, gid[0])
+            end = _compute_group_centroid(X, gid[1])
+            locs = _sample_vec(start, end, 1, False)
+            res.append(np.dot(locs - _mean, U.T).tolist())
+        return jsonify({'status': 'success', 'data': res}), 200
 
     return jsonify({'status': 'fail', 'message': 'unknown projection'}), 200
 

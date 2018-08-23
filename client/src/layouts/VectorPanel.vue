@@ -168,11 +168,17 @@
           this.focus = null
         }
       },
-      proj_state () {
-        this.plotVectors()
+      proj_state (val) {
+        // custom projection rely on an async projection matrix
+        if (/^tsne|^pca/.test(val)) {
+          this.plotVectors()
+        }
       }
     },
     mounted: function () {
+      // register event
+      bus.$on('draw-focus-vec', this.plotVectors)
+
       this.fetchVectors()
         .then(() => {
           // register callback
@@ -194,8 +200,8 @@
       },
 
       plotVectors () {
-        // the backend does not support custom projection
-        let supported = this.proj_state.startsWith('tsne') || this.proj_state === 'pca'
+        let re = /^tsne|^pca|^vector$/i
+        let supported = re.test(this.proj_state)
         if (!supported) {
           // clear previous plot
           this.chart._global_vectors.setData([])
@@ -229,7 +235,7 @@
 
       // when a vector is hovered in the list
       hoverVector (v) {
-        let vid = v ? v.path.id : null
+        let vid = v ? (v.path ? v.path.id : null) : null
         this.chart._global_vectors.hoverVector(vid)
       },
 

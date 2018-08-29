@@ -29,6 +29,7 @@ const config_emoji = {
   train_split: 13500,
   dims: [4, 8, 16, 32, 64, 128, 256, 512, 1024],
   schema: {
+    'type': {},
     'meta': ['i','name', 'mean_color', 'category', 'platform', 'version', 'codepoints', 'shortcode']
   },
   rendering: {
@@ -48,6 +49,7 @@ const config_glove = {
   train_split: 10000,
   dims: [50, 100, 200, 300],
   schema: {
+    'type': {},
     'meta': ['i', 'name']
   },
   rendering: {

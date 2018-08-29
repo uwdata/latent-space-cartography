@@ -165,10 +165,13 @@ def _interpolate (X, start, end):
         loc = _sample_vec(start, end)
         # generate these images
         recon = _generate_image(latent_dim, loc)
-    else:
+    elif data_type == 'other':
         loc = _sample_vec(start, end, 1, False)
         # generate tensor outputs
         recon = _generate_other(latent_dim, loc)
+    else:
+        loc = _sample_vec(start, end, 1, False)
+        recon = None
     count, nn = _num_neighbors(X, loc)
 
     return loc, recon, count, nn
@@ -489,7 +492,6 @@ def focus_vector():
     # interpolate
     if data_type == 'image':
         loc, images, count, nearest = _interpolate(X, start, end)
-        loc = np.dot(loc - _mean, U.T)
         recon = []
         for idx, img in enumerate(images):
             img_fn = '{}_{}.png'.format('to'.join(gid), idx)
@@ -497,17 +499,18 @@ def focus_vector():
             img.save(abs_path('./build/' + img_fn))
     elif data_type == 'other':
         loc, recon, count, nearest = _interpolate(X, start, end)
-        loc = np.dot(loc - _mean, U.T)
         # high weight genes
         diff = recon[-1] - recon[0]
         reply['top_end'], reply['top_start'] = _top_and_bottom(diff)
         recon = recon.tolist()
+    else:
+        loc, recon, count, nearest = _interpolate(X, start, end)
 
-    if recon is not None:
-        reply['outputs'] = recon
-        reply['locations'] = loc.tolist()
-        reply['neighbors'] = count
-        reply['nearest'] = nearest
+    loc = np.dot(loc - _mean, U.T)
+    reply['locations'] = loc.tolist()
+    reply['neighbors'] = count
+    reply['nearest'] = nearest
+    reply['outputs'] = recon
 
     return jsonify(reply), 200
 

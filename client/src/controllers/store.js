@@ -693,6 +693,7 @@ class Store {
   }
 
   _formatVectorLine (locations, neighbors, outputs, nearest) {
+    outputs = outputs || []
     let n = neighbors.length
     return _.range(n).map((j) => {
       let res = {

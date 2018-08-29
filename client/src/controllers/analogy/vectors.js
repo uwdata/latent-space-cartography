@@ -286,7 +286,7 @@ class Vectors {
     if(this.primary && !this.hide) {
       // draw vectors
       let drawFunc = this.data_type === 'image' ? this._drawImageVector.bind(this) :
-        this.data_type === 'other' ? this._drawGenericVector.bind(this) : () => {}
+        this._drawGenericVector.bind(this)
       drawFunc(this.primary.line)
       drawFunc(this.analogy)
 

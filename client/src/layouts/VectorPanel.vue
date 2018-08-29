@@ -51,7 +51,7 @@
       </div>
 
       <!--Vector List-->
-      <div class="bd-vector-list p-3 pt-4">
+      <div class="bd-vector-list p-3 pt-4" v-if="vectors.length">
         <div class="mb-3">
           <!--Title-->
           <div class="bd-subtitle text-uppercase">
@@ -200,6 +200,8 @@
       },
 
       plotVectors () {
+        if (!this.vectors.length) return
+
         let re = /^tsne|^pca|^vector$/i
         let supported = re.test(this.proj_state)
         if (!supported) {

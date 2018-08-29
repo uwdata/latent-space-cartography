@@ -15,9 +15,16 @@
       <hr>
     </div>
     <!--Load-->
-    <div class="mb-3 text-center bd-subtitle text-uppercase">Load</div>
+    <div class="mb-3 text-center bd-subtitle text-uppercase"
+         v-if="!load_only">Load</div>
     <div v-if="loading">Loading ...</div>
     <div v-if="!loading" class="bd-group mb-4">
+      <!--Hint-->
+      <div v-if="!groups.length" class="mt-5 mb-5 text-muted text-center">
+        Nothing to load.
+      </div>
+
+      <!--List-->
       <div v-for="list in groups"  @click="load(list)"
            class="d-flex justify-content-between bd-group-item">
         <div>

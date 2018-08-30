@@ -605,6 +605,30 @@ class Store {
     })
   }
 
+  /**
+   * Get the k nearest neighbors of a data point.
+   * @param latent_dim
+   * @param i
+   * @returns {Promise<array>}
+   */
+  getKnn (latent_dim, i) {
+    return new Promise((resolve, reject) => {
+      let payload = {i: i, latent_dim: latent_dim}
+
+      http.post('/api/get_knn', payload)
+        .then((response) => {
+          let msg = response.data
+          if (msg) {
+            resolve(this._formatKnn(msg['knn_indices'], msg['knn_distances']))
+          } else {
+            reject(`Internal server error.`)
+          }
+        }, () => {
+          reject(`Could not connect to the server.`)
+        })
+    })
+  }
+
   vectorScore (latent_dim, start, end) {
     return new Promise((resolve, reject) => {
       let payload = {groups: [start, end].join(','), latent_dim: latent_dim}

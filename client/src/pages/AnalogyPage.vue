@@ -31,7 +31,7 @@
           <!--Left Panel-->
           <div class="bd-left ml-2">
             <!--Detail Card-->
-            <detail-card></detail-card>
+            <detail-card :latent_dim="dim"></detail-card>
 
             <!--List of Brushed Points-->
             <brushed-list :chart="scatter" :brushed="brushed"></brushed-list>

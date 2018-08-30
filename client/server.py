@@ -368,7 +368,6 @@ def get_meta ():
 # apply analogy
 @app.route('/api/apply_analogy', methods=['POST'])
 def apply_analogy ():
-    kn = 20 # how many nearest neighbors
     latent_dim = request.json['latent_dim']
     pid = request.json['pid']
     gid = request.json['groups'].split(',')
@@ -630,6 +629,15 @@ def cluster_score ():
     score = (b - a) / max(a, b)
 
     return jsonify({'score': score}), 200
+
+# get the k nearest neighbors of a point
+@app.route('/api/get_knn', methods=['POST'])
+def get_knn ():
+    i = request.json['i']
+    latent_dim = request.json['latent_dim']
+    X = read_ls(latent_dim)
+    dist, idx = _knn_cosine(X, X[i].reshape(1, -1))
+    return jsonify({'knn_indices': idx.tolist(), 'knn_distances': dist.tolist()}), 200
 
 # get the raw (input) data for a given index
 # useful if the data type is arbitrary vector

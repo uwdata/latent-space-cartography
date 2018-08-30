@@ -155,16 +155,7 @@
 
       <!--List of Nearest Neighbors-->
       <div class="m-3" v-if="data_type === 'text' && answer">
-        <div class="bd-subtitle text-uppercase mb-3">Result</div>
-        <div>
-          <div v-for = "word in answer" class="d-flex">
-            <div class="w-25 d-flex align-items-center">
-              <div :style="{width: (word.distance * 100) + '%'}"
-                   class="bd-bar-thick">{{word.distance.toFixed(3)}}</div>
-            </div>
-            <div class="ml-3 w-75 bd-word">{{word.name}}</div>
-          </div>
-        </div>
+        <list-knn :list="answer" title="Result"></list-knn>
       </div>
 
       <!--List of the Most Different Output Dimensions-->
@@ -239,10 +230,12 @@
   import ListTopSignal from './ListTopSignal.vue'
   import * as d3 from 'd3'
   import { saveAs } from 'file-saver/FileSaver'
+  import ListKnn from './ListKnn.vue'
 
   export default {
     name: 'VectorFocusView',
     components: {
+      ListKnn,
       ListTopSignal,
       VueLoading},
     props: {
@@ -440,19 +433,6 @@
 </script>
 
 <style>
-  .bd-bar-thick {
-    height: 14px;
-    background-color: rgba(244,196,76, 0.8);
-    font-size: 8px;
-    line-height: 8px;
-    padding: 2px 5px;
-    margin-bottom: 1px;
-  }
-
-  .bd-word {
-    font-size: 0.7em;
-  }
-
   .bd-vector-groups {
     width: calc(25vw - 3rem);
   }

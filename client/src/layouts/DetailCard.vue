@@ -1,5 +1,5 @@
 <template>
-  <div class="card mb-3" v-if="detail && necessary">
+  <div class="card mb-3" v-if="detail">
     <div class="card-header d-flex justify-content-between">
       <div>Details</div>
       <!--Close button-->
@@ -56,6 +56,12 @@
           </div>
         </div>
       </div>
+
+      <!--Nearest Neighbors for Words-->
+      <div v-if="data_type === 'text'" class="mt-2 ml-2">
+        <div class="text-muted mb-1" style="font-size: 0.7em;">Nearest neighbors:</div>
+        <list-knn :list="neighbors"></list-knn>
+      </div>
     </div>
   </div>
 </template>
@@ -64,24 +70,30 @@
   import {store, CONFIG} from '../controllers/config'
   import _ from 'lodash'
   import Heatmap from '../controllers/analogy/heatmap'
+  import ListKnn from './ListKnn.vue'
 
   export default {
     name: 'DetailCard',
+    components: {ListKnn},
+    props: {
+      latent_dim: {
+        type: Number,
+        required: true
+      }
+    },
     data () {
       return {
         shared: store.state,
         dataset: CONFIG.dataset,
         data_type: CONFIG.data_type,
-        chart: new Heatmap()
+        chart: new Heatmap(),
+        neighbors: null
       }
     },
     computed: {
       fields () {
         let fields = CONFIG.schema.meta
         return _.filter(fields, (f) => f !== 'i' && f !== 'name' && f !== 'mean_color')
-      },
-      necessary () {
-        return CONFIG.schema.meta.length > 2
       },
       detail () {
         // when a new point is clicked, fetch input space data to draw a heat map
@@ -90,6 +102,13 @@
             .then((data) => {
               this.chart.setData(data)
               this.chart.draw('#heatmap-container')
+            }, () => {})
+        }
+        // when a new point is clicked, fetch k nearest neighbors
+        if (this.shared.detail_card && this.data_type === 'text') {
+          store.getKnn(this.latent_dim, this.shared.detail_card.i)
+            .then((words) => {
+              this.neighbors = words
             }, () => {})
         }
         return this.shared.detail_card

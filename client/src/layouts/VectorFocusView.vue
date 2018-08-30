@@ -127,7 +127,7 @@
       </div>
 
       <!--Vector Details Comparing Original & Analogy-->
-      <div class="d-flex m-3" v-if="support_analogy && original && analogy">
+      <div class="d-flex m-3" v-if="data_type === 'image' && original && analogy">
         <!--Original-->
         <div class="w-50 d-flex mt-3"
              :class="{'flex-column-reverse': flipped, 'flex-column': !flipped}">
@@ -149,6 +149,20 @@
             <img :src="`/build/${d.image}?${flipped}`" class="img-48"/>
             <img :src="imageUrl(d.nearest)" class="img-24 ml-2"/>
             <span class="text-muted ml-2">{{d.neighbors}}</span>
+          </div>
+        </div>
+      </div>
+
+      <!--List of Nearest Neighbors-->
+      <div class="m-3" v-if="data_type === 'text' && answer">
+        <div class="bd-subtitle text-uppercase mb-3">Result</div>
+        <div>
+          <div v-for = "word in answer" class="d-flex">
+            <div class="w-25 d-flex align-items-center">
+              <div :style="{width: (word.distance * 100) + '%'}"
+                   class="bd-bar-thick">{{word.distance.toFixed(3)}}</div>
+            </div>
+            <div class="ml-3 w-75 bd-word">{{word.name}}</div>
           </div>
         </div>
       </div>
@@ -193,7 +207,10 @@
       <div class="d-flex justify-content-center" v-if="!loading_analogy">
         <div class="mt-3">
           <button class="btn btn-light" @click="applyAnalogy()">Apply Analogy</button>
-          <img :src="imageUrl(detail.i)" class="bd-footer-img" />
+          <img v-if="data_type === 'image'" :src="imageUrl(detail.i)"
+               class="bd-footer-img" />
+          <span class="text-center text-truncate bd-footer-img"
+               v-if="data_type === 'text'">{{detail.name}}</span>
           <button class="btn btn-light" @click="applyAnalogy(true)">Reverse Analogy</button>
         </div>
       </div>
@@ -248,7 +265,8 @@
         shared: store.state,
         tutorial: store.tutorial,
         need_help: true,
-        support_analogy: CONFIG.data_type === 'image',
+        support_analogy: CONFIG.data_type === 'image'
+          || CONFIG.data_type === 'text',
         data_type: CONFIG.data_type,
         totalImage: 5,
         vecs: [],
@@ -257,6 +275,7 @@
         analogy: null,
         original: null,
         top: null,
+        answer: null,
         flipped: false,
         other_vec: false,
         loading_analogy: false
@@ -379,7 +398,10 @@
         let end = flipped ? this.focus.start : this.focus.end
 
         store.applyAnalogy(this.latent_dim, this.detail.i, start, end)
-          .then((line) => {
+          .then((all) => {
+            let line = all[0]
+            this.answer = all[1]
+
             this.loading_analogy = false
             this.flipped = flipped
             this.analogy = line
@@ -418,6 +440,19 @@
 </script>
 
 <style>
+  .bd-bar-thick {
+    height: 14px;
+    background-color: rgba(244,196,76, 0.8);
+    font-size: 8px;
+    line-height: 8px;
+    padding: 2px 5px;
+    margin-bottom: 1px;
+  }
+
+  .bd-word {
+    font-size: 0.7em;
+  }
+
   .bd-vector-groups {
     width: calc(25vw - 3rem);
   }

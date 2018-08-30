@@ -25,7 +25,7 @@ models = {}
 
 # dataset we're working with
 # from config_emoji import img_rows, img_cols, img_chns, img_mode
-from config_glove_6b import dset, data_type, dims, schema_meta, schema_header
+from config_glove_6b import dset, data_type, dims, schema_meta, schema_header, metric
 
 # for absolute path
 def abs_path (rel_path):
@@ -253,6 +253,13 @@ def _pointwise_dist (X, Y=None):
     
     return s / float(m)
 
+# compute k nearest neighbors using cosine distance
+def _knn_cosine (X, v, kn = 20):
+    tree = KDTree(preprocessing.normalize(X))
+    _, idx = tree.query(v, k=kn)
+    dist = cosine_similarity(X[idx[0]], np.repeat(v, kn, axis=0))
+    return dist[:, 0], idx[0]
+
 # global app and DB cursor
 app = Flask(__name__, static_url_path='')
 db = DB()
@@ -361,6 +368,7 @@ def get_meta ():
 # apply analogy
 @app.route('/api/apply_analogy', methods=['POST'])
 def apply_analogy ():
+    kn = 20 # how many nearest neighbors
     latent_dim = request.json['latent_dim']
     pid = request.json['pid']
     gid = request.json['groups'].split(',')
@@ -379,22 +387,24 @@ def apply_analogy ():
     start = X[int(pid)]
     end = start + vec
 
-    loc, images, count, nearest = _interpolate(X, start, end)
-    fns = []
-    for idx, img in enumerate(images):
-        img_fn = 'analogy_{}_{}.png'.format(pid, idx)
-        fns.append(img_fn)
-        img.save(abs_path('./build/' + img_fn))
+    if data_type == 'image':
+        loc, images, count, nearest = _interpolate(X, start, end)
+        fns = []
+        for idx, img in enumerate(images):
+            img_fn = 'analogy_{}_{}.png'.format(pid, idx)
+            fns.append(img_fn)
+            img.save(abs_path('./build/' + img_fn))
+        
+        reply = { 'outputs': fns }
+    else:
+        loc, _, count, nearest = _interpolate(X, start, end)
+        dist, idx = _knn_cosine(X, end.reshape(1, -1))
+        reply = { 'knn_indices': idx.tolist(), 'knn_distances': dist.tolist() }
 
-    # project to visualize path
     loc = np.dot(loc - _mean, U.T)
-
-    reply = {
-        'outputs': fns,
-        'locations': loc.tolist(),
-        'neighbors': count,
-        'nearest': nearest
-    }
+    reply['locations'] = loc.tolist()
+    reply['neighbors'] = count
+    reply['nearest'] = nearest
 
     return jsonify(reply), 200
 

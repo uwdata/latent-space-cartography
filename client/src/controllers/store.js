@@ -593,7 +593,9 @@ class Store {
           if (msg) {
             let line = this._formatVectorLine(msg['locations'], msg['neighbors'],
               msg['outputs'], msg['nearest'])
-            resolve(line)
+            let answer = CONFIG.data_type === 'text' ?
+              this._formatKnn(msg['knn_indices'], msg['knn_distances']) : []
+            resolve([line, answer])
           } else {
             reject()
           }
@@ -690,6 +692,12 @@ class Store {
     }
     let meta_dict = _.keyBy(this.header, 'i')
     return _.map(vec, (v) => _.assign(v, meta_dict[v.i]))
+  }
+
+  _formatKnn (idx, dist) {
+    return _.range(idx.length).map((j) => {
+      return { i: idx[j], name: this.meta[idx[j]].name, distance: dist[j] }
+    })
   }
 
   _formatVectorLine (locations, neighbors, outputs, nearest) {

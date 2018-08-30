@@ -260,6 +260,53 @@ def _knn_cosine (X, v, kn = 20):
     dist = cosine_similarity(X[idx[0]], np.repeat(v, kn, axis=0))
     return dist[:, 0], idx[0]
 
+# compute the screen coordinates of given paths in a global projection
+def _project_path (X, projection, locs, params={}):
+    # t-SNE: use the coordinate of nearest neighbors
+    if projection == 'tsne':
+        # use kd-tree to compute k nearest neighbors
+        tree = KDTree(X)
+
+        # read t-SNE coordinates
+        perp = params['perplexity']
+        latent_dim = params['latent_dim']
+        tpath = abs_path('./data/{}/tsne/tsne{}_perp{}.h5'.format(dset, latent_dim, perp))
+        with h5py.File(tpath, 'r') as f:
+            Y = np.asarray(f['tsne']) # shape: (n, 2)
+
+        result = []
+        for loc in locs:
+            # k nearest neighbors
+            kn = 5
+            dist, idx = tree.query(loc, k=kn)
+            res = []
+            for i in range(idx.shape[0]):
+                # weighted average
+                res.append(np.average(Y[idx[i]], weights=dist[i], axis=0))
+            result.append(res)
+        result = np.asarray(result).tolist()
+        return result
+
+    # PCA: multiply projection matrix directly
+    elif projection == 'pca':
+        pca_dim = params['pca_dim']
+        pca = PCA(n_components = pca_dim).fit(X)
+        res = []
+        for loc in locs:
+            res.append(np.dot(loc, pca.components_.T).tolist())
+        return res
+
+    # Custom vector projection: multiply custom matrix
+    elif projection == 'vector':
+        U = np.asarray(params['matrix'], dtype=np.float64)
+        _mean = np.asarray(params['mean'], dtype=np.float64)
+        res = []
+        for loc in locs:
+            res.append(np.dot(loc - _mean, U.T).tolist())
+        return res
+
+    return []
+
 # global app and DB cursor
 app = Flask(__name__, static_url_path='')
 db = DB()
@@ -417,65 +464,16 @@ def plot_vectors ():
     # read latent space
     X = read_ls(latent_dim)
 
-    # t-SNE: use the coordinate of nearest neighbors
-    if projection == 'tsne':
-        # use kd-tree to compute k nearest neighbors
-        tree = KDTree(X)
+    locs = []
+    for gids in vectors:
+        # compute centroid
+        gid = gids.split(',')
+        start = _compute_group_centroid(X, gid[0])
+        end = _compute_group_centroid(X, gid[1])
+        locs.append(_sample_vec(start, end, over=False))
+    res = _project_path(X, projection, locs, request.json)
 
-        # read t-SNE coordinates
-        perp = request.json['perplexity']
-        tpath = abs_path('./data/{}/tsne/tsne{}_perp{}.h5'.format(dset, latent_dim, perp))
-        with h5py.File(tpath, 'r') as f:
-            Y = np.asarray(f['tsne']) # shape: (n, 2)
-
-        result = []
-        for gids in vectors:
-            # compute centroid
-            gid = gids.split(',')
-            start = _compute_group_centroid(X, gid[0])
-            end = _compute_group_centroid(X, gid[1])
-            locs = _sample_vec(start, end, over=False)
-
-            # k nearest neighbors
-            kn = 5
-            dist, idx = tree.query(locs, k=kn)
-            res = []
-            for i in range(idx.shape[0]):
-                # weighted average
-                res.append(np.average(Y[idx[i]], weights=dist[i], axis=0))
-            result.append(res)
-        result = np.asarray(result).tolist()
-        return jsonify({'status': 'success', 'data': result}), 200
-    
-    # PCA: multiply projection matrix directly
-    elif projection == 'pca':
-        pca_dim = request.json['pca_dim']
-        pca = PCA(n_components = pca_dim).fit(X)
-        res = []
-        for gids in vectors:
-            # compute centroid
-            gid = gids.split(',')
-            start = _compute_group_centroid(X, gid[0])
-            end = _compute_group_centroid(X, gid[1])
-            locs = _sample_vec(start, end, 1, False)
-            res.append(np.dot(locs, pca.components_.T).tolist())
-        return jsonify({'status': 'success', 'data': res}), 200
-    
-    # Custom vector projection: multiply custom matrix
-    elif projection == 'vector':
-        U = np.asarray(request.json['matrix'], dtype=np.float64)
-        _mean = np.asarray(request.json['mean'], dtype=np.float64)
-        res = []
-        for gids in vectors:
-            # compute centroid
-            gid = gids.split(',')
-            start = _compute_group_centroid(X, gid[0])
-            end = _compute_group_centroid(X, gid[1])
-            locs = _sample_vec(start, end, 1, False)
-            res.append(np.dot(locs - _mean, U.T).tolist())
-        return jsonify({'status': 'success', 'data': res}), 200
-
-    return jsonify({'status': 'fail', 'message': 'unknown projection'}), 200
+    return jsonify({'status': 'success', 'data': res}), 200
 
 # bring a vector to focus: interpolate along the path, and reproject all points
 @app.route('/api/focus_vector', methods=['POST'])

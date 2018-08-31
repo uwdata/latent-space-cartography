@@ -290,7 +290,6 @@
 
       // register event
       bus.$on('draw-focus-vec', this.drawPrimaryVector)
-      bus.$on('update-pairs', this.drawPairs)
 
       // vector style
       this.chart._vectors.data_type = CONFIG.data_type
@@ -333,7 +332,6 @@
 
       // unregister event
       bus.$off('draw-focus-vec', this.drawPrimaryVector)
-      bus.$off('update-pairs', this.drawPairs)
     },
     computed: {
       startMore: function () {
@@ -391,40 +389,6 @@
         store.state.tab = 0
       },
 
-      drawPairs (proj_state) {
-        //FIXME: this hack assumes equal group size => pair
-        let ls = this.focus.list_start
-        let le = this.focus.list_end
-        if (ls.length !== le.length) return
-
-        let re = /^tsne|^pca|^vector$/i
-        let supported = re.test(proj_state)
-        if (!supported) {
-          // clear previous plot
-          this.chart._pairs.setData([])
-          this.chart._pairs.redraw()
-          return
-        }
-
-        let vs = _.unzip([ls, le])
-        store.plotVectors(this.latent_dim, proj_state, [], vs)
-          .then((data) => {
-            // save the data
-            data = _.map(data, (arr, i) => {
-              return {
-                label: `${store.meta[le[i]].name}-${store.meta[ls[i]].name}`,
-                coordinates: arr
-              }
-            })
-
-            // plot
-            this.chart._pairs.setData(data)
-            this.chart._pairs.redraw()
-          }, (e) => {
-            alert(e)
-          })
-      },
-
       drawPrimaryVector (vector, top) {
         this.original = vector.line
 
@@ -441,6 +405,9 @@
           top[1] = _.map(top[1], (t) => _.extend({}, t, {width: scale(Math.abs(t.diff))}))
           this.top = top
         }
+
+        // ask someone else to draw the individual pairs
+        bus.$emit('draw-pairs')
       },
 
       applyAnalogy (flipped = false) {

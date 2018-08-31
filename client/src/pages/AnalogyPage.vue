@@ -439,7 +439,6 @@
             vector.points_end = indicesToPoint(vector.list_end, points)
             // points_start and points_end are useful to draw confidence cone
             bus.$emit('draw-focus-vec', vector, all[2])
-            bus.$emit('update-pairs', this.proj_state)
           }, () => {
             this.loading = false
             //handle error

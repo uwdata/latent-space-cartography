@@ -174,6 +174,7 @@
     mounted: function () {
       // register event
       bus.$on('draw-focus-vec', this.plotVectors)
+      bus.$on('draw-pairs', this.drawPairs)
 
       this.fetchVectors()
         .then(() => {
@@ -181,6 +182,12 @@
           // plotting has to be after fetching
           bus.$on('chart-ready', this.plotVectors)
         })
+    },
+    beforeDestroy () {
+      // unregister event
+      bus.$off('draw-focus-vec', this.plotVectors)
+      bus.$off('draw-pairs', this.drawPairs)
+      bus.$off('chart-ready', this.plotVectors)
     },
     methods: {
       fetchVectors () {
@@ -226,6 +233,41 @@
             // plot
             this.chart._global_vectors.setData(data)
             this.chart._global_vectors.redraw()
+          }, (e) => {
+            alert(e)
+          })
+      },
+
+
+      drawPairs () {
+        //FIXME: this hack assumes equal group size => pair
+        let ls = this.focus.list_start
+        let le = this.focus.list_end
+        if (ls.length !== le.length) return
+
+        let re = /^tsne|^pca|^vector$/i
+        let supported = re.test(this.proj_state)
+        if (!supported) {
+          // clear previous plot
+          this.chart._pairs.setData([])
+          this.chart._pairs.redraw()
+          return
+        }
+
+        let vs = _.unzip([ls, le])
+        store.plotVectors(this.latent_dim, this.proj_state, [], vs)
+          .then((data) => {
+            // save the data
+            data = _.map(data, (arr, i) => {
+              return {
+                label: `${store.meta[le[i]].name}-${store.meta[ls[i]].name}`,
+                coordinates: arr
+              }
+            })
+
+            // plot
+            this.chart._pairs.setData(data)
+            this.chart._pairs.redraw()
           }, (e) => {
             alert(e)
           })

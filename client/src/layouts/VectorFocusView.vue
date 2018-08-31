@@ -155,7 +155,17 @@
 
       <!--List of Nearest Neighbors-->
       <div class="m-3" v-if="data_type === 'text' && answer">
-        <list-knn :list="answer" title="Result"></list-knn>
+        <div class="bd-subtitle text-uppercase mb-2">Nearest Neighbors of Analogy</div>
+        <div class="d-flex">
+          <div class="w-50">
+            <div class="mb-2 bd-subtitle text-center">Original</div>
+            <list-knn :list="answer_comp" :compact="true"></list-knn>
+          </div>
+          <div class="w-50">
+            <div class="mb-2 bd-subtitle text-center">Answer</div>
+            <list-knn :list="answer" :compact="true"></list-knn>
+          </div>
+        </div>
       </div>
 
       <!--List of the Most Different Output Dimensions-->
@@ -269,6 +279,7 @@
         original: null,
         top: null,
         answer: null,
+        answer_comp: null,
         flipped: false,
         other_vec: false,
         loading_analogy: false
@@ -425,21 +436,29 @@
 
         let start = flipped ? this.focus.end : this.focus.start
         let end = flipped ? this.focus.start : this.focus.end
+        let answer = []
 
         store.applyAnalogy(this.latent_dim, this.detail.i, start, end)
           .then((all) => {
             let line = all[0]
-            this.answer = all[1]
+            answer = all[1]
 
             this.loading_analogy = false
             this.flipped = flipped
             this.analogy = line
             this.chart._vectors.analogy = line
             this.chart._vectors.redraw()
+
+            return store.getKnn(this.latent_dim, this.detail.i)
           }, (e) => {
             this.loading_analogy = false
             alert(e)
           })
+          .then((words) => {
+            let same = _.keyBy(_.intersectionBy(answer, words, 'name'), 'name')
+            this.answer = _.map(answer, (w) => _.extend({}, w, {muted: w.name in same}))
+            this.answer_comp = _.map(words, (w) => _.extend({}, w, {muted: w.name in same}))
+          }, () => {})
       },
 
       // save gene list as an CSV file

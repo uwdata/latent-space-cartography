@@ -2,7 +2,7 @@ import * as d3 from 'd3'
 import {moveToFront} from './util'
 import _ from 'lodash'
 
-class GlobalVectors {
+class GlobalPaths {
   /**
    * Constructor
    * @param scales
@@ -188,4 +188,4 @@ class GlobalVectors {
   }
 }
 
-export default GlobalVectors
+export default GlobalPaths

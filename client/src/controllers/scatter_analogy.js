@@ -6,7 +6,7 @@ import DotBrush from './analogy/brush'
 import Dots from './analogy/dots'
 import Vectors from './analogy/vectors'
 import DotAxis from './analogy/axis'
-import GlobalVectors from './analogy/global_vectors'
+import GlobalPaths from './analogy/global_paths'
 
 /**
  * Handles drawing a scatter plot for 2-dimensional data.
@@ -150,7 +150,7 @@ class Scatter {
 
     // Multiple vectors in global projection
     if (!this._global_vectors) {
-      this._global_vectors = new GlobalVectors(scales, objects, this.dispatch,
+      this._global_vectors = new GlobalPaths(scales, objects, this.dispatch,
         _.assign({hide: true}, vector_style))
     } else {
       this._global_vectors._scales = scales
@@ -161,7 +161,7 @@ class Scatter {
     // individual pairs within a vector
     if (!this._pairs) {
       let custom_style = {line_style: 1, label_style: 1, id: 'pairs', hide: false}
-      this._pairs = new GlobalVectors(scales, objects, this.dispatch,
+      this._pairs = new GlobalPaths(scales, objects, this.dispatch,
         _.assign(custom_style, vector_style))
     } else {
       this._pairs._scales = scales

@@ -180,6 +180,22 @@
     return _.map(is, (i) => map[i])
   }
 
+  // a hack to wrangle Google's analogy test set
+  // FIXME: remove this
+  function wrangle (input) {
+    input = input.split('\n')
+    let dict = _.keyBy(store.meta, 'name')
+    let left = _.map(input, (line) => _.toLower(line.split(' ')[2]))
+    let right = _.map(input, (line) => _.toLower(line.split(' ')[3]))
+    let il = _.filter(_.map(left, (w, idx) => w in dict ? idx : -1), (i) => i >= 0)
+    let ir = _.filter(_.map(right, (w, idx) => w in dict ? idx : -1), (i) => i >= 0)
+    let valid = _.keyBy(_.intersection(il, ir))
+    left = _.filter(left, (w, i) => i in valid)
+    right = _.filter(right, (w, i) => i in valid)
+    console.log(left.join(','))
+    console.log(right.join(','))
+  }
+
   /**
    * Wrap the draw function
    * @param points

@@ -151,10 +151,17 @@ class GlobalPaths {
       .attr('fill', 'none')
   }
 
+  /**
+   * Set data.
+   * @param {array} paths
+   */
   setData (paths) {
     this.paths = paths
   }
 
+  /**
+   * Clear previous plot and draw current data.
+   */
   redraw () {
     // remove previous vector
     d3.selectAll(`.${this.id}-group`).remove()
@@ -177,6 +184,18 @@ class GlobalPaths {
     }
   }
 
+  /**
+   * Clear data and remove previous plots.
+   */
+  clear () {
+    this.setData([])
+    this.redraw()
+  }
+
+  /**
+   * Ask the chart to highlight a vector.
+   * @param {string} vid - DOM id of the vector to be highlighted.
+   */
   hoverVector (vid) {
     let g = d3.select(`.${this.id}-group`)
 

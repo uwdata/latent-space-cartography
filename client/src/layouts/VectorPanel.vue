@@ -165,6 +165,7 @@
         }
       },
       proj_state (val) {
+        this.chart._pairs.clear()
         // custom projection rely on an async projection matrix
         if (/^tsne|^pca/.test(val)) {
           this.plotVectors()
@@ -238,19 +239,18 @@
           })
       },
 
+      drawPairs (vec) {
+        vec = vec || this.focus
 
-      drawPairs () {
         //FIXME: this hack assumes equal group size => pair
-        let ls = this.focus.list_start
-        let le = this.focus.list_end
+        let ls = vec.list_start
+        let le = vec.list_end
         if (ls.length !== le.length) return
 
         let re = /^tsne|^pca|^vector$/i
         let supported = re.test(this.proj_state)
         if (!supported) {
-          // clear previous plot
-          this.chart._pairs.setData([])
-          this.chart._pairs.redraw()
+          this.chart._pairs.clear()
           return
         }
 
@@ -277,6 +277,11 @@
       hoverVector (v) {
         let vid = v ? (v.path ? v.path.id : null) : null
         this.chart._global_vectors.hoverVector(vid)
+
+        // draw pairs
+        if (v && this.plotted) {
+          this.drawPairs(v)
+        }
       },
 
       // toggle the visibility of vectors plotted on the global view

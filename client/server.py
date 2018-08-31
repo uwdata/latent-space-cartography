@@ -475,6 +475,24 @@ def plot_vectors ():
 
     return jsonify({'status': 'success', 'data': res}), 200
 
+# visualize pairs together in a global projection
+@app.route('/api/plot_pairs', methods=['POST'])
+def plot_pairs ():
+    latent_dim = request.json['latent_dim']
+    projection = request.json['projection']
+    pairs = request.json['pairs'].split(';')
+
+    # read latent space
+    X = read_ls(latent_dim)
+
+    locs = []
+    for pair in pairs:
+        pair = [int(x) for x in pair.split(',')]
+        locs.append(_sample_vec(X[pair[0]], X[pair[1]], over=False))
+    res = _project_path(X, projection, locs, request.json)
+
+    return jsonify({'status': 'success', 'data': res}), 200
+
 # bring a vector to focus: interpolate along the path, and reproject all points
 @app.route('/api/focus_vector', methods=['POST'])
 def focus_vector():

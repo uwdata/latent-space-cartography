@@ -69,6 +69,7 @@ class Scatter {
     this._dots = null
     this._vectors = null
     this._global_vectors = null
+    this._pairs = null
     this._axis = null
   }
 
@@ -135,7 +136,7 @@ class Scatter {
     this._axis = new DotAxis(objects, scales, _.pick(this, ['chart_type', 'y_field']))
     this._axis.draw()
 
-    // Lines
+    // primary and analogy vectors
     let vector_style = {background: this.background}
     if (!this._vectors) {
       this._vectors = new Vectors(scales, objects, this.dispatch, vector_style)
@@ -150,11 +151,22 @@ class Scatter {
     // Multiple vectors in global projection
     if (!this._global_vectors) {
       this._global_vectors = new GlobalVectors(scales, objects, this.dispatch,
-        vector_style)
+        _.assign({hide: true}, vector_style))
     } else {
       this._global_vectors._scales = scales
       this._global_vectors._parent = objects
       this._global_vectors.redraw()
+    }
+
+    // individual pairs within a vector
+    if (!this._pairs) {
+      let custom_style = {line_style: 1, label_style: 1, id: 'pairs', hide: false}
+      this._pairs = new GlobalVectors(scales, objects, this.dispatch,
+        _.assign(custom_style, vector_style))
+    } else {
+      this._pairs._scales = scales
+      this._pairs._parent = objects
+      this._pairs.redraw()
     }
 
     /**
@@ -228,6 +240,7 @@ class Scatter {
       // update vectors
       that._vectors.redraw()
       that._global_vectors.redraw()
+      that._pairs.redraw()
 
       // clear brush
       dot_brush.clear()

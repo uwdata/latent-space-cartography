@@ -464,9 +464,10 @@ class Store {
    * @param latent_dim
    * @param {string} projection - Projection code that encodes multiple info
    * @param {array} vectors - A 2D array of start and end group id per vector
+   * @param {array} pairs
    * @returns {Promise}
    */
-  plotVectors (latent_dim, projection, vectors) {
+  plotVectors (latent_dim, projection, vectors=[], pairs=[]) {
     // parse projection string
     let perp = ''
     if (/^tsne/.test(projection)) {
@@ -481,15 +482,17 @@ class Store {
       mean = this._projection_mean
     }
 
-    // serialize vectors
+    // serialize
     vectors = _.map(vectors, (v) => v.join(',')).join(';')
+    pairs = _.map(pairs, (v) => v.join(',')).join(';')
 
     return new Promise((resolve, reject) => {
+      let route = vectors.length ? '/api/plot_vectors' : '/api/plot_pairs'
       let payload = {latent_dim: latent_dim, projection: projection,
         perplexity: perp, pca_dim: nPC, matrix: matrix, mean: mean,
-        vectors: vectors}
+        vectors: vectors, pairs: pairs}
 
-      http.post('/api/plot_vectors', payload)
+      http.post(route, payload)
         .then((response) => {
           let msg = response['data']
 

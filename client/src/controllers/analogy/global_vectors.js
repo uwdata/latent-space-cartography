@@ -14,9 +14,15 @@ class GlobalVectors {
     /**
      * Public
      */
-    this.lineWidth = styles.lineWidth || 3
+    // 0 - vector, 1 - pair
+    this.line_style = styles.line_style || 0
+
+    // 0 - combined, 1 - label start and end separately
+    this.label_style = styles.label_style || 0
+
+    this.id = styles.id || 'global-vector'
     this.background = styles.background || '#fff'
-    this.hide = true
+    this.hide = styles.hide
 
     /**
      * Private
@@ -41,15 +47,31 @@ class GlobalVectors {
    * @private
    */
   _registerCallback () {
-    this._dispatch.on('toggle-background.vector', (color) => {
-      this.background = color
-      d3.selectAll('.vector-background')
-        .style('stroke', color)
-    })
+    if (!this._dispatch.on('toggle-background.vector')) {
+      this._dispatch.on('toggle-background.vector', (color) => {
+        this.background = color
+        d3.selectAll('.vector-background')
+          .style('stroke', color)
+      })
+    }
   }
 
   _drawCurve (vector, group, id = '', label = '') {
     let scales = this._scales
+
+    const styles = [
+      {
+        lineWidth: 3,
+        strokeColor: 'red'
+      },
+      {
+        lineWidth: 1,
+        strokeColor: '#343a40',
+        dash: '2,2'
+      }
+    ]
+
+    let style = styles[this.line_style]
 
     let line = d3.line()
       .x((d) => scales.getX(d))
@@ -62,37 +84,55 @@ class GlobalVectors {
       .style('stroke', this.background)
       .style('stroke-opacity', 0.9)
       .style('stroke-linecap', 'round')
-      .style('stroke-width', this.lineWidth + 6)
+      .style('stroke-width', style.lineWidth + 6)
 
     // the actual line
     let l = this._drawLine(line, vector, group)
       .classed('vector-curve', true)
-      .style('stroke', 'red')
+      .style('stroke', style.strokeColor)
       .style('stroke-linecap', 'round')
-      .style('stroke-width', this.lineWidth)
+      .style('stroke-width', style.lineWidth)
+    if (style.dash) {
+      l.style('stroke-dasharray', style.dash)
+    }
 
     // text label
-    label = label || 'Untitled'
     const font_size = 10
-    let words = label.split('-')
-    let x0 = scales.getX(vector[0]) + 5
-    let y0 = scales.getY(vector[0])
+    const font_color = '#343a40'
+    if (this.label_style === 0) {
+      label = label || 'Untitled'
+      let words = label.split('-')
+      let x0 = scales.getX(vector[0]) + 5
+      let y0 = scales.getY(vector[0])
 
-    let txt = group.append('text')
-      .text(null)
-      .attr('x', x0)
-      .attr('y', y0)
-      .attr('fill', '#343a40')
-      .style('font-size', `${font_size}px`)
-      .classed('outlined-text', true)
-
-    _.each(words, (word, idx) => {
-      txt.append('tspan')
-        .text(word)
+      let txt = group.append('text')
+        .text(null)
         .attr('x', x0)
         .attr('y', y0)
-        .attr('dy', idx * font_size)
-    })
+        .attr('fill', font_color)
+        .style('font-size', `${font_size}px`)
+        .classed('outlined-text', true)
+
+      _.each(words, (word, idx) => {
+        txt.append('tspan')
+          .text(word)
+          .attr('x', x0)
+          .attr('y', y0)
+          .attr('dy', idx * font_size)
+      })
+    } else {
+      let words = label.split('-')
+      _.each(words, (word, idx) => {
+        idx = idx ? 0 : vector.length - 1
+        group.append('text')
+          .text(word)
+          .attr('x', scales.getX(vector[idx]) + 5)
+          .attr('y', scales.getY(vector[idx]))
+          .attr('fill', font_color)
+          .style('font-size', `${font_size}px`)
+          .classed('outlined-text', true)
+      })
+    }
 
     if (id) {
       l.attr('id', id)
@@ -113,7 +153,7 @@ class GlobalVectors {
 
   redraw () {
     // remove previous vector
-    d3.selectAll('.global-vector-group').remove()
+    d3.selectAll(`.${this.id}-group`).remove()
 
     // hide flag on: do not draw anything
     if (this.hide) {
@@ -124,7 +164,7 @@ class GlobalVectors {
     if (this.paths && this.paths.length) {
       // group
       let group = this._parent.append('g')
-        .classed('global-vector-group', true)
+        .classed(`${this.id}-group`, true)
         .on('mouseover', () => {moveToFront(group)})
 
       _.each(this.paths, (path) => {
@@ -134,7 +174,7 @@ class GlobalVectors {
   }
 
   hoverVector (vid) {
-    let g = d3.select('.global-vector-group')
+    let g = d3.select(`.${this.id}-group`)
 
     g.selectAll('.line.vector-curve')
       .style('stroke', 'red')

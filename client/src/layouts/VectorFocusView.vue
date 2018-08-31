@@ -321,6 +321,20 @@
           alert(e)
         })
     },
+    beforeDestroy () {
+      if (this.chart._pairs) {
+        this.chart._pairs.setData([])
+        this.chart._pairs.redraw()
+      }
+      if (this.chart._vectors) {
+        this.chart._vectors.clearData()
+        this.chart._vectors.redraw()
+      }
+
+      // unregister event
+      bus.$off('draw-focus-vec', this.drawPrimaryVector)
+      bus.$off('update-pairs', this.drawPairs)
+    },
     computed: {
       startMore: function () {
         return Math.max(0, this.focus.list_start.length - this.totalImage)
@@ -339,8 +353,6 @@
           this.toggleVectorPlot() // turn off
         }
 
-        this.chart._vectors.clearData()
-        this.chart._pairs.setData([])
         this.$emit('back', true)
       },
 

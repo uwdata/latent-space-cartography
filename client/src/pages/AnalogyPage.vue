@@ -430,7 +430,6 @@
             // 1. draw points
             let points = all[0]
             this.loading = false
-            log_debug(points[0])
             this.points = points
             lets_draw.call(this, points)
 
@@ -439,7 +438,6 @@
             vector.points_start = indicesToPoint(vector.list_start, points)
             vector.points_end = indicesToPoint(vector.list_end, points)
             // points_start and points_end are useful to draw confidence cone
-            log_debug(vector.line)
             bus.$emit('draw-focus-vec', vector, all[2])
             bus.$emit('update-pairs', this.proj_state)
           }, () => {

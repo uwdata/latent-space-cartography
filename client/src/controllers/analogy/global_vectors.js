@@ -62,12 +62,14 @@ class GlobalVectors {
     const styles = [
       {
         lineWidth: 3,
-        strokeColor: 'red'
+        strokeColor: 'red',
+        padding: 3
       },
       {
         lineWidth: 1,
         strokeColor: '#343a40',
-        dash: '2,2'
+        dash: '2,2',
+        padding: 1
       }
     ]
 
@@ -84,7 +86,7 @@ class GlobalVectors {
       .style('stroke', this.background)
       .style('stroke-opacity', 0.9)
       .style('stroke-linecap', 'round')
-      .style('stroke-width', style.lineWidth + 6)
+      .style('stroke-width', style.lineWidth + style.padding * 2)
 
     // the actual line
     let l = this._drawLine(line, vector, group)
@@ -124,10 +126,12 @@ class GlobalVectors {
       let words = label.split('-')
       _.each(words, (word, idx) => {
         idx = idx ? 0 : vector.length - 1
+        let x_offset = word.length * font_size * 0.25
+
         group.append('text')
           .text(word)
-          .attr('x', scales.getX(vector[idx]) + 5)
-          .attr('y', scales.getY(vector[idx]))
+          .attr('x', scales.getX(vector[idx]) - x_offset)
+          .attr('y', scales.getY(vector[idx]) - font_size * 0.5)
           .attr('fill', font_color)
           .style('font-size', `${font_size}px`)
           .classed('outlined-text', true)

@@ -276,7 +276,7 @@
         current_x: 'x',
         current_y: 'y',
         filter_func: (d) => d,
-        show_search: !CONFIG.search.simple,
+        show_search: CONFIG.search.advanced,
         open_search: false,
         show_filter: CONFIG.filter,
         loading: true,

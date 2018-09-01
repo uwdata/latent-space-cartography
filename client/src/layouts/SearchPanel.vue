@@ -41,7 +41,7 @@
         </b-dropdown>
 
         <!--Search In-->
-        <b-dropdown dropup size="sm" variant="light"
+        <b-dropdown dropup size="sm" variant="light" v-if="all_filter.length"
                     :text="filterText" class="ml-2">
           <b-dropdown-item v-for="f in all_filter" @click="filter=f" :key="f">
             {{f}}
@@ -66,7 +66,7 @@
 
   const MAX = 50
   const ALL = 'All'
-  const all_by = CONFIG.search.by
+  const all_by = CONFIG.search.by || []
   const col = CONFIG.search.filter
 
   let timer_handle = null
@@ -108,6 +108,7 @@
     watch: {
       meta () {
         if (!this.meta.length) return
+        if (!col) return
 
         let u = _.uniqWith(this.meta, (a, b) => a[col] === b[col])
         u = _.sortBy(_.map(u, (uu) => uu[col]))

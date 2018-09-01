@@ -37,7 +37,7 @@ const config_emoji = {
     ext: 'png',
   },
   search: {
-    simple: false,
+    advanced: true,
     by: ['name', 'codepoints', 'shortcode'],
     filter: 'platform'
   }
@@ -56,7 +56,9 @@ const config_glove = {
     dot_color: null
   },
   search: {
-    simple: true
+    simple: true,
+    advanced: true,
+    by: ['name']
   }
 }
 
@@ -83,7 +85,7 @@ const config_tybalt = {
     dot_color: 'organ'
   },
   search: {
-    simple: false,
+    advanced: true,
     by: ['name'],
     filter: 'stage'
   },

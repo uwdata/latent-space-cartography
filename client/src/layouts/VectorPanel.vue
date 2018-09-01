@@ -76,20 +76,33 @@
         </div>
 
         <!--List of Vectors-->
-        <div v-if="!loading_vectors" v-for="v in vectors"
+        <div v-if="!loading_vectors" v-for="(v, idx) in vectors"
              class="d-flex bd-vector"  @click="focusVector(v)"
-             @mouseover="hoverVector(v)" @mouseout="hoverVector()">
-          <div class="mr-2 d-flex flex-column">
+             @mouseover="hoverVector(v, idx)" @mouseout="hoverVector()">
+          <div class="mr-2 d-flex flex-column" v-if="!compact_style">
             <i class="fa fa-fw fa-circle-o bd-arrow-end mt-1"></i>
             <div class="bd-arrow-vertical h-100"></div>
             <i class="fa fa-fw fa-circle-o bd-arrow-end"></i>
           </div>
           <div class="w-100">
-            <div>
+            <div v-if="compact_style" class="d-flex justify-content-between">
+              <div>{{v.description || `${v.alias_end} - ${v.alias_start}`}}</div>
+              <div>
+                <span v-if="visible_vec === idx" class="bd-visible-btn">
+                  <i class="fa fa-eye"></i>
+                </span>
+                <span v-else-if="hovered_vec === idx"
+                      class="bd-visible-btn bd-btn-trans"
+                      @click.stop="clickPairs(v, idx)">
+                  <i class="fa fa-eye"></i>
+                </span>
+              </div>
+            </div>
+            <div v-if="!compact_style">
               <group-thumb :list="v.list_start" :width="4" :height="1"></group-thumb>
               <span class="ml-2 text-truncate">{{v.alias_start}}</span>
             </div>
-            <div>
+            <div v-if="!compact_style">
               <group-thumb :list="v.list_end" :width="4" :height="1"></group-thumb>
               <span class="ml-2 text-truncate">{{v.alias_end}}</span>
             </div>
@@ -150,10 +163,13 @@
         // start, list_start, alias_start, (and same for end)
         // path -- to visualize a vector in a global projection
         vectors: [],
+        hovered_vec: -1,
+        visible_vec: -1,
         focus: null,
         plotted: false,
         shared: store.state,
         show_image: CONFIG.data_type === 'image',
+        compact_style: CONFIG.data_type === 'text',
         loading_vectors: false
       }
     },
@@ -273,15 +289,18 @@
           })
       },
 
+      clickPairs (v, idx) {
+        if (v && idx !== this.visible_vec) {
+          this.drawPairs(v)
+          this.visible_vec = idx
+        }
+      },
+
       // when a vector is hovered in the list
-      hoverVector (v) {
+      hoverVector (v, idx) {
         let vid = v ? (v.path ? v.path.id : null) : null
         this.chart._global_vectors.hoverVector(vid)
-
-        // draw pairs
-        if (v && this.plotted) {
-          this.drawPairs(v)
-        }
+        this.hovered_vec = idx
       },
 
       // toggle the visibility of vectors plotted on the global view
@@ -376,5 +395,11 @@
     position: absolute;
     left: 40%;
     margin-top: -15px;
+  }
+
+  .bd-visible-btn {
+    padding: 1px 10px;
+    font-size: 0.8em;
+    color: #6c757d;
   }
 </style>

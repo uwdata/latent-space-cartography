@@ -107,9 +107,9 @@ class Dots {
         .enter()
         .append('text')
         .classed('dot-text', true)
+        .classed('outlined-text', true)
         .text((d) => d.name)
         .style('font-size', () => `${font_size}px`)
-        .style('filter', 'url(#text-bg)')
 
       this._positionText(t, font_size)
     }

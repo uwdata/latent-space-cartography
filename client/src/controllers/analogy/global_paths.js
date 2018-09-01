@@ -78,7 +78,7 @@ class GlobalPaths {
     let line = d3.line()
       .x((d) => scales.getX(d))
       .y((d) => scales.getY(d))
-      .curve(d3.curveCatmullRom)
+      .curve(d3.curveCatmullRom.alpha(0.5))
 
     // line background
     this._drawLine(line, vector, group)

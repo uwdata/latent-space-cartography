@@ -296,6 +296,7 @@
         if (code === 't-SNE') {
           code = 'tsne-' + this.perplexity
         }
+        code += `-dim${this.dim}`
         return _.toLower(code)
       },
       all_y: function () {

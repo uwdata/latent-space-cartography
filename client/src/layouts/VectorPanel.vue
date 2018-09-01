@@ -182,9 +182,17 @@
       },
       proj_state (val) {
         this.chart._pairs.clear()
+        this.chart._global_vectors.clear()
+
         // custom projection rely on an async projection matrix
         if (/^tsne|^pca/.test(val)) {
           this.plotVectors()
+
+          // update pairs if visible
+          let v = this.vectors[this.visible_vec]
+          if (v) {
+            this.drawPairs(v)
+          }
         }
       }
     },
@@ -222,12 +230,11 @@
       plotVectors () {
         if (!this.vectors.length) return
 
-        let re = /^tsne|^pca|^vector$/i
+        let re = /^tsne|^pca|^vector/i
         let supported = re.test(this.proj_state)
         if (!supported) {
           // clear previous plot
-          this.chart._global_vectors.setData([])
-          this.chart._global_vectors.redraw()
+          this.chart._global_vectors.clear()
           return
         }
 
@@ -263,7 +270,7 @@
         let le = vec.list_end
         if (ls.length !== le.length) return
 
-        let re = /^tsne|^pca|^vector$/i
+        let re = /^tsne|^pca|^vector/i
         let supported = re.test(this.proj_state)
         if (!supported) {
           this.chart._pairs.clear()

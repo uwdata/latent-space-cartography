@@ -472,8 +472,8 @@ class Store {
     let perp = ''
     if (/^tsne/.test(projection)) {
       perp = projection.split('-')[1]
-      projection = 'tsne'
     }
+    projection = projection.split('-')[0]
 
     let matrix = ''
     let mean = ''

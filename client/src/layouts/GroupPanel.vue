@@ -275,9 +275,9 @@
       hoverItem(p) {
         // 1. text data: highlight position in the plot
         if (CONFIG.data_type === 'text') {
-          this.$emit('highlight', null)
+          bus.$emit('highlight', null)
           if (p) {
-            this.$emit('highlight', p.i)
+            bus.$emit('highlight', p.i)
           }
         } else {
           // 2. other data: show meta
@@ -294,10 +294,10 @@
         store.state.detail_card = p
       },
       hoverLogo (p) {
-        this.$emit('highlight', p.i)
+        bus.$emit('highlight', p.i)
       },
       unhoverLogo () {
-        this.$emit('highlight', null)
+        bus.$emit('highlight', null)
       },
 
       // helper

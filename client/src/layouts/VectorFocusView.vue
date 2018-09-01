@@ -24,6 +24,13 @@
 
     <!--Main View-->
     <div class="bd-focus-panel-body">
+      <!--Search Bar-->
+      <div class="p-3 bd-border-bottom" v-if="data_type === 'text'">
+        <auto-complete v-model="search" :points="search_suggestions"
+                       v-on:chosen="clickSearchItem" hint="Search ..."
+                       v-on:tentative="hoverSearchItem"></auto-complete>
+      </div>
+
       <!--Score-->
       <div>
         <div v-if="score" class="text-muted text-center m-3">
@@ -238,6 +245,7 @@
   import _ from 'lodash'
   import VueLoading from 'vue-loading-template'
   import ListTopSignal from './ListTopSignal.vue'
+  import AutoComplete from './AutoComplete.vue'
   import * as d3 from 'd3'
   import { saveAs } from 'file-saver/FileSaver'
   import ListKnn from './ListKnn.vue'
@@ -247,7 +255,9 @@
     components: {
       ListKnn,
       ListTopSignal,
-      VueLoading},
+      AutoComplete,
+      VueLoading
+    },
     props: {
       latent_dim: {
         type: Number,
@@ -268,6 +278,8 @@
         shared: store.state,
         tutorial: store.tutorial,
         need_help: true,
+        search: '',
+        search_suggestions: store.meta,
         support_analogy: CONFIG.data_type === 'image'
           || CONFIG.data_type === 'text',
         data_type: CONFIG.data_type,
@@ -363,6 +375,17 @@
           }, (e) => {
             alert(e)
           })
+      },
+
+      clickSearchItem (p) {
+        store.state.clicked_point = p
+      },
+
+      hoverSearchItem (p) {
+        bus.$emit('highlight', null)
+        if (p) {
+          bus.$emit('highlight', p.i)
+        }
       },
 
       // toggle the visibility of vectors plotted on the global view

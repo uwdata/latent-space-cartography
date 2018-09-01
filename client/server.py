@@ -265,7 +265,10 @@ def _project_path (X, projection, locs, params={}):
     # t-SNE: use the coordinate of nearest neighbors
     if projection == 'tsne':
         # use kd-tree to compute k nearest neighbors
-        tree = KDTree(X)
+        if metric == 'cosine':
+            tree = KDTree(preprocessing.normalize(X))
+        else:
+            tree = KDTree(X)
 
         # read t-SNE coordinates
         perp = params['perplexity']
@@ -277,14 +280,20 @@ def _project_path (X, projection, locs, params={}):
         result = []
         for loc in locs:
             # k nearest neighbors
-            kn = 5
+            kn = 1 if data_type == 'text' else 5 #FIXME
             dist, idx = tree.query(loc, k=kn)
             res = []
             for i in range(idx.shape[0]):
                 # weighted average
-                res.append(np.average(Y[idx[i]], weights=dist[i], axis=0))
-            result.append(res)
-        result = np.asarray(result).tolist()
+                res.append(np.average(Y[idx[i]], weights=1/dist[i], axis=0))
+            # remove duplicate control points
+            res = np.asarray(res)
+            dup = np.linalg.norm(res[1:] - res[:-1], axis=1)
+            dedup = [res[0]]
+            for i in range(idx.shape[0] - 1):
+                if dup[i] > 0.00001:
+                    dedup.append(res[i + 1])
+            result.append(np.asarray(dedup).tolist())
         return result
 
     # PCA: multiply projection matrix directly

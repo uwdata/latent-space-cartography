@@ -85,14 +85,13 @@
             <i class="fa fa-fw fa-circle-o bd-arrow-end"></i>
           </div>
           <div class="w-100">
+            <!--Compact Style (NLP)-->
             <div v-if="compact_style" class="d-flex justify-content-between">
               <div>{{v.description || `${v.alias_end} - ${v.alias_start}`}}</div>
               <div>
-                <span v-if="visible_vec === idx" class="bd-visible-btn">
-                  <i class="fa fa-eye"></i>
-                </span>
-                <span v-else-if="hovered_vec === idx"
-                      class="bd-visible-btn bd-btn-trans"
+                <span v-if="visible_vec === idx || hovered_vec === idx"
+                      class="bd-visible-btn bd-btn-trans" v-b-tooltip.hover
+                      :title="visible_vec === idx ? 'Hide Pairs' : 'Show Pairs'"
                       @click.stop="clickPairs(v, idx)">
                   <i class="fa fa-eye"></i>
                 </span>
@@ -300,6 +299,9 @@
         if (v && idx !== this.visible_vec) {
           this.drawPairs(v)
           this.visible_vec = idx
+        } else {
+          this.visible_vec = -1
+          this.chart._pairs.clear()
         }
       },
 

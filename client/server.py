@@ -302,7 +302,7 @@ def _project_path (X, projection, locs, params={}):
         pca = PCA(n_components = pca_dim).fit(X)
         res = []
         for loc in locs:
-            res.append(np.dot(loc, pca.components_.T).tolist())
+            res.append(pca.transform(loc).tolist())
         return res
 
     # Custom vector projection: multiply custom matrix

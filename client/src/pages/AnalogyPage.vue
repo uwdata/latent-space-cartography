@@ -325,6 +325,9 @@
         if (!shift) {
           // 1. normal click brings up detail
           store.state.detail_card = pt
+          if (CONFIG.data_type === 'text' && this.view_state === 2) {
+            store.state.detail_card = null // hack: don't show card in vector view
+          }
           store.state.clicked_point = pt
         } else {
           // 2. shift + click adds a point to the current group

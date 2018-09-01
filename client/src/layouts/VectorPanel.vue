@@ -346,6 +346,7 @@
         if (this.plotted) {
           this.toggleVectorPlot() // turn off
         }
+        this.hovered_vec = -1
         this.focus = vector
         this.$emit('focus', vector)
       },

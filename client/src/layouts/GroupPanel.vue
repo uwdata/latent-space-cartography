@@ -273,8 +273,17 @@
         this.toggleAll()
       },
       hoverItem(p) {
-        if (p) {
-          store.state.detail_card = p
+        // 1. text data: highlight position in the plot
+        if (CONFIG.data_type === 'text') {
+          this.$emit('highlight', null)
+          if (p) {
+            this.$emit('highlight', p.i)
+          }
+        } else {
+          // 2. other data: show meta
+          if (p) {
+            store.state.detail_card = p
+          }
         }
       },
 

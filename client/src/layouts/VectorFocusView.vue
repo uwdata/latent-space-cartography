@@ -297,7 +297,7 @@
       // vector score
       // for performance reason, skip if either group has too many items
       const limit = 500
-      if (this.focus.start.length < limit && this.focus.end.length < limit) {
+      if (this.focus.list_start.length < limit && this.focus.list_end.length < limit) {
         store.vectorScore(this.latent_dim, this.focus.start, this.focus.end)
           .then((s) => {
             this.score = Math.round(s * 100) + '%'

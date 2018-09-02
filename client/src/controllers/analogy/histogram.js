@@ -10,7 +10,7 @@ class Histogram {
      * Public, styles
      */
     this.outerWidth = 300
-    this.outerHeight = 100
+    this.outerHeight = 80
 
     /**
      * Private
@@ -39,7 +39,7 @@ class Histogram {
       .attr('width', this.outerWidth)
       .attr('height', this.outerHeight)
 
-    let x = d3.scaleBand().range([0, width])
+    let x = d3.scaleBand().range([0, width]).paddingInner(0.1)
       .domain(this.data.map((d) => d.x0))
     let y = d3.scaleLinear().range([height, 0])
       .domain([0, d3.max(this.data, (d) => d.y)])

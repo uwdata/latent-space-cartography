@@ -170,11 +170,25 @@
                          :name_end="focus.alias_end"></list-top-signal>
       </div>
 
-      <!--Pairwise angles-->
+      <!--Pairs-->
       <div class="m-3">
         <!--Title-->
-        <div class="bd-subtitle mb-2 text-uppercase">Pairwise Angles</div>
+        <div class="bd-subtitle mb-1 text-uppercase">
+          Pairs within the vector
+          <!--Toggle button-->
+          <span class="ml-2 pl-2 pr-2 bd-btn-trans" @click.stop="togglePairs"
+                v-b-tooltip.hover :title="show_pairs ? 'Hide Pairs' : 'Show Pairs'">
+            <i class="fa" :class="{'fa-eye-slash': !show_pairs, 'fa-eye': show_pairs}"></i>
+          </span>
+        </div>
+
+        <!--Histogram-->
+        <div class="text-danger text-sm">
+          <span v-if="score">Average: {{score}}</span>
+        </div>
         <div id="hist-container"></div>
+        <div v-if="score" class="text-center" style="font-size: 10px;">
+          Pairwise Cosine Similarity</div>
       </div>
 
       <!--Other vectors-->
@@ -284,6 +298,7 @@
         answer_comp: null,
         flipped: false,
         other_vec: false,
+        show_pairs: true,
         loading_analogy: false
       }
     },
@@ -305,7 +320,7 @@
             console.log(all)
             let mean = all[0]
             let hist = all[1]
-            this.score = Math.round(mean * 100) + '%'
+            this.score = mean.toFixed(2)
             this.chart_hist.setData(hist)
             this.chart_hist.draw('#hist-container')
           }, (e) => {
@@ -329,6 +344,7 @@
     },
     beforeDestroy () {
       if (this.chart._pairs) {
+        this.chart._pairs.hide = false
         this.chart._pairs.setData([])
         this.chart._pairs.redraw()
       }
@@ -370,6 +386,12 @@
           }, (e) => {
             alert(e)
           })
+      },
+
+      togglePairs () {
+        this.show_pairs = !this.show_pairs
+        this.chart._pairs.hide = !this.show_pairs
+        this.chart._pairs.redraw()
       },
 
       // toggle the visibility of vectors plotted on the global view

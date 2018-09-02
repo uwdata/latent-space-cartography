@@ -611,7 +611,7 @@ def all_vector_diff ():
 
     return jsonify({'status': 'success'}), 200
 
-# compute a number to represent how focused an attribute vector is
+# pairwise cosine similarity within an attribute vector
 @app.route('/api/vector_score', methods=['POST'])
 def vector_score ():
     latent_dim = request.json['latent_dim']
@@ -643,10 +643,15 @@ def vector_score ():
     cs = cs[np.nonzero(cs)]
 
     score = np.mean(cs)
-    print 'Vector score (GID {} & {}): average {}, max{}, min {}'.format(gid[0], \
+    hist, _ = np.histogram(cs, bins=np.arange(-1.0, 1.05, 0.1))
+    print 'Vector score (GID {} & {}): average {}, max {}, min {}'.format(gid[0], \
         gid[1], round(score, 2), round(np.amax(cs), 2),  round(np.amin(cs), 2))
 
-    return jsonify({'score': score}), 200
+    reply = {'mean': score}
+    if request.json['histogram']:
+        reply['histogram'] = hist.tolist()
+
+    return jsonify(reply), 200
 
 # compute a number to represent how tight a cluster is
 @app.route('/api/cluster_score', methods=['POST'])

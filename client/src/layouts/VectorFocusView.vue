@@ -24,16 +24,8 @@
 
     <!--Main View-->
     <div class="bd-focus-panel-body">
-      <!--Score-->
-      <div>
-        <div v-if="score" class="text-muted text-center m-3">
-          <small v-b-tooltip.hover :title="score_hint">Angle Consistency: {{score}}</small>
-        </div>
-        <div v-if="!score" class="mb-3"></div>
-      </div>
-
       <!--Start & End-->
-      <div class="ml-3 mr-3 mb-3 d-flex bd-vector-groups">
+      <div class="m-3 d-flex bd-vector-groups">
         <!--Start Group-->
         <div class="bd-panel-card start bd-pointer w-50"
              @mouseover="hoverGroup(focus.list_start)"
@@ -178,6 +170,13 @@
                          :name_end="focus.alias_end"></list-top-signal>
       </div>
 
+      <!--Pairwise angles-->
+      <div class="m-3">
+        <!--Title-->
+        <div class="bd-subtitle mb-2 text-uppercase">Pairwise Angles</div>
+        <div id="hist-container"></div>
+      </div>
+
       <!--Other vectors-->
       <div class="m-3" v-if="vecs.length">
         <!--Title-->
@@ -241,6 +240,7 @@
   import * as d3 from 'd3'
   import { saveAs } from 'file-saver/FileSaver'
   import ListKnn from './ListKnn.vue'
+  import Histogram from '../controllers/analogy/histogram'
 
   export default {
     name: 'VectorFocusView',
@@ -274,6 +274,7 @@
         data_type: CONFIG.data_type,
         totalImage: 5,
         vecs: [],
+        chart_hist: new Histogram(),
         score: null,
         score_hint: 'The average cosine similarity between all possible start and end pairs',
         analogy: null,
@@ -299,9 +300,14 @@
       // for performance reason, skip if either group has too many items
       const limit = 500
       if (this.focus.list_start.length < limit && this.focus.list_end.length < limit) {
-        store.vectorScore(this.latent_dim, this.focus.start, this.focus.end)
-          .then((s) => {
-            this.score = Math.round(s * 100) + '%'
+        store.vectorScore(this.latent_dim, this.focus.start, this.focus.end, true)
+          .then((all) => {
+            console.log(all)
+            let mean = all[0]
+            let hist = all[1]
+            this.score = Math.round(mean * 100) + '%'
+            this.chart_hist.setData(hist)
+            this.chart_hist.draw('#hist-container')
           }, (e) => {
             alert(e)
           })

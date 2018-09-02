@@ -632,16 +632,21 @@ class Store {
     })
   }
 
-  vectorScore (latent_dim, start, end) {
+  vectorScore (latent_dim, start, end, histogram = false) {
     return new Promise((resolve, reject) => {
-      let payload = {groups: [start, end].join(','), latent_dim: latent_dim}
+      let payload = {groups: [start, end].join(','), latent_dim: latent_dim,
+        histogram: histogram}
 
       http.post('/api/vector_score', payload)
         .then((response) => {
           let msg = response.data
 
           if (msg) {
-            resolve(msg['score'])
+            let hist = _.map(msg['histogram'] || [], (num, idx) => {
+              return {x0: (-1.0 + idx * 0.1).toFixed(1), y: num}
+            })
+            console.log(hist)
+            resolve([msg['mean'], hist])
           } else {
             reject(`Internal server error.`)
           }

@@ -626,16 +626,25 @@ def vector_score ():
     n, _ = start.shape
     m, _ = end.shape
 
-    # all possible vector pairs between start and end
-    L = np.repeat(start, m, axis=0)
-    R = np.tile(end, (n, 1))
-    V = L - R
+    if (m == n):
+        # one-to-one pairs
+        V = end - start
+    else:
+        # all possible vector pairs between start and end
+        L = np.repeat(start, m, axis=0)
+        R = np.tile(end, (n, 1))
+        V = L - R
 
     # cosine similarity
     cs = cosine_similarity(V)
+
+    # we want only the lower triangle (excluding the diagonal)
+    cs = np.tril(cs, k=-1)
+    cs = cs[np.nonzero(cs)]
+
     score = np.mean(cs)
-    print 'Vector score (GID {} & {}): average {}, min {}'.format(gid[0], \
-        gid[1], round(score, 2), round(np.amin(cs), 2))
+    print 'Vector score (GID {} & {}): average {}, max{}, min {}'.format(gid[0], \
+        gid[1], round(score, 2), round(np.amax(cs), 2),  round(np.amin(cs), 2))
 
     return jsonify({'score': score}), 200
 

@@ -183,9 +183,6 @@
         </div>
 
         <!--Histogram-->
-        <div class="text-danger text-sm">
-          <span v-if="score">Average: {{score}}</span>
-        </div>
         <div id="hist-container"></div>
         <div v-if="score" class="text-center" style="font-size: 10px;">
           Pairwise Cosine Similarity</div>
@@ -321,7 +318,7 @@
             let mean = all[0]
             let hist = all[1]
             this.score = mean.toFixed(2)
-            this.chart_hist.setData(hist)
+            this.chart_hist.setData(hist, mean)
             this.chart_hist.draw('#hist-container')
           }, (e) => {
             alert(e)

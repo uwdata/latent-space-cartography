@@ -22,6 +22,7 @@ class Histogram {
      * Data
      */
     this.data = []
+    this.mean = -2
   }
 
   /**
@@ -33,6 +34,9 @@ class Histogram {
 
     let width = this.outerWidth
     let height = this.outerHeight - 20
+    let p_top = 15
+
+    let c_red = '#dc3545'
 
     let svg = d3.select(parent)
       .append('svg')
@@ -41,7 +45,7 @@ class Histogram {
 
     let x = d3.scaleBand().range([0, width]).paddingInner(0.1)
       .domain(this.data.map((d) => d.x0))
-    let y = d3.scaleLinear().range([height, 0])
+    let y = d3.scaleLinear().range([height, p_top])
       .domain([0, d3.max(this.data, (d) => d.y)])
 
     let g = svg.append('g')
@@ -81,10 +85,34 @@ class Histogram {
       .attr('width', x.bandwidth())
       .attr('height', (d) => height - y(d.y))
       .attr('fill', '#aaa')
+
+    // the average line
+    if (this.mean > -1 && this.mean < 1) {
+      let bin = (Math.floor(this.mean * 10) * 0.1).toFixed(1)
+      let x0 = x(bin) + (this.mean - Number(bin)) * 10 * x.bandwidth()
+        + x.bandwidth() * 0.5
+
+      g.append('line')
+        .attr('x1', x0)
+        .attr('x2', x0)
+        .attr('y1', p_top)
+        .attr('y2', height)
+        .attr('stroke', c_red)
+        .attr('stroke-width', 2)
+
+      g.append('text')
+        .text(`Average: ${this.mean.toFixed(2)}`)
+        .attr('x', x0)
+        .attr('y', 10)
+        .attr('text-anchor', 'middle')
+        .style('font-size', '10px')
+        .attr('fill', c_red)
+    }
   }
 
-  setData (data) {
+  setData (data, mean = -2) {
     this.data = data
+    this.mean = mean
   }
 }
 

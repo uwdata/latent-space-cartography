@@ -21,10 +21,11 @@ def convert_glove ():
         glove2word2vec(fn, pout)
 
 def analogy_glove ():
+    test = base + 'benchmarks/questions-words.txt'
     for dim in dims:
         fn = base + 'raw/glove_6b_w2v/glove.6B.{}d.w2v.txt'.format(dim)
         wv = KeyedVectors.load_word2vec_format(fn)
-        analogy_scores = wv.accuracy(base + 'benchmarks/questions-words.txt')
+        analogy_scores = wv.accuracy(test, restrict_vocab=10000)
 
 if __name__ == '__main__':
     program = os.path.basename(sys.argv[0])

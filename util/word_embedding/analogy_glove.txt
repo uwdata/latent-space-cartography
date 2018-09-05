@@ -147,3 +147,75 @@ restrict_vocb=10000
 2018-09-04 21:32:27,653: INFO: gram8-plural: 81.2% (411/506)
 2018-09-04 21:32:27,970: INFO: gram9-plural-verbs: 58.5% (159/272)
 2018-09-04 21:32:27,977: INFO: total: 79.1% (5348/6762)
+
+=====================
+mine: exclude, extra=0
+=====================
+
+Dimension 50
+capital-common-countries: 81.8% (378/462)
+capital-world: 72.2% (221/306)
+currency: 26.7% (24/90)
+city-in-state: 18.6% (151/812)
+family: 86.7% (182/210)
+gram1-adjective-to-adverb: 17.1% (65/380)
+gram2-opposite: 12.5% (7/56)
+gram3-comparative: 58.2% (321/552)
+gram4-superlative: 46.2% (72/156)
+gram5-present-participle: 53.0% (318/600)
+gram6-nationality-adjective: 96.6% (1084/1122)
+gram7-past-tense: 39.3% (390/992)
+gram8-plural: 64.0% (324/506)
+gram9-plural-verbs: 35.7% (97/272)
+
+Dimension 300
+capital-common-countries: 95.7% (442/462)
+capital-world: 97.1% (297/306)
+currency: 41.1% (37/90)
+city-in-state: 72.4% (588/812)
+family: 94.8% (199/210)
+gram1-adjective-to-adverb: 27.6% (105/380)
+gram2-opposite: 26.8% (15/56)
+gram3-comparative: 85.5% (472/552)
+gram4-superlative: 80.8% (126/156)
+gram5-present-participle: 78.3% (470/600)
+gram6-nationality-adjective: 100.0% (1122/1122)
+gram7-past-tense: 62.7% (622/992)
+gram8-plural: 80.6% (408/506)
+gram9-plural-verbs: 58.8% (160/272)
+
+=====================
+mine: exclude, extra=3
+=====================
+
+Dimension 50
+capital-common-countries: 94.4% (436/462)
+capital-world: 88.9% (272/306)
+currency: 42.2% (38/90)
+city-in-state: 37.4% (304/812)
+family: 95.7% (201/210)
+gram1-adjective-to-adverb: 33.9% (129/380)
+gram2-opposite: 28.6% (16/56)
+gram3-comparative: 74.5% (411/552)
+gram4-superlative: 70.5% (110/156)
+gram5-present-participle: 74.8% (449/600)
+gram6-nationality-adjective: 99.5% (1116/1122)
+gram7-past-tense: 63.2% (627/992)
+gram8-plural: 77.5% (392/506)
+gram9-plural-verbs: 55.9% (152/272)
+
+Dimension 300
+capital-common-countries: 99.4% (459/462)
+capital-world: 100.0% (306/306)
+currency: 55.6% (50/90)
+city-in-state: 86.5% (702/812)
+family: 99.5% (209/210)
+gram1-adjective-to-adverb: 50.3% (191/380)
+gram2-opposite: 50.0% (28/56)
+gram3-comparative: 96.2% (531/552)
+gram4-superlative: 93.6% (146/156)
+gram5-present-participle: 92.5% (555/600)
+gram6-nationality-adjective: 100.0% (1122/1122)
+gram7-past-tense: 87.0% (863/992)
+gram8-plural: 96.2% (487/506)
+gram9-plural-verbs: 84.6% (230/272)

@@ -91,31 +91,44 @@ def convert_pairs (pairs):
                 res.append([p[0], p[1], pp[0], pp[1]])
     return np.asarray(res, dtype=int)
 
-def analogy (X, pairs, exclude_b=True):
+def analogy (X, pairs, exclude=True, extra=0):
     test = convert_pairs(pairs)
     x = X[test]
     v = - x[:, 0] + x[:, 1] + x[:, 2]
 
     # build KD tree
     tree = KDTree(preprocessing.normalize(X))
-    _, idx = tree.query(v, k=2)
+    _, idx = tree.query(v, k = 4 + extra)
 
     correct = 0
     total = idx.shape[0]
     for j in range(total):
         nns = idx[j]
-        nn = nns[1] if exclude_b and nns[0] == test[j][2] else nns[0]
-        if nn == test[j][3]:
-            correct += 1
+        c = 0
+        ignore = set(test[j][:3]) if exclude else {}
+        ex = extra
+        for nn in nns:
+            if nn == test[j][3]:
+                c = 1
+                break
+            if nn not in ignore and ex == 0 and nn != test[j][3]:
+                break
+            if nn not in ignore and ex > 0:
+                ex -= 1
+        correct += c
 
     percent = round(float(correct)/total, 3) * 100
-    print '{}% ({}/{})'.format(percent, correct, total)
+    return '{}% ({}/{})'.format(percent, correct, total)
 
 if __name__ == '__main__':
     words, groups = read_test()
     meta, lookup = read_meta()
     words, idx = clean_test(words, lookup)
 
-    dim = 100
+    dim = 300
     X = read_ls(dim)
-    analogy(X, idx[0])
+
+    print 'Dimension {}'.format(dim)
+    for g in range(14):
+        res = analogy(X, idx[g], extra=3)
+        print '{}: {}'.format(groups[g], res)

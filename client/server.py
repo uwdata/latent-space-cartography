@@ -460,7 +460,7 @@ def apply_analogy ():
         loc, images, count, nearest = _interpolate(X, start, end)
         fns = []
         for idx, img in enumerate(images):
-            img_fn = 'analogy_{}_{}.png'.format(pid, idx)
+            img_fn = 'analogy_{}_{}_{}.png'.format(latent_dim, pid, idx)
             fns.append(img_fn)
             img.save(abs_path('./build/' + img_fn))
         
@@ -542,7 +542,7 @@ def focus_vector():
         loc, images, count, nearest = _interpolate(X, start, end)
         recon = []
         for idx, img in enumerate(images):
-            img_fn = '{}_{}.png'.format('to'.join(gid), idx)
+            img_fn = '{}_{}_{}.png'.format(latent_dim, 'to'.join(gid), idx)
             recon.append(img_fn)
             img.save(abs_path('./build/' + img_fn))
     elif data_type == 'other':

@@ -316,6 +316,20 @@ def _project_path (X, projection, locs, params={}):
 
     return []
 
+# pairwise cosine similarity between random pairs in X
+def _random_pairs (X, num_pairs=2000):
+    n, _ = X.shape
+    ids = np.random.choice(n, size=(num_pairs, 2), replace=False)
+
+    V = X[ids][:, 1, :] - X[ids][:, 0, :]
+    cs = cosine_similarity(V) # cosine similarity
+
+    # we want only the lower triangle (excluding the diagonal)
+    cs = np.tril(cs, k=-1)
+    cs = cs[np.nonzero(cs)]
+
+    return cs
+
 # global app and DB cursor
 app = Flask(__name__, static_url_path='')
 db = DB()
@@ -647,9 +661,15 @@ def vector_score ():
     print 'Vector score (GID {} & {}): average {}, max {}, min {}'.format(gid[0], \
         gid[1], round(score, 2), round(np.amax(cs), 2),  round(np.amin(cs), 2))
 
+    # relative formulation: random pairs
+    csr = _random_pairs(X)
+    histr, _ = np.histogram(csr, bins=np.arange(-1.0, 1.01, 0.02))
+    print 'Random average {}'.format(round(np.mean(csr), 2))
+
     reply = {'mean': score}
     if request.json['histogram']:
         reply['histogram'] = hist.tolist()
+        reply['random'] = histr.tolist()
 
     return jsonify(reply), 200
 

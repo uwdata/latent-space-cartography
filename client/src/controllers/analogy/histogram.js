@@ -22,6 +22,7 @@ class Histogram {
      * Data
      */
     this.data = []
+    this.background = []
     this.mean = -2
   }
 
@@ -43,10 +44,16 @@ class Histogram {
       .attr('width', this.outerWidth)
       .attr('height', this.outerHeight)
 
+    // scales
     let x = d3.scaleBand().range([0, width]).paddingInner(0.1)
       .domain(this.data.map((d) => d.x0))
     let y = d3.scaleLinear().range([height, p_top])
       .domain([0, d3.max(this.data, (d) => d.y)])
+    // scales for area chart
+    let xx = d3.scaleBand().range([0, width])
+      .domain(this.background.map((d) => d.x))
+    let yy = d3.scaleLinear().range([height, p_top])
+      .domain([0, d3.max(this.background, (d) => d.y)])
 
     let g = svg.append('g')
       .classed('hist', true)
@@ -54,8 +61,8 @@ class Histogram {
     let x_axis = d3.axisBottom(x)
       // .tickValues(['-0.5', '0.0', '0.5'])
 
-    let labels = _.keyBy(['-0.8', '-0.6', '-0.4', '-0.2',
-      '0.0', '0.2', '0.4', '0.6', '0.8'])
+    let labels = _.keyBy(['-1.0', '-0.8', '-0.6', '-0.4', '-0.2',
+      '0.0', '0.2', '0.4', '0.6', '0.8', '1.0'])
     function custom_x (g) {
       g.call(x_axis)
       g.selectAll('text')
@@ -73,6 +80,16 @@ class Histogram {
       .attr('class', 'axis axis--x')
       .attr('transform', `translate(0,${height})`)
       .call(custom_x)
+
+    // area chart
+    let area = d3.area()
+      .x((d) => xx(d.x))
+      .y1((d) => yy(d.y))
+      .y0(yy(0))
+    g.append('path')
+      .datum(this.background)
+      .attr('fill', '#ddd')
+      .attr('d', area)
 
     // bars
     g.selectAll('.bar')
@@ -110,8 +127,9 @@ class Histogram {
     }
   }
 
-  setData (data, mean = -2) {
+  setData (data, background, mean = -2) {
     this.data = data
+    this.background = background
     this.mean = mean
   }
 }

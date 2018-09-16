@@ -316,9 +316,8 @@
           .then((all) => {
             console.log(all)
             let mean = all[0]
-            let hist = all[1]
             this.score = mean.toFixed(2)
-            this.chart_hist.setData(hist, mean)
+            this.chart_hist.setData(all[1], all[2], mean)
             this.chart_hist.draw('#hist-container')
           }, (e) => {
             alert(e)

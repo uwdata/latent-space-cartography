@@ -645,8 +645,12 @@ class Store {
             let hist = _.map(msg['histogram'] || [], (num, idx) => {
               return {x0: (-1.0 + idx * 0.1).toFixed(1), y: num}
             })
-            console.log(hist)
-            resolve([msg['mean'], hist])
+            hist.push({x0: '1.0', y: 0})
+            let hist_random = _.map(msg['random'] || [], (num, idx) => {
+              return {x: (-1.0 + idx * 0.02).toFixed(2), y: num}
+            })
+            hist_random.push({x: '1.0', y: 0})
+            resolve([msg['mean'], hist, hist_random])
           } else {
             reject(`Internal server error.`)
           }

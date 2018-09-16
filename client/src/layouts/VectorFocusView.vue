@@ -118,6 +118,25 @@
         Select a point (click, or search) to apply this attribute vector.
       </div>
 
+
+      <!--Pairs-->
+      <div class="m-3">
+        <!--Title-->
+        <div class="bd-subtitle mb-1 text-uppercase">
+          Pairs within the vector
+          <!--Toggle button-->
+          <span class="ml-2 pl-2 pr-2 bd-btn-trans" @click.stop="togglePairs"
+                v-b-tooltip.hover :title="show_pairs ? 'Hide Pairs' : 'Show Pairs'">
+            <i class="fa" :class="{'fa-eye-slash': !show_pairs, 'fa-eye': show_pairs}"></i>
+          </span>
+        </div>
+
+        <!--Histogram-->
+        <div id="hist-container"></div>
+        <div v-if="score" class="text-center" style="font-size: 10px;">
+          Pairwise Cosine Similarity</div>
+      </div>
+
       <!--Vector Details Comparing Original & Analogy-->
       <div class="d-flex m-3" v-if="data_type === 'image' && original && analogy">
         <!--Original-->
@@ -168,24 +187,6 @@
         <list-top-signal :signals="top[0]" :start="true" class="mt-3"
                          :name_start="focus.alias_start"
                          :name_end="focus.alias_end"></list-top-signal>
-      </div>
-
-      <!--Pairs-->
-      <div class="m-3">
-        <!--Title-->
-        <div class="bd-subtitle mb-1 text-uppercase">
-          Pairs within the vector
-          <!--Toggle button-->
-          <span class="ml-2 pl-2 pr-2 bd-btn-trans" @click.stop="togglePairs"
-                v-b-tooltip.hover :title="show_pairs ? 'Hide Pairs' : 'Show Pairs'">
-            <i class="fa" :class="{'fa-eye-slash': !show_pairs, 'fa-eye': show_pairs}"></i>
-          </span>
-        </div>
-
-        <!--Histogram-->
-        <div id="hist-container"></div>
-        <div v-if="score" class="text-center" style="font-size: 10px;">
-          Pairwise Cosine Similarity</div>
       </div>
 
       <!--Other vectors-->

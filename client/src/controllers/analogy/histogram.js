@@ -24,6 +24,7 @@ class Histogram {
     this.data = []
     this.background = []
     this.mean = -2
+    this.effect = 0
   }
 
   /**
@@ -125,12 +126,21 @@ class Histogram {
         .style('font-size', '10px')
         .attr('fill', c_red)
     }
+
+    // effect size
+    g.append('text')
+      .text(`Effect Size: ${this.effect.toFixed(2)}`)
+      .attr('x', 0)
+      .attr('y', 50)
+      .style('font-size', '10px')
+      .attr('fill', 'black')
   }
 
-  setData (data, background, mean = -2) {
+  setData (data, background, mean = -2, effect = 0) {
     this.data = data
     this.background = background
     this.mean = mean
+    this.effect = effect
   }
 }
 

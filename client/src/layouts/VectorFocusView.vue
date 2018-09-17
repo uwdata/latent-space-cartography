@@ -288,7 +288,6 @@
         vecs: [],
         chart_hist: new Histogram(),
         score: null,
-        score_hint: 'The average cosine similarity between all possible start and end pairs',
         analogy: null,
         original: null,
         top: null,
@@ -316,9 +315,8 @@
         store.vectorScore(this.latent_dim, this.focus.start, this.focus.end, true)
           .then((all) => {
             console.log(all)
-            let mean = all[0]
-            this.score = mean.toFixed(2)
-            this.chart_hist.setData(all[1], all[2], mean)
+            this.score = all[1].toFixed(2)
+            this.chart_hist.setData(all[2], all[3], all[0], all[1])
             this.chart_hist.draw('#hist-container')
           }, (e) => {
             alert(e)

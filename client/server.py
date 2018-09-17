@@ -316,18 +316,12 @@ def _project_path (X, projection, locs, params={}):
 
     return []
 
-# pairwise cosine similarity between random pairs in X
-def _random_pairs (X, num_pairs=2000):
-    n, _ = X.shape
-    ids = np.random.choice(n, size=(num_pairs, 2), replace=False)
-
-    V = X[ids][:, 1, :] - X[ids][:, 0, :]
-    cs = cosine_similarity(V) # cosine similarity
-
-    # we want only the lower triangle (excluding the diagonal)
-    cs = np.tril(cs, k=-1)
-    cs = cs[np.nonzero(cs)]
-
+# pairwise cosine similarity between random pairs in the latent space
+# this is precomputed
+def _random_pairs (latent_dim):
+    fn = abs_path('./data/{}/pairs.h5'.format(dset))
+    with h5py.File(fn, 'r') as f:
+        cs = np.asarray(f['cosine{}'.format(latent_dim)])
     return cs
 
 # global app and DB cursor
@@ -656,18 +650,26 @@ def vector_score ():
     cs = np.tril(cs, k=-1)
     cs = cs[np.nonzero(cs)]
 
-    score = np.mean(cs)
+    mean = np.mean(cs)
     hist, _ = np.histogram(cs, bins=np.arange(-1.0, 1.05, 0.1))
-    print 'Vector score (GID {} & {}): average {}, max {}, min {}'.format(gid[0], \
-        gid[1], round(score, 2), round(np.amax(cs), 2),  round(np.amin(cs), 2))
+    print 'Vector score (GID {} & {}): average {}, std {}, min {}'.format(gid[0], \
+        gid[1], round(mean, 2), round(np.amax(cs), 2),  round(np.amin(cs), 2))
 
     # relative formulation: random pairs
-    csr = _random_pairs(X)
+    csr = _random_pairs(latent_dim)
     histr, _ = np.histogram(csr, bins=np.arange(-1.0, 1.01, 0.02))
-    print 'Random average {}'.format(round(np.mean(csr), 2))
 
-    reply = {'mean': score}
-    if request.json['histogram']:
+    # effect size
+    n1 = cs.shape[0]
+    n2 = csr.shape[0]
+    s1 = np.std(cs)
+    s2 = np.std(csr)
+    pooled = np.sqrt(((n1 - 1) * s1 * s1 + (n2 - 1) * s2 * s2) / (n1 + n2 - 2))
+    cohen = (mean - np.mean(csr)) / pooled
+    print 'Cohen\'s d: {}, pooled sd: {}'.format(cohen, pooled)
+ 
+    reply = {'mean': mean, 'cohen': cohen}
+    if 'histogram' in request.json:
         reply['histogram'] = hist.tolist()
         reply['random'] = histr.tolist()
 

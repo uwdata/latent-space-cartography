@@ -650,7 +650,7 @@ class Store {
               return {x: (-1.0 + idx * 0.02).toFixed(2), y: num}
             })
             hist_random.push({x: '1.0', y: 0})
-            resolve([msg['mean'], hist, hist_random])
+            resolve([msg['mean'], msg['cohen'], hist, hist_random])
           } else {
             reject(`Internal server error.`)
           }

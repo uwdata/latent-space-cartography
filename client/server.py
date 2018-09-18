@@ -92,6 +92,15 @@ def read_raw ():
         X = np.asarray(f['data'])
     return X
 
+# read csv, discarding (optionally) the first row
+def read_csv (fn, row_start=1):
+    res = []
+    with open(fn, 'rb') as csvfile:
+        reader = csv.reader(csvfile, delimiter=',')
+        for row in reader:
+            res.append(row)
+    return res[row_start:]
+
 # given a list of points in latent space, generate their corresponding images
 def _generate_image (latent_dim, points):
     if not latent_dim in models:
@@ -795,6 +804,14 @@ def delete_vector ():
     cursor, conn = db.execute(query)
     db.safe_commit(conn, cursor)
     return jsonify({'status': 'success'}), 200
+
+# cross-comparison
+@app.route('/api/get_compare_page', methods=['POST'])
+def get_compare_page ():
+    initial = read_csv(abs_path('./data/{}/initial.csv').format(dset))
+    vecs = read_csv(abs_path('./data/{}/vector_scores.csv').format(dset))
+    reply = {'initial': initial, 'vectors': vecs}
+    return jsonify(reply), 200
 
 @app.route('/api/_compare_vectors', methods=['POST'])
 def _compare_vectors ():

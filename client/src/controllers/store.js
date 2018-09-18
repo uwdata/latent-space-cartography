@@ -683,6 +683,27 @@ class Store {
     })
   }
 
+  comparePage () {
+    let vec = []
+    return new Promise((resolve, reject) => {
+      this.getVectors()
+        .then((vectors) => {
+          vec = vectors
+          return http.post('/api/get_compare_page', {})
+        })
+        .then((response) => {
+          let msg = response.data
+          if (msg) {
+            resolve([msg['initial'], msg['vectors'], vec])
+          } else {
+            reject(`Internal server error.`)
+          }
+        }, () => {
+          reject(`Could not connect to the server.`)
+        })
+    })
+  }
+
   /**
    * Given the index, return a relative URL to the image.
    * @param i
@@ -690,6 +711,11 @@ class Store {
    */
   getImageUrl (i) {
     return `/data/${DATASET}/images/${i}.${CONFIG.rendering.ext}`
+  }
+
+  getVectorName (v) {
+    if (!v) return 'Untitled'
+    return v.description || `${v.alias_end}-${v.alias_start}`
   }
 
   /**

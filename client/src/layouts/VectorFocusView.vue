@@ -134,7 +134,7 @@
         <!--Histogram-->
         <div id="hist-container"></div>
         <div v-if="score" class="text-center" style="font-size: 10px;">
-          Pairwise Cosine Similarity</div>
+          Pair Alignment</div>
       </div>
 
       <!--Vector Details Comparing Original & Analogy-->
@@ -316,7 +316,7 @@
           .then((all) => {
             console.log(all)
             this.score = all[1].toFixed(2)
-            this.chart_hist.setData(all[2], all[3], all[0], all[1])
+            this.chart_hist.setData(all[2], all[3], all[0], all[1], all[4])
             this.chart_hist.draw('#hist-container')
           }, (e) => {
             alert(e)

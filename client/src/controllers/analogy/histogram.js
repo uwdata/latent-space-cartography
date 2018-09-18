@@ -25,6 +25,7 @@ class Histogram {
     this.background = []
     this.mean = -2
     this.effect = 0
+    this.unit = 1
   }
 
   /**
@@ -55,22 +56,18 @@ class Histogram {
       .domain(this.background.map((d) => d.x))
     let yy = d3.scaleLinear().range([height, p_top])
       .domain([0, d3.max(this.background, (d) => d.y)])
+    // scales for x-axis
+    let bo = x.bandwidth() * 0.5
+    let xr = d3.scaleLinear().range([x('-1.0') + bo, x('1.0') + bo])
+      .domain([-1 / this.unit, 1 / this.unit])
 
     let g = svg.append('g')
       .classed('hist', true)
 
-    let x_axis = d3.axisBottom(x)
-      // .tickValues(['-0.5', '0.0', '0.5'])
+    let x_axis = d3.axisBottom(xr)
 
-    let labels = _.keyBy(['-1.0', '-0.8', '-0.6', '-0.4', '-0.2',
-      '0.0', '0.2', '0.4', '0.6', '0.8', '1.0'])
     function custom_x (g) {
       g.call(x_axis)
-      g.selectAll('text')
-        .filter(function () {
-          return !labels[d3.select(this).text()]
-        })
-        .remove()
 
       g.selectAll('text')
         .attr('fill', '#6c757d')
@@ -119,7 +116,7 @@ class Histogram {
         .attr('stroke-width', 2)
 
       g.append('text')
-        .text(`Average: ${this.mean.toFixed(2)}`)
+        .text(`Average: ${(this.mean / this.unit).toFixed(2)}`)
         .attr('x', x0)
         .attr('y', 10)
         .attr('text-anchor', 'middle')
@@ -128,19 +125,20 @@ class Histogram {
     }
 
     // effect size
-    g.append('text')
-      .text(`Effect Size: ${this.effect.toFixed(2)}`)
-      .attr('x', 0)
-      .attr('y', 50)
-      .style('font-size', '10px')
-      .attr('fill', 'black')
+    // g.append('text')
+    //   .text(`Effect Size: ${this.effect.toFixed(2)}`)
+    //   .attr('x', 0)
+    //   .attr('y', 50)
+    //   .style('font-size', '10px')
+    //   .attr('fill', 'black')
   }
 
-  setData (data, background, mean = -2, effect = 0) {
+  setData (data, background, mean = -2, effect = 0, unit = 1) {
     this.data = data
     this.background = background
     this.mean = mean
     this.effect = effect
+    this.unit = unit
   }
 }
 

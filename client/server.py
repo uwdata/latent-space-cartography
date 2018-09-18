@@ -652,7 +652,7 @@ def vector_score ():
 
     mean = np.mean(cs)
     hist, _ = np.histogram(cs, bins=np.arange(-1.0, 1.05, 0.1))
-    print 'Vector score (GID {} & {}): average {}, std {}, min {}'.format(gid[0], \
+    print 'Vector score (GID {} & {}): average {}, max {}, min {}'.format(gid[0], \
         gid[1], round(mean, 2), round(np.amax(cs), 2),  round(np.amin(cs), 2))
 
     # relative formulation: random pairs
@@ -668,7 +668,7 @@ def vector_score ():
     cohen = (mean - np.mean(csr)) / pooled
     print 'Cohen\'s d: {}, pooled sd: {}'.format(cohen, pooled)
  
-    reply = {'mean': mean, 'cohen': cohen}
+    reply = {'mean': mean, 'cohen': cohen, 'unit': pooled}
     if 'histogram' in request.json:
         reply['histogram'] = hist.tolist()
         reply['random'] = histr.tolist()

@@ -10,6 +10,7 @@ import h5py
 import sys
 import os
 import time
+import csv
 from PIL import Image
 
 # ugly way to import a file from another directory ...
@@ -324,6 +325,46 @@ def _random_pairs (latent_dim):
         cs = np.asarray(f['cosine{}'.format(latent_dim)])
     return cs
 
+# relative formulation of pairwise cosine
+def _pair_alignment (latent_dim, gid):
+    # read latent space
+    X = read_ls(latent_dim)
+    
+    # data points in start and end group
+    start = X[_get_group_indices(gid[0])]
+    end = X[_get_group_indices(gid[1])]
+    n, _ = start.shape
+    m, _ = end.shape
+
+    if (m == n):
+        # one-to-one pairs
+        V = end - start
+    else:
+        # all possible vector pairs between start and end
+        L = np.repeat(start, m, axis=0)
+        R = np.tile(end, (n, 1))
+        V = L - R
+
+    # cosine similarity
+    cs = cosine_similarity(V)
+
+    # we want only the lower triangle (excluding the diagonal)
+    cs = np.tril(cs, k=-1)
+    cs = cs[np.nonzero(cs)]
+
+    # relative formulation: random pairs
+    csr = _random_pairs(latent_dim)
+
+    # effect size
+    n1 = cs.shape[0]
+    n2 = csr.shape[0]
+    s1 = np.std(cs)
+    s2 = np.std(csr)
+    pooled = np.sqrt(((n1 - 1) * s1 * s1 + (n2 - 1) * s2 * s2) / (n1 + n2 - 2))
+    cohen = (np.mean(cs) - np.mean(csr)) / pooled
+
+    return cs, csr, cohen, pooled
+
 # global app and DB cursor
 app = Flask(__name__, static_url_path='')
 db = DB()
@@ -625,47 +666,15 @@ def vector_score ():
     latent_dim = request.json['latent_dim']
     gid = request.json['groups'].split(',')
 
-    # read latent space
-    X = read_ls(latent_dim)
-    
-    # data points in start and end group
-    start = X[_get_group_indices(gid[0])]
-    end = X[_get_group_indices(gid[1])]
-    n, _ = start.shape
-    m, _ = end.shape
+    cs, csr, cohen, pooled = _pair_alignment(latent_dim, gid)
 
-    if (m == n):
-        # one-to-one pairs
-        V = end - start
-    else:
-        # all possible vector pairs between start and end
-        L = np.repeat(start, m, axis=0)
-        R = np.tile(end, (n, 1))
-        V = L - R
-
-    # cosine similarity
-    cs = cosine_similarity(V)
-
-    # we want only the lower triangle (excluding the diagonal)
-    cs = np.tril(cs, k=-1)
-    cs = cs[np.nonzero(cs)]
-
-    mean = np.mean(cs)
+    # histograms
     hist, _ = np.histogram(cs, bins=np.arange(-1.0, 1.05, 0.1))
-    print 'Vector score (GID {} & {}): average {}, max {}, min {}'.format(gid[0], \
-        gid[1], round(mean, 2), round(np.amax(cs), 2),  round(np.amin(cs), 2))
-
-    # relative formulation: random pairs
-    csr = _random_pairs(latent_dim)
     histr, _ = np.histogram(csr, bins=np.arange(-1.0, 1.01, 0.02))
 
-    # effect size
-    n1 = cs.shape[0]
-    n2 = csr.shape[0]
-    s1 = np.std(cs)
-    s2 = np.std(csr)
-    pooled = np.sqrt(((n1 - 1) * s1 * s1 + (n2 - 1) * s2 * s2) / (n1 + n2 - 2))
-    cohen = (mean - np.mean(csr)) / pooled
+    mean = np.mean(cs)
+    print 'Vector score (GID {} & {}): average {}, max {}, min {}'.format(gid[0], \
+        gid[1], round(mean, 2), round(np.amax(cs), 2),  round(np.amin(cs), 2))
     print 'Cohen\'s d: {}, pooled sd: {}'.format(cohen, pooled)
  
     reply = {'mean': mean, 'cohen': cohen, 'unit': pooled}
@@ -785,6 +794,33 @@ def delete_vector ():
 
     cursor, conn = db.execute(query)
     db.safe_commit(conn, cursor)
+    return jsonify({'status': 'success'}), 200
+
+@app.route('/api/_compare_vectors', methods=['POST'])
+def _compare_vectors ():
+    # get all attribute vectors
+    query = 'SELECT a.start, a.end, a.id FROM {}_vector a'.format(dset)
+    cursor, conn = db.execute(query)
+    vecs = [list(i) for i in cursor.fetchall()]
+
+    # compute pair alignment for all dims
+    res = []
+    for dim in dims:
+        for gid in vecs:
+            _, _, cohen, _ = _pair_alignment(dim, gid)
+            print dim, gid[2], cohen
+            res.append([dim, gid[2], cohen])
+
+    # save to csv file
+    out = abs_path('./data/{}/vector_scores.csv'.format(dset))
+    if os.path.exists(out):
+        os.remove(out)
+    with open(out, 'wb') as csvfile:
+        writer = csv.writer(csvfile, delimiter=',')
+        writer.writerow(['dim', 'vector id', 'cohen d'])
+        for row in res:
+            writer.writerow(row)
+
     return jsonify({'status': 'success'}), 200
 
 # create the groups table. internal use only

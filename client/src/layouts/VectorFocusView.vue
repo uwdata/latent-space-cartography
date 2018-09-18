@@ -134,7 +134,7 @@
         <!--Histogram-->
         <div id="hist-container"></div>
         <div v-if="score" class="text-center" style="font-size: 10px;">
-          Pair Alignment</div>
+          Standardized Cosine Distance (&sigma;)</div>
       </div>
 
       <!--Vector Details Comparing Original & Analogy-->

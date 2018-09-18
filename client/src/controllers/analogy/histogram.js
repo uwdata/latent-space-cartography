@@ -116,7 +116,7 @@ class Histogram {
         .attr('stroke-width', 2)
 
       g.append('text')
-        .text(`Average: ${(this.mean / this.unit).toFixed(2)}`)
+        .text(`Effect Size: ${(this.mean / this.unit).toFixed(2)}`)
         .attr('x', x0)
         .attr('y', 10)
         .attr('text-anchor', 'middle')

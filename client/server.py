@@ -25,8 +25,8 @@ from flaskext.mysql import MySQL
 models = {}
 
 # dataset we're working with
-# from config_emoji import img_rows, img_cols, img_chns, img_mode
-from config_glove_6b import dset, data_type, dims, schema_meta, schema_header, metric
+from config_emoji import img_rows, img_cols, img_chns, img_mode
+from config_emoji import dset, data_type, dims, schema_meta, schema_header, metric
 
 # for absolute path
 def abs_path (rel_path):
@@ -95,6 +95,8 @@ def read_raw ():
 # read csv, discarding (optionally) the first row
 def read_csv (fn, row_start=1):
     res = []
+    if not os.path.exists(fn):
+        return res
     with open(fn, 'rb') as csvfile:
         reader = csv.reader(csvfile, delimiter=',')
         for row in reader:
@@ -811,6 +813,18 @@ def get_compare_page ():
     initial = read_csv(abs_path('./data/{}/initial.csv').format(dset))
     vecs = read_csv(abs_path('./data/{}/vector_scores.csv').format(dset))
     reply = {'initial': initial, 'vectors': vecs}
+
+    if data_type == 'image':
+        # summary distribution on each axis
+        res = []
+        for dim in dims:
+            X = read_ls(dim)
+            q25 = np.percentile(X, 25, axis=0)
+            q75 = np.percentile(X, 75, axis=0)
+            q0 = X.min(axis=0)
+            q100 = X.max(axis=0)
+            res.append(np.asarray([q0, q25, q75, q100]).tolist())
+        reply['axes'] = res
     return jsonify(reply), 200
 
 @app.route('/api/_compare_vectors', methods=['POST'])

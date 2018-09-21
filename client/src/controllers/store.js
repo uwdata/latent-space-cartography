@@ -694,7 +694,7 @@ class Store {
         .then((response) => {
           let msg = response.data
           if (msg) {
-            resolve([msg['initial'], msg['vectors'], vec])
+            resolve([msg['initial'], msg['vectors'], vec, msg['axes'] || []])
           } else {
             reject(`Internal server error.`)
           }

@@ -27,7 +27,8 @@ const config_emoji = {
   dataset: 'emoji',
   data_type: 'image',
   train_split: 13500,
-  dims: [4, 8, 16, 32, 64, 128, 256, 512, 1024],
+  // dims: [4, 8, 16, 32, 64, 128, 256, 512, 1024],
+  dims: [4, 8, 16, 32, 64, 128],
   schema: {
     'type': {},
     'meta': ['i','name', 'mean_color', 'category', 'platform', 'version', 'codepoints', 'shortcode']
@@ -102,7 +103,7 @@ const config_tybalt = {
 /**
  * Toggle dataset here!
  */
-let CONFIG = config_glove
+let CONFIG = config_emoji
 
 const DEBUG = process.env.NODE_ENV === 'development'
 const DATASET = CONFIG.dataset

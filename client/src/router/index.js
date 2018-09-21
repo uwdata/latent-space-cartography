@@ -8,6 +8,7 @@ import TsnePage from '../pages/TsnePage.vue'
 import SplomPage from '../pages/SplomPage.vue'
 import AnalogyPage from '../pages/AnalogyPage.vue'
 import ComparePage from '../pages/ComparePage.vue'
+import InitialPage from '../pages/InitialPage.vue'
 
 Vue.use(Router)
 
@@ -47,6 +48,11 @@ export default new Router({
       path: '/compare',
       name: 'compare',
       component: ComparePage
+    },
+    {
+      path: '/initial',
+      name: 'initial',
+      component: InitialPage
     },
     {
       path: '/analogy',

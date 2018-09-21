@@ -18,8 +18,6 @@
 <script>
   import {store, CONFIG} from '../controllers/config'
   import _ from 'lodash'
-  import * as d3 from 'd3'
-  import * as scale from 'd3-scale-chromatic'
   import InitialAxes from '../controllers/analogy/initial_axes'
 
   export default {

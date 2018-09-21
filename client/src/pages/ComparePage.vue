@@ -1,39 +1,48 @@
 <template>
-<div class="d-flex justify-content-center">
-  <!--Analogy-->
-  <div class="mt-3 mr-5">
-    <h5>Google's Analogy Test</h5>
-    <table>
-      <tr>
-        <th>Category</th>
-        <th v-for="dim in dims">{{dim}}D</th>
-      </tr>
-      <tr v-for="row in analogy">
-        <td class="pr-3">{{row[0]}}</td>
-        <td v-for="cell in row.slice(1)"
-            :style="{background: getColor('analogy', cell)}"
-            class="bd-num text-center">
-          <div>{{cell}}</div>
-        </td>
-      </tr>
-    </table>
+<div class="row">
+  <div class="col-3 pr-0">
+    <div style="margin-top: calc(9rem + 1px);">
+      <div v-for="v in vectors" class="d-flex flex-row-reverse bd-vector">
+        <div class="ml-2 d-flex flex-column">
+          <i class="fa fa-fw fa-circle-o bd-arrow-end mt-1"></i>
+          <div class="bd-arrow-vertical h-100"></div>
+          <i class="fa fa-fw fa-circle-o bd-arrow-end"></i>
+        </div>
+        <div class="w-100 text-right">
+          <div>
+            <span class="ml-2 text-truncate">{{v.alias_start}}</span>
+            <group-thumb :list="v.list_start" :width="4" :height="1"></group-thumb>
+          </div>
+          <div>
+            <span class="ml-2 text-truncate">{{v.alias_end}}</span>
+            <group-thumb :list="v.list_end" :width="4" :height="1"></group-thumb>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 
-  <!--Vectors-->
-  <div class="mt-3">
-    <h5>Attribute Vector Consistency Score</h5>
-    <table>
-      <tr>
-        <th>Attribute Vector</th>
-        <th v-for="dim in dims">{{dim}}D</th>
-      </tr>
-      <tr v-for="row in vectors">
-        <td class="pr-3">{{row[0]}}</td>
-        <td v-for="cell in row.slice(1)"
-            :style="{background: getColor('vectors', cell)}"
-            class="bd-num text-center">{{cell.toFixed(2)}}</td>
-      </tr>
-    </table>
+  <div class="col-9 pl-0 mt-3 d-flex">
+    <div v-for="dim in dims"
+         class="bd-col text-center">
+      <h5>Dimension: {{dim}}</h5>
+      <div class="mt-3 mb-3 text-muted" v-if="ready">
+        Validation Loss: {{metrics[dim]['validation_loss']}}
+      </div>
+      <router-link to="/analogy" tag="a" class="btn btn-outline-primary mb-3">
+        Enter
+      </router-link>
+
+      <!--vector scores-->
+      <div>
+        <div v-for="v in vectors" class="bd-vec-row">
+          <div class="bd-dot"
+               :style="{backgroundColor: getColor(metrics[dim].vectors[v.id]),
+               color: getTextColor(metrics[dim].vectors[v.id])}">
+            {{metrics[dim].vectors[v.id]}}</div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 </template>
@@ -41,18 +50,20 @@
 <script>
   import {store, CONFIG} from '../controllers/config'
   import _ from 'lodash'
+  import GroupThumb from '../layouts/GroupThumbnail.vue'
   import * as d3 from 'd3'
   import * as scale from 'd3-scale-chromatic'
 
   export default {
     name: 'ComparePage',
+    components: {GroupThumb},
     data () {
       return {
         dims: CONFIG.dims,
-        analogy: [],
+        ready: false,
         vectors: [],
-        raw_analogy: [],
-        raw_vectors: []
+        metrics: {},
+        max_vector_score: 10
       }
     },
     mounted () {
@@ -62,59 +73,83 @@
             return {'type': v[0], 'dim': Number(v[1]), 'subtype': v[2], 'score': Number(v[3])}
           })
 
-          // wrangle analogy table
-          let analogy = _.filter(initial, (r) => r.type === 'analogy')
-          this.raw_analogy = analogy
-          analogy = _.groupBy(analogy, 'subtype')
-          analogy = _.map(analogy, (group) => {
-            let res = [group[0].subtype]
-            _.each(this.dims, (dim) => {
-              res.push(_.find(group, {'dim': dim}).score)
-            })
-            return res
+          // init data
+          _.each(_.uniqBy(initial, 'dim'), (dim) => {
+            this.metrics[dim.dim] = {vectors: {}}
           })
-          this.analogy = analogy
 
-          // wrangle vector table
-          let vectors = _.keyBy(all[2], 'id')
-          let scores = _.map(all[1], (v) => {
+          // wrangle initial metrics
+          _.each(initial, (p) => {
+            if (_.find)
+              this.metrics[p.dim][p.type] = p.score
+          })
+
+          // wrangle vectors
+          this.vectors = all[2]
+          _.each(all[1], (v) => {
             let vid = Number(v[1])
-            return {
-              'dim': Number(v[0]),
-              'vid': vid,
-              'name': store.getVectorName(vectors[vid]),
-              'score': Number(v[2])
-            }
+            let dim = Number(v[0])
+            this.metrics[dim].vectors[vid] = Number(Number(v[2]).toFixed(2))
           })
-          this.raw_vectors = scores
-          scores = _.groupBy(scores, 'name')
-          this.vectors = _.map(scores, (group) => {
-            let res = [group[0].name]
-            _.each(this.dims, (dim) => {
-              res.push(_.find(group, {'dim': dim}).score)
-            })
-            return res
-          })
+          this.max_vector_score = d3.max(all[1], (d) => d[2])
+
+          this.ready = true
         }, () => {})
     },
     methods: {
-      getColor (which, score) {
-        let max = d3.max(this[`raw_${which}`], (d) => d.score)
-        return scale.interpolateBlues(score / max)
+      getColor (score) {
+        return scale.interpolateBlues(score / this.max_vector_score)
+      },
+      getTextColor (score) {
+        let ratio = score / this.max_vector_score
+        return ratio > 0.3 ? '#fff' : '#6c757d'
       }
     }
   }
 </script>
 
 <style scoped>
-  .bd-num {
+  .bd-col {
     font-size: 0.8em;
-    /*color: #99979c;*/
-    color: white;
-    min-width: 50px;
+    width: 16.66%;
   }
 
-  tr {
-    height: 30px;
+  .bd-col a{
+    border-radius: 2rem !important;
+    min-width: 100px;
+  }
+
+  .bd-vec-row {
+    border-top: #ddd 1px solid;
+    height: 5rem;
+  }
+
+  .bd-dot {
+    display: inline-block;
+    border-radius: 50%;
+    height: 3rem;
+    width: 3rem;
+    line-height: 3rem;
+    margin-top:1rem;
+  }
+
+  /*related to vector list*/
+  .bd-vector {
+    border-top: #ddd 1px solid;
+    padding: 15px 0 15px 15px;
+    cursor: pointer;
+    height: 5rem;
+  }
+  .bd-vector:hover {
+    background-color: #fafafa;
+  }
+  .bd-arrow-vertical {
+    border-right: 2px dotted #6c757d;
+    width: calc(50% + 1px);
+  }
+
+  .bd-arrow-end {
+    color: #8c959d;
+    font-size: 0.9em;
   }
 </style>

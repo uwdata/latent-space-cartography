@@ -16,7 +16,7 @@ class Store {
     this.pca = {}
 
     /**
-     * Dictionary to save UMAP points, key by latent dimension
+     * Dictionary to save UMAP points, key by latent dimension, n_neighbors and min_dist
      */
     this.umap = {}
 
@@ -169,8 +169,9 @@ class Store {
   getUmapPoints (dim, nn, dist) {
     this.latent_dim = dim
     return new Promise((resolve, reject) => {
-      if (this.umap[dim]) {
-        resolve(this.umap[dim])
+      let key = `${dim}-${nn}-${dist}`
+      if (this.umap[key]) {
+        resolve(this.umap[key])
         return
       }
 
@@ -184,8 +185,8 @@ class Store {
           let msg = response.data
 
           if (msg) {
-            this.umap[dim] = this._formatPcaPoints(msg.data, [])
-            resolve(this.umap[dim])
+            this.umap[key] = this._formatPoints(msg.data)
+            resolve(this.umap[key])
           } else {
             reject(`Fail to initialize.`)
           }

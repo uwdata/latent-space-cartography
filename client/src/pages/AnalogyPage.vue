@@ -76,7 +76,7 @@
                         v-if="projection === 'UMAP' && view_state === 0">
               <b-dropdown-item v-for="n in all_nn" @click="changeNn(n)" :key="n">{{n}}</b-dropdown-item>
             </b-dropdown>
-            <b-dropdown :text="`Dist: ${min_dist}`" variant="light" class="ml-2"
+            <b-dropdown :text="`Global: ${min_dist}`" variant="light" class="ml-2"
                         v-if="projection === 'UMAP' && view_state === 0">
               <b-dropdown-item v-for="dist in all_min_dist" @click="changeMinDist(dist)" :key="dist">{{dist}}</b-dropdown-item>
             </b-dropdown>
@@ -310,6 +310,9 @@
           this.view_state === 1 ? 'subset' : 'vector'
         if (code === 't-SNE') {
           code = 'tsne-' + this.perplexity
+        }
+        if (code === 'UMAP') {
+          code = `umap-${this.n_neighbors}-${this.min_dist}`
         }
         code += `-dim${this.dim}`
         return _.toLower(code)

@@ -231,7 +231,7 @@
 
         let re = /^tsne|^pca|^vector/i
         let supported = re.test(this.proj_state)
-        if (!supported) {
+        if (!supported && this.chart._global_vectors) {
           // clear previous plot
           this.chart._global_vectors.clear()
           return
@@ -271,7 +271,7 @@
 
         let re = /^tsne|^pca|^vector/i
         let supported = re.test(this.proj_state)
-        if (!supported) {
+        if (!supported && this.chart._pairs) {
           this.chart._pairs.clear()
           return
         }

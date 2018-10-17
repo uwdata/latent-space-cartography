@@ -8,6 +8,7 @@ import h5py
 import umap
 import os
 import numpy as np
+import pickle
 
 # dataset config
 from config_emoji import *
@@ -45,7 +46,17 @@ if __name__ == '__main__':
                 # random state only produces consistent result on the same machine?!
                 d = umap.UMAP(n_neighbors = n_neighbors,
                               min_dist = min_dist,
-                              random_state = 22).fit_transform(X)
+                              random_state = 22).fit(X)
                 name = 'neighbor{}-dist{}'.format(n_neighbors, min_dist)
-                f.create_dataset(name, data=d)
+                f.create_dataset(name, data=d.embedding_)
+
+                # save pickle file
+                pkl_path = base + 'umap/umap{}-nn{}-dist{}.pkl'.format(latent_dim, n_neighbors, min_dist)
+                pf = open(pkl_path, 'wb')
+                for attr in ["_tree_init", "_search", "_random_init"]:
+                    if hasattr(d, attr):
+                        delattr(d, attr)
+                pickle.dump(d, pf, pickle.HIGHEST_PROTOCOL)
+                pf.close()
+
         f.close()

@@ -6,6 +6,7 @@ from sklearn.neighbors import KDTree
 from sklearn import preprocessing
 from scipy.stats import norm
 import umap
+import pickle
 import numpy as np
 import h5py
 import sys
@@ -425,11 +426,19 @@ def get_umap ():
     nn = request.json['n_neighbors']
     dist = request.json['min_dist']
 
-    h5_path = abs_path('./data/{}/umap/umap{}.h5').format(dset, latent_dim)
-    if os.path.exists(h5_path):
-        with h5py.File(h5_path, 'r') as f:
-            name = 'neighbor{}-dist{}'.format(nn, dist)
-            d = np.asarray(f[name])
+    pkl_path = abs_path('./data/{}/umap/umap{}-nn{}-dist{}.pkl').format(dset, latent_dim, nn, dist)
+    if os.path.exists(pkl_path):
+        with open(pkl_path, 'rb') as pkl_file:
+            data = pickle.load(pkl_file)
+            from umap.nndescent import make_initialisations, make_initialized_nnd_search
+            data._random_init, data._tree_init = make_initialisations(
+                data._distance_func, data._dist_args
+            )
+            data._search = make_initialized_nnd_search(
+                data._distance_func, data._dist_args
+            )
+            umap_fit['{}-{}'.format(nn, dist)] = data
+            d = data.embedding_
     else:
         d = _fit_umap(latent_dim, nn, dist).embedding_
     return jsonify({'data': d.tolist()}), 200

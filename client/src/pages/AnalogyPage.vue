@@ -72,6 +72,14 @@
                 {{perp}}
               </b-dropdown-item>
             </b-dropdown>
+            <b-dropdown :text="`Neighbors: ${nn}`" variant="light" class="ml-2"
+                        v-if="projection === 'UMAP' && view_state === 0">
+              <b-dropdown-item v-for="n in all_nn" @click="changeNn(n)" :key="n">{{n}}</b-dropdown-item>
+            </b-dropdown>
+            <b-dropdown :text="`Dist: ${min_dist}`" variant="light" class="ml-2"
+                        v-if="projection === 'UMAP' && view_state === 0">
+              <b-dropdown-item v-for="dist in all_min_dist" @click="changeMinDist(dist)" :key="dist">{{dist}}</b-dropdown-item>
+            </b-dropdown>
 
             <!--On the right-->
             <div v-if="all_color.length" class="float-right ml-2">
@@ -223,6 +231,9 @@
     if (this.projection === 't-SNE') {
       args.push(this.perplexity)
     }
+    if (this.projection === 'UMAP') {
+      args.push(this.nn, this.min_dist)
+    }
 
     func.call(store, ...args)
       .then((points) => {
@@ -272,6 +283,10 @@
         all_projections: ['PCA', 't-SNE', 'UMAP'],
         perplexity: 30,
         all_perplexity: [5, 10, 30, 50, 100],
+        nn: 15,
+        all_nn: [5, 10, 15, 30, 50],
+        min_dist: 0.1,
+        all_min_dist: [0.001, 0.01, 0.1, 0.2, 0.5],
         current_color: CONFIG.rendering.dot_color,
         all_color: CONFIG.color_by || [],
         current_x: 'x',
@@ -424,6 +439,16 @@
       // change perplexity of t-SNE
       changePerp (perp) {
         this.perplexity = perp
+        lets_load.call(this, () => {})
+      },
+
+      changeNn (nn) {
+        this.nn = nn
+        lets_load.call(this, () => {})
+      },
+
+      changeMinDist (dist) {
+        this.min_dist = dist
         lets_load.call(this, () => {})
       },
 

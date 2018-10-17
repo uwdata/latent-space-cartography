@@ -162,9 +162,11 @@ class Store {
   /**
    * Async get the points after UMAP from server
    * @param dim The latent dimension
+   * @param nn UMAP param n_neighbors
+   * @param dist UMAP param min_dist
    * @returns {Promise}
    */
-  getUmapPoints (dim) {
+  getUmapPoints (dim, nn, dist) {
     this.latent_dim = dim
     return new Promise((resolve, reject) => {
       if (this.umap[dim]) {
@@ -172,7 +174,7 @@ class Store {
         return
       }
 
-      let payload = {'latent_dim': dim}
+      let payload = {'latent_dim': dim, 'n_neighbors': nn, 'min_dist': dist}
 
       this.getMeta()
         .then(() => {

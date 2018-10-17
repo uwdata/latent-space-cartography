@@ -9,7 +9,7 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 client="$DIR/../client/data/$dset/"
 data="/Users/yliu0/data/$dset/"
 
-declare -a arr=("latent" "models" "pca" "tsne" "images")
+declare -a arr=("latent" "models" "pca" "tsne" "images" "umap")
 
 # symbolic links
 for i in "${arr[@]}"

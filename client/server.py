@@ -398,9 +398,18 @@ def serve_data (path):
 @app.route('/api/get_umap', methods=['POST'])
 def get_umap ():
     latent_dim = request.json['latent_dim']
-    X = read_ls(latent_dim)
-    embedding = umap.UMAP().fit_transform(X)
-    return jsonify({'data': embedding.tolist()}), 200
+    nn = request.json['n_neighbors']
+    dist = request.json['min_dist']
+
+    h5_path = abs_path('./data/{}/umap/umap{}.h5').format(dset, latent_dim)
+    if os.path.exists(h5_path):
+        with h5py.File(h5_path, 'r') as f:
+            name = 'neighbor{}-dist{}'.format(nn, dist)
+            d = np.asarray(f[name])
+    else:
+        X = read_ls(latent_dim)
+        d = umap.UMAP(n_neighbors=nn, min_dist=dist).fit_transform(X)
+    return jsonify({'data': d.tolist()}), 200
 
 # get pca data
 @app.route('/api/get_pca', methods=['POST'])

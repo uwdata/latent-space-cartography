@@ -312,7 +312,7 @@
           code = 'tsne-' + this.perplexity
         }
         if (code === 'UMAP') {
-          code = `umap-${this.n_neighbors}-${this.min_dist}`
+          code = `umap-${this.nn}-${this.min_dist}`
         }
         code += `-dim${this.dim}`
         return _.toLower(code)

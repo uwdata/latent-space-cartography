@@ -24,6 +24,9 @@ from flaskext.mysql import MySQL
 
 # re-use keras models
 models = {}
+# re-use umap fit
+umap_fit = {}
+umap_seed = 22
 
 # dataset we're working with
 from config_emoji import img_rows, img_cols, img_chns, img_mode
@@ -309,6 +312,16 @@ def _project_path (X, projection, locs, params={}):
             result.append(np.asarray(dedup).tolist())
         return result
 
+    elif projection == 'umap':
+        n_neighbors = params['n_neighbors']
+        min_dist = params['min_dist']
+        latent_dim = params['latent_dim']
+        fit = _fit_umap(latent_dim, n_neighbors, min_dist)
+        res = []
+        for loc in locs:
+            res.append(fit.transform(loc).tolist())
+        return res
+
     # PCA: multiply projection matrix directly
     elif projection == 'pca':
         pca_dim = params['pca_dim']
@@ -328,6 +341,17 @@ def _project_path (X, projection, locs, params={}):
         return res
 
     return []
+
+# fit umap to data
+def _fit_umap (latent_dim, nn, dist):
+    key = '{}-{}'.format(nn, dist)
+    if key in umap_fit:
+        return umap_fit[key]
+    X = read_ls(latent_dim)
+    d = umap.UMAP(n_neighbors=nn, min_dist=dist,
+                  random_state=umap_seed).fit(X)
+    umap_fit[key] = d
+    return d
 
 # pairwise cosine similarity between random pairs in the latent space
 # this is precomputed
@@ -407,8 +431,7 @@ def get_umap ():
             name = 'neighbor{}-dist{}'.format(nn, dist)
             d = np.asarray(f[name])
     else:
-        X = read_ls(latent_dim)
-        d = umap.UMAP(n_neighbors=nn, min_dist=dist).fit_transform(X)
+        d = _fit_umap(latent_dim, nn, dist).embedding_
     return jsonify({'data': d.tolist()}), 200
 
 # get pca data

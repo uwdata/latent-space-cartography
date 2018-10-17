@@ -13,7 +13,7 @@ import numpy as np
 from config_emoji import *
 
 # path to the stored model
-base = '/home/yliu0/data/{}/'.format(dset)
+base = '/Users/yliu0/data/{}/'.format(dset)
 
 # read latent space
 def read_ls (latent_dim):
@@ -42,7 +42,10 @@ if __name__ == '__main__':
         for n_neighbors in [5, 10, 15, 30, 50]:
             for min_dist in [0.001, 0.01, 0.1, 0.2, 0.5]:
                 print 'Neighbors: {}, dist: {}'.format(n_neighbors, min_dist)
-                d = umap.UMAP(n_neighbors = n_neighbors, min_dist = min_dist).fit_transform(X)
+                # random state only produces consistent result on the same machine?!
+                d = umap.UMAP(n_neighbors = n_neighbors,
+                              min_dist = min_dist,
+                              random_state = 22).fit_transform(X)
                 name = 'neighbor{}-dist{}'.format(n_neighbors, min_dist)
                 f.create_dataset(name, data=d)
         f.close()

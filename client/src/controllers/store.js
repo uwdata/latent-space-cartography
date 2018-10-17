@@ -512,8 +512,14 @@ class Store {
   plotVectors (latent_dim, projection, vectors=[], pairs=[]) {
     // parse projection string
     let perp = ''
+    let nn = ''
+    let md = ''
     if (/^tsne/.test(projection)) {
       perp = projection.split('-')[1]
+    }
+    if (/^umap/.test(projection)) {
+      nn = Number(projection.split('-')[1])
+      md = Number(projection.split('-')[2])
     }
     projection = projection.split('-')[0]
 
@@ -532,7 +538,7 @@ class Store {
       let route = vectors.length ? '/api/plot_vectors' : '/api/plot_pairs'
       let payload = {latent_dim: latent_dim, projection: projection,
         perplexity: perp, pca_dim: nPC, matrix: matrix, mean: mean,
-        vectors: vectors, pairs: pairs}
+        n_neighbors:nn, min_dist:md, vectors: vectors, pairs: pairs}
 
       http.post(route, payload)
         .then((response) => {

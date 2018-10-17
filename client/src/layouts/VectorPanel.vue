@@ -62,6 +62,9 @@
                   v-b-tooltip.hover :title="plotted ? 'Hide Vectors' : 'Visualize Vectors'">
               <i class="fa" :class="{'fa-eye-slash': !plotted, 'fa-eye': plotted}"></i>
             </span>
+
+            <!--Loading-->
+            <span class="ml-2 text-muted" v-if="loading_paths">loading ... </span>
           </div>
         </div>
 
@@ -169,7 +172,8 @@
         shared: store.state,
         show_image: CONFIG.data_type === 'image',
         compact_style: CONFIG.data_type === 'text',
-        loading_vectors: false
+        loading_vectors: false,
+        loading_paths: false,
       }
     },
     watch: {
@@ -184,7 +188,7 @@
         this.chart._global_vectors.clear()
 
         // custom projection rely on an async projection matrix
-        if (/^tsne|^pca/.test(val)) {
+        if (/^tsne|^pca|^umap/.test(val)) {
           this.plotVectors()
 
           // update pairs if visible
@@ -229,7 +233,7 @@
       plotVectors () {
         if (!this.vectors.length) return
 
-        let re = /^tsne|^pca|^vector/i
+        let re = /^umap|^tsne|^pca|^vector/i
         let supported = re.test(this.proj_state)
         if (!supported && this.chart._global_vectors) {
           // clear previous plot
@@ -238,8 +242,12 @@
         }
 
         let vs = _.map(this.vectors, (v) => [v.start, v.end])
+        this.loading_paths = true
+        let cur_state = this.proj_state // cache current state
         store.plotVectors(this.latent_dim, this.proj_state, vs)
           .then((data) => {
+            this.loading_paths = false
+
             // save the data
             data = _.map(data, (arr, i) => {
               let vt = this.vectors[i]
@@ -254,9 +262,12 @@
             })
 
             // plot
-            this.chart._global_vectors.setData(data)
-            this.chart._global_vectors.redraw()
+            if (this.proj_state === cur_state) {
+              this.chart._global_vectors.setData(data)
+              this.chart._global_vectors.redraw()
+            }
           }, (e) => {
+            this.loading_paths = false
             alert(e)
           })
       },

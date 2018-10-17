@@ -217,7 +217,8 @@
 
     clear.call(this)
     this.loading = true
-    let func = this.projection === 't-SNE' ? store.getTsnePoints : store.getPcaPoints
+    let func = this.projection === 't-SNE' ? store.getTsnePoints :
+      (this.projection === 'UMAP' ? store.getUmapPoints : store.getPcaPoints)
     let args = [this.dim]
     if (this.projection === 't-SNE') {
       args.push(this.perplexity)
@@ -266,9 +267,9 @@
         brushed: [],
         view_state: 0, // 0 - main, 1 - subset PCA, 2 - vector PCA
         all_dims: CONFIG.dims,
-        dim: CONFIG.dims[0],
-        projection: 't-SNE',
-        all_projections: ['PCA', 't-SNE'],
+        dim: CONFIG.initial_dim || CONFIG.dims[0],
+        projection: 'UMAP',
+        all_projections: ['PCA', 't-SNE', 'UMAP'],
         perplexity: 30,
         all_perplexity: [5, 10, 30, 50, 100],
         current_color: CONFIG.rendering.dot_color,

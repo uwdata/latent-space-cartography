@@ -5,6 +5,7 @@ from sklearn.metrics.pairwise import cosine_similarity
 from sklearn.neighbors import KDTree
 from sklearn import preprocessing
 from scipy.stats import norm
+import umap
 import numpy as np
 import h5py
 import sys
@@ -392,6 +393,14 @@ def serve_public (path):
 @app.route('/data/<path:path>')
 def serve_data (path):
     return send_from_directory('data', path)
+
+# get umap data
+@app.route('/api/get_umap', methods=['POST'])
+def get_umap ():
+    latent_dim = request.json['latent_dim']
+    X = read_ls(latent_dim)
+    embedding = umap.UMAP().fit_transform(X)
+    return jsonify({'data': embedding.tolist()}), 200
 
 # get pca data
 @app.route('/api/get_pca', methods=['POST'])

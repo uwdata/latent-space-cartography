@@ -16,6 +16,11 @@ class Store {
     this.pca = {}
 
     /**
+     * Dictionary to save UMAP points, key by latent dimension
+     */
+    this.umap = {}
+
+    /**
      * Dictionary to save t-SNE points, key by latent dimension and perplexity
      */
     this.tsne = {}
@@ -145,6 +150,40 @@ class Store {
               variation: msg.variation
             }
             resolve(this.pca[dim].points)
+          } else {
+            reject(`Fail to initialize.`)
+          }
+        }, () => {
+          reject(`Network error.`)
+        })
+    })
+  }
+
+  /**
+   * Async get the points after UMAP from server
+   * @param dim The latent dimension
+   * @returns {Promise}
+   */
+  getUmapPoints (dim) {
+    this.latent_dim = dim
+    return new Promise((resolve, reject) => {
+      if (this.umap[dim]) {
+        resolve(this.umap[dim])
+        return
+      }
+
+      let payload = {'latent_dim': dim}
+
+      this.getMeta()
+        .then(() => {
+          return http.post('/api/get_umap', payload)
+        })
+        .then((response) => {
+          let msg = response.data
+
+          if (msg) {
+            this.umap[dim] = this._formatPcaPoints(msg.data, [])
+            resolve(this.umap[dim])
           } else {
             reject(`Fail to initialize.`)
           }

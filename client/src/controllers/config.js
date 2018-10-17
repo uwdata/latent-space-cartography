@@ -27,8 +27,8 @@ const config_emoji = {
   dataset: 'emoji',
   data_type: 'image',
   train_split: 13500,
-  // dims: [4, 8, 16, 32, 64, 128, 256, 512, 1024],
-  dims: [4, 8, 16, 32, 64, 128],
+  initial_dim: 32,
+  dims: [4, 8, 16, 32, 64, 128, 256, 512, 1024],
   schema: {
     'type': {},
     'meta': ['i','name', 'mean_color', 'category', 'platform', 'version', 'codepoints', 'shortcode']

@@ -10,6 +10,7 @@ const config_logo = {
   dataset: 'logo',
   date_type: 'image',
   train_split: 15000,
+  initial_projection: 't-SNE',
   dims: [32, 64, 128, 256, 512, 1024],
   schema: {
     'meta': ['i', 'name', 'mean_color', 'source', 'industry']
@@ -28,6 +29,7 @@ const config_emoji = {
   data_type: 'image',
   train_split: 13500,
   initial_dim: 32,
+  initial_projection: 'UMAP',
   // dims: [4, 8, 16, 32, 64, 128, 256, 512, 1024],
   dims: [4, 8, 16, 32, 64, 128],
   schema: {
@@ -49,6 +51,7 @@ const config_glove = {
   dataset: 'glove_6b',
   data_type: 'text',
   train_split: 10000,
+  initial_projection: 't-SNE',
   dims: [50, 100, 200, 300],
   schema: {
     'type': {},
@@ -68,6 +71,7 @@ const config_tybalt = {
   dataset: 'tybalt',
   data_type: 'other',
   train_split: 10458,
+  initial_projection: 't-SNE',
   dims: [100],
   schema: {
     'type': {

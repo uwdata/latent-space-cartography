@@ -279,7 +279,7 @@
         view_state: 0, // 0 - main, 1 - subset PCA, 2 - vector PCA
         all_dims: CONFIG.dims,
         dim: CONFIG.initial_dim || CONFIG.dims[0],
-        projection: 'UMAP',
+        projection: CONFIG.initial_projection,
         all_projections: ['PCA', 't-SNE', 'UMAP'],
         perplexity: 30,
         all_perplexity: [5, 10, 30, 50, 100],

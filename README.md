@@ -18,12 +18,11 @@ npm install
 npm run dev
 
 # install dependencies for the server
-# you may want to use tools like virtualenv to manange python deps ...
-pip install numpy scipy pyyaml h5py keras pillow matplotlib sklearn
-pip install flask-mysql Flask
+# you'll want to run this inside a virtual environment like virtualenv ...
+pip install -r requirements.txt
 
 # start the server
-python server.py
+npm run start
 ```
 
 4. Navigate to http://localhost:5000/#/ in your browser 

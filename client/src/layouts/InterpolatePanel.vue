@@ -11,7 +11,7 @@
         <div v-if="loading">Generating ...</div>
         <div v-if="!loading" class="d-flex flex-column">
           <div v-for="img in generated">
-            <img :src="`/build/${img}`" class="img-48" />
+            <img :src="`/data/temp/${img}`" class="img-48" />
           </div>
         </div>
         <div v-if="!loading" class="d-flex flex-column text-muted pl-1">
@@ -43,7 +43,7 @@
         <div v-if="loading_analogy">Generating ...</div>
         <div v-if="!loading_analogy" class="d-flex flex-column">
           <div v-for="img in analogy">
-            <img :src="`/build/${img}`" class="img-48" />
+            <img :src="`/data/temp/${img}`" class="img-48" />
           </div>
         </div>
         <div v-if="!loading_analogy" class="d-flex flex-column text-muted pl-1">

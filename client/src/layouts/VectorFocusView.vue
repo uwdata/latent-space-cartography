@@ -146,7 +146,7 @@
           <div v-for="d in original" class="div-48 text-right">
             <span class="text-muted mr-2">{{d.neighbors}}</span>
             <img :src="imageUrl(d.nearest)" class="img-24 mr-2"/>
-            <img :src="`/build/${d.image}`" class="img-48"/>
+            <img :src="`/data/temp/${d.image}`" class="img-48"/>
           </div>
 
           <!--when flipped, everything is in reverse-->
@@ -157,7 +157,7 @@
         <div class="w-50 d-flex flex-column mt-3 ml-3">
           <p><b>Analogy</b></p>
           <div v-for="d in analogy" class="div-48">
-            <img :src="`/build/${d.image}?${flipped}`" class="img-48"/>
+            <img :src="`/data/temp/${d.image}?${flipped}`" class="img-48"/>
             <img :src="imageUrl(d.nearest)" class="img-24 ml-2"/>
             <span class="text-muted ml-2">{{d.neighbors}}</span>
           </div>

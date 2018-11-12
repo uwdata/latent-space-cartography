@@ -112,7 +112,7 @@ class Vectors {
       .enter()
       .append('image')
       .classed('vector-img-shadow', true)
-      .attr('xlink:href', (d) => `/build/${d.image}`)
+      .attr('xlink:href', (d) => `/data/temp/${d.image}`)
       .style('filter', 'url(#shadow)')
     _styleImage(shadow, img_size, img_padding)
 
@@ -122,7 +122,7 @@ class Vectors {
       .enter()
       .append('image')
       .classed('vector-img', true)
-      .attr('xlink:href', (d) => `/build/${d.image}`)
+      .attr('xlink:href', (d) => `/data/temp/${d.image}`)
     _styleImage(images, img_size, img_padding)
 
     function _styleImage(img, size, padding) {

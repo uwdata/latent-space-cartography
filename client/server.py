@@ -13,6 +13,7 @@ import sys
 import os
 import time
 import csv
+import shutil
 from PIL import Image
 
 # ugly way to import a file from another directory ...
@@ -23,15 +24,18 @@ from flask import Flask, send_from_directory, send_file
 from flask import request, jsonify
 import sqlite3
 
+# dataset we're working with
+from config_emoji import img_rows, img_cols, img_chns, img_mode
+from config_emoji import dset, data_type, dims, schema_meta, schema_header, metric
+
 # re-use keras models
 models = {}
 # re-use umap fit
 umap_fit = {}
 umap_seed = 22
 
-# dataset we're working with
-from config_emoji import img_rows, img_cols, img_chns, img_mode
-from config_emoji import dset, data_type, dims, schema_meta, schema_header, metric
+# paths
+P_TEMP = './data/temp/'
 
 # for absolute path
 def abs_path (rel_path):
@@ -60,6 +64,14 @@ class DB:
             conn.rollback()
         finally:
             cursor.close()
+
+# things to do right before starting the server
+def init_server ():
+    # create the temp folder to store interpolation images
+    p_temp = abs_path(P_TEMP)
+    if os.path.exists(p_temp):
+        shutil.rmtree(p_temp)
+    os.makedirs(p_temp)
 
 # instantiate the model from our image generation VAE
 def create_model (latent_dim):
@@ -487,7 +499,7 @@ def pca_back ():
     # project from latent space to image
     img =  _generate_image(latent_dim, re[i:i+1])[0]
     img_fn = '{}.png'.format(int(time.time()))
-    img.save(abs_path('./build/' + img_fn))
+    img.save(abs_path(P_TEMP + img_fn))
 
     return jsonify({'latent': re[i].tolist(), 'image': img_fn}), 200
 
@@ -551,7 +563,7 @@ def apply_analogy ():
         for idx, img in enumerate(images):
             img_fn = 'analogy_{}_{}_{}.png'.format(latent_dim, pid, idx)
             fns.append(img_fn)
-            img.save(abs_path('./build/' + img_fn))
+            img.save(abs_path(P_TEMP + img_fn))
         
         reply = { 'outputs': fns }
     else:
@@ -633,7 +645,7 @@ def focus_vector():
         for idx, img in enumerate(images):
             img_fn = '{}_{}_{}.png'.format(latent_dim, 'to'.join(gid), idx)
             recon.append(img_fn)
-            img.save(abs_path('./build/' + img_fn))
+            img.save(abs_path(P_TEMP + img_fn))
     elif data_type == 'other':
         loc, recon, count, nearest = _interpolate(X, start, end)
         # high weight genes
@@ -931,4 +943,5 @@ def _create_table_vector ():
     return jsonify({'status': 'success'}), 200
 
 if __name__ == '__main__':
+    init_server()
     app.run(debug=True) # change to (host= '0.0.0.0') in production

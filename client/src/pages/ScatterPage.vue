@@ -108,7 +108,7 @@
         store.transformPoint(x, y, i)
           .then((img) => {
             log_debug(img)
-            this.recon = '/build/' + img
+            this.recon = '/data/temp/' + img
             this.recon_loading = false
           }, (e) => {
             log_debug(e)

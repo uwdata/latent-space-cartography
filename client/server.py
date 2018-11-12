@@ -21,7 +21,7 @@ import model
 
 from flask import Flask, send_from_directory, send_file
 from flask import request, jsonify
-from flaskext.mysql import MySQL
+import sqlite3
 
 # re-use keras models
 models = {}
@@ -37,25 +37,18 @@ from config_emoji import dset, data_type, dims, schema_meta, schema_header, metr
 def abs_path (rel_path):
     return os.path.join(os.path.dirname(__file__), rel_path)
 
-# wrapper class for database
+# wrapper class for sqlite3 database
 class DB:
     conn = None
-
-    def __init__(self):
-        # read config file
-        with open(abs_path('mysql_config.json')) as jsonfile:
-            app.config.update(json.load(jsonfile))
-        
-        self.mysql = MySQL()
-        self.mysql.init_app(app)
+    filename = abs_path('./data/lsc.db')
 
     def execute(self, query):
         try:
             cursor = self.conn.cursor()
             cursor.execute(query)
         except: #TODO: handle specific error
-            self.conn = self.mysql.connect()
-            print 'MySQL connected!'
+            self.conn = sqlite3.connect(self.filename)
+            print 'sqlite3 connected!'
             cursor = self.conn.cursor()
             cursor.execute(query)
         return cursor, self.conn
@@ -63,7 +56,7 @@ class DB:
     def safe_commit(self, conn, cursor):
         try:
             conn.commit()
-        except:
+        except sqlite3.Error, e:
             conn.rollback()
         finally:
             cursor.close()

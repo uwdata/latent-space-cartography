@@ -7,6 +7,8 @@ import zipfile
 import shutil
 
 urls = {
+    'emoji': 'https://onedrive.live.com/download?cid=14E816594A8F732F&resid=14E816594A8F732F%21192&authkey=AKMBM9ZZiKXbucE',
+    'tybalt': 'https://onedrive.live.com/download?cid=14E816594A8F732F&resid=14E816594A8F732F%21191&authkey=AB7Q-lSvqBVLjfo',
     'glove_6b': 'https://onedrive.live.com/download?cid=14E816594A8F732F&resid=14E816594A8F732F%21190&authkey=APVJGaWeQehdA34'
 }
 

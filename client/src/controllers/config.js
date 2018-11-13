@@ -29,7 +29,7 @@ const config_emoji = {
   data_type: 'image',
   train_split: 13500,
   initial_dim: 32,
-  initial_projection: 'UMAP',
+  initial_projection: 't-SNE',
   // dims: [4, 8, 16, 32, 64, 128, 256, 512, 1024],
   dims: [4, 8, 16, 32, 64, 128],
   schema: {

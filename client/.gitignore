@@ -2,3 +2,5 @@ build/
 node_modules/
 \.idea/
 data/
+config_data.py
+

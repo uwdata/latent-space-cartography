@@ -25,8 +25,7 @@ from flask import request, jsonify
 import sqlite3
 
 # dataset we're working with
-from config_emoji import img_rows, img_cols, img_chns, img_mode
-from config_emoji import dset, data_type, dims, schema_meta, schema_header, metric
+from config_data import *
 
 # re-use keras models
 models = {}

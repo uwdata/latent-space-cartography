@@ -56,7 +56,7 @@
 
 <script>
   import {draw, setData, setCb} from '../controllers/scatter_tsne'
-  import {store, log_debug, TRAIN_SPLIT} from '../controllers/config'
+  import {store, log_debug, CONFIG} from '../controllers/config'
   import _ from 'lodash'
 
   function clear () {
@@ -77,9 +77,9 @@
    */
   function sliceData (points, option) {
     if (option === 0) {
-      setData(_.slice(points, TRAIN_SPLIT))
+      setData(_.slice(points, CONFIG.train_split))
     } else if (option === 1) {
-      setData(_.slice(points, 0, TRAIN_SPLIT))
+      setData(_.slice(points, 0, CONFIG.train_split))
     } else {
       setData(points)
     }

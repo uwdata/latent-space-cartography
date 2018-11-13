@@ -1,0 +1,17 @@
+{
+  "dataset": "logo",
+  "date_type": "image",
+  "train_split": 15000,
+  "initial_projection": "t-SNE",
+  "dims": [32, 64, 128, 256, 512, 1024],
+  "schema": {
+    "meta": ["i", "name", "mean_color", "source", "industry"]
+  },
+  "rendering": {
+    "dot_color": "mean_color",
+    "ext": "jpg"
+  },
+  "search": {
+    "simple": true
+  }
+}

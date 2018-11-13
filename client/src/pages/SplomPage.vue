@@ -48,7 +48,7 @@
 
 <script>
   import Splom from '../controllers/splom'
-  import {store, log_debug, TRAIN_SPLIT, DATASET} from '../controllers/config'
+  import {store, log_debug, CONFIG} from '../controllers/config'
   import _ from 'lodash'
 
   const PCA_DIM = 8
@@ -72,11 +72,11 @@
    */
   function sliceData (points, option) {
     if (option === 0) {
-//      splom.setData(_.slice(points, TRAIN_SPLIT))
+//      splom.setData(_.slice(points, CONFIG.train_split))
       // TODO: deal with performance issue
       splom.setData(_.slice(points, 16000))
     } else if (option === 1) {
-      splom.setData(_.slice(points, 0, TRAIN_SPLIT))
+      splom.setData(_.slice(points, 0, CONFIG.train_split))
     } else {
       splom.setData(points)
     }
@@ -164,7 +164,7 @@
         }
       },
       sideviewUrl (pc, j) {
-        return `/data/${DATASET}/splom/dim${this.dim}_pc${pc}_${j}.png`
+        return `/data/${CONFIG.dataset}/splom/dim${this.dim}_pc${pc}_${j}.png`
       },
       imageUrl (p) {
         return store.getImageUrl(p.i)

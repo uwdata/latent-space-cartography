@@ -10,7 +10,7 @@
 </template>
 
 <script>
-  import {store, DATASET} from '../controllers/config'
+  import {store, CONFIG} from '../controllers/config'
   export default {
     name: 'DetailTip',
     props: {
@@ -20,7 +20,7 @@
     },
     data () {
       return {
-        long: DATASET === 'logo'
+        long: CONFIG.dataset === 'logo'
       }
     },
     methods: {

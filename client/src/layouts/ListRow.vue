@@ -23,7 +23,7 @@
 </template>
 
 <script>
-  import {store, DATASET, CONFIG} from '../controllers/config'
+  import {store, CONFIG} from '../controllers/config'
   import _ from 'lodash'
 
   export default {
@@ -50,7 +50,7 @@
     data () {
       return {
         hovered: false,
-        dset: DATASET,
+        dset: CONFIG.dataset,
         show_image: CONFIG.data_type === 'image'
       }
     },

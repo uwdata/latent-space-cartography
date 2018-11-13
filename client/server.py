@@ -881,6 +881,14 @@ def get_compare_page ():
         reply['axes'] = res
     return jsonify(reply), 200
 
+# load client side config
+@app.route('/api/load_config', methods=['POST'])
+def load_config ():
+    fn = abs_path('./configs/config_{}.json'.format(dset))
+    with open(fn, 'r') as f:
+        cfg = json.load(f)
+    return jsonify({'config': cfg}), 200
+
 @app.route('/api/_compare_vectors', methods=['POST'])
 def _compare_vectors ():
     # get all attribute vectors

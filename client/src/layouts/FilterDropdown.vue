@@ -11,10 +11,10 @@
 </template>
 
 <script>
-  import {DATASET} from '../controllers/config'
+  import {CONFIG} from '../controllers/config'
   import _ from 'lodash'
 
-  const aval = DATASET === 'emoji' ? ['category', 'platform'] : []
+  const aval = CONFIG.dataset === 'emoji' ? ['category', 'platform'] : []
   const ALL = 'All'
 
   export default {

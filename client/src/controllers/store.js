@@ -1,6 +1,6 @@
 import http from 'axios'
 import _ from 'lodash'
-import {DATASET, CONFIG, log_debug} from './config'
+import {CONFIG, log_debug} from './config'
 
 const nPC = 4
 
@@ -758,7 +758,7 @@ class Store {
    * @returns {string}
    */
   getImageUrl (i) {
-    return `/data/${DATASET}/images/${i}.${CONFIG.rendering.ext}`
+    return `/data/${CONFIG.dataset}/images/${i}.${CONFIG.rendering.ext}`
   }
 
   getVectorName (v) {

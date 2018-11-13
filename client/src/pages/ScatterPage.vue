@@ -41,7 +41,7 @@
 
 <script>
   import Scatter from '../controllers/scatter_pca'
-  import {store, log_debug, TRAIN_SPLIT} from '../controllers/config'
+  import {store, log_debug, CONFIG} from '../controllers/config'
   import _ from 'lodash'
 
   let scatter = new Scatter()
@@ -65,9 +65,9 @@
    */
   function sliceData (points, option) {
     if (option === 0) {
-      scatter.setData(_.slice(points, TRAIN_SPLIT))
+      scatter.setData(_.slice(points, CONFIG.train_split))
     } else if (option === 1) {
-      scatter.setData(_.slice(points, 0, TRAIN_SPLIT))
+      scatter.setData(_.slice(points, 0, CONFIG.train_split))
     } else {
       scatter.setData(points)
     }

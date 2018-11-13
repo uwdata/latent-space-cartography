@@ -3,7 +3,8 @@ import App from './App.vue'
 import VueResource from 'vue-resource'
 import BootstrapVue from 'bootstrap-vue'
 import router from './router'
-import {log_debug} from "./controllers/config"
+import {log_debug, setConfig} from "./controllers/config"
+import http from 'axios'
 
 Vue.use(VueResource)
 Vue.use(BootstrapVue)
@@ -27,13 +28,25 @@ Vue.directive('click-outside', {
   },
 })
 
-/* eslint-disable no-new */
-new Vue({
-  el: '#app',
-  router,
-  template: '<App/>',
-  components: { App },
-  mounted: function () {
-    log_debug('main.js', 'mounted()')
-  }
-})
+/**
+ * Load config file from server before initializing
+ */
+http.post('/api/load_config', {})
+  .then((response) => {
+    let msg = response.data
+
+    if (msg) {
+      setConfig(msg.config)
+
+      /* eslint-disable no-new */
+      new Vue({
+        el: '#app',
+        router,
+        template: '<App/>',
+        components: { App },
+        mounted: function () {
+          log_debug('main.js', 'mounted()')
+        }
+      })
+    }
+  }, () => {})

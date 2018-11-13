@@ -1,0 +1,37 @@
+{
+  "dataset": "tybalt",
+  "data_type": "other",
+  "train_split": 10458,
+  "initial_projection": "t-SNE",
+  "dims": [100],
+  "schema": {
+    "type": {
+      "organ": "categorical",
+      "race": "categorical",
+      "stage":"categorical",
+      "gender": "categorical",
+      "age_at_diagnosis": "numeric",
+      "ovarian_cancer_subtype": "categorical"
+    },
+    "meta": ["i", "name", "platform", "age_at_diagnosis", "race", "stage", "vital_status",
+      "disease", "organ", "gender", "analysis_center", "year_of_diagnosis",
+      "ovarian_cancer_subtype"],
+    "header": ["i", "gene"]
+  },
+  "rendering": {
+    "dot_color": "organ"
+  },
+  "search": {
+    "advanced": true,
+    "by": ["name"],
+    "filter": "stage"
+  },
+  "filter": {
+    "fields": ["organ", "race", "stage", "vital_status", "gender",
+      "ovarian_cancer_subtype"]
+  },
+  "color_by": ["organ", "race", "stage", "vital_status", "gender",
+    "analysis_center", "ovarian_cancer_subtype"],
+  "y_axis": ["y", "organ", "race", "stage", "gender", "age_at_diagnosis",
+    "ovarian_cancer_subtype"]
+}

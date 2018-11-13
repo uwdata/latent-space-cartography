@@ -16,7 +16,11 @@ To start visualizing any one of the above datasets, follow these steps (using `e
 ```
 cd deploy
 
-# TODO: shell script to install python deps?
+# install dependencies
+pip install virtualenv
+virtualenv lsc_env
+source lsc_env/bin/activate
+pip install -r requirements.txt
 
 # download data
 python use_data.py tybalt --download
@@ -63,6 +67,9 @@ pip install -r requirements.txt
 
 # start the server
 npm run start
+
+# deploy
+npm run deploy
 ```
 
 4. Navigate to http://localhost:5000/#/ in your browser 

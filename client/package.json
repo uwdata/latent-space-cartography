@@ -18,6 +18,7 @@
     "prebuild": "rm -rf build && mkdir build && cp -R assets/ build",
     "webpack-dev": "NODE_ENV=development webpack --progress --hide-modules",
     "webpack-prod": "NODE_ENV=production webpack --progress --hide-modules",
+    "deploy": "npm run build && ./deploy.sh",
     "start": "python server.py"
   },
   "dependencies": {

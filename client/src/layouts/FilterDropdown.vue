@@ -14,7 +14,6 @@
   import {CONFIG} from '../controllers/config'
   import _ from 'lodash'
 
-  const aval = CONFIG.dataset === 'emoji' ? ['category', 'platform'] : []
   const ALL = 'All'
 
   export default {
@@ -30,7 +29,7 @@
         if (!this.meta.length) return
 
         this.ready = true
-        _.each(aval, (col) => {
+        _.each(this.cols, (col) => {
           // 1. prepare options
           let u = _.uniqWith(this.meta, (a, b) => a[col] === b[col])
           u = _.sortBy(_.map(u, (uu) => uu[col]))
@@ -47,7 +46,7 @@
       return {
         redraw: 0,
         ready: false,
-        cols: aval,
+        cols: CONFIG.dataset === 'emoji' ? ['category', 'platform'] : [],
         all: {},
         active: {}
       }
@@ -61,12 +60,13 @@
         this.redraw++
         this.active[col] = d
         let active = this.active
+        let cols = this.cols
 
         // probably need closure?
         let filter_func = function (points) {
           return _.filter(points, (p) => {
             let pass = true
-            _.each(aval, (c) => {
+            _.each(cols, (c) => {
               if (active[c] !== ALL && p[c] !== active[c]) {
                 pass = false
               }

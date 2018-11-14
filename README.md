@@ -9,35 +9,14 @@ We provide example datasets on three different data types / scenarios:
 2. `tybalt`: scientific feature learning. The 100-dimensional latent space encodes gene expression in cancer patients, fit using a Variational Auto-Encoder by [Way & Green](https://github.com/greenelab/tybalt).
 3. `glove_6b`: natural language processing. These spaces contain the top 10,000 words from pretrained 50-, 100-, 200-, and 300-dimensional [GloVe](https://nlp.stanford.edu/projects/glove/) word embeddings.
 
-To start visualizing any one of the above datasets, follow these steps (using `tybalt` as an example):
-
-1. Clone the repository
-2. Run these commands (only tested on macOS, might work on Linux)
-```bash
-cd deploy
-
-# install dependencies
-pip install virtualenv
-virtualenv lsc_env
-source lsc_env/bin/activate
-pip install -r requirements.txt
-
-# download data
-python use_data.py tybalt --download
-
-# start the server
-python server.py
-```
-4. Navigate to http://localhost:5000/#/ in your browser
-
-The above commands are necessary only for first time setup. After that, you can view a downloaded dataset by the following stpes (again using `tybalt` as an example):
+To start visualizing some latent spaces, first pick an example dataset. Then, run the following commands in your console:
 
 ```bash
 cd deploy
-source lsc_env/bin/activate
-python use_data.py tybalt
-python server.py
+./start.sh tybalt # replace "tybalt" with the dataset of your choice
 ```
+
+After the data finish downloading and the server starts, navigate to http://localhost:5000/#/ in your browser.
 
 ## I have my own data
 You'll need to supply three componenets: (1) your data, (2) server side config and (3) client side config.
@@ -202,6 +181,7 @@ Run the following script to create database tables and perform precomputation.
 
 ```bash
 cd deploy
+source lsc/bin/activate # if this returns error, run "./start.sh dataset" once
 python use_data.py --add <dataset>
 ```
 

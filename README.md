@@ -5,15 +5,17 @@ Visual analysis tools for mapping and orienting latent spaces (reduced dimension
 
 We provide example datasets on three different data types / scenarios:
 
-1. `emoji`: image generation. We scraped ~24,000 emoji images from the web, trained several Variational Auto-Encoders (VAEs) and obtained latent spaces capapble of hallucinating new emojis.
+1. `emoji`: image generation. We scraped ~24,000 emoji images from the web, trained several Variational Auto-Encoders (VAEs) and obtained latent spaces capapble of hallucinating new emojis. (Warning: this dataset is 3.3 GB in size so it will take a while to download.)
 2. `tybalt`: scientific feature learning. The 100-dimensional latent space encodes gene expression in cancer patients, fit using a Variational Auto-Encoder by [Way & Green](https://github.com/greenelab/tybalt).
 3. `glove_6b`: natural language processing. These spaces contain the top 10,000 words from pretrained 50-, 100-, 200-, and 300-dimensional [GloVe](https://nlp.stanford.edu/projects/glove/) word embeddings.
 
-To start visualizing some latent spaces, first pick an example dataset. Then, run the following commands in your console:
+To start visualizing some latent spaces, first pick an example dataset. Then, run the following commands in your console (we only support macOS, though it might work on Linux too):
 
 ```bash
 cd deploy
-./start.sh tybalt # replace "tybalt" with the dataset of your choice
+
+# replace "tybalt" with the dataset of your choice
+./start.sh tybalt
 ```
 
 After the data finish downloading and the server starts, navigate to http://localhost:5000/#/ in your browser.
@@ -51,9 +53,7 @@ Place the meta file as `<project_root>/deploy/data/<dataset>/meta.csv`. The inst
 
 ### Server Side Config
 
-Create a file with the name `config_<dataset>.py` under the `<project_root>/model` folder. Then run `python use_data.py <dataset>` inside `<project_root>/deploy/` to switch to this dataset.
-
-Below is an example configuration file:
+Create a file with the name `config_<dataset>.py` under the `<project_root>/model` folder. Below is an example configuration file:
 
 ```python
 # name of the dataset
@@ -79,9 +79,9 @@ train_split = 19500
 # cosine: Cosine distance
 metric = 'l2'
 
-# the file name of the input
+# the file name of the input, only used for "other" data type
 fn_raw = 'emoji.h5'
-# the dataset key in the hdf5 file
+# the dataset key in the hdf5 file, only used for "other" data type
 key_raw = 'emoji' 
 
 # all available latent dimensions
@@ -212,10 +212,13 @@ pip install -r requirements.txt
 python use_data.py <dataset> --download
 
 # start the server
-npm run start
+python server.py
 
 # switch between datasets
 python use_data.py <dataset>
+
+# remove a dataset (warning: danger)
+python use_data.py <dataset> --remove
 
 # deploy
 npm run deploy

@@ -5,3 +5,4 @@ eda/result
 log
 lsc_env/
 config_data.py
+deploy/data/

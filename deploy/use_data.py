@@ -164,7 +164,7 @@ def download (dset):
         print 'Only the following datasets are available for download:'
         for key in urls:
             print key
-        exit(0)
+        exit(1)
 
     # check if we have already an existing directory
     pout = os.path.join(P_DATA, dset)
@@ -252,7 +252,7 @@ if __name__ == '__main__':
         if not os.path.exists(f) and not args.download:
             print bcolors.WARNING + \
                 'Error: required file not found\n  {}'.format(f) + bcolors.ENDC
-            exit(0)
+            exit(1)
 
     # copy config
     cfg = './config_data.py'
@@ -266,7 +266,7 @@ if __name__ == '__main__':
             print bcolors.WARNING + \
                 'Error: metadata file not found\n  {}'.format(p_meta) + \
                 bcolors.ENDC
-            exit(0)
+            exit(1)
 
         # create database tables
         create_tables(dset, p_meta)

@@ -43,13 +43,33 @@ python server.py
 You'll need to supply three componenets: (1) your data, (2) server side config and (3) client side config.
 
 ### Data
-TODO: folder structure
+After picking a convenient name for your dataset, create a folder `<project_root>/deploy/data/<dataset>`. Under this directory, you will need to provide the following sub-directories. The first two are required, while the rest are dependent on data types:
 
-TODO: meta data, and database
+- `latent`: contains the latent spaces. Each file is in HDF5 format. It contains a dataset named `latent`, which is a n*m array where n is the number of samples, and m is the number of latent dimensions. The file name should be `latent<dim>.h5`, where dim is the latent dimension.
+
+- `tsne`: contains precomputed t-SNE coordinates. Each file is in HDF5 format. It contains a dataset named `tsne`, which is a n*2 array, where n is the number of samples.
+
+- `umap`: contains precomputed UMAP results. This is optional, because the tool will compute UMAP on the fly if it does not find existing results.
+
+- `images`: if your data type is "image", put all your images here. The image file name should correspond to the index in the input tensor you used to train the model, for example `0.png` is the first row in the input.
+
+- `models`: if your model is generative, put your models here so the tool can reconstruct output. However, you'll probably also need to modify the source code to load your model ...
+
+- `raw.h5`: HDF5 file of the input array (namely, the input to your unsupervised model). This is only required if your data is arbitrary vector, because we will use it to visualize each input sample.
+
+In addition, you will need to specify some metadata associated with each sample. For example, if each sample is a word, you may want to display which word it is and its frequency count. Such information will then be displayed in the tool, e.g. when the user clicks on a point.
+
+The metadata file is a CSV file. These two fields are required:
+- `i` maps back to the row index in the input matrix.
+- `name` is the name of this sample. For example, it is the word if your sample is a word. It can be the patient ID if your sample is the gene profile of a patient.
+
+You are free to provide other metadata columns, but remember to specify the schema in config files (details in the next section).
+
+TODO: database
 
 ### Server Side Config
 
-Create a file with the name `config_<dataset>.py` under the `<project_root>/model` folder. Then run `python use_data.py <dataset>` to switch to this dataset.
+Create a file with the name `config_<dataset>.py` under the `<project_root>/model` folder. Then run `python use_data.py <dataset>` inside `<project_root>/deploy/` to switch to this dataset.
 
 Below is an example configuration file:
 
@@ -77,9 +97,9 @@ train_split = 19500
 # cosine: Cosine distance
 metric = 'l2'
 
-# the file name containing the input
+# the file name of the input
 fn_raw = 'emoji.h5'
-# the dataset key in hdf5 file
+# the dataset key in the hdf5 file
 key_raw = 'emoji' 
 
 # all available latent dimensions

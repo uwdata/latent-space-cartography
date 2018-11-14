@@ -1,6 +1,9 @@
 #!/bin/bash
 # for end user to start the server
 
+# exit immediately if any command fails
+set -e
+
 # arguments
 if [ "$#" -lt 1 ]; then
   echo "Usage: start.sh dataset"
@@ -26,9 +29,6 @@ if [ ! -d "$DIR_DATA" ]; then
   echo "Local data not found, looking for a remote copy ..."
   source lsc_env/bin/activate
   python use_data.py "$dset" --download
-  if [ $? -ne 0 ]; then
-    exit 0
-  fi
   deactivate
 fi
 

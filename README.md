@@ -59,7 +59,6 @@ After picking a convenient name for your dataset, create a folder `<project_root
 
 - `raw.h5`: HDF5 file of the input array (namely, the input to your unsupervised model). This is only required if your data is arbitrary vector, because we will use it to visualize each input sample.
 
-
 #### Metadata
 In addition, you will need to specify some metadata associated with each sample. For example, if each sample is a word, you may want to display which word it is and its frequency count. Such information will then be displayed in the tool, e.g. when the user clicks on a point.
 
@@ -67,12 +66,9 @@ The metadata file is a CSV file. These two fields are required:
 - `i` maps back to the row index in the input matrix.
 - `name` is the name of this sample. For example, it is the word if your sample is a word. It can be the patient ID if your sample is the gene profile of a patient.
 
-You are free to provide other metadata columns, but remember to specify the schema in config files (details in the next section).
+You are free to provide other metadata columns, but remember to specify the schema in config files.
 
-Place the meta file in `<project_root>/deploy/data/<dataset>/meta.csv` and run the next step to import it into the database.
-
-#### Database
-TODO: database
+Place the meta file as `<project_root>/deploy/data/<dataset>/meta.csv`. The installation script `use_data.py` will look into this location to import metadata into the appropriate database table.
 
 ### Server Side Config
 
@@ -198,6 +194,15 @@ Below is an example configuration file. Remove the comments if you copy-paste th
   // note: "y" refers to the original Y-axis, for example the 1st PC in PCA plot
   "y_axis": ["y", "platform", "category"]
 }
+```
+
+### Finally ...
+
+Run the following script to create database tables and perform precomputation.
+
+```bash
+cd deploy
+python use_data.py --add <dataset>
 ```
 
 ## I want to code

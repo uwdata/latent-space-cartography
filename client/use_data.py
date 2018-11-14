@@ -16,6 +16,18 @@ P_DATA = './data/'
 P_CFG = '../model/'
 P_UI_CFG = './configs/'
 
+# terminal text colors
+class bcolors:
+    HEADER = '\033[95m'
+    OKBLUE = '\033[94m'
+    OKGREEN = '\033[92m'
+    WARNING = '\033[93m'
+    FAIL = '\033[91m'
+    ENDC = '\033[0m'
+    BOLD = '\033[1m'
+    UNDERLINE = '\033[4m'
+
+# connect to SQLite db
 def connect_db ():
     import sqlite3
     p_db = P_DATA + 'lsc.db'
@@ -23,8 +35,15 @@ def connect_db ():
     cursor = conn.cursor()
     return conn, cursor
 
+# remove files
+def remove_files (fs):
+    pass
+
+# drop all tables associated with dset
 def drop_tables (dset):
     conn, cursor = connect_db()
+    print 'SQLite connected, dropping tables ...'
+
     ts = ['meta', 'group', 'vector']
     for t in ts:
         q = 'DROP TABLE IF EXISTS {}_{};'.format(dset, t)
@@ -33,6 +52,10 @@ def drop_tables (dset):
     conn.commit()
     conn.close()
 
+    print bcolors.OKGREEN + 'Remove database tables: done.' + bcolors.ENDC
+
+# create tables and import meta
+# this will drop the original meta table!!
 def create_tables (dset, p_meta):
     import csv
 
@@ -72,12 +95,18 @@ def create_tables (dset, p_meta):
         rq = ['i', 'name']
         for col in rq:
             if col not in cols:
-                print 'Error: required field {} not found in meta.csv'.format(col)
+                print bcolors.WARNING + \
+                    'Error: required field {} not found in meta.csv'.format(col) + \
+                    bcolors.ENDC
                 exit(0)
             cols.remove(col)
 
+        # drop previous meta table
+        q3 = 'DROP TABLE IF EXISTS {}_meta;'.format(dset)
+        cursor.execute(q3)
+        print q3
+
         # create table
-        created = True
         q3 = 'CREATE TABLE IF NOT EXISTS `{}_meta` (\n'.format(dset)
         q3 += '\t`i` integer NOT NULL,\n'
         q3 += '\t`name` varchar(255) DEFAULT NULL,\n'
@@ -104,6 +133,59 @@ def create_tables (dset, p_meta):
         conn.commit()
         conn.close()
 
+    print bcolors.OKGREEN + '\nImport into database: success!\n' + bcolors.ENDC
+
+# download and unzip data
+def download (dset):
+    # check url
+    if dset not in urls:
+        print 'Only the following datasets are available for download:'
+        for key in urls:
+            print key
+        exit(0)
+
+    # check if we have already an existing directory
+    pout = os.path.join(P_DATA, dset)
+    if os.path.exists(pout):
+        print '{} already exists. Do you want to overwrite?'.format(dset)
+        s = raw_input('(y/n): ')
+        if s.startswith('y'):
+            shutil.rmtree(pout)
+        else:
+            exit(0)
+    os.makedirs(pout)
+
+    fn = '{}_data_temp.zip'.format(dset) # temporary zip file
+    u = urllib2.urlopen(urls[dset])
+    f = open(fn, 'wb')
+    meta = u.info()
+    fsize = int(meta.getheaders("Content-Length")[0])
+    print 'Downloading ...'
+
+    # display progress
+    block = 8192
+    total = 0
+    while True:
+        buffer = u.read(block)
+        if not buffer:
+            break
+
+        total += len(buffer)
+        f.write(buffer)
+        status = r"%10d  [%3.2f%%]" % (total, total * 100. / fsize)
+        status = status + chr(8) * (len(status) + 1)
+        print status,
+
+    f.close()
+
+    # unzip
+    zip_ref = zipfile.ZipFile(fn, 'r')
+    zip_ref.extractall(pout)
+    zip_ref.close()
+
+    # remove the zip file
+    os.remove(fn)
+
 if __name__ == '__main__':
     # arguments
     parser = argparse.ArgumentParser(description='Decide which dataset to work with.')
@@ -111,13 +193,20 @@ if __name__ == '__main__':
         help='name of the dataset')
     parser.add_argument('--download', action='store_true',
         help='download a demo dataset from the web')
-    parser.add_argument('--new', action='store_true',
+    parser.add_argument('--add', action='store_true',
         help='onboard a new, custom dataset')
     parser.add_argument('--remove', action='store_true',
         help='delete data associated with this dataset')
 
     args = parser.parse_args()
     dset = args.name
+
+    # required files
+    REQ_FS = {
+        'config': os.path.join(P_CFG, 'config_{}.py'.format(dset)),
+        'json': os.path.join(P_UI_CFG, 'config_{}.json'.format(dset)),
+        'data': os.path.join(P_DATA, dset)
+    }
 
     # delete!!
     if args.remove:
@@ -135,81 +224,36 @@ if __name__ == '__main__':
         os.makedirs(P_DATA)
 
     # verify we have data and configs
-    p_data = os.path.join(P_DATA, dset)
-    if not os.path.exists(p_data) and not args.download:
-        print 'Error: data folder not found\n  {}'.format(p_data)
-        exit(0)
-    cfgs = [
-        os.path.join(P_CFG, 'config_{}.py'.format(dset)),
-        os.path.join(P_UI_CFG, 'config_{}.json'.format(dset))
-    ]
-    for pp in cfgs:
-        if not os.path.exists(pp):
-            print 'Error: config file not found\n  {}'.format(pp)
+    for f in REQ_FS:
+        f = REQ_FS[f]
+        if not os.path.exists(f) and not args.download:
+            print bcolors.WARNING + \
+                'Error: required file not found\n  {}'.format(f) + bcolors.ENDC
             exit(0)
 
     # copy config
     cfg = './config_data.py'
-    shutil.copyfile(cfgs[0], cfg)
+    shutil.copyfile(REQ_FS['config'], cfg)
 
     # create database tables
-    if args.new:
+    if args.add:
         # check meta csv
-        p_meta = os.path.join(p_data, 'meta.csv')
+        p_meta = os.path.join(REQ_FS['data'], 'meta.csv')
         if not os.path.exists(p_meta):
-            print 'Error: metadata file not found\n  {}'.format(p_meta)
+            print bcolors.WARNING + \
+                'Error: metadata file not found\n  {}'.format(p_meta) + \
+                bcolors.ENDC
             exit(0)
 
         # create database tables
         create_tables(dset, p_meta)
 
+        # TODO: precompute pairs.h5
+
     # download the zip file from links
     if args.download:
-        # check url
-        if dset not in urls:
-            print 'Only the following datasets are available for download:'
-            for key in urls:
-                print key
-            exit(0)
+        download(dset)
 
-        # check if we have already an existing directory
-        pout = os.path.join(P_DATA, dset)
-        if os.path.exists(pout):
-            print '{} already exists. Do you want to overwrite?'.format(dset)
-            s = raw_input('(y/n): ')
-            if s.startswith('y'):
-                shutil.rmtree(pout)
-            else:
-                exit(0)
-        os.makedirs(pout)
-
-        fn = '{}_data_temp.zip'.format(dset) # temporary zip file
-        u = urllib2.urlopen(urls[dset])
-        f = open(fn, 'wb')
-        meta = u.info()
-        fsize = int(meta.getheaders("Content-Length")[0])
-        print 'Downloading ...'
-
-        # display progress
-        block = 8192
-        total = 0
-        while True:
-            buffer = u.read(block)
-            if not buffer:
-                break
-
-            total += len(buffer)
-            f.write(buffer)
-            status = r"%10d  [%3.2f%%]" % (total, total * 100. / fsize)
-            status = status + chr(8) * (len(status) + 1)
-            print status,
-
-        f.close()
-
-        # unzip
-        zip_ref = zipfile.ZipFile(fn, 'r')
-        zip_ref.extractall(pout)
-        zip_ref.close()
-
-        # remove the zip file
-        os.remove(fn)
+    # hint
+    print bcolors.OKBLUE + 'Dataset "{}" is ready\n'.format(dset) + bcolors.ENDC
+    print 'Next: start the server via\n  python server.py' 

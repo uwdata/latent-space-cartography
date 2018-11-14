@@ -69,21 +69,34 @@
           Our visual analysis tool let you explore the answers interactively.
           Hit the demo button to start!
         </p>
-        <p>
+        <p v-if="dataset==='tybalt'">
           Dataset: a latent space of gene expression data in cancer patients,
           fit using a Variational Auto-Encoder by
           <a href="https://github.com/greenelab/tybalt" target="_blank">Way & Greene</a>
         </p>
+        <p v-else-if="dataset==='glove_6b'">
+          Dataset: pre-trained
+          <a href="https://nlp.stanford.edu/projects/glove/" target="_blank">GloVe</a> word embeddings.
+        </p>
+        <p v-else-if="dataset==='emoji'">
+          Dataset: latent spaces of emoji images, fit via convolutional Variational Autoencoders.
+          The 24,000 input images were crawled from
+          <a href="https://emojipedia.org/" target="_blank">Emojipedia</a>.
+        </p>
+        <p v-else>Dataset: {{dataset}}</p>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+  import {CONFIG} from '../controllers/config'
+
   export default {
     name: 'MainPage',
     data() {
       return {
+        dataset: CONFIG.dataset,
         menus: [
           {link: '/tsne', name: 't-SNE'},
           {link: '/splom', name: 'PCA - Scatter Plots Matrix'},

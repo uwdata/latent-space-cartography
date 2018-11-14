@@ -14,6 +14,7 @@ urls = {
 
 P_DATA = './data/'
 P_CFG = '../model/'
+P_UI_CFG = './configs/'
 
 if __name__ == '__main__':
     # arguments
@@ -26,18 +27,27 @@ if __name__ == '__main__':
     args = parser.parse_args()
     dset = args.name
 
-    # verify we have data and configs
+    # create data root folder
     if not os.path.exists(P_DATA):
         os.makedirs(P_DATA)
-    p_cfg = os.path.join(P_CFG, 'config_{}.py'.format(dset))
-    if not os.path.exists(p_cfg):
-        print 'Error: config file not found'
-        print '  {}'.format(p_cfg)
+
+    # verify we have data and configs
+    p_data = os.path.join(P_DATA, dset)
+    if not os.path.exists(p_data) and not args.download:
+        print 'Error: data folder not found\n  {}'.format(p_data)
         exit(0)
+    cfgs = [
+        os.path.join(P_CFG, 'config_{}.py'.format(dset)),
+        os.path.join(P_UI_CFG, 'config_{}.json'.format(dset))
+    ]
+    for pp in cfgs:
+        if not os.path.exists(pp):
+            print 'Error: config file not found\n  {}'.format(pp)
+            exit(0)
 
     # copy config
     cfg = './config_data.py'
-    shutil.copyfile(p_cfg, cfg)
+    shutil.copyfile(cfgs[0], cfg)
 
     # download the zip file from links
     if args.download:

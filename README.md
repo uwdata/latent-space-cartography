@@ -34,8 +34,8 @@ The above commands are necessary only for first time setup. After that, you can 
 
 ```bash
 cd deploy
-python use_data.py tybalt
 source lsc_env/bin/activate
+python use_data.py tybalt
 python server.py
 ```
 
@@ -43,6 +43,8 @@ python server.py
 You'll need to supply three componenets: (1) your data, (2) server side config and (3) client side config.
 
 ### Data
+
+#### Folder Structure
 After picking a convenient name for your dataset, create a folder `<project_root>/deploy/data/<dataset>`. Under this directory, you will need to provide the following sub-directories. The first two are required, while the rest are dependent on data types:
 
 - `latent`: contains the latent spaces. Each file is in HDF5 format. It contains a dataset named `latent`, which is a n*m array where n is the number of samples, and m is the number of latent dimensions. The file name should be `latent<dim>.h5`, where dim is the latent dimension.
@@ -57,6 +59,8 @@ After picking a convenient name for your dataset, create a folder `<project_root
 
 - `raw.h5`: HDF5 file of the input array (namely, the input to your unsupervised model). This is only required if your data is arbitrary vector, because we will use it to visualize each input sample.
 
+
+#### Metadata
 In addition, you will need to specify some metadata associated with each sample. For example, if each sample is a word, you may want to display which word it is and its frequency count. Such information will then be displayed in the tool, e.g. when the user clicks on a point.
 
 The metadata file is a CSV file. These two fields are required:
@@ -65,6 +69,7 @@ The metadata file is a CSV file. These two fields are required:
 
 You are free to provide other metadata columns, but remember to specify the schema in config files (details in the next section).
 
+#### Database
 TODO: database
 
 ### Server Side Config
@@ -197,9 +202,7 @@ Below is an example configuration file. Remove the comments if you copy-paste th
 
 1. Clone the repository
 
-2. Ask @yyyliu for data and a database dump
-
-3. Useful commands
+2. Useful commands
 ```bash
 cd client
 
@@ -217,11 +220,18 @@ source lsc/bin/activate
 # install dependencies for the server
 pip install -r requirements.txt
 
+# download data
+# change <dataset> to be one of [iamge, tybalt, glove_6b]
+python use_data.py <dataset> --download
+
 # start the server
 npm run start
+
+# switch between datasets
+python use_data.py <dataset>
 
 # deploy
 npm run deploy
 ```
 
-4. Navigate to http://localhost:5000/#/ in your browser 
+3. Navigate to http://localhost:5000/#/ in your browser 

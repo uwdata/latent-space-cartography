@@ -37,7 +37,29 @@ def connect_db ():
 
 # remove files
 def remove_files (fs):
-    pass
+    print 'Deleting files ...'
+
+    for f in fs:
+        f = fs[f]
+        if os.path.exists(f):
+            if os.path.isfile(f):
+                os.remove(f)
+            else:
+                shutil.rmtree(f)
+            print f
+
+    print bcolors.OKGREEN + 'Delete files: done.' + bcolors.ENDC
+
+# precompute
+def compute (dset):
+    print 'Performing precomputation ...\n'
+    from precompute import RandomCosine
+    from config_data import dims
+
+    rc = RandomCosine(dset, dims)
+    rc.compute()
+
+    print bcolors.OKGREEN + '\nPrecompute: success!\n' + bcolors.ENDC
 
 # drop all tables associated with dset
 def drop_tables (dset):
@@ -216,6 +238,7 @@ if __name__ == '__main__':
 
         if s.startswith('CONFIRM'):
             drop_tables(dset)
+            remove_files(REQ_FS)
 
         exit(0)
 
@@ -248,7 +271,8 @@ if __name__ == '__main__':
         # create database tables
         create_tables(dset, p_meta)
 
-        # TODO: precompute pairs.h5
+        # precompute pairs.h5
+        compute(dset)
 
     # download the zip file from links
     if args.download:

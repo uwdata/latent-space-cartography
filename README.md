@@ -69,6 +69,8 @@ The metadata file is a CSV file. These two fields are required:
 
 You are free to provide other metadata columns, but remember to specify the schema in config files (details in the next section).
 
+Place the meta file in `<project_root>/deploy/data/<dataset>/meta.csv` and run the next step to import it into the database.
+
 #### Database
 TODO: database
 

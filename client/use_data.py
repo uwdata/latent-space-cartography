@@ -16,6 +16,94 @@ P_DATA = './data/'
 P_CFG = '../model/'
 P_UI_CFG = './configs/'
 
+def connect_db ():
+    import sqlite3
+    p_db = P_DATA + 'lsc.db'
+    conn = sqlite3.connect(p_db)
+    cursor = conn.cursor()
+    return conn, cursor
+
+def drop_tables (dset):
+    conn, cursor = connect_db()
+    ts = ['meta', 'group', 'vector']
+    for t in ts:
+        q = 'DROP TABLE IF EXISTS {}_{};'.format(dset, t)
+        print q
+        cursor.execute(q)
+    conn.commit()
+    conn.close()
+
+def create_tables (dset, p_meta):
+    import csv
+
+    conn, cursor = connect_db()
+    print 'SQLite connected, creating tables ...'
+
+    q1 = '''
+    CREATE TABLE IF NOT EXISTS `{}_group` (
+        `id` integer NOT NULL PRIMARY KEY AUTOINCREMENT,
+        `alias` varchar(255) DEFAULT NULL,
+        `list` text,
+        `creation_time` datetime DEFAULT CURRENT_TIMESTAMP,
+        `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP);
+    '''.format(dset)
+    cursor.execute(q1)
+    print q1
+
+    q2 = '''
+    CREATE TABLE IF NOT EXISTS `{}_vector` (
+        `id` integer NOT NULL PRIMARY KEY AUTOINCREMENT,
+        `description` varchar(255) DEFAULT NULL,
+        `start` integer DEFAULT NULL,
+        `end` integer DEFAULT NULL,
+        `creation_time` datetime DEFAULT CURRENT_TIMESTAMP,
+        `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP);
+    '''.format(dset)
+    cursor.execute(q2)
+    print q2
+
+    with open(p_meta, 'rb') as f:
+        dr = csv.DictReader(f)
+        meta = [i for i in dr]
+
+        cols = meta[0].keys()
+
+        # check required fields
+        rq = ['i', 'name']
+        for col in rq:
+            if col not in cols:
+                print 'Error: required field {} not found in meta.csv'.format(col)
+                exit(0)
+            cols.remove(col)
+
+        # create table
+        created = True
+        q3 = 'CREATE TABLE IF NOT EXISTS `{}_meta` (\n'.format(dset)
+        q3 += '\t`i` integer NOT NULL,\n'
+        q3 += '\t`name` varchar(255) DEFAULT NULL,\n'
+        for col in cols:
+            q3 += '\t`{}` varchar(255) DEFAULT NULL,\n'.format(col)
+        q3 += '\tPRIMARY KEY (`i`));\n'
+        cursor.execute(q3)
+        print q3
+
+        # insert data
+        to_db = []
+        for i in meta:
+            row = (i['i'], i['name'])
+            for col in cols:
+                row += (i[col],)
+            to_db.append(row)
+        marks = '?,' * (len(cols) + 2)
+        s_col = 'i,name,{}'.format(','.join(cols)) if len(cols) else 'i, name'
+        q4 = 'INSERT INTO `{}_meta` ({}) VALUES ({});'.format(dset, s_col, marks[:-1])
+        print q4
+
+        conn.text_factory = str
+        cursor.executemany(q4, to_db)
+        conn.commit()
+        conn.close()
+
 if __name__ == '__main__':
     # arguments
     parser = argparse.ArgumentParser(description='Decide which dataset to work with.')
@@ -23,9 +111,24 @@ if __name__ == '__main__':
         help='name of the dataset')
     parser.add_argument('--download', action='store_true',
         help='download a demo dataset from the web')
+    parser.add_argument('--new', action='store_true',
+        help='onboard a new, custom dataset')
+    parser.add_argument('--remove', action='store_true',
+        help='delete data associated with this dataset')
 
     args = parser.parse_args()
     dset = args.name
+
+    # delete!!
+    if args.remove:
+        print 'Do you want to permenantly delete all data associated with {}?'.format(dset)
+        print 'Type CONFIRM to confirm:'
+        s = raw_input('> ')
+
+        if s.startswith('CONFIRM'):
+            drop_tables(dset)
+
+        exit(0)
 
     # create data root folder
     if not os.path.exists(P_DATA):
@@ -48,6 +151,17 @@ if __name__ == '__main__':
     # copy config
     cfg = './config_data.py'
     shutil.copyfile(cfgs[0], cfg)
+
+    # create database tables
+    if args.new:
+        # check meta csv
+        p_meta = os.path.join(p_data, 'meta.csv')
+        if not os.path.exists(p_meta):
+            print 'Error: metadata file not found\n  {}'.format(p_meta)
+            exit(0)
+
+        # create database tables
+        create_tables(dset, p_meta)
 
     # download the zip file from links
     if args.download:

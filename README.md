@@ -5,11 +5,11 @@ Visual analysis tools for mapping and orienting latent spaces (reduced dimension
 
 We provide example datasets on three different data types / scenarios:
 
-1. `emoji`: image generation. We scraped ~24,000 emoji images from the web, trained several Variational Auto-Encoders (VAEs) and obtained latent spaces capapble of hallucinating new emojis. (Warning: this dataset is 3.3 GB in size so it will take a while to download.)
+1. `emoji`: image generation. We scraped ~24,000 emoji images from the web, trained several Variational Auto-Encoders (VAEs) and obtained latent spaces capable of hallucinating new emojis. (Warning: this dataset is 3.3 GB in size so it will take a while to download.)
 2. `tybalt`: scientific feature learning. The 100-dimensional latent space encodes gene expression in cancer patients, fit using a Variational Auto-Encoder by [Way & Green](https://github.com/greenelab/tybalt).
 3. `glove_6b`: natural language processing. These spaces contain the top 10,000 words from pretrained 50-, 100-, 200-, and 300-dimensional [GloVe](https://nlp.stanford.edu/projects/glove/) word embeddings.
 
-To start visualizing some latent spaces, first pick an example dataset. Then, run the following commands in your console (we only support macOS, though it might work on Linux too):
+To start using latent space cartography (LSC), first pick an example dataset. Then, run the following commands in your console (we only support macOS, though it might work on Linux too):
 
 ```bash
 cd deploy
@@ -24,6 +24,8 @@ After the data finish downloading and the server starts, navigate to http://loca
 You'll need to supply three componenets: (1) your data, (2) server side config and (3) client side config.
 
 ### Data
+
+Your data folder holds all the data: latent space coordinates, precomputed t-SNE results, images, etc.
 
 #### Folder Structure
 After picking a convenient name for your dataset, create a folder `<project_root>/deploy/data/<dataset>`. Under this directory, you will need to provide the following sub-directories. The first two are required, while the rest are dependent on data types:
@@ -53,7 +55,9 @@ Place the meta file as `<project_root>/deploy/data/<dataset>/meta.csv`. The inst
 
 ### Server Side Config
 
-Create a file with the name `config_<dataset>.py` under the `<project_root>/model` folder. Below is an example configuration file:
+Server-side config tells the tool where to look for your data, as well as other customized behavior to your data type. 
+
+Create a file with the name `config_<dataset>.py` under the `<project_root>/model` folder. Below is an example:
 
 ```python
 # name of the dataset
@@ -66,7 +70,7 @@ dset = 'emoji'
 # other: input and output are arbitrary vectors
 data_type = 'image'
 
-# image specifications (only valid for image data type)
+# (required for "image" type) image specifications
 img_rows, img_cols, img_chns = 64, 64, 4
 img_mode = 'RGBA'
 
@@ -79,9 +83,9 @@ train_split = 19500
 # cosine: Cosine distance
 metric = 'l2'
 
-# the file name of the input, only used for "other" data type
+# (required for "other" type) the file name of the input
 fn_raw = 'emoji.h5'
-# the dataset key in the hdf5 file, only used for "other" data type
+# (required for "other" type) the dataset key in the hdf5 file, only used for "other" data type
 key_raw = 'emoji' 
 
 # all available latent dimensions
@@ -90,26 +94,20 @@ dims = [4, 8, 16, 32, 64, 128]
 # database table schema
 # meta table schema (order is important)
 schema_meta = 'i, name, mean_color, category, platform, version, codepoints, shortcode'
-# header table schema, only used for "other" data type
+# header table schema
 schema_header = None
 ```
 
 ### Client Side Config
 
-Create a file with the name `config_<dataset>.json` in `<project_root>/deploy/configs/` folder. The file name needs to be consistent with your data folder name and the server config python file name.
+Client-side config is a JSON file that customize the UI. We will provide a default config that you can further build on. After you run the command to add your dataset (in the next subsection), the config will appear as `<project_root>/deploy/configs/config_<dataset>.json`.
 
-Below is an example configuration file. Remove the comments if you copy-paste the following into your json file. For the optional items, they usually create a new UI element. Omit the item entirely if you do not need its corresponding functionality.
+Below is an example configuration file. Remove the comments if you copy-paste the following into your JSON file. For the optional items, they usually create a new UI element. Omit the item entirely if you do not need its corresponding functionality.
 
 ```javascript
 {
-  // name of the dataset
-  // it must be consistent with your data folder name and config file names
-  "dataset": "emoji",
-
-  // data type, can be one of ['image', 'text', 'other']
-  "data_type": "image",
-
   // only samples before train_split will be visualized
+  // you can use this to limit the number of samples displayed
   "train_split": 13500,
 
   // which latent space to display initially
@@ -117,9 +115,6 @@ Below is an example configuration file. Remove the comments if you copy-paste th
 
   // which projection method to use initially
   "initial_projection": "t-SNE",
-
-  // all the available latent dimensions
-  "dims": [4, 8, 16, 32, 64, 128],
 
   // database schema
   "schema": {
@@ -129,10 +124,7 @@ Below is an example configuration file. Remove the comments if you copy-paste th
         "platform": "categorical",
         "version": "categorical"
         // and more ...
-    },
-
-    // meta table schema
-    "meta": ["i","name", "mean_color", "category", "platform", "version", "codepoints", "shortcode"]
+    }
   },
   "rendering": {
     // which field in the meta is used to color the dots in the scatter plot
@@ -177,13 +169,15 @@ Below is an example configuration file. Remove the comments if you copy-paste th
 
 ### Finally ...
 
-Run the following script to create database tables and perform precomputation.
+Run the following script to add your dataset. It will check necessary files, create database tables, perform precomputation, etc.
 
 ```bash
 cd deploy
-source lsc/bin/activate # if this returns error, run "./start.sh dataset" once
+source lsc/bin/activate # if it returns error, run "./start.sh dataset" once
 python use_data.py --add <dataset>
 ```
+
+You can then run `./start.sh <dataset>` to start the server.
 
 ## I want to code
 

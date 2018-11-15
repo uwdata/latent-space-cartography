@@ -927,4 +927,7 @@ def _compare_vectors ():
 
 if __name__ == '__main__':
     init_server()
-    app.run(debug=True) # change to (host= '0.0.0.0') in production
+    print '\033[92m' + 'Server started!'
+    print 'Navigate to http://127.0.0.1:5000/ in your browser'
+    print 'Press CTRL+C to stop' + '\033[0m'
+    app.run(host= '0.0.0.0')

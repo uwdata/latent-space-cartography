@@ -3,12 +3,6 @@ Visual analysis tools for mapping and orienting latent spaces (reduced dimension
 
 ## I want to see how it works
 
-We provide example datasets on three different data types / scenarios:
-
-1. `emoji`: image generation. We scraped ~24,000 emoji images from the web, trained several Variational Auto-Encoders (VAEs) and obtained latent spaces capable of hallucinating new emojis. (Warning: this dataset is 3.3 GB in size so it will take a while to download.)
-2. `tybalt`: scientific feature learning. The 100-dimensional latent space encodes gene expression in cancer patients, fit using a Variational Auto-Encoder by [Way & Green](https://github.com/greenelab/tybalt).
-3. `glove_6b`: natural language processing. These spaces contain the top 10,000 words from pretrained 50-, 100-, 200-, and 300-dimensional [GloVe](https://nlp.stanford.edu/projects/glove/) word embeddings.
-
 To start using latent space cartography (LSC), first pick an example dataset. Then, run the following commands in your console (we only support macOS, though it might work on Linux too):
 
 ```bash
@@ -18,7 +12,14 @@ cd deploy
 ./start.sh tybalt
 ```
 
-After the data finish downloading and the server starts, navigate to http://localhost:5000/#/ in your browser.
+After the server starts, navigate to http://localhost:5000/#/ in your browser. (We only support Chrome, though it might also work for other browsers.)
+
+We provide example datasets on three different data types / scenarios:
+
+1. `emoji`: image generation. We scraped ~24,000 emoji images from the web, trained several Variational Auto-Encoders (VAEs) and obtained latent spaces capable of hallucinating new emojis. (Warning: this dataset is 3.3 GB in size so it will take a while to download.)
+2. `tybalt`: scientific feature learning. The 100-dimensional latent space encodes gene expression in cancer patients, fit using a Variational Auto-Encoder by [Way & Green](https://github.com/greenelab/tybalt).
+3. `glove_6b`: natural language processing. These spaces contain the top 10,000 words from pretrained 50-, 100-, 200-, and 300-dimensional [GloVe](https://nlp.stanford.edu/projects/glove/) word embeddings.
+
 
 ## I have my own data
 You'll need to supply three componenets: (1) your data, (2) server side config and (3) client side config.

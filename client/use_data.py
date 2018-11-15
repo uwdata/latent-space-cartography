@@ -175,7 +175,7 @@ def download (dset):
     f = open(fn, 'wb')
     meta = u.info()
     fsize = int(meta.getheaders("Content-Length")[0])
-    print 'Downloading ...'
+    print 'Downloading data ...'
 
     # display progress
     block = 8192
@@ -194,6 +194,7 @@ def download (dset):
     f.close()
 
     # unzip
+    print 'Decompressing data ...'
     zip_ref = zipfile.ZipFile(fn, 'r')
     zip_ref.extractall(pout)
     zip_ref.close()

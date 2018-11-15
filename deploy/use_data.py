@@ -159,13 +159,6 @@ def create_tables (dset, p_meta):
 
 # download and unzip data
 def download (dset):
-    # check url
-    if dset not in urls:
-        print 'Only the following datasets are available for download:'
-        for key in urls:
-            print key
-        exit(1)
-
     # check if we have already an existing directory
     pout = os.path.join(P_DATA, dset)
     if os.path.exists(pout):
@@ -208,6 +201,14 @@ def download (dset):
     # remove the zip file
     os.remove(fn)
 
+# check if the dataset can be downloaded
+def check_download (dset):
+    if dset not in urls:
+        print 'Only the following datasets are available for download:'
+        for key in urls:
+            print key
+        exit(1)
+
 if __name__ == '__main__':
     # arguments
     parser = argparse.ArgumentParser(description='Decide which dataset to work with.')
@@ -222,6 +223,9 @@ if __name__ == '__main__':
 
     args = parser.parse_args()
     dset = args.name
+
+    if args.download:
+        check_download(dset)
 
     # required files
     REQ_FS = {
@@ -247,12 +251,20 @@ if __name__ == '__main__':
         os.makedirs(P_DATA)
 
     # verify we have data and configs
-    for f in REQ_FS:
-        f = REQ_FS[f]
-        if not os.path.exists(f) and not args.download:
-            print bcolors.WARNING + \
-                'Error: required file not found\n  {}'.format(f) + bcolors.ENDC
-            exit(1)
+    for i in REQ_FS:
+        f = REQ_FS[i]
+        if i == 'data' and args.download:
+            continue # skip
+        if not os.path.exists(f):
+            if i == 'json':
+                # copy default client config
+                shutil.copyfile(P_UI_CFG + 'config_default.json', f)
+                print bcolors.WARNING + 'Client config not found'
+                print 'Creating a default config in {}'.format(f) + bcolors.ENDC
+            else:
+                print bcolors.WARNING + \
+                    'Error: required file not found\n  {}'.format(f) + bcolors.ENDC
+                exit(1)
 
     # copy config
     cfg = './config_data.py'

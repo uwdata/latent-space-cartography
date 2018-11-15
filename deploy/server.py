@@ -884,9 +884,18 @@ def get_compare_page ():
 # load client side config
 @app.route('/api/load_config', methods=['POST'])
 def load_config ():
+    # read json
     fn = abs_path('./configs/config_{}.json'.format(dset))
     with open(fn, 'r') as f:
         cfg = json.load(f)
+
+    # add more fields
+    cfg['dataset'] = dset
+    cfg['data_type'] = data_type
+    cfg['dims'] = dims
+    cfg['schema']['meta'] = [i.strip() for i in schema_meta.split(',')]
+    if schema_header:
+        cfg['schema']['header'] = [i.strip() for i in schema_header.split(',')]
     return jsonify({'config': cfg}), 200
 
 @app.route('/api/_compare_vectors', methods=['POST'])
@@ -914,39 +923,6 @@ def _compare_vectors ():
         for row in res:
             writer.writerow(row)
 
-    return jsonify({'status': 'success'}), 200
-
-# create the groups table. internal use only
-@app.route('/api/_create_table_group', methods=['POST'])
-def _create_table_group ():
-    query = """
-    CREATE TABLE `{}_group` (
-        `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-        `alias` varchar(255) DEFAULT NULL,
-        `list` TEXT,
-        `creation_time` DATETIME DEFAULT CURRENT_TIMESTAMP,
-        `timestamp` TIMESTAMP,
-        PRIMARY KEY (`id`)
-    ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-    """.format(dset)
-    db.execute(query)
-    return jsonify({'status': 'success'}), 200
-
-# create the vectors table. internal use only
-@app.route('/api/_create_table_vector', methods=['POST'])
-def _create_table_vector ():
-    query = """
-    CREATE TABLE `{}_vector` (
-        `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-        `description` varchar(255) DEFAULT NULL,
-        `start` int(11),
-        `end` int(11),
-        `creation_time` DATETIME DEFAULT CURRENT_TIMESTAMP,
-        `timestamp` TIMESTAMP,
-        PRIMARY KEY (`id`)
-    ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-    """.format(dset)
-    db.execute(query)
     return jsonify({'status': 'success'}), 200
 
 if __name__ == '__main__':

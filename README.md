@@ -3,7 +3,7 @@ Visual analysis tools for mapping and orienting latent spaces (reduced dimension
 
 ## I want to see how it works
 
-To start using latent space cartography (LSC), first pick an example dataset. Then, run the following commands in your console (we only support macOS, though it might work on Linux too):
+We provide example datasets on three different data types / scenarios: `emoji` for image generation, `tybalt` for scientific feature learning, and `glove_6b` for natural language processing. To start using latent space cartography (LSC), first pick an example dataset. Then, run the following commands in your console (we only support macOS, though it might work on Linux too):
 
 ```bash
 cd deploy
@@ -12,9 +12,9 @@ cd deploy
 ./start.sh tybalt
 ```
 
-After the server starts, navigate to http://localhost:5000/#/ in your browser. (We only support Chrome, though it might also work for other browsers.)
+After the server starts, navigate to http://localhost:5000/#/ in your browser. (We only support Chrome, though it might work for other browsers.)
 
-We provide example datasets on three different data types / scenarios:
+Below are descriptions on the example datasets:
 
 1. `emoji`: image generation. We scraped ~24,000 emoji images from the web, trained several Variational Auto-Encoders (VAEs) and obtained latent spaces capable of hallucinating new emojis. (Warning: this dataset is 3.3 GB in size so it will take a while to download.)
 2. `tybalt`: scientific feature learning. The 100-dimensional latent space encodes gene expression in cancer patients, fit using a Variational Auto-Encoder by [Way & Green](https://github.com/greenelab/tybalt).

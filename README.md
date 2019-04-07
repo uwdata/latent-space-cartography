@@ -1,10 +1,27 @@
-# latent-space-cartography
-Visual analysis tools for mapping and orienting latent spaces (reduced dimensionality vector spaces produced by unsupervised learning).
+# Latent Space Cartography
 
-## I want to see how it works
+Latent Space Cartography (LSC) is a visual analysis tools for mapping and comparing meaingful "semantic" dimensions in a latent space. This repository contains source code of the visual analysis tool and includes three example case studies.
 
-We provide example datasets on three different data types / scenarios: `emoji` for image generation, `tybalt` for scientific feature learning, and `glove_6b` for natural language processing. To start using latent space cartography (LSC), first pick an example dataset. Then, run the following commands in your console (we only support macOS, though it might work on Linux too):
+## Citation
+If you are interested in this work, please see our research [paper](https://yangliu.life/build/misc/lsc.pdf) and consider citing our work:
 
+```
+@article{liu2019-lsc,
+ title = {Latent space cartography: Visual analysis of vector space embeddings},
+ author = {Yang Liu AND Eunice Jun AND Qisheng Li AND Jeffrey Heer},
+ journal = {Computer Graphics Forum (Proc. EuroVis)},
+ year = {2019}
+}
+```
+
+## Demo
+
+You might run LSC on your machine (we only support MacOS at the moment) using one of the three example datasets: `emoji` for image generation, `tybalt` for scientific feature learning, and `glove_6b` for natural language processing.
+Here are the steps for running the demo:
+
+1. Clone this repository
+
+2. Run the following commands in your console:
 ```bash
 cd deploy
 
@@ -12,7 +29,7 @@ cd deploy
 ./start.sh tybalt
 ```
 
-After the server starts, navigate to http://localhost:5000/#/ in your browser. (We only support Chrome, though it might work for other browsers.)
+3. After the server starts, navigate to http://localhost:5000/#/ in your browser. We strongly recommend using Chrome!
 
 Below are descriptions on the example datasets:
 
@@ -21,8 +38,9 @@ Below are descriptions on the example datasets:
 3. `glove_6b`: natural language processing. These spaces contain the top 10,000 words from pretrained 50-, 100-, 200-, and 300-dimensional [GloVe](https://nlp.stanford.edu/projects/glove/) word embeddings.
 
 
-## I have my own data
-You'll need to supply three componenets: (1) your data, (2) server side config and (3) client side config.
+## Using LSC on Your Own data
+You might also use LSC to explore your own data.
+You'll need to supply three componenets: (1) your data, (2) a server side config and (3) a client side config.
 
 ### Data
 
@@ -180,7 +198,9 @@ python use_data.py --add <dataset>
 
 You can then run `./start.sh <dataset>` to start the server.
 
-## I want to code
+## Developer
+
+If you would like to develop LSC further, you might begin by:
 
 1. Clone the repository
 

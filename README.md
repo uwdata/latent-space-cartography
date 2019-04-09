@@ -1,6 +1,6 @@
 # Latent Space Cartography
 
-Latent Space Cartography (LSC) is a visual analysis tools for mapping and comparing meaingful "semantic" dimensions in a latent space. This repository contains source code of the visual analysis tool and includes three example case studies.
+Latent Space Cartography (LSC) is a visual analysis tool for mapping and comparing meaningful "semantic" dimensions in latent spaces. This repository contains the source code of LSC and includes three example case studies.
 
 ## Citation
 If you are interested in this work, please see our research [paper](https://yangliu.life/build/misc/lsc.pdf) and consider citing our work:
@@ -40,7 +40,7 @@ Below are descriptions on the example datasets:
 
 ## Using LSC on Your Own data
 You might also use LSC to explore your own data.
-You'll need to supply three componenets: (1) your data, (2) a server side config and (3) a client side config.
+You'll need to supply three components: (1) your data, (2) a server-side config and (3) a client-side config.
 
 ### Data
 
@@ -49,9 +49,9 @@ Your data folder holds all the data: latent space coordinates, precomputed t-SNE
 #### Folder Structure
 After picking a convenient name for your dataset, create a folder `<project_root>/deploy/data/<dataset>`. Under this directory, you will need to provide the following sub-directories. The first two are required, while the rest are dependent on data types:
 
-- `latent`: contains the latent spaces. Each file is in HDF5 format. It contains a dataset named `latent`, which is a n*m array where n is the number of samples, and m is the number of latent dimensions. The file name should be `latent<dim>.h5`, where dim is the latent dimension.
+- `latent`: contains the latent spaces. Each file is in HDF5 format. It contains a dataset named `latent`, which is an n*m array where n is the number of samples, and m is the number of latent dimensions. The file name should be `latent<dim>.h5`, where dim is the latent dimension.
 
-- `tsne`: contains precomputed t-SNE coordinates. Each file is in HDF5 format. It contains a dataset named `tsne`, which is a n*2 array, where n is the number of samples.
+- `tsne`: contains precomputed t-SNE coordinates. Each file is in HDF5 format. It contains a dataset named `tsne`, which is an n*2 array, where n is the number of samples.
 
 - `umap`: contains precomputed UMAP results. This is optional, because the tool will compute UMAP on the fly if it does not find existing results.
 
@@ -72,7 +72,7 @@ You are free to provide other metadata columns, but remember to specify the sche
 
 Place the meta file as `<project_root>/deploy/data/<dataset>/meta.csv`. The installation script `use_data.py` will look into this location to import metadata into the appropriate database table.
 
-### Server Side Config
+### Server-side Config
 
 Server-side config tells the tool where to look for your data, as well as other customized behavior to your data type. 
 
@@ -117,9 +117,9 @@ schema_meta = 'i, name, mean_color, category, platform, version, codepoints, sho
 schema_header = None
 ```
 
-### Client Side Config
+### Client-side Config
 
-Client-side config is a JSON file that customize the UI. We will provide a default config that you can further build on. After you run the command to add your dataset (in the next subsection), the config will appear as `<project_root>/deploy/configs/config_<dataset>.json`.
+Client-side config is a JSON file that customizes the UI. We will provide a default config that you can further build on. After you run the command to add your dataset (in the next subsection), the config will appear as `<project_root>/deploy/configs/config_<dataset>.json`.
 
 Below is an example configuration file. Remove the comments if you copy-paste the following into your JSON file. For the optional items, they usually create a new UI element. Omit the item entirely if you do not need its corresponding functionality.
 

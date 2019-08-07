@@ -1,5 +1,8 @@
 # Latent Space Cartography
 
+[![Build Status](https://travis-ci.org/uwdata/latent-space-cartography.svg?branch=master)](https://travis-ci.org/uwdata/latent-space-cartography)
+[![License](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)
+
 Latent Space Cartography (LSC) is a visual analysis tool for mapping and comparing meaningful "semantic" dimensions in latent spaces. This repository contains the source code of LSC and includes three example case studies.
 
 ## Citation

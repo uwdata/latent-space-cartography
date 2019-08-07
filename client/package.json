@@ -1,15 +1,15 @@
 {
   "name": "latent-space-explorer",
   "version": "0.0.1",
-  "license": "MIT",
-  "description": "Visualize the latent space of variational autoencoders.",
+  "license": "BSD-3-Clause",
+  "description": "Visual analysis of vector space embeddings",
   "author": {
     "name": "Yang Liu",
     "url": "http://yangliu.life"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/yyyliu/spider-logo"
+    "url": "https://github.com/uwdata/latent-space-cartography"
   },
   "scripts": {
     "checkstyle": "eslint index.js src",
